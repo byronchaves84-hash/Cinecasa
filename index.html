@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="theme-color"
+        content="#000000"
+    >
+
+    <title>CINEMAX</title>
+
+    <link
+        rel="stylesheet"
+        href="intro.css"
+    >
+
+</head>
+
+<body>
+
+
+    <main class="intro">
+
+
+        <!-- =================================================
+             FONDO
+        ================================================== -->
+
+        <div class="background-glow"></div>
+
+        <div class="light-beam beam-one"></div>
+
+        <div class="light-beam beam-two"></div>
+
+        <div class="light-beam beam-three"></div>
+
+
+        <!-- =================================================
+             PARTÍCULAS
+        ================================================== -->
+
+        <div class="particles">
+
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+
+        </div>
+
+
+        <!-- =================================================
+             ROLLO DE PELÍCULA DECORATIVO
+        ================================================== -->
+
+        <div class="film-reel">
+
+            <div class="reel-center"></div>
+
+            <div class="reel-hole hole-one"></div>
+            <div class="reel-hole hole-two"></div>
+            <div class="reel-hole hole-three"></div>
+            <div class="reel-hole hole-four"></div>
+            <div class="reel-hole hole-five"></div>
+            <div class="reel-hole hole-six"></div>
+
+        </div>
+
+
+        <!-- =================================================
+             LÍNEAS CINEMATOGRÁFICAS
+        ================================================== -->
+
+        <div class="cinema-lines">
+
+            <span></span>
+            <span></span>
+            <span></span>
+
+        </div>
+
+
+        <!-- =================================================
+             LOGO
+        ================================================== -->
+
+        <section class="logo-container">
+
+
+            <div class="logo-aura"></div>
+
+
+            <div class="logo">
+
+                <span class="logo-text">
+                    CINEMAX
+                </span>
+
+                <span class="logo-reflection"></span>
+
+                <span class="logo-shine"></span>
+
+            </div>
+
+
+            <div class="logo-line">
+
+                <span></span>
+
+            </div>
+
+
+            <div class="tagline">
+
+                <span>TU CINE.</span>
+
+                <span>TU MUNDO.</span>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- =================================================
+             BARRAS CINEMATOGRÁFICAS
+        ================================================== -->
+
+        <div class="cinematic-bars top-bar"></div>
+
+        <div class="cinematic-bars bottom-bar"></div>
+
+
+        <!-- =================================================
+             FLASH
+        ================================================== -->
+
+        <div class="screen-flash"></div>
+
+
+    </main>
+
+
+    <script>
+
+
+        /* =================================================
+           INTRO CINEMAX
+        ================================================= */
+
+
+        window.addEventListener(
+            "load",
+            () => {
+
+
+                const intro =
+                    document.querySelector(".intro");
+
+
+                /*
+                 * Activar la animación
+                 */
+
+                setTimeout(
+                    () => {
+
+                        intro.classList.add(
+                            "started"
+                        );
+
+                    },
+                    100
+                );
+
+
+                /*
+                 * Comenzar salida
+                 */
+
+                setTimeout(
+                    () => {
+
+                        intro.classList.add(
+                            "exit"
+                        );
+
+                    },
+                    4000
+                );
+
+
+                /*
+                 * Entrar al LOGIN
+                 */
+
+                setTimeout(
+                    () => {
+
+                        window.location.href =
+                            "login.html";
+
+                    },
+                    4900
+                );
+
+
+            }
+        );
+
+
+    </script>
+
+
+</body>
+
+</html>

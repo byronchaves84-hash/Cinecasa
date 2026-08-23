@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reproduciendo Película</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>StreamZone</h1>
+        </div>
+    </header>
+
+    <div class="video-background">
+        <!-- Video del trailer como fondo -->
+        <video id="trailerBackground" autoplay loop muted>
+            <source src="peli/Movie.mp4" type="video/mp4">
+            Tu navegador no soporta la etiqueta de video.
+        </video>
+        <div class="background-overlay"></div> <!-- Capa de desenfoque -->
+    </div>
+
+    <div class="horror-anime-item" onclick="handleVideoClick(this)">
+        <a href="https://drive.google.com/file/d/17PJjZPTwx8FiRRFUNzfmPoSfW-A9sec1/view?usp=sharing" target="_blank">
+            <div class="video-container">
+                <div class="video-overlay"></div> <!-- Overlay de nube -->
+                <iframe src="https://drive.google.com/file/d/17PJjZPTwx8FiRRFUNzfmPoSfW-A9sec1/preview" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+            </div>
+        </a>
+    </div>
+    
+    <div class="movie-details">
+        <h2>Anabelle vuelve a casa.</h2> 
+        <p>En *Annabelle Vuelve a Casa*, la temida muñeca Annabelle regresa al centro de todo el caos cuando es llevada al hogar de los Warrens. Después de que la muñeca es puesta bajo llave en la sala de artefactos malditos de la familia Warren, el mal parece despertar una vez más. En una noche que debería haber sido tranquila, la hija de los Warren, Judy, y sus amigos se encuentran enfrentando una pesadilla aterradora, mientras la muñeca posee a los objetos y espíritus que habitan la casa. </p>
+    </div>
+    
+    <hr class="separator">
+
+    <footer>
+        <p>&copy; 2025 MiNetflix. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>
+

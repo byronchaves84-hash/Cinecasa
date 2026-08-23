@@ -1,0 +1,1327 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="theme-color"
+        content="#000000"
+    >
+
+    <title>CINEMAX — Iniciar sesión</title>
+
+    <link
+        rel="stylesheet"
+        href="login.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         FONDO DEL LOGIN
+    ====================================================== -->
+
+    <div class="background"></div>
+
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <header class="header">
+
+        <div class="logo">
+            CINEMAX
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         LOGIN
+    ====================================================== -->
+
+    <main class="login-page">
+
+        <section class="login-box">
+
+
+            <h1>
+                Iniciar sesión
+            </h1>
+
+
+            <div
+                id="errorMessage"
+                class="error-message"
+            ></div>
+
+
+            <form id="loginForm">
+
+
+                <div class="input-group">
+
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="Correo electrónico"
+                        autocomplete="email"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="input-group password-group">
+
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="Contraseña"
+                        autocomplete="current-password"
+                        required
+                    >
+
+                    <button
+                        type="button"
+                        id="showPassword"
+                        class="show-password"
+                    >
+                        Mostrar
+                    </button>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="login-button"
+                    id="loginButton"
+                >
+                    Iniciar sesión
+                </button>
+
+
+            </form>
+
+
+            <div class="login-options">
+
+                <label class="remember">
+
+                    <input
+                        type="checkbox"
+                        id="remember"
+                    >
+
+                    <span>
+                        Recuérdame
+                    </span>
+
+                </label>
+
+
+                <a
+                    href="#"
+                    id="helpLink"
+                >
+                    ¿Necesitas ayuda?
+                </a>
+
+            </div>
+
+
+            <div class="signup">
+
+                <span>
+                    ¿Nuevo en CINEMAX?
+                </span>
+
+                <a
+                    href="registro.html"
+                    id="signupLink"
+                >
+                    Crear una cuenta.
+                </a>
+
+            </div>
+
+
+            <p class="security-text">
+
+                Esta página está protegida para garantizar
+                que solo los usuarios autorizados puedan
+                acceder a CINEMAX.
+
+            </p>
+
+
+        </section>
+
+    </main>
+
+
+    <footer>
+
+        © 2026 CINEMAX — Todos los derechos reservados.
+
+    </footer>
+
+
+    <!-- =====================================================
+         ANIMACIÓN POST LOGIN
+    ====================================================== -->
+
+    <div
+        class="welcome-screen"
+        id="welcomeScreen"
+    >
+
+        <div class="welcome-background"></div>
+
+        <div class="welcome-glow"></div>
+
+        <div class="welcome-light"></div>
+
+
+        <div class="welcome-content">
+
+            <div class="welcome-logo">
+
+                CINEMAX
+
+            </div>
+
+
+            <div class="welcome-line"></div>
+
+
+            <div class="welcome-text">
+
+                BIENVENIDO
+
+            </div>
+
+
+            <div class="welcome-subtitle">
+
+                PREPARANDO TU EXPERIENCIA
+
+            </div>
+
+        </div>
+
+
+        <div class="welcome-progress">
+
+            <div class="welcome-progress-bar"></div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
+
+    <script>
+
+
+        /* =====================================================
+           CONFIGURACIÓN
+        ====================================================== */
+
+        const ADMIN_EMAIL =
+            "admin@cinemax.com";
+
+
+        const ADMIN_PASSWORD =
+            "123456";
+
+
+        /* =====================================================
+           STORAGE
+        ====================================================== */
+
+        const CURRENT_USER_KEY =
+            "cinemax_current_user";
+
+
+        const SESSION_KEY =
+            "cinemax_session_id";
+
+
+        /* =====================================================
+           RUTA DEL CATÁLOGO
+        ====================================================== */
+
+        const CATALOG_URL =
+            "./Cinema-main/index.html";
+
+
+        /* =====================================================
+           ELEMENTOS
+        ====================================================== */
+
+        const loginForm =
+            document.getElementById(
+                "loginForm"
+            );
+
+
+        const emailInput =
+            document.getElementById(
+                "email"
+            );
+
+
+        const passwordInput =
+            document.getElementById(
+                "password"
+            );
+
+
+        const loginButton =
+            document.getElementById(
+                "loginButton"
+            );
+
+
+        const errorMessage =
+            document.getElementById(
+                "errorMessage"
+            );
+
+
+        const showPassword =
+            document.getElementById(
+                "showPassword"
+            );
+
+
+        const welcomeScreen =
+            document.getElementById(
+                "welcomeScreen"
+            );
+
+
+        /* =====================================================
+           MOSTRAR / OCULTAR CONTRASEÑA
+        ====================================================== */
+
+        showPassword.addEventListener(
+            "click",
+            function () {
+
+                if (
+                    passwordInput.type ===
+                    "password"
+                ) {
+
+                    passwordInput.type =
+                        "text";
+
+                    showPassword.textContent =
+                        "Ocultar";
+
+                } else {
+
+                    passwordInput.type =
+                        "password";
+
+                    showPassword.textContent =
+                        "Mostrar";
+
+                }
+
+            }
+        );
+
+
+        /* =====================================================
+           MOSTRAR ERROR
+        ====================================================== */
+
+        function showError(
+            message
+        ) {
+
+            errorMessage.textContent =
+                message;
+
+            errorMessage.classList.add(
+                "show"
+            );
+
+        }
+
+
+        /* =====================================================
+           OCULTAR ERROR
+        ====================================================== */
+
+        function hideError() {
+
+            errorMessage.textContent =
+                "";
+
+            errorMessage.classList.remove(
+                "show"
+            );
+
+        }
+
+
+        /* =====================================================
+           GUARDAR USUARIO
+        ====================================================== */
+
+        function saveCurrentUser(
+            user
+        ) {
+
+            try {
+
+                const sessionUser = {
+
+                    id:
+                        user.id,
+
+                    username:
+                        user.username,
+
+                    email:
+                        user.email,
+
+                    role:
+                        user.role || "user"
+
+                };
+
+
+                localStorage.setItem(
+                    CURRENT_USER_KEY,
+                    JSON.stringify(
+                        sessionUser
+                    )
+                );
+
+
+            } catch (error) {
+
+                console.error(
+                    "Error guardando usuario:",
+                    error
+                );
+
+            }
+
+        }
+
+
+        /* =====================================================
+           GUARDAR SESIÓN
+        ====================================================== */
+
+        function saveSessionId(
+            sessionId
+        ) {
+
+            if (!sessionId) {
+                return;
+            }
+
+
+            const value =
+                String(
+                    sessionId
+                ).trim();
+
+
+            if (!value) {
+                return;
+            }
+
+
+            try {
+
+                localStorage.setItem(
+                    SESSION_KEY,
+                    value
+                );
+
+
+                /*
+                 * Compatibilidad adicional
+                 */
+
+                localStorage.setItem(
+                    "cinemax_sessionId",
+                    value
+                );
+
+
+                localStorage.setItem(
+                    "cinemax_token",
+                    value
+                );
+
+
+            } catch (error) {
+
+                console.error(
+                    "Error guardando session ID:",
+                    error
+                );
+
+            }
+
+        }
+
+
+        /* =====================================================
+           LIMPIAR SESIÓN
+        ====================================================== */
+
+        function clearSession() {
+
+            try {
+
+                localStorage.removeItem(
+                    CURRENT_USER_KEY
+                );
+
+                localStorage.removeItem(
+                    SESSION_KEY
+                );
+
+                localStorage.removeItem(
+                    "cinemax_sessionId"
+                );
+
+                localStorage.removeItem(
+                    "cinemax_token"
+                );
+
+            } catch (error) {
+
+                console.error(
+                    "Error limpiando sesión:",
+                    error
+                );
+
+            }
+
+        }
+
+
+        /* =====================================================
+           OBTENER SESIÓN GUARDADA
+        ====================================================== */
+
+        function getSavedSessionId() {
+
+            try {
+
+                return (
+                    localStorage.getItem(
+                        SESSION_KEY
+                    )
+                    ||
+                    localStorage.getItem(
+                        "cinemax_sessionId"
+                    )
+                    ||
+                    localStorage.getItem(
+                        "cinemax_token"
+                    )
+                    ||
+                    null
+                );
+
+            } catch (error) {
+
+                return null;
+
+            }
+
+        }
+
+
+        /* =====================================================
+           TIMEOUT PARA FETCH
+           
+           Evita que "Comprobando..." quede infinito.
+        ====================================================== */
+
+        async function fetchWithTimeout(
+            url,
+            options = {},
+            timeout = 10000
+        ) {
+
+            const controller =
+                new AbortController();
+
+
+            const timeoutId =
+                setTimeout(
+                    function () {
+
+                        controller.abort();
+
+                    },
+                    timeout
+                );
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        url,
+                        {
+                            ...options,
+                            signal:
+                                controller.signal
+                        }
+                    );
+
+
+                return response;
+
+
+            } finally {
+
+                clearTimeout(
+                    timeoutId
+                );
+
+            }
+
+        }
+
+
+        /* =====================================================
+           AUTENTICACIÓN
+        ====================================================== */
+
+        async function authenticate(
+            email,
+            password
+        ) {
+
+
+            /* =================================================
+               ADMINISTRADOR
+            ================================================== */
+
+            if (
+                email === ADMIN_EMAIL &&
+                password === ADMIN_PASSWORD
+            ) {
+
+                return {
+
+                    id:
+                        "admin",
+
+                    username:
+                        "Administrador",
+
+                    email:
+                        ADMIN_EMAIL,
+
+                    role:
+                        "admin",
+
+                    session_id:
+                        null
+
+                };
+
+            }
+
+
+            /* =================================================
+               USUARIO NORMAL
+            ================================================== */
+
+            try {
+
+                const response =
+                    await fetchWithTimeout(
+                        "/api/users/login",
+                        {
+
+                            method:
+                                "POST",
+
+                            headers: {
+
+                                "Content-Type":
+                                    "application/json",
+
+                                "Cache-Control":
+                                    "no-cache"
+
+                            },
+
+                            body:
+                                JSON.stringify(
+                                    {
+
+                                        email:
+                                            email,
+
+                                        password:
+                                            password
+
+                                    }
+                                )
+
+                        },
+                        10000
+                    );
+
+
+                let result = null;
+
+
+                try {
+
+                    result =
+                        await response.json();
+
+                } catch (jsonError) {
+
+                    console.error(
+                        "Respuesta JSON inválida:",
+                        jsonError
+                    );
+
+                }
+
+
+                /* =================================================
+                   ERROR DEL SERVIDOR
+                ================================================== */
+
+                if (!response.ok) {
+
+                    console.error(
+                        "Login rechazado:",
+                        response.status,
+                        result
+                    );
+
+
+                    return {
+
+                        loginError:
+                            result &&
+                            result.error
+                                ? result.error
+                                : "LOGIN_FAILED"
+
+                    };
+
+                }
+
+
+                /* =================================================
+                   LOGIN CORRECTO
+                ================================================== */
+
+                if (
+                    result &&
+                    result.success &&
+                    result.user
+                ) {
+
+                    const sessionId =
+                        result.session_id
+                        ||
+                        result.sessionId
+                        ||
+                        result.token
+                        ||
+                        null;
+
+
+                    if (!sessionId) {
+
+                        console.error(
+                            "El servidor no devolvió session_id."
+                        );
+
+
+                        throw new Error(
+                            "SESSION_ID_MISSING"
+                        );
+
+                    }
+
+
+                    return {
+
+                        id:
+                            result.user.id,
+
+                        username:
+                            result.user.username,
+
+                        email:
+                            result.user.email,
+
+                        role:
+                            result.user.role ||
+                            "user",
+
+                        session_id:
+                            sessionId
+
+                    };
+
+                }
+
+
+                return null;
+
+
+            } catch (error) {
+
+                console.error(
+                    "Error conectando con el servidor:",
+                    error
+                );
+
+
+                if (
+                    error.name ===
+                    "AbortError"
+                ) {
+
+                    throw new Error(
+                        "SERVER_TIMEOUT"
+                    );
+
+                }
+
+
+                if (
+                    error.message ===
+                    "SESSION_ID_MISSING"
+                ) {
+
+                    throw error;
+
+                }
+
+
+                throw new Error(
+                    "SERVER_CONNECTION_ERROR"
+                );
+
+            }
+
+        }
+
+
+        /* =====================================================
+           COMPROBAR SESIÓN EXISTENTE
+           
+           Si alguien ya tiene una sesión válida,
+           puede entrar directamente al catálogo.
+        ====================================================== */
+
+        async function checkExistingSession() {
+
+            const sessionId =
+                getSavedSessionId();
+
+
+            if (!sessionId) {
+
+                return false;
+
+            }
+
+
+            try {
+
+                const response =
+                    await fetchWithTimeout(
+
+                        "/api/users/session/"
+                        +
+                        encodeURIComponent(
+                            sessionId
+                        ),
+
+                        {
+
+                            method:
+                                "GET",
+
+                            headers: {
+
+                                "X-Session-ID":
+                                    sessionId,
+
+                                "Authorization":
+                                    "Bearer "
+                                    +
+                                    sessionId,
+
+                                "Cache-Control":
+                                    "no-cache"
+
+                            }
+
+                        },
+
+                        7000
+
+                    );
+
+
+                let result =
+                    null;
+
+
+                try {
+
+                    result =
+                        await response.json();
+
+                } catch (error) {
+
+                    result =
+                        null;
+
+                }
+
+
+                if (
+                    response.ok &&
+                    result &&
+                    result.success &&
+                    result.active &&
+                    result.user
+                ) {
+
+                    saveCurrentUser(
+                        result.user
+                    );
+
+
+                    saveSessionId(
+                        sessionId
+                    );
+
+
+                    return true;
+
+                }
+
+
+                /*
+                 * La sesión ya no existe o
+                 * fue desconectada por el admin.
+                 */
+
+                clearSession();
+
+
+                return false;
+
+
+            } catch (error) {
+
+                console.error(
+                    "No se pudo comprobar la sesión:",
+                    error
+                );
+
+
+                /*
+                 * No bloqueamos el login.
+                 *
+                 * Si el servidor no responde,
+                 * simplemente mostramos el formulario.
+                 */
+
+                return false;
+
+            }
+
+        }
+
+
+        /* =====================================================
+           IR AL CATÁLOGO
+        ====================================================== */
+
+        function goToCatalog(
+            user
+        ) {
+
+            saveCurrentUser(
+                user
+            );
+
+
+            if (
+                user.session_id
+            ) {
+
+                saveSessionId(
+                    user.session_id
+                );
+
+            }
+
+
+            loginButton.textContent =
+                "Entrando...";
+
+
+            loginButton.disabled =
+                true;
+
+
+            setTimeout(
+                function () {
+
+                    document.body.classList.add(
+                        "login-success"
+                    );
+
+
+                    welcomeScreen.classList.add(
+                        "active"
+                    );
+
+
+                    setTimeout(
+                        function () {
+
+                            welcomeScreen.classList.add(
+                                "leaving"
+                            );
+
+
+                            setTimeout(
+                                function () {
+
+                                    window.location.href =
+                                        CATALOG_URL;
+
+                                },
+                                700
+                            );
+
+
+                        },
+                        3300
+                    );
+
+
+                },
+                450
+            );
+
+        }
+
+
+        /* =====================================================
+           LOGIN
+        ====================================================== */
+
+        loginForm.addEventListener(
+            "submit",
+            async function (event) {
+
+                event.preventDefault();
+
+
+                hideError();
+
+
+                const email =
+                    emailInput.value
+                    .trim()
+                    .toLowerCase();
+
+
+                const password =
+                    passwordInput.value;
+
+
+                if (!email) {
+
+                    showError(
+                        "Introduce tu correo electrónico."
+                    );
+
+                    return;
+
+                }
+
+
+                if (!password) {
+
+                    showError(
+                        "Introduce tu contraseña."
+                    );
+
+                    return;
+
+                }
+
+
+                /* =============================================
+                   ESTADO
+                ============================================== */
+
+                loginButton.textContent =
+                    "Comprobando...";
+
+
+                loginButton.disabled =
+                    true;
+
+
+                let user = null;
+
+
+                try {
+
+                    user =
+                        await authenticate(
+                            email,
+                            password
+                        );
+
+
+                } catch (error) {
+
+                    console.error(
+                        "Error durante login:",
+                        error
+                    );
+
+
+                    if (
+                        error.message ===
+                        "SERVER_TIMEOUT"
+                    ) {
+
+                        showError(
+                            "El servidor tardó demasiado en responder. Comprueba que Python esté iniciado."
+                        );
+
+                    } else if (
+                        error.message ===
+                        "SESSION_ID_MISSING"
+                    ) {
+
+                        showError(
+                            "CINEMAX no recibió la sesión del servidor."
+                        );
+
+                    } else {
+
+                        showError(
+                            "No se pudo conectar con CINEMAX. Asegúrate de que el servidor Python esté iniciado."
+                        );
+
+                    }
+
+
+                    loginButton.textContent =
+                        "Iniciar sesión";
+
+
+                    loginButton.disabled =
+                        false;
+
+
+                    return;
+
+                }
+
+
+                /* =============================================
+                   ERROR DEVUELTO POR EL SERVIDOR
+                ============================================== */
+
+                if (
+                    user &&
+                    user.loginError
+                ) {
+
+                    showError(
+                        user.loginError
+                    );
+
+
+                    passwordInput.value =
+                        "";
+
+
+                    loginButton.textContent =
+                        "Iniciar sesión";
+
+
+                    loginButton.disabled =
+                        false;
+
+
+                    return;
+
+                }
+
+
+                /* =============================================
+                   USUARIO CORRECTO
+                ============================================== */
+
+                if (user) {
+
+                    goToCatalog(
+                        user
+                    );
+
+
+                    return;
+
+                }
+
+
+                /* =============================================
+                   LOGIN INCORRECTO
+                ============================================== */
+
+                showError(
+                    "Correo electrónico o contraseña incorrectos."
+                );
+
+
+                passwordInput.value =
+                    "";
+
+
+                loginButton.textContent =
+                    "Iniciar sesión";
+
+
+                loginButton.disabled =
+                    false;
+
+            }
+        );
+
+
+        /* =====================================================
+           QUITAR ERROR
+        ====================================================== */
+
+        emailInput.addEventListener(
+            "input",
+            function () {
+
+                hideError();
+
+            }
+        );
+
+
+        passwordInput.addEventListener(
+            "input",
+            function () {
+
+                hideError();
+
+            }
+        );
+
+
+        /* =====================================================
+           AYUDA
+        ====================================================== */
+
+        const helpLink =
+            document.getElementById(
+                "helpLink"
+            );
+
+
+        helpLink.addEventListener(
+            "click",
+            function (event) {
+
+                event.preventDefault();
+
+                showError(
+                    "Si tienes problemas para entrar, comprueba tu correo, contraseña y que el servidor CINEMAX esté iniciado."
+                );
+
+            }
+        );
+
+
+document.addEventListener(
+    "DOMContentLoaded",
+    async function () {
+
+        try {
+
+            /*
+             * Comprobamos si existe una sesión guardada
+             * para saber si sigue siendo válida.
+             *
+             * IMPORTANTE:
+             * aunque exista una sesión válida,
+             * NO entramos automáticamente al catálogo.
+             *
+             * El usuario debe presionar
+             * "Iniciar sesión".
+             */
+
+            await checkExistingSession();
+
+
+        } catch (error) {
+
+            console.error(
+                "Error en comprobación inicial:",
+                error
+            );
+
+        }
+
+    }
+);
+
+
+    </script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,56 @@
+[
+    {
+        "title": "Harry Potter",
+        "category": "serie",
+        "year": "2034",
+        "image": "https://images.unsplash.com/photo-1500534623283-312aade485b7",
+        "video": "",
+        "description": "assqqw",
+        "genre": "Ciencia ficción, misterio, suspenso",
+        "duration": "10 segundos",
+        "rating": "8.4",
+        "featured": false,
+        "session_id": "223ee5bc-87d3-4f41-af54-38d74eedc7d8",
+        "id": "harry-potter",
+        "seasons": [
+            {
+                "number": 1,
+                "episodes": [
+                    {
+                        "number": 1,
+                        "title": "Episodio 1",
+                        "video": "https://www.youtube.com/watch?v=z8f7OvwZDfc&t=2459s",
+                        "image": "https://www.impawards.com/tv/last_of_us_ver23.html?utm_source=chatgpt.com"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "title": "Dark",
+        "category": "serie",
+        "year": "2017",
+        "image": "https://image.tmdb.org/t/p/w500/5Lo6v7gY2mW0FjY5G8Q3K0J4z9m.jpg",
+        "video": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4?utm_source=chatgpt.com",
+        "description": "Una desaparición misteriosa lleva a cuatro familias de un pequeño pueblo alemán a descubrir un complejo entramado de secretos, conexiones familiares y viajes en el tiempo.",
+        "genre": "Drama, Misterio, Ciencia ficción, Suspenso",
+        "duration": "60 min",
+        "rating": "8.4",
+        "featured": false,
+        "session_id": "bf4fb04d-b2ea-47da-b7e3-fe651fa04034",
+        "id": "dark",
+        "seasons": [
+            {
+                "number": 1,
+                "episodes": [
+                    {
+                        "number": 1,
+                        "title": "Episodio 1",
+                        "video": "https://www.youtube.com/watch?v=z8f7OvwZDfc&t=2459s",
+                        "image": "https://image.tmdb.org/t/p/w500/5Lo6v7gY2mW0FjY5G8Q3K0J4z9m.jpg"
+                    }
+                ]
+            }
+        ]
+    }
+]

@@ -1,0 +1,21 @@
+[
+    {
+        "id": "4423626b-556b-4e66-97a5-f84951dce265",
+        "user_id": "4bf7a116-8cb1-455e-a5b8-ae3b1d3da165",
+        "active": true,
+        "last_activity": "2026-08-17T01:39:36.501425+00:00"
+    },
+    {
+        "id": "6fbbfa3a-83d0-4ee3-82eb-2207ae7b25d5",
+        "user_id": "6d1a3384-8d97-4c61-9281-abc025d7dd6b",
+        "active": false,
+        "last_activity": "2026-08-20T01:43:15.543381+00:00",
+        "disconnected_at": "2026-08-20T01:43:15.543393+00:00"
+    },
+    {
+        "id": "1decbe64-d53e-441d-93be-2ec83052d795",
+        "user_id": "admin-001",
+        "active": true,
+        "last_activity": "2026-08-23T22:08:19.839476+00:00"
+    }
+]

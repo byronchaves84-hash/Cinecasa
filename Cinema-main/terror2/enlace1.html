@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reproduciendo Película</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>StreamZone</h1>
+        </div>
+    </header>
+
+    <div class="video-background">
+        <!-- Video del trailer como fondo -->
+        <video id="trailerBackground" autoplay loop muted>
+            <source src="peli/Movie.mp4" type="video/mp4">
+            Tu navegador no soporta la etiqueta de video.
+        </video>
+        <div class="background-overlay"></div> <!-- Capa de desenfoque -->
+    </div>
+
+    <div class="horror-anime-item" onclick="handleVideoClick(this)">
+        <a href="https://drive.google.com/file/d/1p_4J809lKInjTu-3BHr4_tZ4evrG_yEX/view?usp=sharing" target="_blank">
+            <div class="video-container">
+                <div class="video-overlay"></div> <!-- Overlay de nube -->
+                <iframe src="https://drive.google.com/file/d/1p_4J809lKInjTu-3BHr4_tZ4evrG_yEX/preview" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+            </div>
+        </a>
+    </div>
+    
+    <div class="movie-details">
+        <h2>El conjuro 1.</h2> 
+        <p>Basada en hechos reales, *El Conjuro 1* narra la aterradora historia de los investigadores paranormales Ed y Lorraine Warren, quienes son llamados a ayudar a la familia Perron, que vive una pesadilla en su antigua y aislada casa en Rhode Island. A medida que fenómenos inexplicables se intensifican, los Warren descubren que el hogar está poseído por fuerzas demoníacas, y deberán arriesgar sus vidas para salvar a la familia de una amenaza sobrenatural que podría destruirlos. </p>
+    </div>
+    
+    <hr class="separator">
+
+    <footer>
+        <p>&copy; 2025 MiNetflix. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>
+

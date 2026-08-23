@@ -1,0 +1,1493 @@
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+
+    margin: 0;
+    padding: 0;
+
+    box-sizing: border-box;
+
+}
+
+
+html,
+body {
+
+    width: 100%;
+    height: 100%;
+
+}
+
+
+body {
+
+    background: #000;
+
+    overflow: hidden;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+}
+
+
+/* =========================================================
+   INTRO
+========================================================= */
+
+.intro {
+
+    position: fixed;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    background:
+
+        radial-gradient(
+            ellipse at center,
+            #120507 0%,
+            #050204 48%,
+            #000 100%
+        );
+
+    opacity: 1;
+
+    transition:
+        opacity 0.9s
+        cubic-bezier(
+            .65,
+            0,
+            .35,
+            1
+        );
+
+}
+
+
+/* =========================================================
+   SALIDA
+========================================================= */
+
+.intro.exit {
+
+    opacity: 0;
+
+}
+
+
+/* =========================================================
+   BRILLO CENTRAL
+========================================================= */
+
+.background-glow {
+
+    position: absolute;
+
+    width: 900px;
+    height: 700px;
+
+    left: 50%;
+    top: 50%;
+
+    transform:
+        translate(-50%, -50%)
+        scale(.65);
+
+    border-radius: 50%;
+
+    background:
+
+        radial-gradient(
+            ellipse,
+
+            rgba(
+                229,
+                9,
+                20,
+                .20
+            ) 0%,
+
+            rgba(
+                130,
+                5,
+                20,
+                .12
+            ) 28%,
+
+            rgba(
+                50,
+                4,
+                12,
+                .06
+            ) 48%,
+
+            transparent 72%
+        );
+
+    filter:
+        blur(25px);
+
+    opacity: 0;
+
+    transition:
+        opacity 2s ease,
+        transform 4s
+        cubic-bezier(
+            .16,
+            1,
+            .3,
+            1
+        );
+
+}
+
+
+.started .background-glow {
+
+    opacity: 1;
+
+    transform:
+        translate(-50%, -50%)
+        scale(1);
+
+}
+
+
+/* =========================================================
+   HACES DE LUZ
+========================================================= */
+
+.light-beam {
+
+    position: absolute;
+
+    width: 140%;
+
+    height: 2px;
+
+    left: -20%;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    filter:
+        blur(8px);
+
+}
+
+
+.beam-one {
+
+    top: 37%;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(
+                229,
+                9,
+                20,
+                .5
+            ),
+            rgba(
+                255,
+                50,
+                50,
+                .75
+            ),
+            transparent
+        );
+
+    transform:
+        rotate(-11deg)
+        translateX(-50%);
+
+}
+
+
+.beam-two {
+
+    top: 58%;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(
+                120,
+                130,
+                255,
+                .15
+            ),
+            rgba(
+                160,
+                170,
+                255,
+                .35
+            ),
+            transparent
+        );
+
+    transform:
+        rotate(8deg)
+        translateX(50%);
+
+}
+
+
+.beam-three {
+
+    top: 47%;
+
+    height: 80px;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            transparent 10%,
+            rgba(
+                229,
+                9,
+                20,
+                .025
+            ),
+            transparent 90%
+        );
+
+    filter:
+        blur(20px);
+
+}
+
+
+.started .beam-one {
+
+    animation:
+        beamMoveOne
+        5s
+        ease-in-out
+        forwards;
+
+}
+
+
+.started .beam-two {
+
+    animation:
+        beamMoveTwo
+        6s
+        ease-in-out
+        forwards;
+
+}
+
+
+.started .beam-three {
+
+    animation:
+        beamMoveThree
+        5s
+        ease-in-out
+        forwards;
+
+}
+
+
+@keyframes beamMoveOne {
+
+    0% {
+
+        opacity: 0;
+
+        transform:
+            rotate(-11deg)
+            translateX(-60%);
+
+    }
+
+    25% {
+
+        opacity: .8;
+
+    }
+
+    55% {
+
+        opacity: .4;
+
+    }
+
+    100% {
+
+        opacity: 0;
+
+        transform:
+            rotate(-11deg)
+            translateX(60%);
+
+    }
+
+}
+
+
+@keyframes beamMoveTwo {
+
+    0% {
+
+        opacity: 0;
+
+        transform:
+            rotate(8deg)
+            translateX(60%);
+
+    }
+
+    30% {
+
+        opacity: .6;
+
+    }
+
+    100% {
+
+        opacity: 0;
+
+        transform:
+            rotate(8deg)
+            translateX(-60%);
+
+    }
+
+}
+
+
+@keyframes beamMoveThree {
+
+    0% {
+
+        opacity: 0;
+
+        transform:
+            scaleX(.4);
+
+    }
+
+    40% {
+
+        opacity: 1;
+
+        transform:
+            scaleX(1);
+
+    }
+
+    100% {
+
+        opacity: 0;
+
+        transform:
+            scaleX(1.5);
+
+    }
+
+}
+
+
+/* =========================================================
+   PARTÍCULAS
+========================================================= */
+
+.particles {
+
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    z-index: 3;
+
+}
+
+
+.particles span {
+
+    position: absolute;
+
+    width: 2px;
+    height: 2px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            .55
+        );
+
+    box-shadow:
+
+        0 0 6px
+        rgba(
+            255,
+            255,
+            255,
+            .35
+        );
+
+    opacity: 0;
+
+}
+
+
+.started .particles span {
+
+    animation:
+        particle
+        4s
+        ease-in-out
+        infinite;
+
+}
+
+
+.particles span:nth-child(1) {
+    left: 8%;
+    top: 24%;
+    animation-delay: .2s;
+}
+
+.particles span:nth-child(2) {
+    left: 16%;
+    top: 68%;
+    animation-delay: 1s;
+}
+
+.particles span:nth-child(3) {
+    left: 23%;
+    top: 38%;
+    animation-delay: 1.8s;
+}
+
+.particles span:nth-child(4) {
+    left: 31%;
+    top: 15%;
+    animation-delay: .7s;
+}
+
+.particles span:nth-child(5) {
+    left: 38%;
+    top: 78%;
+    animation-delay: 2.3s;
+}
+
+.particles span:nth-child(6) {
+    left: 46%;
+    top: 26%;
+    animation-delay: 1.2s;
+}
+
+.particles span:nth-child(7) {
+    left: 55%;
+    top: 72%;
+    animation-delay: .4s;
+}
+
+.particles span:nth-child(8) {
+    left: 63%;
+    top: 19%;
+    animation-delay: 2s;
+}
+
+.particles span:nth-child(9) {
+    left: 71%;
+    top: 60%;
+    animation-delay: 1.5s;
+}
+
+.particles span:nth-child(10) {
+    left: 79%;
+    top: 31%;
+    animation-delay: .8s;
+}
+
+.particles span:nth-child(11) {
+    left: 87%;
+    top: 73%;
+    animation-delay: 2.4s;
+}
+
+.particles span:nth-child(12) {
+    left: 92%;
+    top: 43%;
+    animation-delay: 1.3s;
+}
+
+.particles span:nth-child(13) {
+    left: 12%;
+    top: 48%;
+    animation-delay: 2.7s;
+}
+
+.particles span:nth-child(14) {
+    left: 69%;
+    top: 82%;
+    animation-delay: 3s;
+}
+
+.particles span:nth-child(15) {
+    left: 84%;
+    top: 18%;
+    animation-delay: 1.9s;
+}
+
+.particles span:nth-child(16) {
+    left: 27%;
+    top: 82%;
+    animation-delay: 2.6s;
+}
+
+
+@keyframes particle {
+
+    0% {
+
+        opacity: 0;
+
+        transform:
+            translateY(30px)
+            scale(.3);
+
+    }
+
+    30% {
+
+        opacity: .8;
+
+    }
+
+    65% {
+
+        opacity: .35;
+
+    }
+
+    100% {
+
+        opacity: 0;
+
+        transform:
+            translateY(-45px)
+            scale(1);
+
+    }
+
+}
+
+
+/* =========================================================
+   ROLLO DE PELÍCULA
+========================================================= */
+
+.film-reel {
+
+    position: absolute;
+
+    width: 360px;
+    height: 360px;
+
+    right: -80px;
+    bottom: -90px;
+
+    border:
+        1px solid
+        rgba(
+            255,
+            255,
+            255,
+            .035
+        );
+
+    border-radius: 50%;
+
+    opacity: 0;
+
+    transform:
+        rotate(-20deg)
+        scale(.7);
+
+    transition:
+        opacity 2s ease,
+        transform 7s
+        linear;
+
+}
+
+
+.started .film-reel {
+
+    opacity: .7;
+
+    transform:
+        rotate(40deg)
+        scale(1);
+
+}
+
+
+.reel-center {
+
+    position: absolute;
+
+    width: 80px;
+    height: 80px;
+
+    left: 50%;
+    top: 50%;
+
+    transform:
+        translate(-50%, -50%);
+
+    border:
+        2px solid
+        rgba(
+            255,
+            255,
+            255,
+            .04
+        );
+
+    border-radius: 50%;
+
+}
+
+
+.reel-hole {
+
+    position: absolute;
+
+    width: 70px;
+    height: 70px;
+
+    border:
+        1px solid
+        rgba(
+            255,
+            255,
+            255,
+            .035
+        );
+
+    border-radius: 50%;
+
+}
+
+
+.hole-one {
+    left: 145px;
+    top: 20px;
+}
+
+.hole-two {
+    right: 20px;
+    top: 145px;
+}
+
+.hole-three {
+    left: 145px;
+    bottom: 20px;
+}
+
+.hole-four {
+    left: 20px;
+    top: 145px;
+}
+
+.hole-five {
+    right: 65px;
+    top: 65px;
+}
+
+.hole-six {
+    left: 65px;
+    bottom: 65px;
+}
+
+
+/* =========================================================
+   LÍNEAS
+========================================================= */
+
+.cinema-lines {
+
+    position: absolute;
+
+    inset: 0;
+
+    opacity: 0;
+
+}
+
+
+.started .cinema-lines {
+
+    animation:
+        linesAppear
+        2s
+        ease
+        forwards;
+
+}
+
+
+.cinema-lines span {
+
+    position: absolute;
+
+    width: 1px;
+
+    height: 100%;
+
+    background:
+
+        linear-gradient(
+            transparent,
+            rgba(
+                255,
+                255,
+                255,
+                .035
+            ),
+            transparent
+        );
+
+}
+
+
+.cinema-lines span:nth-child(1) {
+    left: 20%;
+}
+
+.cinema-lines span:nth-child(2) {
+    left: 50%;
+}
+
+.cinema-lines span:nth-child(3) {
+    left: 80%;
+}
+
+
+@keyframes linesAppear {
+
+    from {
+
+        opacity: 0;
+
+    }
+
+    to {
+
+        opacity: 1;
+
+    }
+
+}
+
+
+/* =========================================================
+   CONTENEDOR LOGO
+========================================================= */
+
+.logo-container {
+
+    position: relative;
+
+    z-index: 20;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    opacity: 0;
+
+    transform:
+        scale(.72)
+        translateY(15px);
+
+    filter:
+        blur(1px);
+
+}
+
+
+.started .logo-container {
+
+    animation:
+        logoEntrance
+        1.4s
+        cubic-bezier(
+            .16,
+            1,
+            .3,
+            1
+        )
+        .45s
+        forwards;
+
+}
+
+
+@keyframes logoEntrance {
+
+    0% {
+
+        opacity: 0;
+
+        transform:
+            scale(.72)
+            translateY(15px);
+
+        filter:
+            blur(1px);
+
+    }
+
+    45% {
+
+        opacity: 1;
+
+        filter:
+            blur(0);
+
+    }
+
+    70% {
+
+        transform:
+            scale(1.06)
+            translateY(0);
+
+    }
+
+    100% {
+
+        opacity: 1;
+
+        transform:
+            scale(1)
+            translateY(0);
+
+        filter:
+            blur(0);
+
+    }
+
+}
+
+
+/* =========================================================
+   AURA
+========================================================= */
+
+.logo-aura {
+
+    position: absolute;
+
+    width: 650px;
+    height: 300px;
+
+    border-radius: 50%;
+
+    background:
+
+        radial-gradient(
+            ellipse,
+            rgba(
+                229,
+                9,
+                20,
+                .16
+            ),
+
+            transparent 70%
+        );
+
+    filter:
+        blur(25px);
+
+    z-index: -1;
+
+    animation:
+        auraPulse
+        3s
+        ease-in-out
+        infinite;
+
+}
+
+
+@keyframes auraPulse {
+
+    0%,
+    100% {
+
+        opacity: .45;
+
+        transform:
+            scale(.9);
+
+    }
+
+    50% {
+
+        opacity: 1;
+
+        transform:
+            scale(1.1);
+
+    }
+
+}
+
+
+/* =========================================================
+   LOGO
+========================================================= */
+
+.logo {
+
+    position: relative;
+
+    overflow: hidden;
+
+}
+
+
+.logo-text {
+
+    display: block;
+
+    color:
+        #e50914;
+
+    font-size:
+        clamp(
+            65px,
+            11vw,
+            150px
+        );
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        14px;
+
+    padding-left:
+        14px;
+
+    line-height:
+        1;
+
+    text-shadow:
+
+        0 0 5px
+        rgba(
+            229,
+            9,
+            20,
+            .95
+        ),
+
+        0 0 18px
+        rgba(
+            229,
+            9,
+            20,
+            .55
+        ),
+
+        0 0 45px
+        rgba(
+            229,
+            9,
+            20,
+            .25
+        );
+
+}
+
+
+/* =========================================================
+   REFLEJO
+========================================================= */
+
+.logo-reflection {
+
+    position: absolute;
+
+    left: 0;
+    right: 0;
+
+    bottom: -30px;
+
+    height: 45px;
+
+    background:
+
+        linear-gradient(
+            transparent,
+            rgba(
+                229,
+                9,
+                20,
+                .15
+            ),
+            transparent
+        );
+
+    filter:
+        blur(8px);
+
+    opacity: .7;
+
+}
+
+
+/* =========================================================
+   DESTELLO DEL LOGO
+========================================================= */
+
+.logo-shine {
+
+    position: absolute;
+
+    top: -30%;
+
+    left: -70%;
+
+    width: 30%;
+
+    height: 160%;
+
+    transform:
+        skewX(-20deg);
+
+    background:
+
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(
+                255,
+                255,
+                255,
+                .95
+            ),
+            transparent
+        );
+
+    filter:
+        blur(4px);
+
+}
+
+
+.started .logo-shine {
+
+    animation:
+        shine
+        1.15s
+        ease
+        1.45s
+        forwards;
+
+}
+
+
+@keyframes shine {
+
+    0% {
+
+        left: -70%;
+
+        opacity: 0;
+
+    }
+
+    15% {
+
+        opacity: 1;
+
+    }
+
+    100% {
+
+        left: 150%;
+
+        opacity: 0;
+
+    }
+
+}
+
+
+/* =========================================================
+   LÍNEA ROJA
+========================================================= */
+
+.logo-line {
+
+    width: 0;
+
+    height: 2px;
+
+    margin-top: 20px;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            transparent,
+            #e50914,
+            transparent
+        );
+
+    box-shadow:
+
+        0 0 12px
+        rgba(
+            229,
+            9,
+            20,
+            .8
+        );
+
+}
+
+
+.started .logo-line {
+
+    animation:
+        line
+        .8s
+        ease
+        1.4s
+        forwards;
+
+}
+
+
+@keyframes line {
+
+    from {
+
+        width: 0;
+
+    }
+
+    to {
+
+        width: 270px;
+
+    }
+
+}
+
+
+/* =========================================================
+   FRASE
+========================================================= */
+
+.tagline {
+
+    display: flex;
+
+    gap: 9px;
+
+    margin-top: 25px;
+
+    font-size: 13px;
+
+    letter-spacing: 6px;
+
+    color:
+        rgba(
+            255,
+            255,
+            255,
+            .65
+        );
+
+    opacity: 0;
+
+    transform:
+        translateY(10px);
+
+}
+
+
+.tagline span:last-child {
+
+    color:
+        #fff;
+
+}
+
+
+.started .tagline {
+
+    animation:
+        tagline
+        .8s
+        ease
+        1.7s
+        forwards;
+
+}
+
+
+@keyframes tagline {
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0);
+
+    }
+
+}
+
+
+/* =========================================================
+   BARRAS CINEMATOGRÁFICAS
+========================================================= */
+
+.cinematic-bars {
+
+    position: absolute;
+
+    left: 0;
+
+    width: 100%;
+
+    height: 0;
+
+    background: #000;
+
+    z-index: 50;
+
+    transition:
+        height 1.2s
+        cubic-bezier(
+            .65,
+            0,
+            .35,
+            1
+        );
+
+}
+
+
+.top-bar {
+
+    top: 0;
+
+}
+
+
+.bottom-bar {
+
+    bottom: 0;
+
+}
+
+
+.started .cinematic-bars {
+
+    height: 28px;
+
+}
+
+
+/* =========================================================
+   FLASH FINAL
+========================================================= */
+
+.screen-flash {
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        #fff;
+
+    opacity: 0;
+
+    z-index: 100;
+
+    pointer-events: none;
+
+}
+
+
+.intro.exit .screen-flash {
+
+    animation:
+        flash
+        .55s
+        ease
+        forwards;
+
+}
+
+
+@keyframes flash {
+
+    0% {
+
+        opacity: 0;
+
+    }
+
+    35% {
+
+        opacity: .06;
+
+    }
+
+    100% {
+
+        opacity: 0;
+
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 700px) {
+
+    .logo-text {
+
+        font-size:
+            52px;
+
+        letter-spacing:
+            8px;
+
+        padding-left:
+            8px;
+
+    }
+
+
+    .logo-aura {
+
+        width:
+            420px;
+
+        height:
+            220px;
+
+    }
+
+
+    .started .cinematic-bars {
+
+        height:
+            20px;
+
+    }
+
+
+    .tagline {
+
+        font-size:
+            10px;
+
+        letter-spacing:
+            4px;
+
+    }
+
+
+    .logo-line {
+
+        margin-top:
+            15px;
+
+    }
+
+}
+
+
+@media (max-width: 400px) {
+
+    .logo-text {
+
+        font-size:
+            42px;
+
+        letter-spacing:
+            6px;
+
+        padding-left:
+            6px;
+
+    }
+
+
+    .logo-aura {
+
+        width:
+            330px;
+
+        height:
+            180px;
+
+    }
+
+
+    .tagline {
+
+        font-size:
+            9px;
+
+        letter-spacing:
+            3px;
+
+    }
+
+}

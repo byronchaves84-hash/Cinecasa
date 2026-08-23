@@ -1,0 +1,2187 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="theme-color"
+        content="#050505"
+    >
+
+    <meta
+        name="description"
+        content="Breaking Bad - MiNetflix"
+    >
+
+    <title>
+        Breaking Bad | MiNetflix
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="styles.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     VIDEO DE FONDO GLOBAL
+     ESTE VIDEO QUEDA DETRAS DE TODA LA PAGINA
+====================================================== -->
+
+<div class="global-video-background">
+
+    <video
+        id="trailer"
+        autoplay
+        loop
+        muted
+        playsinline
+        preload="auto"
+    >
+
+        <source
+            src="./peli/The Walking.mp4"
+            type="video/mp4"
+        >
+
+    </video>
+
+
+    <!-- OSCURECIMIENTO GENERAL -->
+
+    <div class="global-video-dark"></div>
+
+
+    <!-- DEGRADADO IZQUIERDO -->
+
+    <div class="global-video-left"></div>
+
+
+    <!-- DEGRADADO INFERIOR -->
+
+    <div class="global-video-bottom"></div>
+
+
+    <!-- VIÑETA -->
+
+    <div class="global-video-vignette"></div>
+
+</div>
+
+
+
+<!-- =====================================================
+     CONTENEDOR PRINCIPAL
+====================================================== -->
+
+<main class="serie-container">
+
+
+    <!-- =================================================
+         HERO
+    ================================================== -->
+
+    <section class="hero-section">
+
+
+        <div class="hero-red-line"></div>
+
+
+        <div class="hero-content">
+
+
+            <!-- MARCA -->
+
+            <div class="serie-brand">
+
+                <span class="brand-mark">
+                    M
+                </span>
+
+                <span class="brand-name">
+                    MINETFLIX
+                </span>
+
+            </div>
+
+
+
+            <!-- ORIGINAL -->
+
+            <div class="original-label">
+
+                <span class="original-line"></span>
+
+                <span>
+                    SERIE ORIGINAL
+                </span>
+
+            </div>
+
+
+
+            <!-- TITULO -->
+
+            <h1 class="serie-title">
+
+                <span>
+                    BREAKING
+                </span>
+
+                <span>
+                    BAD
+                </span>
+
+            </h1>
+
+
+
+            <!-- META -->
+
+            <div class="serie-meta">
+
+                <span class="quality">
+                    HD
+                </span>
+
+                <span>
+                    2008
+                </span>
+
+                <span class="dot">
+                    •
+                </span>
+
+                <span>
+                    5 Temporadas
+                </span>
+
+                <span class="dot">
+                    •
+                </span>
+
+                <span>
+                    Drama
+                </span>
+
+                <span class="dot">
+                    •
+                </span>
+
+                <span>
+                    Crimen
+                </span>
+
+            </div>
+
+
+
+            <!-- DESCRIPCION -->
+
+            <div class="serie-description">
+
+                <p>
+                    Breaking Bad nos lleva al mundo sombrío
+                    de la criminalidad, donde Walter White,
+                    un profesor de química, cuya vida toma
+                    un giro inesperado.
+                </p>
+
+            </div>
+
+
+
+            <!-- ACCIONES -->
+
+            <div class="hero-actions">
+
+
+                <button
+                    id="heroStartButton"
+                    class="hero-play-button"
+                    onclick="startEpisode()"
+                    type="button"
+                >
+
+                    <span class="play-symbol">
+                        ▶
+                    </span>
+
+                    <strong id="heroStartButtonText">
+                        Iniciar
+                    </strong>
+
+                </button>
+
+
+
+                <a
+                    href="./episodios/Breaking-Bad.html"
+                    class="hero-info-button"
+                >
+
+                    <span class="info-symbol">
+                        ⓘ
+                    </span>
+
+                    <span>
+                        Más información
+                    </span>
+
+                </a>
+
+
+            </div>
+
+
+
+            <!-- REACCIONES -->
+
+            <div class="reaction-area">
+
+                <span class="reaction-question">
+                    ¿Qué te parece?
+                </span>
+
+
+                <div class="like-dislike-buttons">
+
+
+                    <button
+                        id="likeButton"
+                        class="reaction-button"
+                        type="button"
+                        onclick="setReaction('like')"
+                    >
+
+                        <span class="reaction-icon">
+                            👍
+                        </span>
+
+                        <span>
+                            Me gusta
+                        </span>
+
+                    </button>
+
+
+
+                    <button
+                        id="dislikeButton"
+                        class="reaction-button"
+                        type="button"
+                        onclick="setReaction('dislike')"
+                    >
+
+                        <span class="reaction-icon">
+                            👎
+                        </span>
+
+                        <span>
+                            No me gusta
+                        </span>
+
+                    </button>
+
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- FADE -->
+
+        <div class="hero-bottom-fade"></div>
+
+
+    </section>
+
+
+
+    <!-- =================================================
+         EPISODIOS
+    ================================================== -->
+
+    <section class="episode-section">
+
+
+        <!-- CABECERA -->
+
+        <div class="section-heading">
+
+
+            <div class="heading-left">
+
+                <span class="section-kicker">
+                    BREAKING BAD
+                </span>
+
+
+                <div class="section-title-row">
+
+                    <h2>
+                        Reproducción
+                    </h2>
+
+                    <span class="heading-red-line"></span>
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="current-episode-badge"
+                id="currentEpisodeBadge"
+            >
+                T1 · E1
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             EXPLORADOR
+        ================================================== -->
+
+        <div class="episode-explorer">
+
+
+            <div class="explorer-header">
+
+
+                <div>
+
+                    <span class="explorer-kicker">
+                        EXPLORA
+                    </span>
+
+                    <h3>
+                        Elige tu episodio
+                    </h3>
+
+                </div>
+
+
+                <button
+                    id="explorerToggle"
+                    class="explorer-toggle"
+                    type="button"
+                    aria-label="Mostrar u ocultar opciones"
+                    onclick="toggleExplorer()"
+                >
+                    ▾
+                </button>
+
+
+            </div>
+
+
+
+            <div
+                id="episodeSelectors"
+                class="episode-selectors"
+            >
+
+
+                <!-- TEMPORADA -->
+
+                <div class="selector-box">
+
+                    <label for="seasonSelect">
+                        TEMPORADA
+                    </label>
+
+
+                    <div class="select-wrapper">
+
+                        <select
+                            id="seasonSelect"
+                            onchange="changeSeason()"
+                        >
+                        </select>
+
+
+                        <span class="select-arrow">
+                            ▾
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- EPISODIO -->
+
+                <div class="selector-box">
+
+                    <label for="episodeSelect">
+                        EPISODIO
+                    </label>
+
+
+                    <div class="select-wrapper">
+
+                        <select
+                            id="episodeSelect"
+                            onchange="changeEpisode()"
+                        >
+                        </select>
+
+
+                        <span class="select-arrow">
+                            ▾
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             CONTROLES
+        ================================================== -->
+
+        <div
+            id="controlsContainer"
+            class="controls-container"
+        >
+
+
+            <button
+                class="episode-button secondary"
+                onclick="previousEpisode()"
+                type="button"
+            >
+
+                <span class="button-icon">
+                    ‹
+                </span>
+
+                <span>
+                    Anterior
+                </span>
+
+            </button>
+
+
+
+            <button
+                id="startButton"
+                class="episode-button primary"
+                onclick="startEpisode()"
+                type="button"
+            >
+
+                <span class="button-icon">
+                    ▶
+                </span>
+
+                <span id="startButtonText">
+                    Iniciar T1-E1
+                </span>
+
+            </button>
+
+
+
+            <button
+                class="episode-button secondary"
+                onclick="nextEpisode()"
+                type="button"
+            >
+
+                <span>
+                    Siguiente
+                </span>
+
+                <span class="button-icon">
+                    ›
+                </span>
+
+            </button>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             REPRODUCTOR
+        ================================================== -->
+
+        <div class="player-section">
+
+
+            <div
+                id="videoContainer"
+                class="video-container"
+            >
+
+
+                <div
+                    class="player-placeholder"
+                    id="playerPlaceholder"
+                >
+
+
+                    <div class="placeholder-glow"></div>
+
+
+                    <div class="placeholder-icon">
+                        ▶
+                    </div>
+
+
+                    <span class="placeholder-label">
+                        MI NETFLIX
+                    </span>
+
+
+                    <h3>
+                        Selecciona un episodio
+                    </h3>
+
+
+                    <p>
+                        Presiona el botón de reproducción
+                        para comenzar.
+                    </p>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- ESTADO -->
+
+            <div class="player-status-row">
+
+
+                <div class="player-status">
+
+                    <span class="status-dot"></span>
+
+                    <span id="playerStatusText">
+                        Listo para reproducir
+                    </span>
+
+                </div>
+
+
+                <div
+                    class="player-current"
+                    id="playerCurrent"
+                >
+                    T1 · E1
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             ACCIONES INFERIORES
+        ================================================== -->
+
+        <div class="series-actions">
+
+
+            <button
+                id="restartButton"
+                class="action-button"
+                onclick="restartToFirstEpisode()"
+                type="button"
+            >
+
+                <span>
+                    ↺
+                </span>
+
+                <span>
+                    Ver desde el inicio
+                </span>
+
+            </button>
+
+
+
+            <a
+                href="./episodios/Breaking-Bad.html"
+                class="action-button info-action"
+            >
+
+                <span>
+                    ⓘ
+                </span>
+
+                <span>
+                    Ver más información
+                </span>
+
+            </a>
+
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- =================================================
+         INFORMACION
+    ================================================== -->
+
+    <section class="bottom-info">
+
+
+        <div class="info-card">
+
+
+            <div class="info-card-icon">
+                TV
+            </div>
+
+
+            <div class="info-card-content">
+
+                <span class="info-card-label">
+                    SERIE
+                </span>
+
+                <strong>
+                    Breaking Bad
+                </strong>
+
+            </div>
+
+
+        </div>
+
+
+
+        <div class="info-card">
+
+
+            <div class="info-card-icon status-icon">
+                ●
+            </div>
+
+
+            <div class="info-card-content">
+
+                <span class="info-card-label">
+                    ESTADO
+                </span>
+
+                <strong id="watchStatus">
+                    Listo para reproducir
+                </strong>
+
+            </div>
+
+
+        </div>
+
+
+
+        <div class="info-card">
+
+
+            <div class="info-card-icon">
+                #
+            </div>
+
+
+            <div class="info-card-content">
+
+                <span class="info-card-label">
+                    PROGRESO
+                </span>
+
+                <strong id="progressText">
+                    T1 · E1
+                </strong>
+
+            </div>
+
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- ETIQUETA -->
+
+    <div class="episodes-side-label">
+        EPISODIOS
+    </div>
+
+
+</main>
+
+
+
+<!-- =====================================================
+     FOOTER
+====================================================== -->
+
+<footer>
+
+
+    <div class="footer-inner">
+
+
+        <!-- MARCA -->
+
+        <div class="footer-brand">
+
+            <div class="footer-logo">
+
+                <span class="footer-logo-mark">
+                    M
+                </span>
+
+                <span class="footer-logo-text">
+                    MINETFLIX
+                </span>
+
+            </div>
+
+
+            <p class="footer-description">
+                Tu plataforma para disfrutar de tus series
+                favoritas.
+            </p>
+
+        </div>
+
+
+
+        <!-- ENLACES -->
+
+        <div class="footer-links">
+
+
+            <a
+                href="./index.html"
+                class="footer-link"
+            >
+                Inicio
+            </a>
+
+
+            <a
+                href="./episodios/Breaking-Bad.html"
+                class="footer-link"
+            >
+                Información
+            </a>
+
+
+            <a
+                href="#"
+                class="footer-link"
+            >
+                Series
+            </a>
+
+
+            <a
+                href="#"
+                class="footer-link"
+            >
+                Contacto
+            </a>
+
+
+        </div>
+
+
+
+        <!-- ESTADO -->
+
+        <div class="footer-status">
+
+            <span class="footer-status-dot"></span>
+
+            <span>
+                MiNetflix activo
+            </span>
+
+        </div>
+
+
+    </div>
+
+
+
+    <div class="footer-divider"></div>
+
+
+
+    <div class="footer-bottom">
+
+        <span>
+            © 2026 MiNetflix
+        </span>
+
+        <span>
+            Breaking Bad
+        </span>
+
+    </div>
+
+
+</footer>
+
+
+
+
+
+
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script>
+
+/* =========================================================
+   CONFIGURACION DE BREAKING BAD
+========================================================= */
+
+const seriesData = {
+
+    title: "Breaking Bad",
+
+    seasons: [
+
+        /* =====================================================
+           TEMPORADA 1
+        ===================================================== */
+
+        {
+            number: 1,
+
+            episodes: [
+
+                {
+                    number: 1,
+                    title: "Episodio 1",
+                    url: "https://drive.google.com/file/d/1A6150sx30rk1-0wx7ABHUGNfbXoyf2gD/preview"
+                },
+
+                {
+                    number: 2,
+                    title: "Episodio 2",
+                    url: "https://drive.google.com/file/d/1jhmOY4oW90oTabdUtTm_KK76ke7UYzVm/preview"
+                },
+
+                {
+                    number: 3,
+                    title: "Episodio 3",
+                    url: "https://drive.google.com/file/d/16Vuq4-1h1VH_u2nUC16wtiJGzIsqZUr5/preview"
+                },
+
+                {
+                    number: 4,
+                    title: "Episodio 4",
+                    url: "https://drive.google.com/file/d/1nj0ygk5sFQ0dgZHumOWeXYhDqMjQMAlb/preview"
+                },
+
+                {
+                    number: 5,
+                    title: "Episodio 5",
+                    url: "https://drive.google.com/file/d/11RtNz-ylgeAyRN0lkDGFjoX2-9xxIHea/preview"
+                },
+
+                {
+                    number: 6,
+                    title: "Episodio 6",
+                    url: "https://drive.google.com/file/d/1tS4El77638m9WBJvqgV8FeM02AiBkK3p/preview"
+                },
+
+                {
+                    number: 7,
+                    title: "Episodio 7",
+                    url: "https://drive.google.com/file/d/1W-Wv-tlsUlRwODEUNItiMjCznTlqV05Z/preview"
+                }
+
+            ]
+        },
+
+
+        /* =====================================================
+           TEMPORADA 2
+        ===================================================== */
+
+        {
+            number: 2,
+
+            episodes: [
+
+                {
+                    number: 1,
+                    title: "Episodio 1",
+                    url: "https://drive.google.com/file/d/1wTRYpL71hHDADCx0ZjJX0SH9UT3_EXVU/preview"
+                },
+
+                {
+                    number: 2,
+                    title: "Episodio 2",
+                    url: "https://drive.google.com/file/d/1fZInlvajaO-wLFqJFugxv2qCj6ZHHa5G/preview"
+                },
+
+                {
+                    number: 3,
+                    title: "Episodio 3",
+                    url: "https://drive.google.com/file/d/1fjsSTpDtiXlkkmH-sQ1mj6j7qRJ5-sXr/preview"
+                },
+
+                {
+                    number: 4,
+                    title: "Episodio 4",
+                    url: "https://drive.google.com/file/d/11RJQGIC_RUNsLMFIryIHwU-stC0MWw2G/preview"
+                },
+
+                {
+                    number: 5,
+                    title: "Episodio 5",
+                    url: "https://drive.google.com/file/d/1XAqDRlQeGe18KVkCY8HMjZ6uKGhGWr7z/preview"
+                },
+
+                {
+                    number: 6,
+                    title: "Episodio 6",
+                    url: "https://drive.google.com/file/d/12gmD5DOvgYxd2Hg-F3XeJ_aH83YY4cg9/preview"
+                },
+
+                {
+                    number: 7,
+                    title: "Episodio 7",
+                    url: "https://drive.google.com/file/d/1iqC2Yd20wB95DXjyr6oLL8kupRs0ZMX7/preview"
+                },
+
+                {
+                    number: 8,
+                    title: "Episodio 8",
+                    url: "https://drive.google.com/file/d/1PcGX0Es3CW0JiDNPMF-6_9HyT11_cIxP/preview"
+                },
+
+                {
+                    number: 9,
+                    title: "Episodio 9",
+                    url: "https://drive.google.com/file/d/1fmzuAo1FngqwE488Gj6s75UpZwhNsiNP/preview"
+                },
+
+                {
+                    number: 10,
+                    title: "Episodio 10",
+                    url: "https://drive.google.com/file/d/1dDwV2QiOhDDphthaOSqx8gD_2qx-eCDj/preview"
+                },
+
+                {
+                    number: 11,
+                    title: "Episodio 11",
+                    url: "https://drive.google.com/file/d/1_AanjFKiwBlXH-I-qgHv4NGnfdO2g451/preview"
+                },
+
+                {
+                    number: 12,
+                    title: "Episodio 12",
+                    url: "https://drive.google.com/file/d/1AMjCZmUZ5RG3Pp0413xJCTFoyX75VD9m/preview"
+                },
+
+                {
+                    number: 13,
+                    title: "Episodio 13",
+                    url: "https://drive.google.com/file/d/1Do2HofXl9eTQI9Os5aLZ1bXpu3WDma9g/preview"
+                }
+
+            ]
+        },
+
+
+        /* =====================================================
+           TEMPORADA 3
+        ===================================================== */
+
+        {
+            number: 3,
+
+            episodes: [
+
+                {
+                    number: 1,
+                    title: "Episodio 1",
+                    url: "https://drive.google.com/file/d/1ZgoGwOtPKrTxTu0GXkrcJ66bcBdMZUI5/preview"
+                },
+
+                {
+                    number: 2,
+                    title: "Episodio 2",
+                    url: "https://drive.google.com/file/d/1fOXwXq-SZk71ewO9Xq_JuLh89MJzPbFQ/preview"
+                },
+
+                {
+                    number: 3,
+                    title: "Episodio 3",
+                    url: "https://drive.google.com/file/d/1w0OxXQ8gerIpZDKiow88ms6GD6VbHKC9/preview"
+                },
+
+                {
+                    number: 4,
+                    title: "Episodio 4",
+                    url: "https://drive.google.com/file/d/1xB6-CpXIeWz4R6nD8YF7Kkg_I861eICM/preview"
+                },
+
+                {
+                    number: 5,
+                    title: "Episodio 5",
+                    url: "https://drive.google.com/file/d/1BiSk-7714a5YpHXReqEjhyW9Qfn3Yin0/preview"
+                },
+
+                {
+                    number: 6,
+                    title: "Episodio 6",
+                    url: "https://drive.google.com/file/d/1LpGXnueew_adndpBSA2Qkjdua7rzptSK/preview"
+                },
+
+                {
+                    number: 7,
+                    title: "Episodio 7",
+                    url: "https://drive.google.com/file/d/1Q04uuycnY1VcV-dQm7UHTsxyRrQRPmkL/preview"
+                },
+
+                {
+                    number: 8,
+                    title: "Episodio 8",
+                    url: "https://drive.google.com/file/d/1fmLh8fM2scZ4xszmp9Bz-ZhzN6-HZomW/preview"
+                },
+
+                {
+                    number: 9,
+                    title: "Episodio 9",
+                    url: "https://drive.google.com/file/d/1hyvPe_Ksf9Hf9aJB9s6UZDN_eUFudgp6/preview"
+                },
+
+                {
+                    number: 10,
+                    title: "Episodio 10",
+                    url: "https://drive.google.com/file/d/1WyK3-Vnx46kso2uwJUXY10X3wE_I6trG/preview"
+                },
+
+                {
+                    number: 11,
+                    title: "Episodio 11",
+                    url: "https://drive.google.com/file/d/1ubb8J5cvK7K2Y0Gxdvqfet0cqcX753R-/preview"
+                },
+
+                {
+                    number: 12,
+                    title: "Episodio 12",
+                    url: "https://drive.google.com/file/d/1VSMyAw2dlHIXKifpsTuSa_ssu6ARJACw/preview"
+                },
+
+                {
+                    number: 13,
+                    title: "Episodio 13",
+                    url: "https://drive.google.com/file/d/16sLTh4Nj4dsvivCKsb3DVCWsjSGa3d49/preview"
+                }
+
+            ]
+        },
+
+
+        /* =====================================================
+           TEMPORADA 4
+        ===================================================== */
+
+        {
+            number: 4,
+
+            episodes: [
+
+                {
+                    number: 1,
+                    title: "Episodio 1",
+                    url: "https://drive.google.com/file/d/1Xfl-RyNYS2iFl32YZWYJ9q7FtmCoFK1d/preview"
+                },
+
+                {
+                    number: 2,
+                    title: "Episodio 2",
+                    url: "https://drive.google.com/file/d/1FcVDSXGBb4gAlbsJWsuaaf96pJ-nX_J-/preview"
+                },
+
+                {
+                    number: 3,
+                    title: "Episodio 3",
+                    url: "https://drive.google.com/file/d/1XvktieEiIHpjo9CQCBda0LnjQ7UEK1Fr/preview"
+                },
+
+                {
+                    number: 4,
+                    title: "Episodio 4",
+                    url: "https://drive.google.com/file/d/1dKXWsUASAb28b-hOVk1xaOKgY_ZS04t7/preview"
+                },
+
+                {
+                    number: 5,
+                    title: "Episodio 5",
+                    url: "https://drive.google.com/file/d/1l-U32Q9bAQ-BQ1oTZwlKEJaRhNulqypJ/preview"
+                },
+
+                {
+                    number: 6,
+                    title: "Episodio 6",
+                    url: "https://drive.google.com/file/d/17RuNO1aTI3SoZ-M8nuwLYlpYmt0bxfZV/preview"
+                },
+
+                {
+                    number: 7,
+                    title: "Episodio 7",
+                    url: "https://drive.google.com/file/d/1_zUYcqvwM23OKvSSNn5chgljeIYulJmk/preview"
+                },
+
+                {
+                    number: 8,
+                    title: "Episodio 8",
+                    url: "https://drive.google.com/file/d/1GQ6lnOoKvUAWvkM-yLwdtG89ykn3KbvY/preview"
+                },
+
+                {
+                    number: 9,
+                    title: "Episodio 9",
+                    url: "https://drive.google.com/file/d/1O36iUMyNIn_bvAyct9rCNlSW5Gfi1-5W/preview"
+                },
+
+                {
+                    number: 10,
+                    title: "Episodio 10",
+                    url: "https://drive.google.com/file/d/1W3lZenL1Jm8npAhKjsmAaQGlqE--yUfG/preview"
+                },
+
+                {
+                    number: 11,
+                    title: "Episodio 11",
+                    url: "https://drive.google.com/file/d/1hEnrQTRDxPj_amEdUJLuLp6TSWjyTW7h/preview"
+                },
+
+                {
+                    number: 12,
+                    title: "Episodio 12",
+                    url: "https://drive.google.com/file/d/1sgXQ47oVLbSPnS1cWObZ8HeWZNk7jtNN/preview"
+                },
+
+                {
+                    number: 13,
+                    title: "Episodio 13",
+                    url: "https://drive.google.com/file/d/1giWLfQwvTS5Qwa8neV2tgeA56dxyWw-F/preview"
+                }
+
+            ]
+        },
+
+
+        /* =====================================================
+           TEMPORADA 5
+        ===================================================== */
+
+        {
+            number: 5,
+
+            episodes: [
+
+                {
+                    number: 1,
+                    title: "Episodio 1",
+                    url: "https://drive.google.com/file/d/147IZGouMqvjd5Uz_z6ktVAz2s_SlrhLn/preview"
+                },
+
+                {
+                    number: 2,
+                    title: "Episodio 2",
+                    url: "https://drive.google.com/file/d/1Aty9WMU12PuC84X5uuSAwnwEyDCzShzB/preview"
+                },
+
+                {
+                    number: 3,
+                    title: "Episodio 3",
+                    url: "https://drive.google.com/file/d/1QwqL1MLae3uxhlZxST5Kn7whslWQtZo0/preview"
+                },
+
+                {
+                    number: 4,
+                    title: "Episodio 4",
+                    url: "https://drive.google.com/file/d/1et6zuOT2IXYOYSHSWgBu564giqmBJORz/preview"
+                },
+
+                {
+                    number: 5,
+                    title: "Episodio 5",
+                    url: "https://drive.google.com/file/d/1TRs20FHV1A5em03XamQToenNpTmIUbrO/preview"
+                },
+
+                {
+                    number: 6,
+                    title: "Episodio 6",
+                    url: "https://drive.google.com/file/d/1HAl2wEh9W_IrrKM8Yd0sMfH1-JJNL_Sn/preview"
+                },
+
+                {
+                    number: 7,
+                    title: "Episodio 7",
+                    url: "https://drive.google.com/file/d/11M9abF4eNbyS4du1HQPQ62C5tpyom2fI/preview"
+                },
+
+                {
+                    number: 8,
+                    title: "Episodio 8",
+                    url: "https://drive.google.com/file/d/1Wz12k2UmmAxRXui5Jv2HeRqzz1Cz7LZt/preview"
+                },
+
+                {
+                    number: 9,
+                    title: "Episodio 9",
+                    url: "https://drive.google.com/file/d/16OCOOmysjQY7tTiarUOybUzY-r_TM2jS/preview"
+                },
+
+                {
+                    number: 10,
+                    title: "Episodio 10",
+                    url: "https://drive.google.com/file/d/1u_ldfxi3sVtDCSz6N_BvfnH_GvT83KJM/preview"
+                },
+
+                {
+                    number: 11,
+                    title: "Episodio 11",
+                    url: "https://drive.google.com/file/d/1-U2iWgNbCswiN1L7rOciQaLSVOMO1rRV/preview"
+                },
+
+                {
+                    number: 12,
+                    title: "Episodio 12",
+                    url: "https://drive.google.com/file/d/1TSNKAixd6PHzIyZuf8Xdcn6PkJYR6_eI/preview"
+                },
+
+                {
+                    number: 13,
+                    title: "Episodio 13",
+                    url: "https://drive.google.com/file/d/1AUjqS2Bku0YD2d1Wf4LBrlywX7w9VrCL/preview"
+                },
+
+                {
+                    number: 14,
+                    title: "Episodio 14",
+                    url: "https://drive.google.com/file/d/1H8phj2nXSWCRgR02GYvPjb5p2gze6V17/preview"
+                },
+
+                {
+                    number: 15,
+                    title: "Episodio 15",
+                    url: "https://drive.google.com/file/d/1EG7u2var7w83jWlVmF8allSHxkU7dtD6/preview"
+                },
+
+                {
+                    number: 16,
+                    title: "Episodio 16",
+                    url: "https://drive.google.com/file/d/167RIyhgWOZ-SoBHQFzCF9w01l-FmgdeN/preview"
+                }
+
+            ]
+        }
+
+    ]
+
+};
+
+
+/* =========================================================
+   ESTADO
+========================================================= */
+
+let currentSeason = 1;
+let currentEpisode = 1;
+let currentVideo = null;
+
+
+/* =========================================================
+   ELEMENTOS
+========================================================= */
+
+const seasonSelect =
+    document.getElementById("seasonSelect");
+
+const episodeSelect =
+    document.getElementById("episodeSelect");
+
+const videoContainer =
+    document.getElementById("videoContainer");
+
+const playerPlaceholder =
+    document.getElementById("playerPlaceholder");
+
+const videoBackground =
+    document.getElementById("videoBackground");
+
+const videoPlayer =
+    document.getElementById("videoPlayer");
+
+const playerStatusText =
+    document.getElementById("playerStatusText");
+
+const playerCurrent =
+    document.getElementById("playerCurrent");
+
+const currentEpisodeBadge =
+    document.getElementById("currentEpisodeBadge");
+
+const progressText =
+    document.getElementById("progressText");
+
+const watchStatus =
+    document.getElementById("watchStatus");
+
+const startButtonText =
+    document.getElementById("startButtonText");
+
+const heroStartButtonText =
+    document.getElementById("heroStartButtonText");
+
+
+/* =========================================================
+   INICIALIZAR
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        loadProgress();
+
+        loadSeasons();
+
+        updateEpisodeInterface();
+
+        loadSavedReaction();
+
+    }
+);
+
+
+/* =========================================================
+   TEMPORADAS
+========================================================= */
+
+function loadSeasons() {
+
+    seasonSelect.innerHTML = "";
+
+    seriesData.seasons.forEach(
+        function (season) {
+
+            const option =
+                document.createElement("option");
+
+            option.value =
+                season.number;
+
+            option.textContent =
+                "Temporada " + season.number;
+
+            seasonSelect.appendChild(option);
+
+        }
+    );
+
+    seasonSelect.value =
+        currentSeason;
+
+    loadEpisodes();
+
+}
+
+
+/* =========================================================
+   EPISODIOS
+========================================================= */
+
+function loadEpisodes() {
+
+    episodeSelect.innerHTML = "";
+
+    const season =
+        getCurrentSeason();
+
+    if (
+        !season ||
+        !season.episodes ||
+        season.episodes.length === 0
+    ) {
+
+        const option =
+            document.createElement("option");
+
+        option.value = "1";
+
+        option.textContent =
+            "Episodio 1";
+
+        episodeSelect.appendChild(option);
+
+        currentEpisode = 1;
+
+        return;
+    }
+
+    season.episodes.forEach(
+        function (episode) {
+
+            const option =
+                document.createElement("option");
+
+            option.value =
+                episode.number;
+
+            option.textContent =
+                "Episodio " +
+                episode.number +
+                (
+                    episode.title
+                        ? " · " + episode.title
+                        : ""
+                );
+
+            episodeSelect.appendChild(option);
+
+        }
+    );
+
+    episodeSelect.value =
+        currentEpisode;
+
+}
+
+
+/* =========================================================
+   CAMBIAR TEMPORADA
+========================================================= */
+
+function changeSeason() {
+
+    currentSeason =
+        Number(seasonSelect.value);
+
+    currentEpisode = 1;
+
+    loadEpisodes();
+
+    updateEpisodeInterface();
+
+}
+
+
+/* =========================================================
+   CAMBIAR EPISODIO
+========================================================= */
+
+function changeEpisode() {
+
+    currentEpisode =
+        Number(episodeSelect.value);
+
+    updateEpisodeInterface();
+
+}
+
+
+/* =========================================================
+   OBTENER TEMPORADA
+========================================================= */
+
+function getCurrentSeason() {
+
+    return seriesData.seasons.find(
+        function (season) {
+
+            return season.number ===
+                currentSeason;
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   OBTENER EPISODIO
+========================================================= */
+
+function getCurrentEpisode() {
+
+    const season =
+        getCurrentSeason();
+
+    if (
+        !season ||
+        !season.episodes
+    ) {
+
+        return null;
+
+    }
+
+    return season.episodes.find(
+        function (episode) {
+
+            return episode.number ===
+                currentEpisode;
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   ACTUALIZAR INTERFAZ
+========================================================= */
+
+function updateEpisodeInterface() {
+
+    const label =
+        "T" +
+        currentSeason +
+        " · E" +
+        currentEpisode;
+
+    currentEpisodeBadge.textContent =
+        label;
+
+    playerCurrent.textContent =
+        label;
+
+    progressText.textContent =
+        label;
+
+    startButtonText.textContent =
+        "Iniciar T" +
+        currentSeason +
+        "-E" +
+        currentEpisode;
+
+    heroStartButtonText.textContent =
+        "Iniciar";
+
+    playerStatusText.textContent =
+        "Listo para reproducir";
+
+    watchStatus.textContent =
+        "Listo para reproducir";
+
+    seasonSelect.value =
+        currentSeason;
+
+    episodeSelect.value =
+        currentEpisode;
+
+}
+
+
+/* =========================================================
+   INICIAR EPISODIO
+========================================================= */
+
+function startEpisode() {
+
+    const episode =
+        getCurrentEpisode();
+
+    if (
+        !episode ||
+        !episode.url
+    ) {
+
+        playerStatusText.textContent =
+            "Falta configurar la URL del episodio";
+
+        watchStatus.textContent =
+            "URL pendiente";
+
+        playerPlaceholder.classList.remove(
+            "hidden"
+        );
+
+        return;
+    }
+
+    currentVideo =
+        episode.url;
+
+    createPlayer(
+        episode.url
+    );
+
+    playerStatusText.textContent =
+        "Reproduciendo";
+
+    watchStatus.textContent =
+        "Reproduciendo";
+
+    progressText.textContent =
+        "T" +
+        currentSeason +
+        " · E" +
+        currentEpisode;
+
+    saveProgress();
+
+}
+
+
+/* =========================================================
+   CREAR REPRODUCTOR
+========================================================= */
+
+function createPlayer(url) {
+
+    /* =====================================================
+       ELIMINAR REPRODUCTOR ANTERIOR
+    ===================================================== */
+
+    const oldVideo =
+        videoContainer.querySelector(
+            "video.episode-video"
+        );
+
+    if (oldVideo) {
+        oldVideo.remove();
+    }
+
+    const oldIframe =
+        videoContainer.querySelector(
+            "iframe.episode-iframe"
+        );
+
+    if (oldIframe) {
+        oldIframe.remove();
+    }
+
+
+    /* =====================================================
+       GOOGLE DRIVE
+    ===================================================== */
+
+    if (
+        url.includes("drive.google.com") &&
+        url.includes("/preview")
+    ) {
+
+        const iframe =
+            document.createElement("iframe");
+
+        iframe.className =
+            "episode-iframe";
+
+        iframe.src =
+            url;
+
+        iframe.allow =
+            "autoplay; fullscreen";
+
+        iframe.allowFullscreen =
+            true;
+
+        iframe.frameBorder =
+            "0";
+
+        iframe.loading =
+            "eager";
+
+        iframe.style.width =
+            "100%";
+
+        iframe.style.height =
+            "600px";
+
+        iframe.style.border =
+            "0";
+
+        iframe.style.display =
+            "block";
+
+        videoContainer.insertBefore(
+            iframe,
+            playerPlaceholder
+        );
+
+        playerPlaceholder.classList.add(
+            "hidden"
+        );
+
+        videoContainer.classList.add(
+            "is-playing"
+        );
+
+        playerStatusText.textContent =
+            "Reproduciendo";
+
+        watchStatus.textContent =
+            "Reproduciendo";
+
+        return;
+    }
+
+
+    /* =====================================================
+       VIDEO DIRECTO NORMAL
+    ===================================================== */
+
+    const video =
+        document.createElement("video");
+
+    video.className =
+        "episode-video";
+
+    video.controls =
+        true;
+
+    video.playsInline =
+        true;
+
+    video.preload =
+        "metadata";
+
+    video.src =
+        url;
+
+    videoContainer.insertBefore(
+        video,
+        playerPlaceholder
+    );
+
+    playerPlaceholder.classList.add(
+        "hidden"
+    );
+
+    videoContainer.classList.add(
+        "is-playing"
+    );
+
+
+    /* =====================================================
+       EVENTOS
+    ===================================================== */
+
+    video.addEventListener(
+        "play",
+        function () {
+
+            playerStatusText.textContent =
+                "Reproduciendo";
+
+            watchStatus.textContent =
+                "Reproduciendo";
+
+        }
+    );
+
+
+    video.addEventListener(
+        "pause",
+        function () {
+
+            playerStatusText.textContent =
+                "Pausado";
+
+            watchStatus.textContent =
+                "Pausado";
+
+        }
+    );
+
+
+    video.addEventListener(
+        "ended",
+        function () {
+
+            playerStatusText.textContent =
+                "Episodio terminado";
+
+            watchStatus.textContent =
+                "Completado";
+
+        }
+    );
+
+
+    video.addEventListener(
+        "error",
+        function () {
+
+            playerStatusText.textContent =
+                "No se pudo cargar el video";
+
+            watchStatus.textContent =
+                "Error de reproducción";
+
+        }
+    );
+
+
+    video.play().catch(
+        function () {
+
+            playerStatusText.textContent =
+                "Listo para reproducir";
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   EPISODIO ANTERIOR
+========================================================= */
+
+function previousEpisode() {
+
+    if (currentEpisode > 1) {
+
+        currentEpisode--;
+
+    } else {
+
+        if (currentSeason > 1) {
+
+            currentSeason--;
+
+            const previousSeason =
+                getCurrentSeason();
+
+            if (
+                previousSeason &&
+                previousSeason.episodes.length
+            ) {
+
+                currentEpisode =
+                    previousSeason
+                        .episodes.length;
+
+            } else {
+
+                currentEpisode = 1;
+
+            }
+        }
+    }
+
+    loadEpisodes();
+
+    updateEpisodeInterface();
+
+    saveProgress();
+
+}
+
+
+/* =========================================================
+   EPISODIO SIGUIENTE
+========================================================= */
+
+function nextEpisode() {
+
+    const season =
+        getCurrentSeason();
+
+    const totalEpisodes =
+        season &&
+        season.episodes
+            ? season.episodes.length
+            : 0;
+
+    if (
+        totalEpisodes &&
+        currentEpisode < totalEpisodes
+    ) {
+
+        currentEpisode++;
+
+    } else {
+
+        const nextSeason =
+            seriesData.seasons.find(
+                function (item) {
+
+                    return item.number ===
+                        currentSeason + 1;
+
+                }
+            );
+
+        if (nextSeason) {
+
+            currentSeason++;
+
+            currentEpisode = 1;
+
+        }
+    }
+
+    loadEpisodes();
+
+    updateEpisodeInterface();
+
+    saveProgress();
+
+}
+
+
+/* =========================================================
+   VOLVER AL PRIMER EPISODIO
+========================================================= */
+
+function restartToFirstEpisode() {
+
+    currentSeason = 1;
+
+    currentEpisode = 1;
+
+    loadEpisodes();
+
+    updateEpisodeInterface();
+
+    saveProgress();
+
+    window.scrollTo({
+
+        top: 0,
+
+        behavior: "smooth"
+
+    });
+
+}
+
+
+/* =========================================================
+   LIKE / DISLIKE
+========================================================= */
+
+function setReaction(type) {
+
+    const likeButton =
+        document.getElementById(
+            "likeButton"
+        );
+
+    const dislikeButton =
+        document.getElementById(
+            "dislikeButton"
+        );
+
+    likeButton.classList.remove(
+        "active"
+    );
+
+    dislikeButton.classList.remove(
+        "active"
+    );
+
+    if (type === "like") {
+
+        likeButton.classList.add(
+            "active"
+        );
+
+        localStorage.setItem(
+            "breakingBadReaction",
+            "like"
+        );
+
+    }
+
+    if (type === "dislike") {
+
+        dislikeButton.classList.add(
+            "active"
+        );
+
+        localStorage.setItem(
+            "breakingBadReaction",
+            "dislike"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   CARGAR REACCION
+========================================================= */
+
+function loadSavedReaction() {
+
+    const reaction =
+        localStorage.getItem(
+            "breakingBadReaction"
+        );
+
+    if (reaction) {
+
+        setReaction(reaction);
+
+    }
+
+}
+
+
+/* =========================================================
+   MOSTRAR / OCULTAR EXPLORADOR
+========================================================= */
+
+function toggleExplorer() {
+
+    const selectors =
+        document.getElementById(
+            "episodeSelectors"
+        );
+
+    const toggle =
+        document.getElementById(
+            "explorerToggle"
+        );
+
+    selectors.classList.toggle(
+        "collapsed"
+    );
+
+    if (
+        selectors.classList.contains(
+            "collapsed"
+        )
+    ) {
+
+        toggle.textContent = "›";
+
+    } else {
+
+        toggle.textContent = "▾";
+
+    }
+
+}
+
+
+/* =========================================================
+   GUARDAR PROGRESO
+========================================================= */
+
+function saveProgress() {
+
+    localStorage.setItem(
+        "breakingBadSeason",
+        currentSeason
+    );
+
+    localStorage.setItem(
+        "breakingBadEpisode",
+        currentEpisode
+    );
+
+}
+
+
+/* =========================================================
+   CARGAR PROGRESO
+========================================================= */
+
+function loadProgress() {
+
+    const savedSeason =
+        localStorage.getItem(
+            "breakingBadSeason"
+        );
+
+    const savedEpisode =
+        localStorage.getItem(
+            "breakingBadEpisode"
+        );
+
+    if (savedSeason) {
+
+        currentSeason =
+            Number(savedSeason);
+
+    }
+
+    if (savedEpisode) {
+
+        currentEpisode =
+            Number(savedEpisode);
+
+    }
+
+}
+
+
+/* =========================================================
+   GUARDAR AUTOMATICAMENTE
+========================================================= */
+
+window.addEventListener(
+    "beforeunload",
+    function () {
+
+        saveProgress();
+
+    }
+);
+
+</script>
+
+
+</body>
+
+</html>

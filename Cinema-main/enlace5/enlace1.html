@@ -1,0 +1,398 @@
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Dragon Ball Super: Saga de Kid Buu | MiNetflix
+    </title>
+
+    <link rel="stylesheet" href="styles.css">
+
+</head>
+
+
+<body>
+
+
+<!-- =================================================
+     FONDO
+================================================== -->
+
+<div class="video-background">
+
+    <video
+        id="trailerBackground"
+        autoplay
+        loop
+        muted
+        playsinline
+    >
+
+        <source
+            src="peli/trai.mp4"
+            type="video/mp4"
+        >
+
+        Tu navegador no soporta la etiqueta de video.
+
+    </video>
+
+    <div class="background-overlay"></div>
+
+</div>
+
+
+
+<!-- =================================================
+     NAVEGACIÓN
+================================================== -->
+
+<div class="top-navigation">
+
+    <button
+        class="back-button"
+        onclick="history.back()"
+        type="button"
+    >
+
+        <span>‹</span>
+
+        Volver
+
+    </button>
+
+</div>
+
+
+
+<!-- =================================================
+     REPRODUCTOR
+================================================== -->
+
+<section
+    class="player-section"
+    id="playerSection"
+>
+
+    <div
+        class="video-container"
+        id="videoContainer"
+    >
+
+        <div class="video-top-glow"></div>
+
+
+        <!-- Pantalla inicial -->
+
+        <div
+            class="player-start-screen"
+            id="playerStartScreen"
+        >
+
+            <div class="play-circle">
+                ▶
+            </div>
+
+            <span>
+                Pulsa "Ver película" para comenzar
+            </span>
+
+        </div>
+
+
+        <!-- Reproductor Google Drive -->
+
+        <iframe
+            id="moviePlayer"
+            src="about:blank"
+            data-src="https://drive.google.com/file/d/10l1x8Apv4_7EAGAeymRgPlhowPQsxMRB/preview"
+            frameborder="0"
+            allow="autoplay; fullscreen"
+            allowfullscreen
+            title="Dragon Ball Super: Saga de Kid Buu Completa"
+        ></iframe>
+
+
+        <div class="video-overlay"></div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =================================================
+     INFORMACIÓN
+================================================== -->
+
+<section class="movie-details">
+
+
+    <div class="movie-brand">
+        MINETFLIX
+    </div>
+
+
+    <h1>
+        Dragon Ball Super: Saga de Kid Buu Completa
+    </h1>
+
+
+    <div class="movie-meta">
+
+        <span class="quality">
+            HD
+        </span>
+
+        <span>
+            Animación
+        </span>
+
+        <span class="dot">
+            •
+        </span>
+
+        <span>
+            Acción
+        </span>
+
+        <span class="dot">
+            •
+        </span>
+
+        <span>
+            Español
+        </span>
+
+    </div>
+
+
+    <p class="movie-description">
+
+        Una emocionante aventura llena de acción y poder,
+        donde Goku y sus compañeros deben enfrentarse al
+        malvado Kid Buu, el más destructivo de los Majins,
+        para salvar al universo.
+
+    </p>
+
+
+
+    <!-- =================================================
+         BOTÓN
+    ================================================== -->
+
+    <div class="movie-actions">
+
+        <button
+            class="watch-button"
+            id="watchButton"
+            type="button"
+            onclick="startMovie()"
+        >
+
+            <span class="button-icon">
+                ▶
+            </span>
+
+            Ver película
+
+        </button>
+
+    </div>
+
+
+    <div class="movie-line"></div>
+
+
+</section>
+
+
+
+<!-- =================================================
+     RECOMENDACIONES
+================================================== -->
+
+<section class="recommendations">
+
+
+    <div class="section-heading">
+
+        <h2>
+            También te puede gustar
+        </h2>
+
+        <div class="heading-line"></div>
+
+    </div>
+
+
+    <div class="recommendation-grid">
+
+
+        <div class="recommendation-card">
+
+            <div class="recommendation-placeholder">
+                <span>🎬</span>
+            </div>
+
+            <div class="recommendation-info">
+
+                <h3>
+                    Próximamente
+                </h3>
+
+                <p>
+                    Más películas
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="recommendation-card">
+
+            <div class="recommendation-placeholder">
+                <span>🍿</span>
+            </div>
+
+            <div class="recommendation-info">
+
+                <h3>
+                    Próximamente
+                </h3>
+
+                <p>
+                    Más aventuras
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="recommendation-card">
+
+            <div class="recommendation-placeholder">
+                <span>🎥</span>
+            </div>
+
+            <div class="recommendation-info">
+
+                <h3>
+                    Próximos estrenos
+                </h3>
+
+                <p>
+                    Nuevas películas
+                </p>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =================================================
+     FOOTER
+================================================== -->
+
+<footer>
+
+    <div class="footer-logo">
+        MINETFLIX
+    </div>
+
+    <p>
+        &copy; 2026 MiNetflix.
+        Todos los derechos reservados.
+    </p>
+
+</footer>
+
+
+
+<!-- =================================================
+     JAVASCRIPT
+================================================== -->
+
+<script>
+
+function startMovie() {
+
+    const player =
+        document.getElementById("moviePlayer");
+
+    const startScreen =
+        document.getElementById("playerStartScreen");
+
+    const button =
+        document.getElementById("watchButton");
+
+    const videoContainer =
+        document.getElementById("videoContainer");
+
+    const movieURL =
+        player.getAttribute("data-src");
+
+
+    if (
+        player.src === "about:blank" ||
+        !player.src.includes("/preview")
+    ) {
+
+        player.src = movieURL;
+
+    }
+
+
+    startScreen.classList.add("hidden");
+
+    videoContainer.classList.add("playing");
+
+
+    button.innerHTML = `
+        <span class="button-icon">▶</span>
+        Reproduciendo...
+    `;
+
+    button.classList.add("playing");
+
+
+    setTimeout(() => {
+
+        videoContainer.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        });
+
+    }, 200);
+
+}
+
+</script>
+
+
+</body>
+
+</html>
+
+
+

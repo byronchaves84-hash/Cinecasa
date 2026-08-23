@@ -1,0 +1,1763 @@
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="theme-color"
+        content="#050505"
+    >
+
+    <meta
+        name="description"
+        content="SAW | MiNetflix"
+    >
+
+    <title>
+        SAW | MiNetflix
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="styles.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     VIDEO DE FONDO GLOBAL
+     THE WALKING.MP4
+====================================================== -->
+
+<div class="video-trailer">
+
+    <video
+        id="trailer"
+        autoplay
+        loop
+        muted
+        playsinline
+        preload="auto"
+    >
+
+        <source
+            src="./peli/The Walking.mp4"
+            type="video/mp4"
+        >
+
+        Tu navegador no soporta la etiqueta de video.
+
+    </video>
+
+
+    <div class="background-overlay"></div>
+
+    <div class="trailer-vignette"></div>
+
+</div>
+
+
+
+<!-- =====================================================
+     CONTENEDOR GENERAL
+====================================================== -->
+
+<div class="serie-container">
+
+
+
+<!-- =====================================================
+     HERO
+====================================================== -->
+
+<section class="hero-section">
+
+
+    <div class="hero-red-line"></div>
+
+
+    <div class="hero-content">
+
+
+        <!-- MARCA -->
+
+        <div class="serie-brand">
+
+            <span class="brand-mark">
+                M
+            </span>
+
+            <span class="brand-name">
+                MINETFLIX
+            </span>
+
+        </div>
+
+
+
+        <!-- ORIGINAL -->
+
+        <div class="original-label">
+
+            <span class="original-line"></span>
+
+            <span>
+                COLECCIÓN ORIGINAL
+            </span>
+
+        </div>
+
+
+
+        <!-- TITULO -->
+
+        <h1 class="serie-title">
+
+            <span>
+                SAW
+            </span>
+
+            <span>
+                SAGA
+            </span>
+
+        </h1>
+
+
+
+        <!-- META -->
+
+        <div class="serie-meta">
+
+            <span class="quality">
+                HD
+            </span>
+
+            <span>
+                2004
+            </span>
+
+            <span class="dot">
+                •
+            </span>
+
+            <span>
+                7 Películas
+            </span>
+
+            <span class="dot">
+                •
+            </span>
+
+            <span>
+                Terror
+            </span>
+
+            <span class="dot">
+                •
+            </span>
+
+            <span>
+                Suspenso
+            </span>
+
+        </div>
+
+
+
+        <!-- DESCRIPCION -->
+
+        <div class="serie-description">
+
+            <p>
+                La vida y la muerte se juegan en crueles
+                trampas creadas por el enigmático Jigsaw.
+                A través de juegos macabros, las víctimas
+                deben enfrentarse a sus propios pecados
+                y decisiones morales mientras luchan
+                por sobrevivir.
+            </p>
+
+        </div>
+
+
+
+        <!-- ACCIONES -->
+
+        <div class="hero-actions">
+
+
+            <button
+                id="heroStartButton"
+                class="hero-play-button"
+                onclick="startMovie()"
+                type="button"
+            >
+
+                <span class="play-symbol">
+                    ▶
+                </span>
+
+                <strong id="heroStartButtonText">
+                    Iniciar
+                </strong>
+
+            </button>
+
+
+
+            <a
+                href="./episodios/Untitled-1.html"
+                class="hero-info-button"
+            >
+
+                <span class="info-symbol">
+                    ⓘ
+                </span>
+
+                <span>
+                    Más información
+                </span>
+
+            </a>
+
+
+        </div>
+
+
+
+        <!-- REACCIONES -->
+
+        <div class="reaction-area">
+
+            <span class="reaction-question">
+                ¿Qué te parece?
+            </span>
+
+
+            <div class="like-dislike-buttons">
+
+
+                <button
+                    id="likeButton"
+                    class="reaction-button"
+                    type="button"
+                    onclick="setReaction('like')"
+                >
+
+                    <span class="reaction-icon">
+                        👍
+                    </span>
+
+                    <span>
+                        Me gusta
+                    </span>
+
+                </button>
+
+
+
+                <button
+                    id="dislikeButton"
+                    class="reaction-button"
+                    type="button"
+                    onclick="setReaction('dislike')"
+                >
+
+                    <span class="reaction-icon">
+                        👎
+                    </span>
+
+                    <span>
+                        No me gusta
+                    </span>
+
+                </button>
+
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- FADE -->
+
+    <div class="hero-bottom-fade"></div>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     PELICULAS
+====================================================== -->
+
+<section class="episode-section">
+
+
+
+    <!-- CABECERA -->
+
+    <div class="section-heading">
+
+
+        <div class="heading-left">
+
+            <span class="section-kicker">
+                SAW
+            </span>
+
+
+            <div class="section-title-row">
+
+                <h2>
+                    Reproducción
+                </h2>
+
+                <span class="heading-red-line"></span>
+
+            </div>
+
+        </div>
+
+
+
+        <div
+            class="current-episode-badge"
+            id="currentEpisodeBadge"
+        >
+            Película 1
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =================================================
+         EXPLORADOR
+    ================================================== -->
+
+    <div class="episode-explorer">
+
+
+        <div class="explorer-header">
+
+
+            <div>
+
+                <span class="explorer-kicker">
+                    EXPLORA
+                </span>
+
+                <h3>
+                    Elige tu película
+                </h3>
+
+            </div>
+
+
+            <button
+                id="explorerToggle"
+                class="explorer-toggle"
+                type="button"
+                aria-label="Mostrar u ocultar opciones"
+                onclick="toggleExplorer()"
+            >
+                ▾
+            </button>
+
+
+        </div>
+
+
+
+        <div
+            id="episodeSelectors"
+            class="episode-selectors"
+        >
+
+
+            <!-- PELICULA -->
+
+            <div class="selector-box">
+
+                <label for="movieSelect">
+                    PELÍCULA
+                </label>
+
+
+                <div class="select-wrapper">
+
+                    <select
+                        id="movieSelect"
+                        onchange="changeMovie()"
+                    >
+                    </select>
+
+
+                    <span class="select-arrow">
+                        ▾
+                    </span>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =================================================
+         CONTROLES
+    ================================================== -->
+
+    <div
+        id="controlsContainer"
+        class="controls-container"
+    >
+
+
+        <button
+            class="episode-button secondary"
+            onclick="previousMovie()"
+            type="button"
+        >
+
+            <span class="button-icon">
+                ‹
+            </span>
+
+            <span>
+                Anterior
+            </span>
+
+        </button>
+
+
+
+        <button
+            id="startButton"
+            class="episode-button primary"
+            onclick="startMovie()"
+            type="button"
+        >
+
+            <span class="button-icon">
+                ▶
+            </span>
+
+            <span id="startButtonText">
+                Iniciar Película 1
+            </span>
+
+        </button>
+
+
+
+        <button
+            class="episode-button secondary"
+            onclick="nextMovie()"
+            type="button"
+        >
+
+            <span>
+                Siguiente
+            </span>
+
+            <span class="button-icon">
+                ›
+            </span>
+
+        </button>
+
+
+    </div>
+
+
+
+    <!-- =================================================
+         REPRODUCTOR
+    ================================================== -->
+
+    <div class="player-section">
+
+
+        <div
+            id="videoContainer"
+            class="video-container"
+        >
+
+
+            <div
+                class="player-placeholder"
+                id="playerPlaceholder"
+            >
+
+
+                <div class="placeholder-glow"></div>
+
+
+                <div class="placeholder-icon">
+                    ▶
+                </div>
+
+
+                <span class="placeholder-label">
+                    MI NETFLIX
+                </span>
+
+
+                <h3>
+                    Selecciona una película
+                </h3>
+
+
+                <p>
+                    Presiona el botón de reproducción
+                    para comenzar.
+                </p>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- ESTADO -->
+
+        <div class="player-status-row">
+
+
+            <div class="player-status">
+
+                <span class="status-dot"></span>
+
+                <span id="playerStatusText">
+                    Listo para reproducir
+                </span>
+
+            </div>
+
+
+            <div
+                class="player-current"
+                id="playerCurrent"
+            >
+                Película 1
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =================================================
+         ACCIONES INFERIORES
+    ================================================== -->
+
+    <div class="series-actions">
+
+
+        <button
+            id="restartButton"
+            class="action-button"
+            onclick="restartToFirstMovie()"
+            type="button"
+        >
+
+            <span>
+                ↺
+            </span>
+
+            <span>
+                Ver desde el inicio
+            </span>
+
+        </button>
+
+
+
+        <a
+            href="./episodios/Untitled-1.html"
+            class="action-button info-action"
+        >
+
+            <span>
+                ⓘ
+            </span>
+
+            <span>
+                Ver más información
+            </span>
+
+        </a>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     INFORMACION
+====================================================== -->
+
+<section class="bottom-info">
+
+
+    <div class="info-card">
+
+
+        <div class="info-card-icon">
+            TV
+        </div>
+
+
+        <div class="info-card-content">
+
+            <span class="info-card-label">
+                COLECCIÓN
+            </span>
+
+            <strong>
+                SAW
+            </strong>
+
+        </div>
+
+
+    </div>
+
+
+
+    <div class="info-card">
+
+
+        <div class="info-card-icon status-icon">
+            ●
+        </div>
+
+
+        <div class="info-card-content">
+
+            <span class="info-card-label">
+                ESTADO
+            </span>
+
+            <strong id="watchStatus">
+                Listo para reproducir
+            </strong>
+
+        </div>
+
+
+    </div>
+
+
+
+    <div class="info-card">
+
+
+        <div class="info-card-icon">
+            #
+        </div>
+
+
+        <div class="info-card-content">
+
+            <span class="info-card-label">
+                PROGRESO
+            </span>
+
+            <strong id="progressText">
+                Película 1
+            </strong>
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     ETIQUETA
+====================================================== -->
+
+<div class="episodes-side-label">
+    PELÍCULAS
+</div>
+
+
+
+<!-- =====================================================
+     FOOTER
+====================================================== -->
+
+<footer>
+
+
+    <div class="footer-inner">
+
+
+        <!-- MARCA -->
+
+        <div class="footer-brand">
+
+            <div class="footer-logo">
+
+                <span class="footer-logo-mark">
+                    M
+                </span>
+
+                <span class="footer-logo-text">
+                    MINETFLIX
+                </span>
+
+            </div>
+
+
+            <p class="footer-description">
+                Tu plataforma para disfrutar de tus
+                películas y series favoritas.
+            </p>
+
+        </div>
+
+
+
+        <!-- ENLACES -->
+
+        <div class="footer-links">
+
+
+            <a
+                href="./index.html"
+                class="footer-link"
+            >
+                Inicio
+            </a>
+
+
+            <a
+                href="./episodios/Untitled-1.html"
+                class="footer-link"
+            >
+                Información
+            </a>
+
+
+            <a
+                href="#"
+                class="footer-link"
+            >
+                Películas
+            </a>
+
+
+            <a
+                href="#"
+                class="footer-link"
+            >
+                Contacto
+            </a>
+
+
+        </div>
+
+
+
+        <!-- ESTADO -->
+
+        <div class="footer-status">
+
+            <span class="footer-status-dot"></span>
+
+            <span>
+                MiNetflix activo
+            </span>
+
+        </div>
+
+
+    </div>
+
+
+
+    <div class="footer-divider"></div>
+
+
+
+    <div class="footer-bottom">
+
+        <span>
+            © 2026 MiNetflix
+        </span>
+
+        <span>
+            SAW
+        </span>
+
+    </div>
+
+
+</footer>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     JAVASCRIPT
+====================================================== -->
+
+<script>
+
+
+/* =====================================================
+   CONFIGURACIÓN
+====================================================== */
+
+const currentSeries = 'saw';
+
+
+/* =====================================================
+   PELÍCULAS SAW
+
+   Cada URL corresponde a una película.
+   NO son temporadas.
+====================================================== */
+
+const movies = [
+
+    'https://drive.google.com/file/d/16w-NILfNkXrWxXXrEy_BjXB1_yqrH0uu/preview',
+
+    'https://drive.google.com/file/d/1K0Pr9U1cs5J59ZrdbI9x811x9AAc2LB7/preview',
+
+    'https://drive.google.com/file/d/1scUxyVDugTObjKD5Ww_tjmmxexCHyjKG/preview',
+
+    'https://drive.google.com/file/d/1iDklH5aWx2ozyhkWb1o4y8NozPG6ByYJ/preview',
+
+    'https://drive.google.com/file/d/1Y9qNpRZgdItmNxtD-U6fM4unRXAPttMk/preview',
+
+    'https://drive.google.com/file/d/1yh-S7tSDUKo47dnGGcFgTdqyj6w1ZX1W/preview',
+
+    'https://drive.google.com/file/d/15pKMh5QQUjCjMJz-axzmPoQwaUV1dJMA/preview'
+
+];
+
+
+const totalMovies = movies.length;
+
+
+
+/* =====================================================
+   VARIABLES
+====================================================== */
+
+let currentMovie =
+    getCurrentMovie();
+
+let currentVideo = null;
+
+
+
+/* =====================================================
+   OBTENER PELÍCULA GUARDADA
+====================================================== */
+
+function getCurrentMovie() {
+
+    const saved =
+        localStorage.getItem(
+            `${currentSeries}_currentMovie`
+        );
+
+    if (saved) {
+
+        const number =
+            parseInt(saved, 10);
+
+        if (
+            number >= 1 &&
+            number <= totalMovies
+        ) {
+
+            return number;
+
+        }
+
+    }
+
+    return 1;
+
+}
+
+
+
+/* =====================================================
+   GUARDAR PELÍCULA
+====================================================== */
+
+function saveCurrentMovie(movieNumber) {
+
+    localStorage.setItem(
+        `${currentSeries}_currentMovie`,
+        movieNumber
+    );
+
+}
+
+
+
+/* =====================================================
+   TEXTO DE PELÍCULA
+====================================================== */
+
+function movieText(number) {
+
+    return `Película ${number}`;
+
+}
+
+
+
+/* =====================================================
+   CREAR SELECTOR
+====================================================== */
+
+function populateMovieSelector() {
+
+    const select =
+        document.getElementById(
+            'movieSelect'
+        );
+
+
+    select.innerHTML = '';
+
+
+    for (
+        let i = 1;
+        i <= totalMovies;
+        i++
+    ) {
+
+        const option =
+            document.createElement(
+                'option'
+            );
+
+
+        option.value = i;
+
+        option.textContent =
+            `Película ${i}`;
+
+
+        if (i === currentMovie) {
+
+            option.selected = true;
+
+        }
+
+
+        select.appendChild(option);
+
+    }
+
+}
+
+
+
+/* =====================================================
+   ACTUALIZAR INTERFAZ
+====================================================== */
+
+function updateInterface() {
+
+
+    const text =
+        movieText(currentMovie);
+
+
+
+    /* BADGE */
+
+    const badge =
+        document.getElementById(
+            'currentEpisodeBadge'
+        );
+
+    if (badge) {
+
+        badge.textContent =
+            text;
+
+    }
+
+
+
+    /* ESTADO ACTUAL */
+
+    const current =
+        document.getElementById(
+            'playerCurrent'
+        );
+
+    if (current) {
+
+        current.textContent =
+            text;
+
+    }
+
+
+
+    /* PROGRESO */
+
+    const progress =
+        document.getElementById(
+            'progressText'
+        );
+
+    if (progress) {
+
+        progress.textContent =
+            text;
+
+    }
+
+
+
+    /* BOTÓN PRINCIPAL */
+
+    const startButton =
+        document.getElementById(
+            'startButtonText'
+        );
+
+    if (startButton) {
+
+        startButton.textContent =
+            `Iniciar ${text}`;
+
+    }
+
+
+
+    /* BOTÓN HERO */
+
+    const heroButton =
+        document.getElementById(
+            'heroStartButtonText'
+        );
+
+    if (heroButton) {
+
+        heroButton.textContent =
+            currentMovie === 1
+                ? 'Iniciar'
+                : `Reanudar`;
+
+    }
+
+
+
+    /* SELECTOR */
+
+    const select =
+        document.getElementById(
+            'movieSelect'
+        );
+
+    if (select) {
+
+        select.value =
+            currentMovie;
+
+    }
+
+}
+
+
+
+/* =====================================================
+   INICIAR PELÍCULA
+====================================================== */
+
+function startMovie() {
+
+    loadMovie(
+        currentMovie
+    );
+
+}
+
+
+
+/* =====================================================
+   CARGAR PELÍCULA
+====================================================== */
+
+function loadMovie(movieNumber) {
+
+
+    if (
+        movieNumber < 1 ||
+        movieNumber > totalMovies
+    ) {
+
+        return;
+
+    }
+
+
+
+    const videoContainer =
+        document.getElementById(
+            'videoContainer'
+        );
+
+
+    videoContainer.innerHTML = '';
+
+
+
+    /* =================================================
+       WRAPPER
+    ================================================= */
+
+    const videoWrapper =
+        document.createElement(
+            'div'
+        );
+
+    videoWrapper.classList.add(
+        'video-wrapper'
+    );
+
+    videoWrapper.id =
+        'videoWrapper';
+
+
+
+    /* =================================================
+       IFRAME GOOGLE DRIVE
+    ================================================= */
+
+    const iframe =
+        document.createElement(
+            'iframe'
+        );
+
+
+    iframe.src =
+        movies[movieNumber - 1];
+
+
+    iframe.width =
+        '560';
+
+    iframe.height =
+        '315';
+
+    iframe.frameBorder =
+        '0';
+
+
+    iframe.allow =
+        'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen';
+
+
+    iframe.setAttribute(
+        'allowfullscreen',
+        'true'
+    );
+
+
+    iframe.id =
+        'videoPlayer';
+
+
+
+    /* =================================================
+       AGREGAR
+    ================================================= */
+
+    videoWrapper.appendChild(
+        iframe
+    );
+
+
+    videoContainer.appendChild(
+        videoWrapper
+    );
+
+
+    videoContainer.style.display =
+        'block';
+
+
+
+    /* GUARDAR REFERENCIA */
+
+    currentVideo =
+        iframe;
+
+
+
+    /* ACTUALIZAR */
+
+    currentMovie =
+        movieNumber;
+
+
+    saveCurrentMovie(
+        currentMovie
+    );
+
+
+    updateInterface();
+
+
+    updateStatus(
+        `Reproduciendo ${movieText(currentMovie)}`
+    );
+
+
+    /* SCROLL SUAVE AL REPRODUCTOR */
+
+    setTimeout(() => {
+
+        videoContainer.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center'
+        });
+
+    }, 100);
+
+}
+
+
+
+/* =====================================================
+   CAMBIAR PELÍCULA DESDE SELECT
+====================================================== */
+
+function changeMovie() {
+
+
+    const select =
+        document.getElementById(
+            'movieSelect'
+        );
+
+
+    const selected =
+        parseInt(
+            select.value,
+            10
+        );
+
+
+    if (
+        selected >= 1 &&
+        selected <= totalMovies
+    ) {
+
+        currentMovie =
+            selected;
+
+
+        saveCurrentMovie(
+            currentMovie
+        );
+
+
+        updateInterface();
+
+    }
+
+}
+
+
+
+/* =====================================================
+   PELÍCULA ANTERIOR
+====================================================== */
+
+function previousMovie() {
+
+
+    if (
+        currentMovie > 1
+    ) {
+
+        currentMovie--;
+
+        saveCurrentMovie(
+            currentMovie
+        );
+
+        updateInterface();
+
+        updateStatus(
+            `Seleccionada ${movieText(currentMovie)}`
+        );
+
+    }
+
+}
+
+
+
+/* =====================================================
+   SIGUIENTE PELÍCULA
+====================================================== */
+
+function nextMovie() {
+
+
+    if (
+        currentMovie < totalMovies
+    ) {
+
+        currentMovie++;
+
+        saveCurrentMovie(
+            currentMovie
+        );
+
+        updateInterface();
+
+        updateStatus(
+            `Seleccionada ${movieText(currentMovie)}`
+        );
+
+    }
+
+}
+
+
+
+/* =====================================================
+   VOLVER A PELÍCULA 1
+====================================================== */
+
+function restartToFirstMovie() {
+
+
+    currentMovie = 1;
+
+
+    saveCurrentMovie(
+        currentMovie
+    );
+
+
+    updateInterface();
+
+
+    updateStatus(
+        'Listo para reproducir Película 1'
+    );
+
+
+    const videoContainer =
+        document.getElementById(
+            'videoContainer'
+        );
+
+
+    videoContainer.innerHTML = `
+
+        <div
+            class="player-placeholder"
+            id="playerPlaceholder"
+        >
+
+            <div class="placeholder-glow"></div>
+
+            <div class="placeholder-icon">
+                ▶
+            </div>
+
+            <span class="placeholder-label">
+                MI NETFLIX
+            </span>
+
+            <h3>
+                Selecciona una película
+            </h3>
+
+            <p>
+                Presiona el botón de reproducción
+                para comenzar.
+            </p>
+
+        </div>
+
+    `;
+
+
+    currentVideo =
+        null;
+
+}
+
+
+
+/* =====================================================
+   ESTADO
+====================================================== */
+
+function updateStatus(message) {
+
+
+    const playerStatus =
+        document.getElementById(
+            'playerStatusText'
+        );
+
+
+    const watchStatus =
+        document.getElementById(
+            'watchStatus'
+        );
+
+
+    if (playerStatus) {
+
+        playerStatus.textContent =
+            message;
+
+    }
+
+
+    if (watchStatus) {
+
+        watchStatus.textContent =
+            message;
+
+    }
+
+}
+
+
+
+/* =====================================================
+   EXPLORADOR
+====================================================== */
+
+function toggleExplorer() {
+
+
+    const selectors =
+        document.getElementById(
+            'episodeSelectors'
+        );
+
+
+    const button =
+        document.getElementById(
+            'explorerToggle'
+        );
+
+
+    selectors.classList.toggle(
+        'collapsed'
+    );
+
+
+    if (
+        selectors.classList.contains(
+            'collapsed'
+        )
+    ) {
+
+        button.textContent =
+            '▸';
+
+    } else {
+
+        button.textContent =
+            '▾';
+
+    }
+
+}
+
+
+
+/* =====================================================
+   REACCIONES
+====================================================== */
+
+function setReaction(type) {
+
+
+    const likeButton =
+        document.getElementById(
+            'likeButton'
+        );
+
+
+    const dislikeButton =
+        document.getElementById(
+            'dislikeButton'
+        );
+
+
+    likeButton.classList.remove(
+        'selected'
+    );
+
+
+    dislikeButton.classList.remove(
+        'selected'
+    );
+
+
+    if (type === 'like') {
+
+        likeButton.classList.add(
+            'selected'
+        );
+
+
+        localStorage.setItem(
+            `${currentSeries}_reaction`,
+            'like'
+        );
+
+    }
+
+
+    if (type === 'dislike') {
+
+        dislikeButton.classList.add(
+            'selected'
+        );
+
+
+        localStorage.setItem(
+            `${currentSeries}_reaction`,
+            'dislike'
+        );
+
+    }
+
+}
+
+
+
+/* =====================================================
+   CARGAR REACCIÓN GUARDADA
+====================================================== */
+
+function loadReaction() {
+
+
+    const reaction =
+        localStorage.getItem(
+            `${currentSeries}_reaction`
+        );
+
+
+    if (reaction) {
+
+        setReaction(
+            reaction
+        );
+
+    }
+
+}
+
+
+
+/* =====================================================
+   ESCAPE
+====================================================== */
+
+document.addEventListener(
+    'keydown',
+    function(event) {
+
+
+        if (
+            event.key === 'Escape'
+        ) {
+
+            closeVideo();
+
+        }
+
+    }
+);
+
+
+
+/* =====================================================
+   CERRAR VIDEO
+====================================================== */
+
+function closeVideo() {
+
+
+    const videoContainer =
+        document.getElementById(
+            'videoContainer'
+        );
+
+
+    videoContainer.innerHTML = `
+
+        <div
+            class="player-placeholder"
+            id="playerPlaceholder"
+        >
+
+            <div class="placeholder-glow"></div>
+
+            <div class="placeholder-icon">
+                ▶
+            </div>
+
+            <span class="placeholder-label">
+                MI NETFLIX
+            </span>
+
+            <h3>
+                Selecciona una película
+            </h3>
+
+            <p>
+                Presiona el botón de reproducción
+                para comenzar.
+            </p>
+
+        </div>
+
+    `;
+
+
+    currentVideo =
+        null;
+
+
+    updateStatus(
+        'Listo para reproducir'
+    );
+
+}
+
+
+
+/* =====================================================
+   INICIALIZACIÓN
+====================================================== */
+
+window.addEventListener(
+    'load',
+    function() {
+
+
+        populateMovieSelector();
+
+
+        updateInterface();
+
+
+        loadReaction();
+
+
+        updateStatus(
+            'Listo para reproducir'
+        );
+
+
+
+        /* Intentar reproducir
+           automáticamente el fondo */
+
+        const trailer =
+            document.getElementById(
+                'trailer'
+            );
+
+
+        if (trailer) {
+
+            trailer.muted = true;
+
+
+            const playPromise =
+                trailer.play();
+
+
+            if (
+                playPromise !== undefined
+            ) {
+
+                playPromise.catch(
+                    () => {
+
+                        /* Algunos navegadores
+                           bloquean autoplay.
+                           El fondo seguirá
+                           disponible cuando
+                           el navegador lo permita. */
+
+                    }
+                );
+
+            }
+
+        }
+
+    }
+);
+
+
+</script>
+
+
+</body>
+
+</html>
+

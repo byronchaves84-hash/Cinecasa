@@ -1,0 +1,1995 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="theme-color"
+        content="#050505"
+    >
+
+    <meta
+        name="description"
+        content="13 Reasons Why - MiNetflix"
+    >
+
+    <title>
+        13 Reasons Why | MiNetflix
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="styles.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     VIDEO DE FONDO
+====================================================== -->
+
+<div class="video-trailer">
+
+    <video
+        id="trailer"
+        autoplay
+        loop
+        muted
+        playsinline
+        preload="auto"
+    >
+
+        <source
+            src="./peli/The Walking.mp4"
+            type="video/mp4"
+        >
+
+        Tu navegador no soporta la etiqueta de video.
+
+    </video>
+
+
+    <div class="trailer-overlay"></div>
+
+    <div class="trailer-vignette"></div>
+
+</div>
+
+
+
+<!-- =====================================================
+     VIDEO DE EPISODIO
+====================================================== -->
+
+<div
+    class="video-background"
+    id="videoBackground"
+>
+
+    <video
+        id="backgroundVideo"
+        muted
+        playsinline
+    ></video>
+
+    <div class="background-overlay"></div>
+
+</div>
+
+
+
+<!-- =====================================================
+     CONTENEDOR PRINCIPAL
+====================================================== -->
+
+<main class="serie-container">
+
+
+
+<!-- =====================================================
+     HERO
+====================================================== -->
+
+<section class="hero-section">
+
+
+    <div class="hero-red-line"></div>
+
+
+    <div class="hero-content">
+
+
+        <!-- MARCA -->
+
+        <div class="serie-brand">
+
+            <span class="brand-mark">
+                M
+            </span>
+
+            <span class="brand-name">
+                MINETFLIX
+            </span>
+
+        </div>
+
+
+
+        <!-- ORIGINAL -->
+
+        <div class="original-label">
+
+            <span class="original-line"></span>
+
+            <span>
+                SERIE ORIGINAL
+            </span>
+
+        </div>
+
+
+
+        <!-- TITULO -->
+
+        <h1 class="serie-title">
+
+            <span>
+                13 REASONS
+            </span>
+
+            <span>
+                WHY
+            </span>
+
+        </h1>
+
+
+
+        <!-- META -->
+
+        <div class="serie-meta">
+
+            <span class="quality">
+                HD
+            </span>
+
+            <span>
+                2017
+            </span>
+
+            <span class="dot">
+                •
+            </span>
+
+            <span>
+                4 Temporadas
+            </span>
+
+            <span class="dot">
+                •
+            </span>
+
+            <span>
+                Drama
+            </span>
+
+            <span class="dot">
+                •
+            </span>
+
+            <span>
+                Misterio
+            </span>
+
+        </div>
+
+
+
+        <!-- DESCRIPCION -->
+
+        <div class="serie-description">
+
+            <p>
+                Clay Jensen, un joven que recibe una caja
+                con varias cintas grabadas por su amiga
+                Hannah Baker, quien se suicidó. En las cintas,
+                Hannah explica las razones que la llevaron
+                a tomar esa trágica decisión.
+            </p>
+
+        </div>
+
+
+
+        <!-- ACCIONES -->
+
+        <div class="hero-actions">
+
+
+            <button
+                id="heroStartButton"
+                class="hero-play-button"
+                onclick="startEpisode()"
+                type="button"
+            >
+
+                <span class="play-symbol">
+                    ▶
+                </span>
+
+                <strong id="heroStartButtonText">
+                    Iniciar
+                </strong>
+
+            </button>
+
+
+
+            <a
+                href="./episodios/Untitled-1.html"
+                class="hero-info-button"
+            >
+
+                <span class="info-symbol">
+                    ⓘ
+                </span>
+
+                <span>
+                    Más información
+                </span>
+
+            </a>
+
+
+        </div>
+
+
+
+        <!-- REACCIONES -->
+
+        <div class="reaction-area">
+
+            <span class="reaction-question">
+                ¿Qué te parece?
+            </span>
+
+
+            <div class="like-dislike-buttons">
+
+
+                <button
+                    id="likeButton"
+                    class="reaction-button"
+                    type="button"
+                    onclick="setReaction('like')"
+                >
+
+                    <span class="reaction-icon">
+                        👍
+                    </span>
+
+                    <span>
+                        Me gusta
+                    </span>
+
+                </button>
+
+
+
+                <button
+                    id="dislikeButton"
+                    class="reaction-button"
+                    type="button"
+                    onclick="setReaction('dislike')"
+                >
+
+                    <span class="reaction-icon">
+                        👎
+                    </span>
+
+                    <span>
+                        No me gusta
+                    </span>
+
+                </button>
+
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- FADE -->
+
+    <div class="hero-bottom-fade"></div>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     EPISODIOS
+====================================================== -->
+
+<section class="episode-section">
+
+
+
+    <!-- CABECERA -->
+
+    <div class="section-heading">
+
+
+        <div class="heading-left">
+
+            <span class="section-kicker">
+                13 REASONS WHY
+            </span>
+
+
+            <div class="section-title-row">
+
+                <h2>
+                    Reproducción
+                </h2>
+
+                <span class="heading-red-line"></span>
+
+            </div>
+
+        </div>
+
+
+
+        <div
+            class="current-episode-badge"
+            id="currentEpisodeBadge"
+        >
+            T1 · E1
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =================================================
+         EXPLORADOR
+    ================================================== -->
+
+    <div class="episode-explorer">
+
+
+        <div class="explorer-header">
+
+
+            <div>
+
+                <span class="explorer-kicker">
+                    EXPLORA
+                </span>
+
+                <h3>
+                    Elige tu episodio
+                </h3>
+
+            </div>
+
+
+            <button
+                id="explorerToggle"
+                class="explorer-toggle"
+                type="button"
+                aria-label="Mostrar u ocultar opciones"
+                onclick="toggleExplorer()"
+            >
+                ▾
+            </button>
+
+
+        </div>
+
+
+
+        <div
+            id="episodeSelectors"
+            class="episode-selectors"
+        >
+
+
+            <!-- TEMPORADA -->
+
+            <div class="selector-box">
+
+                <label for="seasonSelect">
+                    TEMPORADA
+                </label>
+
+
+                <div class="select-wrapper">
+
+                    <select
+                        id="seasonSelect"
+                        onchange="changeSeason()"
+                    >
+                    </select>
+
+
+                    <span class="select-arrow">
+                        ▾
+                    </span>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- EPISODIO -->
+
+            <div class="selector-box">
+
+                <label for="episodeSelect">
+                    EPISODIO
+                </label>
+
+
+                <div class="select-wrapper">
+
+                    <select
+                        id="episodeSelect"
+                        onchange="changeEpisode()"
+                    >
+                    </select>
+
+
+                    <span class="select-arrow">
+                        ▾
+                    </span>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =================================================
+         CONTROLES
+    ================================================== -->
+
+    <div
+        id="controlsContainer"
+        class="controls-container mobile-compact-buttons"
+    >
+
+
+        <button
+            class="episode-button secondary"
+            onclick="previousEpisode()"
+            type="button"
+        >
+
+            <span class="button-icon">
+                ‹
+            </span>
+
+            <span>
+                Anterior
+            </span>
+
+        </button>
+
+
+
+        <button
+            id="startButton"
+            class="episode-button primary"
+            onclick="startEpisode()"
+            type="button"
+        >
+
+            <span class="button-icon">
+                ▶
+            </span>
+
+            <span id="startButtonText">
+                Iniciar T1-E1
+            </span>
+
+        </button>
+
+
+
+        <button
+            class="episode-button secondary"
+            onclick="nextEpisode()"
+            type="button"
+        >
+
+            <span>
+                Siguiente
+            </span>
+
+            <span class="button-icon">
+                ›
+            </span>
+
+        </button>
+
+
+    </div>
+
+
+
+    <!-- =================================================
+         REPRODUCTOR
+    ================================================== -->
+
+    <div class="player-section">
+
+
+        <div
+            id="videoContainer"
+            class="video-container"
+        >
+
+
+            <div
+                class="player-placeholder"
+                id="playerPlaceholder"
+            >
+
+                <div class="placeholder-glow"></div>
+
+
+                <div class="placeholder-icon">
+                    ▶
+                </div>
+
+
+                <span class="placeholder-label">
+                    MI NETFLIX
+                </span>
+
+
+                <h3>
+                    Selecciona un episodio
+                </h3>
+
+
+                <p>
+                    Presiona el botón de reproducción
+                    para comenzar.
+                </p>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- ESTADO -->
+
+        <div class="player-status-row">
+
+
+            <div class="player-status">
+
+                <span class="status-dot"></span>
+
+                <span id="playerStatusText">
+                    Listo para reproducir
+                </span>
+
+            </div>
+
+
+            <div
+                class="player-current"
+                id="playerCurrent"
+            >
+                T1 · E1
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =================================================
+         ACCIONES INFERIORES
+    ================================================== -->
+
+    <div class="series-actions">
+
+
+        <button
+            id="restartButton"
+            class="action-button"
+            onclick="restartToFirstEpisode()"
+            type="button"
+        >
+
+            <span>
+                ↺
+            </span>
+
+            <span>
+                Ver desde el inicio
+            </span>
+
+        </button>
+
+
+
+        <a
+            href="./episodios/Untitled-1.html"
+            class="action-button info-action"
+        >
+
+            <span>
+                ⓘ
+            </span>
+
+            <span>
+                Ver más información
+            </span>
+
+        </a>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     INFORMACION
+====================================================== -->
+
+<section class="bottom-info">
+
+
+    <div class="info-card">
+
+
+        <div class="info-card-icon">
+            TV
+        </div>
+
+
+        <div class="info-card-content">
+
+            <span class="info-card-label">
+                SERIE
+            </span>
+
+            <strong>
+                13 Reasons Why
+            </strong>
+
+        </div>
+
+
+    </div>
+
+
+
+    <div class="info-card">
+
+
+        <div class="info-card-icon status-icon">
+            ●
+        </div>
+
+
+        <div class="info-card-content">
+
+            <span class="info-card-label">
+                ESTADO
+            </span>
+
+            <strong id="watchStatus">
+                Listo para reproducir
+            </strong>
+
+        </div>
+
+
+    </div>
+
+
+
+    <div class="info-card">
+
+
+        <div class="info-card-icon">
+            #
+        </div>
+
+
+        <div class="info-card-content">
+
+            <span class="info-card-label">
+                PROGRESO
+            </span>
+
+            <strong id="progressText">
+                T1 · E1
+            </strong>
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     ETIQUETA LATERAL
+====================================================== -->
+
+<div class="episodes-side-label">
+    EPISODIOS
+</div>
+
+
+
+<!-- =====================================================
+     FOOTER
+====================================================== -->
+
+<footer>
+
+
+    <div class="footer-inner">
+
+
+        <!-- MARCA -->
+
+        <div class="footer-brand">
+
+            <div class="footer-logo">
+
+                <span class="footer-logo-mark">
+                    M
+                </span>
+
+                <span class="footer-logo-text">
+                    MINETFLIX
+                </span>
+
+            </div>
+
+
+            <p class="footer-description">
+                Tu plataforma para disfrutar de tus series
+                favoritas.
+            </p>
+
+        </div>
+
+
+
+        <!-- ENLACES -->
+
+        <div class="footer-links">
+
+
+            <a
+                href="./index.html"
+                class="footer-link"
+            >
+                Inicio
+            </a>
+
+
+            <a
+                href="./episodios/Untitled-1.html"
+                class="footer-link"
+            >
+                Información
+            </a>
+
+
+            <a
+                href="#"
+                class="footer-link"
+            >
+                Series
+            </a>
+
+
+            <a
+                href="#"
+                class="footer-link"
+            >
+                Contacto
+            </a>
+
+
+        </div>
+
+
+
+        <!-- ESTADO -->
+
+        <div class="footer-status">
+
+            <span class="footer-status-dot"></span>
+
+            <span>
+                MiNetflix activo
+            </span>
+
+        </div>
+
+
+    </div>
+
+
+
+    <div class="footer-divider"></div>
+
+
+
+    <div class="footer-bottom">
+
+        <span>
+            © 2026 MiNetflix
+        </span>
+
+        <span>
+            13 Reasons Why
+        </span>
+
+    </div>
+
+
+</footer>
+
+
+</main>
+
+
+
+
+
+<!-- =====================================================
+     JAVASCRIPT
+====================================================== -->
+
+<script>
+
+
+/* =====================================================
+   CONFIGURACION
+====================================================== */
+
+const currentSeries = 'serie1';
+
+
+/* =====================================================
+   EPISODIOS
+====================================================== */
+
+const series = {
+
+    'serie1': [
+
+        /* =================================================
+           TEMPORADA 1
+        ================================================= */
+
+        [
+
+            'https://drive.google.com/file/d/1jfLyfVYxu31fNpVWJDJtgAWrHyRi7v7K/preview',
+
+            'https://drive.google.com/file/d/1kE3vpJTvUZxMz6TM-TxAx5D2fiAHCKJt/preview',
+
+            'https://drive.google.com/file/d/1w18LoxLKHgmAF9YJACuyp_l0vZsEGRxG/preview',
+
+            'https://drive.google.com/file/d/1Qba3YCYhmeMb7EjtKbPPRj5vXa6gELHJ/preview',
+
+            'https://drive.google.com/file/d/1i0-jAteSeay_FzCDxtxviN4bdceD3BXJ/preview',
+
+            'https://drive.google.com/file/d/1DQiMb10EuOjZOKre9gcpgfxTgvit9d-T/preview',
+
+            'https://drive.google.com/file/d/1J3DxKziEALulB9HCL1Tfy2eojpL0bLTO/preview',
+
+            'https://drive.google.com/file/d/16piOV6apK-ZzQVv4faFqv-sY1Mtzj6oo/preview',
+
+            'https://drive.google.com/file/d/14E86PkC2ac96EiKcscl2K8rWTMWTV-ne/preview',
+
+            'https://drive.google.com/file/d/1mxgbs7u617gjBKiKtGJPsGiSsy2myvJy/preview',
+
+            'https://drive.google.com/file/d/1EVosT5qGaRVLUWZpg_5lpeIXDBM-07ke/preview',
+
+            'https://drive.google.com/file/d/1hBzg9gQg84pdf1MLgBoMIgWK7YN7IqWh/preview',
+
+            'https://drive.google.com/file/d/1h3GEHVSSoTNGuXTlVxF2HC53JpTk8nw6/preview'
+
+        ],
+
+
+
+        /* =================================================
+           TEMPORADA 2
+        ================================================= */
+
+        [
+
+            'https://drive.google.com/file/d/1T2EQPvKD053QeBoLN5lwGAYBRrn90f1X/preview',
+
+            'https://drive.google.com/file/d/1CLD53yZVQBx1GePwNoPmYM-6y9Bb615M/preview',
+
+            'https://drive.google.com/file/d/1RrlSUc2yRqkso2HUzKBwOAQSfQrsc28m/preview',
+
+            'https://drive.google.com/file/d/1RJ9FMeVcttis_f7nHNpEz7yLQ5zjRQmb/preview',
+
+            'https://drive.google.com/file/d/1A-oINk3wlQCbML30P_lN4pqhylfdsvmo/preview',
+
+            'https://drive.google.com/file/d/1pVJE4l6iDQDC5C6itnfhWfB3VqAu0Ko6/preview',
+
+            'https://drive.google.com/file/d/1BrH0no0Z7nAASlDS4cJVj-XvFI2xBqwI/preview',
+
+            'https://drive.google.com/file/d/1pnqwoxtLtQnApFj_FENfZG3S5aJB8vJt/preview',
+
+            'https://drive.google.com/file/d/1AXqKfoPrPei5M97sCRagp83ysOhCqczm/preview',
+
+            'https://drive.google.com/file/d/1YG3BWm2ivyedTkgRfW1HJ5UocdxCR-UF/preview',
+
+            'https://drive.google.com/file/d/1fDTL0NsvxMaAznyfQ1jPHhedwiZiaK48/preview',
+
+            'https://drive.google.com/file/d/19O19u_D8lne2fXQAz5GPNfmKNPy4d2N8/preview',
+
+            'https://drive.google.com/file/d/1XG6iUx5DKWwUzfAQQHsjjiu4wyzQwn1s/preview'
+
+        ],
+
+
+
+        /* =================================================
+           TEMPORADA 3
+        ================================================= */
+
+        [
+
+            'https://drive.google.com/file/d/1NlDqEBkRs-G8xBsauSRhT0jb7ieL-pG2/preview',
+
+            'https://drive.google.com/file/d/1uTeMAKJORcPwnbvWeCUREvMHJvpTNjiM/preview',
+
+            'https://drive.google.com/file/d/1aKpDtHG0NAUTO62C5Hw6FS1u4tqaYiqc/preview',
+
+            'https://drive.google.com/file/d/1XfqGbx3nExwP1T_W-FjnCqPUvyuf1h6T/preview',
+
+            'https://drive.google.com/file/d/1G9E2dc7ZwW_mCchcxRFcUDK1o3CRtuxN/preview',
+
+            'https://drive.google.com/file/d/1nWA2JlrnX0iDj8eseARPv4P5MEdTF5J9/preview',
+
+            'https://drive.google.com/file/d/1AoCGaF7ePZY3iZGMHwQfGj6-K_Mgrts5/preview',
+
+            'https://drive.google.com/file/d/10e0YdW-wCzNBkGdibB_36d5iVF-4QvYY/preview',
+
+            'https://drive.google.com/file/d/13vm1zlHvTLplfZNG6uDm6qIBVq6P9giC/preview',
+
+            'https://drive.google.com/file/d/188-jGFGPuKhSdQnDBwEsLGG6wiv4f9N_/preview',
+
+            'https://drive.google.com/file/d/1xlppugi9ka6QcEl5kRCrFmh212-Vt8J_/preview',
+
+            'https://drive.google.com/file/d/1CjDC9nR2EQOSceQFlFkEcDt6etZIywhS/preview',
+
+            'https://drive.google.com/file/d/1fCIH4Rp9S5oN7eeL-gCP2zq4n1nmNtSu/preview'
+
+        ],
+
+
+
+        /* =================================================
+           TEMPORADA 4
+        ================================================= */
+
+        [
+
+            'https://drive.google.com/file/d/1uRH3BXgPzvc9XovYnt_iC4xHf39vgZzz/preview',
+
+            'https://drive.google.com/file/d/1KKcEOWayrfgSWeC5olby9_wEirY65qAZ/preview',
+
+            'https://drive.google.com/file/d/1mkALlb2GfRdtvUwAo4uF2j3F1BOwtxaY/preview',
+
+            'https://drive.google.com/file/d/1EzuhOmxywVWcLnQhyFeVJLrd261dXMAo/preview',
+
+            'https://drive.google.com/file/d/1afrvJeqQ9sngYZPybQB7GvpxM53mDQEL/preview',
+
+            'https://drive.google.com/file/d/1mcrl-7sLX8uXIy2THXZLNp5PLw0mf2d4/preview',
+
+            'https://drive.google.com/file/d/14wMZZzXaKaigNeS82epUJZHeR9aeOgIY/preview',
+
+            'https://drive.google.com/file/d/1MHJWrc6DMX--cIKF_d0DpQgzHnsjyO2C/preview',
+
+            'https://drive.google.com/file/d/1C-VyhQLKiuC3ZrRdLG_XAMPJbblQcZK8/preview',
+
+            'https://drive.google.com/file/d/1Nrm1Tg0wzq1DUlDogqcIiNRmqnOdkqn9/preview'
+
+        ]
+
+    ]
+
+};
+
+
+
+/* =====================================================
+   VARIABLES
+====================================================== */
+
+let currentVideo = null;
+
+let currentEpisode =
+    getCurrentEpisode(currentSeries);
+
+let selectedSeason = 0;
+
+
+
+/* =====================================================
+   TOTAL DE EPISODIOS
+====================================================== */
+
+const totalEpisodes =
+    series[currentSeries].reduce(
+        (total, season) =>
+            total + season.length,
+        0
+    );
+
+
+
+/* =====================================================
+   OBTENER EPISODIO GUARDADO
+====================================================== */
+
+function getCurrentEpisode(seriesName) {
+
+    const saved =
+        localStorage.getItem(
+            `${seriesName}_currentEpisode`
+        );
+
+    return saved
+        ? parseInt(saved, 10)
+        : 1;
+}
+
+
+
+/* =====================================================
+   GUARDAR EPISODIO
+====================================================== */
+
+function saveCurrentEpisode(
+    seriesName,
+    episodeNumber
+) {
+
+    localStorage.setItem(
+        `${seriesName}_currentEpisode`,
+        episodeNumber
+    );
+
+}
+
+
+
+/* =====================================================
+   OBTENER TEMPORADA / EPISODIO
+====================================================== */
+
+function getEpisodePosition(
+    episodeNumber
+) {
+
+    let count = 0;
+
+    for (
+        let season = 0;
+        season < series[currentSeries].length;
+        season++
+    ) {
+
+        const seasonLength =
+            series[currentSeries][season].length;
+
+        if (
+            episodeNumber <=
+            count + seasonLength
+        ) {
+
+            return {
+
+                season: season,
+
+                episode:
+                    episodeNumber - count - 1
+
+            };
+
+        }
+
+        count += seasonLength;
+    }
+
+    return {
+        season: 0,
+        episode: 0
+    };
+
+}
+
+
+
+/* =====================================================
+   TEXTO DEL EPISODIO
+====================================================== */
+
+function getEpisodeLabel(
+    episodeNumber
+) {
+
+    const position =
+        getEpisodePosition(
+            episodeNumber
+        );
+
+    return `T${position.season + 1} · E${position.episode + 1}`;
+
+}
+
+
+
+/* =====================================================
+   INICIAR EPISODIO
+====================================================== */
+
+function startEpisode() {
+
+    loadVideo(
+        currentEpisode
+    );
+
+}
+
+
+
+/* =====================================================
+   CARGAR VIDEO
+====================================================== */
+
+function loadVideo(
+    episodeNumber
+) {
+
+    const videoContainer =
+        document.getElementById(
+            'videoContainer'
+        );
+
+    const position =
+        getEpisodePosition(
+            episodeNumber
+        );
+
+    const episodeUrl =
+        series[currentSeries]
+            [position.season]
+            [position.episode];
+
+
+
+    videoContainer.innerHTML = '';
+
+
+
+    /* CONTENEDOR */
+
+    const videoWrapper =
+        document.createElement('div');
+
+    videoWrapper.className =
+        'video-wrapper';
+
+    videoWrapper.id =
+        'videoWrapper';
+
+
+
+    /* IFRAME */
+
+    const iframe =
+        document.createElement('iframe');
+
+    iframe.src =
+        episodeUrl;
+
+    iframe.width =
+        '100%';
+
+    iframe.height =
+        '100%';
+
+    iframe.frameBorder =
+        '0';
+
+    iframe.allow =
+        'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen';
+
+    iframe.setAttribute(
+        'allowfullscreen',
+        'true'
+    );
+
+    iframe.id =
+        'videoPlayer';
+
+
+
+    videoWrapper.appendChild(
+        iframe
+    );
+
+    videoContainer.appendChild(
+        videoWrapper
+    );
+
+
+
+    videoContainer.style.display =
+        'block';
+
+
+
+    currentVideo =
+        iframe;
+
+    currentEpisode =
+        episodeNumber;
+
+
+
+    saveCurrentEpisode(
+        currentSeries,
+        currentEpisode
+    );
+
+
+
+    updateInterface();
+
+}
+
+
+
+/* =====================================================
+   EPISODIO ANTERIOR
+====================================================== */
+
+function previousEpisode() {
+
+    if (
+        currentEpisode > 1
+    ) {
+
+        currentEpisode--;
+
+        saveCurrentEpisode(
+            currentSeries,
+            currentEpisode
+        );
+
+        updateInterface();
+
+    }
+
+}
+
+
+
+/* =====================================================
+   EPISODIO SIGUIENTE
+====================================================== */
+
+function nextEpisode() {
+
+    if (
+        currentEpisode <
+        totalEpisodes
+    ) {
+
+        currentEpisode++;
+
+        saveCurrentEpisode(
+            currentSeries,
+            currentEpisode
+        );
+
+        updateInterface();
+
+    }
+
+}
+
+
+
+/* =====================================================
+   VOLVER AL PRIMER EPISODIO
+====================================================== */
+
+function restartToFirstEpisode() {
+
+    currentEpisode = 1;
+
+    saveCurrentEpisode(
+        currentSeries,
+        currentEpisode
+    );
+
+    updateInterface();
+
+}
+
+
+
+/* =====================================================
+   CAMBIAR TEMPORADA
+====================================================== */
+
+function changeSeason() {
+
+    const seasonSelect =
+        document.getElementById(
+            'seasonSelect'
+        );
+
+    selectedSeason =
+        parseInt(
+            seasonSelect.value,
+            10
+        );
+
+    populateEpisodes();
+
+}
+
+
+
+/* =====================================================
+   CAMBIAR EPISODIO
+====================================================== */
+
+function changeEpisode() {
+
+    const episodeSelect =
+        document.getElementById(
+            'episodeSelect'
+        );
+
+    const episodeIndex =
+        parseInt(
+            episodeSelect.value,
+            10
+        );
+
+
+
+    let globalEpisode =
+        episodeIndex + 1;
+
+
+
+    for (
+        let i = 0;
+        i < selectedSeason;
+        i++
+    ) {
+
+        globalEpisode +=
+            series[currentSeries][i].length;
+
+    }
+
+
+
+    currentEpisode =
+        globalEpisode;
+
+
+
+    saveCurrentEpisode(
+        currentSeries,
+        currentEpisode
+    );
+
+
+
+    updateInterface();
+
+}
+
+
+
+/* =====================================================
+   POBLAR TEMPORADAS
+====================================================== */
+
+function populateSeasons() {
+
+    const select =
+        document.getElementById(
+            'seasonSelect'
+        );
+
+    select.innerHTML = '';
+
+
+
+    series[currentSeries]
+        .forEach(
+            (season, index) => {
+
+                const option =
+                    document.createElement(
+                        'option'
+                    );
+
+                option.value =
+                    index;
+
+                option.textContent =
+                    `Temporada ${index + 1}`;
+
+                select.appendChild(
+                    option
+                );
+
+            }
+        );
+
+}
+
+
+
+/* =====================================================
+   POBLAR EPISODIOS
+====================================================== */
+
+function populateEpisodes() {
+
+    const select =
+        document.getElementById(
+            'episodeSelect'
+        );
+
+    select.innerHTML = '';
+
+
+
+    const seasonEpisodes =
+        series[currentSeries]
+            [selectedSeason];
+
+
+
+    seasonEpisodes.forEach(
+        (episode, index) => {
+
+            const option =
+                document.createElement(
+                    'option'
+                );
+
+            option.value =
+                index;
+
+            option.textContent =
+                `Episodio ${index + 1}`;
+
+            select.appendChild(
+                option
+            );
+
+        }
+    );
+
+
+
+    const position =
+        getEpisodePosition(
+            currentEpisode
+        );
+
+
+
+    if (
+        position.season ===
+        selectedSeason
+    ) {
+
+        select.value =
+            position.episode;
+
+    }
+
+}
+
+
+
+/* =====================================================
+   ACTUALIZAR INTERFAZ
+====================================================== */
+
+function updateInterface() {
+
+    const position =
+        getEpisodePosition(
+            currentEpisode
+        );
+
+
+
+    selectedSeason =
+        position.season;
+
+
+
+    /* BADGE */
+
+    const badge =
+        document.getElementById(
+            'currentEpisodeBadge'
+        );
+
+    if (badge) {
+
+        badge.textContent =
+            getEpisodeLabel(
+                currentEpisode
+            );
+
+    }
+
+
+
+    /* CURRENT */
+
+    const current =
+        document.getElementById(
+            'playerCurrent'
+        );
+
+    if (current) {
+
+        current.textContent =
+            getEpisodeLabel(
+                currentEpisode
+            );
+
+    }
+
+
+
+    /* PROGRESO */
+
+    const progress =
+        document.getElementById(
+            'progressText'
+        );
+
+    if (progress) {
+
+        progress.textContent =
+            getEpisodeLabel(
+                currentEpisode
+            );
+
+    }
+
+
+
+    /* ESTADO */
+
+    const status =
+        document.getElementById(
+            'playerStatusText'
+        );
+
+    if (status) {
+
+        status.textContent =
+            'Listo para reproducir';
+
+    }
+
+
+
+    const watchStatus =
+        document.getElementById(
+            'watchStatus'
+        );
+
+    if (watchStatus) {
+
+        watchStatus.textContent =
+            'Listo para reproducir';
+
+    }
+
+
+
+    /* BOTON PRINCIPAL */
+
+    const startButton =
+        document.getElementById(
+            'startButton'
+        );
+
+    if (startButton) {
+
+        const label =
+            `T${position.season + 1}-E${position.episode + 1}`;
+
+        startButton.innerHTML = `
+
+            <span class="button-icon">
+                ▶
+            </span>
+
+            <span id="startButtonText">
+                ${currentEpisode === 1
+                    ? `Iniciar ${label}`
+                    : `Reanudar ${label}`
+                }
+            </span>
+
+        `;
+
+    }
+
+
+
+    /* BOTON HERO */
+
+    const heroText =
+        document.getElementById(
+            'heroStartButtonText'
+        );
+
+    if (heroText) {
+
+        heroText.textContent =
+            currentEpisode === 1
+                ? 'Iniciar'
+                : 'Reanudar';
+
+    }
+
+
+
+    /* SELECTORES */
+
+    const seasonSelect =
+        document.getElementById(
+            'seasonSelect'
+        );
+
+    if (seasonSelect) {
+
+        seasonSelect.value =
+            selectedSeason;
+
+    }
+
+
+
+    populateEpisodes();
+
+}
+
+
+
+/* =====================================================
+   ABRIR / CERRAR EXPLORADOR
+====================================================== */
+
+function toggleExplorer() {
+
+    const selectors =
+        document.getElementById(
+            'episodeSelectors'
+        );
+
+    const button =
+        document.getElementById(
+            'explorerToggle'
+        );
+
+
+
+    selectors.classList.toggle(
+        'collapsed'
+    );
+
+
+
+    if (
+        selectors.classList.contains(
+            'collapsed'
+        )
+    ) {
+
+        button.textContent =
+            '▸';
+
+    } else {
+
+        button.textContent =
+            '▾';
+
+    }
+
+}
+
+
+
+/* =====================================================
+   REACCIONES
+====================================================== */
+
+function setReaction(
+    reaction
+) {
+
+    const likeButton =
+        document.getElementById(
+            'likeButton'
+        );
+
+    const dislikeButton =
+        document.getElementById(
+            'dislikeButton'
+        );
+
+
+
+    likeButton.classList.remove(
+        'selected'
+    );
+
+    dislikeButton.classList.remove(
+        'selected'
+    );
+
+
+
+    if (
+        reaction === 'like'
+    ) {
+
+        likeButton.classList.add(
+            'selected'
+        );
+
+        localStorage.setItem(
+            'serie1_reaction',
+            'like'
+        );
+
+    }
+
+
+
+    if (
+        reaction === 'dislike'
+    ) {
+
+        dislikeButton.classList.add(
+            'selected'
+        );
+
+        localStorage.setItem(
+            'serie1_reaction',
+            'dislike'
+        );
+
+    }
+
+}
+
+
+
+/* =====================================================
+   CARGAR REACCION
+====================================================== */
+
+function loadReaction() {
+
+    const reaction =
+        localStorage.getItem(
+            'serie1_reaction'
+        );
+
+    if (reaction) {
+
+        setReaction(
+            reaction
+        );
+
+    }
+
+}
+
+
+
+/* =====================================================
+   ESCAPE
+====================================================== */
+
+document.addEventListener(
+    'keydown',
+    function(event) {
+
+        if (
+            event.key === 'Escape'
+        ) {
+
+            const videoContainer =
+                document.getElementById(
+                    'videoContainer'
+                );
+
+            videoContainer.innerHTML =
+                `
+
+                <div
+                    class="player-placeholder"
+                    id="playerPlaceholder"
+                >
+
+                    <div
+                        class="placeholder-glow"
+                    ></div>
+
+                    <div
+                        class="placeholder-icon"
+                    >
+                        ▶
+                    </div>
+
+                    <span
+                        class="placeholder-label"
+                    >
+                        MI NETFLIX
+                    </span>
+
+                    <h3>
+                        Selecciona un episodio
+                    </h3>
+
+                    <p>
+                        Presiona el botón de reproducción
+                        para comenzar.
+                    </p>
+
+                </div>
+
+                `;
+
+            currentVideo =
+                null;
+
+            updateInterface();
+
+        }
+
+    }
+);
+
+
+
+/* =====================================================
+   INICIALIZACION
+====================================================== */
+
+window.addEventListener(
+    'DOMContentLoaded',
+    function() {
+
+        populateSeasons();
+
+        updateInterface();
+
+        loadReaction();
+
+
+
+        /* =================================================
+           ASEGURAR REPRODUCCION DEL FONDO
+        ================================================= */
+
+        const trailer =
+            document.getElementById(
+                'trailer'
+            );
+
+
+
+        if (trailer) {
+
+            trailer.muted = true;
+
+            const playPromise =
+                trailer.play();
+
+            if (
+                playPromise !== undefined
+            ) {
+
+                playPromise.catch(
+                    function() {
+
+                        /*
+                        Algunos navegadores
+                        bloquean autoplay.
+                        El video queda listo
+                        para reproducirse.
+                        */
+
+                    }
+                );
+
+            }
+
+        }
+
+    }
+);
+
+
+</script>
+
+
+</body>
+
+</html>
+```

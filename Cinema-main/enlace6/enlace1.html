@@ -1,0 +1,400 @@
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Dragon Ball Super: La Batalla de los Dioses | MiNetflix
+    </title>
+
+    <link rel="stylesheet" href="styles.css">
+
+</head>
+
+
+<body>
+
+
+    <!-- =================================================
+         VIDEO DE FONDO
+    ================================================== -->
+
+    <div class="video-background">
+
+        <video
+            id="trailerBackground"
+            autoplay
+            loop
+            muted
+            playsinline
+        >
+
+            <source
+                src="peli/Gods.mp4"
+                type="video/mp4"
+            >
+
+            Tu navegador no soporta la etiqueta de video.
+
+        </video>
+
+        <div class="background-overlay"></div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         NAVEGACIÓN
+    ================================================== -->
+
+    <div class="top-navigation">
+
+        <button
+            class="back-button"
+            onclick="history.back()"
+            type="button"
+        >
+
+            <span>‹</span>
+
+            Volver
+
+        </button>
+
+    </div>
+
+
+
+    <!-- =================================================
+         REPRODUCTOR
+    ================================================== -->
+
+    <section
+        class="player-section"
+        id="playerSection"
+    >
+
+        <div
+            class="video-container"
+            id="videoContainer"
+        >
+
+            <div class="video-top-glow"></div>
+
+
+            <!-- Pantalla inicial -->
+
+            <div
+                class="player-start-screen"
+                id="playerStartScreen"
+            >
+
+                <div class="play-circle">
+                    ▶
+                </div>
+
+                <span>
+                    Pulsa "Ver película" para comenzar
+                </span>
+
+            </div>
+
+
+            <!-- Reproductor de Google Drive -->
+
+            <iframe
+                id="moviePlayer"
+                src="about:blank"
+                data-src="https://drive.google.com/file/d/12vwzkhmAJSKhKDbOgYta3-B2CEOVjuVZ/preview"
+                frameborder="0"
+                allow="autoplay; fullscreen"
+                allowfullscreen
+                title="Dragon Ball Super: La Batalla de los Dioses"
+            ></iframe>
+
+
+            <div class="video-overlay"></div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         INFORMACIÓN DE LA PELÍCULA
+    ================================================== -->
+
+    <section class="movie-details">
+
+
+        <div class="movie-brand">
+            MINETFLIX
+        </div>
+
+
+        <h1>
+            Dragon Ball Super: La Batalla de los Dioses.
+        </h1>
+
+
+        <div class="movie-meta">
+
+            <span class="quality">
+                HD
+            </span>
+
+            <span>
+                Animación
+            </span>
+
+            <span class="dot">
+                •
+            </span>
+
+            <span>
+                Acción
+            </span>
+
+            <span class="dot">
+                •
+            </span>
+
+            <span>
+                Español
+            </span>
+
+        </div>
+
+
+        <p class="movie-description">
+
+            Una emocionante aventura llena de acción y poder,
+            donde Goku se enfrenta a Bills, el Dios de la
+            Destrucción, en una batalla épica que pondrá a
+            prueba los límites del poder de los Saiyajins.
+
+        </p>
+
+
+
+        <!-- =================================================
+             BOTÓN VER PELÍCULA
+        ================================================== -->
+
+        <div class="movie-actions">
+
+            <button
+                class="watch-button"
+                id="watchButton"
+                type="button"
+                onclick="startMovie()"
+            >
+
+                <span class="button-icon">
+                    ▶
+                </span>
+
+                Ver película
+
+            </button>
+
+        </div>
+
+
+        <div class="movie-line"></div>
+
+
+    </section>
+
+
+
+    <!-- =================================================
+         RECOMENDACIONES
+    ================================================== -->
+
+    <section class="recommendations">
+
+
+        <div class="section-heading">
+
+            <h2>
+                También te puede gustar
+            </h2>
+
+            <div class="heading-line"></div>
+
+        </div>
+
+
+        <div class="recommendation-grid">
+
+
+            <div class="recommendation-card">
+
+                <div class="recommendation-placeholder">
+                    <span>🐉</span>
+                </div>
+
+                <div class="recommendation-info">
+
+                    <h3>
+                        Dragon Ball Super
+                    </h3>
+
+                    <p>
+                        Más aventuras
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="recommendation-card">
+
+                <div class="recommendation-placeholder">
+                    <span>⚡</span>
+                </div>
+
+                <div class="recommendation-info">
+
+                    <h3>
+                        Guerreros Saiyajins
+                    </h3>
+
+                    <p>
+                        Más batallas
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="recommendation-card">
+
+                <div class="recommendation-placeholder">
+                    <span>🔥</span>
+                </div>
+
+                <div class="recommendation-info">
+
+                    <h3>
+                        Próximamente
+                    </h3>
+
+                    <p>
+                        Nuevas películas
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         FOOTER
+    ================================================== -->
+
+    <footer>
+
+        <div class="footer-logo">
+            MINETFLIX
+        </div>
+
+        <p>
+            &copy; 2026 MiNetflix.
+            Todos los derechos reservados.
+        </p>
+
+    </footer>
+
+
+
+    <!-- =================================================
+         JAVASCRIPT
+    ================================================== -->
+
+    <script>
+
+        function startMovie() {
+
+            const player = document.getElementById("moviePlayer");
+            const startScreen = document.getElementById("playerStartScreen");
+            const button = document.getElementById("watchButton");
+            const videoContainer = document.getElementById("videoContainer");
+
+            const videoURL = player.getAttribute("data-src");
+
+            if (!videoURL) {
+                return;
+            }
+
+            player.src = videoURL;
+
+            startScreen.classList.add("hidden");
+
+            button.classList.add("started");
+
+            videoContainer.classList.add("playing");
+
+            setTimeout(() => {
+
+                player.scrollIntoView({
+                    behavior: "smooth",
+                    block: "center"
+                });
+
+            }, 150);
+
+        }
+
+
+        /*
+            Evita que el video de fondo interfiera
+            con la reproducción principal.
+        */
+
+        const backgroundVideo =
+            document.getElementById("trailerBackground");
+
+        if (backgroundVideo) {
+
+            backgroundVideo.muted = true;
+
+            backgroundVideo.play().catch(() => {
+
+                console.log(
+                    "El navegador requiere interacción para reproducir el fondo."
+                );
+
+            });
+
+        }
+
+    </script>
+
+
+</body>
+
+</html>
+
+

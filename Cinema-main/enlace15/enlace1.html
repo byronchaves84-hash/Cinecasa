@@ -1,0 +1,450 @@
+```html
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Los Increíbles 2 | MiNetflix
+    </title>
+
+    <link rel="stylesheet" href="styles.css">
+
+</head>
+
+
+<body>
+
+
+    <!-- =================================================
+         VIDEO DE FONDO
+    ================================================== -->
+
+    <div class="video-background">
+
+        <video
+            id="trailerBackground"
+            autoplay
+            loop
+            muted
+            playsinline
+        >
+
+            <source
+                src="peli/Toy.mp4"
+                type="video/mp4"
+            >
+
+            Tu navegador no soporta la etiqueta de video.
+
+        </video>
+
+        <div class="background-overlay"></div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         NAVEGACIÓN
+    ================================================== -->
+
+    <div class="top-navigation">
+
+        <button
+            class="back-button"
+            onclick="history.back()"
+            type="button"
+        >
+
+            <span>‹</span>
+
+            Volver
+
+        </button>
+
+    </div>
+
+
+
+    <!-- =================================================
+         REPRODUCTOR
+    ================================================== -->
+
+    <section
+        class="player-section"
+        id="playerSection"
+    >
+
+        <div
+            class="video-container"
+            id="videoContainer"
+        >
+
+            <div class="video-top-glow"></div>
+
+
+            <!-- Pantalla inicial -->
+
+            <div
+                class="player-start-screen"
+                id="playerStartScreen"
+            >
+
+                <div class="play-circle">
+                    ▶
+                </div>
+
+                <span>
+                    Pulsa "Ver película" para comenzar
+                </span>
+
+            </div>
+
+
+            <!-- Reproductor de Google Drive -->
+
+            <iframe
+                id="moviePlayer"
+                src="about:blank"
+                data-src="https://drive.google.com/file/d/1LBDh_2blaSq0HuyheMldr3LV2H-pKXtk/preview"
+                frameborder="0"
+                allow="autoplay; fullscreen"
+                allowfullscreen
+                title="Los Increíbles 2"
+            ></iframe>
+
+
+            <div class="video-overlay"></div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         INFORMACIÓN DE LA PELÍCULA
+    ================================================== -->
+
+    <section class="movie-details">
+
+
+        <div class="movie-brand">
+            MINETFLIX
+        </div>
+
+
+        <h1>
+            Los Increíbles 2.
+        </h1>
+
+
+        <div class="movie-meta">
+
+            <span class="quality">
+                HD
+            </span>
+
+            <span>
+                Animación
+            </span>
+
+            <span class="dot">
+                •
+            </span>
+
+            <span>
+                Acción
+            </span>
+
+            <span class="dot">
+                •
+            </span>
+
+            <span>
+                Español
+            </span>
+
+        </div>
+
+
+        <p class="movie-description">
+
+            La familia Parr regresa, y esta vez es Helen
+            (Elastigirl) quien lidera la lucha contra el
+            crimen, mientras Bob (Mr. Increíble) se queda
+            en casa cuidando a los niños. Juntos enfrentan
+            una nueva amenaza que pone en peligro el futuro
+            de los superhéroes, mientras tratan de equilibrar
+            su vida familiar y sus roles como salvadores del
+            mundo.
+
+        </p>
+
+
+
+        <!-- =================================================
+             BOTÓN VER PELÍCULA
+        ================================================== -->
+
+        <div class="movie-actions">
+
+            <button
+                class="watch-button"
+                id="watchButton"
+                type="button"
+                onclick="startMovie()"
+            >
+
+                <span class="button-icon">
+                    ▶
+                </span>
+
+                Ver película
+
+            </button>
+
+        </div>
+
+
+        <div class="movie-line"></div>
+
+
+    </section>
+
+
+
+    <!-- =================================================
+         RECOMENDACIONES
+    ================================================== -->
+
+    <section class="recommendations">
+
+
+        <div class="section-heading">
+
+            <h2>
+                También te puede gustar
+            </h2>
+
+            <div class="heading-line"></div>
+
+        </div>
+
+
+        <div class="recommendation-grid">
+
+
+            <div class="recommendation-card">
+
+                <div class="recommendation-placeholder">
+                    <span>🦸</span>
+                </div>
+
+                <div class="recommendation-info">
+
+                    <h3>
+                        Mr. Increíble
+                    </h3>
+
+                    <p>
+                        Más aventuras
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="recommendation-card">
+
+                <div class="recommendation-placeholder">
+                    <span>💪</span>
+                </div>
+
+                <div class="recommendation-info">
+
+                    <h3>
+                        Elastigirl
+                    </h3>
+
+                    <p>
+                        Más acción
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="recommendation-card">
+
+                <div class="recommendation-placeholder">
+                    <span>⚡</span>
+                </div>
+
+                <div class="recommendation-info">
+
+                    <h3>
+                        La familia Parr
+                    </h3>
+
+                    <p>
+                        Nuevas aventuras
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         FOOTER
+    ================================================== -->
+
+    <footer>
+
+        <div class="footer-logo">
+            MINETFLIX
+        </div>
+
+        <p>
+            &copy; 2026 MiNetflix.
+            Todos los derechos reservados.
+        </p>
+
+    </footer>
+
+
+
+    <!-- =================================================
+         JAVASCRIPT
+    ================================================== -->
+
+    <script>
+
+        function startMovie() {
+
+            const player =
+                document.getElementById("moviePlayer");
+
+            const startScreen =
+                document.getElementById("playerStartScreen");
+
+            const button =
+                document.getElementById("watchButton");
+
+            const videoContainer =
+                document.getElementById("videoContainer");
+
+            const videoURL =
+                player.getAttribute("data-src");
+
+
+            if (!videoURL) {
+                return;
+            }
+
+
+            /*
+             * Carga el reproductor de Google Drive
+             * al pulsar "Ver película".
+             */
+
+            player.src = videoURL;
+
+
+            /*
+             * Oculta la pantalla inicial.
+             */
+
+            startScreen.classList.add("hidden");
+
+
+            /*
+             * Cambia el estado del botón.
+             */
+
+            button.classList.add("playing");
+
+            button.innerHTML = `
+                <span class="button-icon">▶</span>
+                Reproduciendo...
+            `;
+
+            button.disabled = true;
+
+
+            /*
+             * Activa el estado visual
+             * del reproductor.
+             */
+
+            videoContainer.classList.add("movie-playing");
+
+
+            /*
+             * Desplaza suavemente hacia el reproductor.
+             */
+
+            setTimeout(() => {
+
+                player.scrollIntoView({
+                    behavior: "smooth",
+                    block: "center"
+                });
+
+            }, 150);
+
+        }
+
+
+
+        /*
+         * Reproducción automática del trailer
+         * utilizado como fondo.
+         */
+
+        const backgroundVideo =
+            document.getElementById("trailerBackground");
+
+
+        if (backgroundVideo) {
+
+            backgroundVideo.muted = true;
+
+
+            backgroundVideo.play().catch(() => {
+
+                console.log(
+                    "El navegador requiere interacción para reproducir el fondo."
+                );
+
+            });
+
+        }
+
+    </script>
+
+
+</body>
+
+</html>
+```
+

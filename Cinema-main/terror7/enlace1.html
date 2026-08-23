@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reproduciendo Película</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>StreamZone</h1>
+        </div>
+    </header>
+
+    <div class="video-background">
+        <!-- Video del trailer como fondo -->
+        <video id="trailerBackground" autoplay loop muted>
+            <source src="peli/Movie.mp4" type="video/mp4">
+            Tu navegador no soporta la etiqueta de video.
+        </video>
+        <div class="background-overlay"></div> <!-- Capa de desenfoque -->
+    </div>
+
+    <div class="horror-anime-item" onclick="handleVideoClick(this)">
+        <a href="https://drive.google.com/file/d/1-6Rg90VfO6GxiaUJV87IVVElMWX6P9Gm/view?usp=sharing" target="_blank">
+            <div class="video-container">
+                <div class="video-overlay"></div> <!-- Overlay de nube -->
+                <iframe src="https://drive.google.com/file/d/1-6Rg90VfO6GxiaUJV87IVVElMWX6P9Gm/preview" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+            </div>
+        </a>
+    </div>
+    
+    <div class="movie-details">
+        <h2>Silent Hill 1.</h2> 
+        <p>En *Silent Hill*, una madre llamada Rose busca desesperadamente a su hija adoptiva, Sharon, quien ha desaparecido misteriosamente en la niebla de un pueblo llamado Silent Hill. Mientras busca respuestas, Rose descubre que el pueblo esconde secretos oscuros y está dominado por una extraña y aterradora oscuridad. A medida que se adentra más en Silent Hill, se encuentra con extrañas criaturas y se enfrenta a fenómenos sobrenaturales mientras intenta salvar a Sharon. </p>
+    </div>
+    
+    <hr class="separator">
+
+    <footer>
+        <p>&copy; 2025 MiNetflix. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>
+

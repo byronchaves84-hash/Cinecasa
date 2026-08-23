@@ -1,0 +1,26 @@
+[
+    {
+        "id": "admin-001",
+        "username": "Byron",
+        "email": "admin@cinemax.com",
+        "password": "cinemax2026",
+        "role": "admin",
+        "createdAt": "2026-08-17T01:32:21.447388+00:00"
+    },
+    {
+        "id": "admin-002",
+        "username": "admin2",
+        "email": "admin2@cinemax.com",
+        "password": "cinemax2026",
+        "role": "admin",
+        "createdAt": "2026-08-19T00:00:00+00:00"
+    },
+    {
+        "id": "6d1a3384-8d97-4c61-9281-abc025d7dd6b",
+        "username": "car",
+        "email": "car@gmail.com",
+        "password": "123456",
+        "role": "user",
+        "createdAt": "2026-08-17T01:49:47.010129+00:00"
+    }
+]

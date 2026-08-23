@@ -1,0 +1,5341 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="theme-color"
+        content="#050505"
+    >
+
+    <meta
+        name="description"
+        content="Explora películas, series y terror en CinemaX."
+    >
+
+    <title>Explorar — CinemaX</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         NAVBAR
+    ====================================================== -->
+
+    <header class="navbar" id="navbar">
+
+        <div class="navbar-left">
+
+            <a
+                href="../Cinema-main/index.html"
+                class="logo"
+            >
+                CINEMAX
+            </a>
+
+
+            <nav class="nav-links">
+
+                <a href="../Cinema-main/index.html">
+                    Inicio
+                </a>
+
+                <a
+                    href="#peliculas"
+                    class="active"
+                >
+                    Películas
+                </a>
+
+                <a href="#series">
+                    Series
+                </a>
+
+                <a href="#terror">
+                    Terror
+                </a>
+
+            </nav>
+
+        </div>
+
+
+        <div class="navbar-right">
+
+            <button
+                class="search-button"
+                id="searchButton"
+                type="button"
+                aria-label="Abrir búsqueda"
+            >
+                <span>⌕</span>
+            </button>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =====================================================
+         HERO
+    ====================================================== -->
+
+    <main>
+
+        <section class="explorer-hero">
+
+            <div class="hero-background-glow"></div>
+
+            <div class="hero-grid"></div>
+
+            <div class="hero-content">
+
+                <span class="hero-label">
+                    CINEMAX · CATÁLOGO
+                </span>
+
+
+                <h1>
+                    Explora.
+                    <br>
+                    <span>Encuentra.</span>
+                    <br>
+                    Disfruta.
+                </h1>
+
+
+                <p>
+                    Descubre películas, series y contenido para
+                    cada momento. Todo tu cine, en un solo lugar.
+                </p>
+
+
+                <form
+                    class="main-search"
+                    id="mainSearchForm"
+                >
+
+                    <span class="main-search-icon">
+                        ⌕
+                    </span>
+
+                    <input
+                        type="text"
+                        id="mainSearchInput"
+                        placeholder="¿Qué quieres ver?"
+                        autocomplete="off"
+                        aria-label="Buscar películas o series"
+                    >
+
+                    <button
+                        id="mainSearchButton"
+                        type="submit"
+                    >
+                        BUSCAR
+                    </button>
+
+                </form>
+
+
+                <div class="quick-categories">
+
+                    <span>
+                        Explorar por:
+                    </span>
+
+                    <a href="#peliculas">
+                        Películas
+                    </a>
+
+                    <a href="#series">
+                        Series
+                    </a>
+
+                    <a href="#terror">
+                        Terror
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="hero-decoration"
+                aria-hidden="true"
+            >
+
+                <div class="decoration-orbit orbit-one"></div>
+                <div class="decoration-orbit orbit-two"></div>
+                <div class="decoration-orbit orbit-three"></div>
+
+                <div class="decoration-circle circle-one"></div>
+                <div class="decoration-circle circle-two"></div>
+
+                <div class="decoration-line line-one"></div>
+                <div class="decoration-line line-two"></div>
+
+            </div>
+
+
+            <div
+                class="hero-corner"
+                aria-hidden="true"
+            >
+                CINEMAX / EXPLORE
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             RESULTADOS
+        ================================================== -->
+
+        <section
+            class="search-results-section"
+            id="searchResultsSection"
+        >
+
+            <div class="section-header">
+
+                <div>
+
+                    <span class="section-label">
+                        BÚSQUEDA
+                    </span>
+
+                    <h2 id="searchResultsTitle">
+                        Resultados
+                    </h2>
+
+                    <p class="section-description">
+                        Contenido encontrado en CinemaX.
+                    </p>
+
+                </div>
+
+
+                <button
+                    class="clear-search"
+                    id="clearSearch"
+                    type="button"
+                >
+                    Limpiar búsqueda
+                </button>
+
+            </div>
+
+
+            <div
+                class="movie-grid"
+                id="searchResults"
+            ></div>
+
+
+            <div
+                class="no-results"
+                id="noResults"
+            >
+
+                <div class="no-results-icon">
+                    ⌕
+                </div>
+
+                <h3>
+                    No encontramos resultados
+                </h3>
+
+                <p>
+                    Prueba con otro título, género o palabra.
+                </p>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             DESTACADOS
+        ================================================== -->
+
+        <section class="featured-section">
+
+            <div class="featured-background"></div>
+
+            <div class="featured-content">
+
+                <div class="featured-text">
+
+                    <span class="section-label">
+                        CINEMAX
+                    </span>
+
+                    <h2>
+                        Tu próxima película
+                        <span>está aquí.</span>
+                    </h2>
+
+                    <p>
+                        Explora nuestro catálogo y descubre
+                        nuevas historias para disfrutar.
+                    </p>
+
+                    <a
+                        href="../peliculas/index.html"
+                        class="featured-button"
+                    >
+                        EXPLORAR PELÍCULAS
+                        <span>→</span>
+                    </a>
+
+                </div>
+
+
+                <div
+                    class="featured-symbol"
+                    aria-hidden="true"
+                >
+                    <span>C</span>
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             PELÍCULAS
+        ================================================== -->
+
+        <section
+            class="content-section"
+            id="peliculas"
+        >
+
+            <div class="section-header">
+
+                <div>
+
+                    <span class="section-label">
+                        CATÁLOGO
+                    </span>
+
+                    <h2>
+                        Películas
+                    </h2>
+
+                    <p class="section-description">
+                        Historias para todos los gustos.
+                    </p>
+
+                </div>
+
+
+                <a
+                    href="../peliculas/index.html"
+                    class="view-all"
+                >
+                    Ver catálogo completo
+                    <span>→</span>
+                </a>
+
+            </div>
+
+
+            <div class="carousel">
+
+                <button
+                    class="carousel-button carousel-left"
+                    type="button"
+                    aria-label="Películas anteriores"
+                >
+                    ‹
+                </button>
+
+
+                <div
+                    class="movie-carousel"
+                    id="moviesGrid"
+                >
+
+
+                    <!-- =================================================
+                         TARJETAS EXISTENTES
+                         SE CONSERVAN COMO FALLBACK
+                    ================================================== -->
+
+
+                    <!-- DEADPOOL -->
+
+                    <article
+                        class="movie-card"
+                        data-id="deadpool-wolverine"
+                        data-title="Deadpool Wolverine Deadpool & Wolverine"
+                        data-type="película"
+                        data-url="../Cinema-main/Deadpool/index.html"
+                    >
+
+                        <div class="movie-poster">
+
+                            <img
+                                src="https://image.tmdb.org/t/p/w500/8cdWjvZQUExUUTzyp4t6EDMubfO.jpg"
+                                alt="Deadpool & Wolverine"
+                                loading="lazy"
+                            >
+
+                            <div class="movie-gradient"></div>
+
+                            <div class="movie-overlay">
+
+                                <button
+                                    class="add-button"
+                                    type="button"
+                                    aria-label="Agregar a mi lista"
+                                >
+                                    +
+                                </button>
+
+                            </div>
+
+                            <span class="movie-type">
+                                PELÍCULA
+                            </span>
+
+                        </div>
+
+
+                        <div class="movie-info">
+
+                            <h3>
+                                Deadpool & Wolverine
+                            </h3>
+
+                            <div class="movie-meta">
+
+                                <span>2024</span>
+                                <i></i>
+                                <span>Acción</span>
+                                <i></i>
+                                <span>Comedia</span>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+
+                    <!-- SPIDER-MAN -->
+
+                    <article
+                        class="movie-card"
+                        data-id="spiderman"
+                        data-title="Spider-Man Spiderman"
+                        data-type="película"
+                        data-url="../Cinema-main/Spider-Man/index.html"
+                    >
+
+                        <div class="movie-poster">
+
+                            <img
+                                src="https://image.tmdb.org/t/p/w500/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg"
+                                alt="Spider-Man"
+                                loading="lazy"
+                            >
+
+                            <div class="movie-gradient"></div>
+
+                            <div class="movie-overlay">
+
+                                <button
+                                    class="add-button"
+                                    type="button"
+                                    aria-label="Agregar a mi lista"
+                                >
+                                    +
+                                </button>
+
+                            </div>
+
+                            <span class="movie-type">
+                                PELÍCULA
+                            </span>
+
+                        </div>
+
+
+                        <div class="movie-info">
+
+                            <h3>
+                                Spider-Man
+                            </h3>
+
+                            <div class="movie-meta">
+
+                                <span>2021</span>
+                                <i></i>
+                                <span>Acción</span>
+                                <i></i>
+                                <span>Aventura</span>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+
+                    <!-- OPPENHEIMER -->
+
+                    <article
+                        class="movie-card"
+                        data-id="oppenheimer"
+                        data-title="Oppenheimer"
+                        data-type="película"
+                        data-url="../Cinema-main/Oppenheimer/index.html"
+                    >
+
+                        <div class="movie-poster">
+
+                            <img
+                                src="https://image.tmdb.org/t/p/w500/8Gxv8gSFCU0XGDykEGv7zR1n2ua.jpg"
+                                alt="Oppenheimer"
+                                loading="lazy"
+                            >
+
+                            <div class="movie-gradient"></div>
+
+                            <div class="movie-overlay">
+
+                                <button
+                                    class="add-button"
+                                    type="button"
+                                    aria-label="Agregar a mi lista"
+                                >
+                                    +
+                                </button>
+
+                            </div>
+
+                            <span class="movie-type">
+                                PELÍCULA
+                            </span>
+
+                        </div>
+
+
+                        <div class="movie-info">
+
+                            <h3>
+                                Oppenheimer
+                            </h3>
+
+                            <div class="movie-meta">
+
+                                <span>2023</span>
+                                <i></i>
+                                <span>Drama</span>
+                                <i></i>
+                                <span>Historia</span>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+
+                    <!-- BATMAN -->
+
+                    <article
+                        class="movie-card"
+                        data-id="the-batman"
+                        data-title="The Batman Batman"
+                        data-type="película"
+                        data-url="../Cinema-main/The-Batman/index.html"
+                    >
+
+                        <div class="movie-poster">
+
+                            <img
+                                src="https://image.tmdb.org/t/p/original/74xTEgt7R36Fpooo50r9T25onhq.jpg"
+                                alt="The Batman"
+                                loading="lazy"
+                                referrerpolicy="no-referrer"
+                            >
+
+                            <div class="movie-gradient"></div>
+
+                            <div class="movie-overlay">
+
+                                <button
+                                    class="add-button"
+                                    type="button"
+                                    aria-label="Agregar a mi lista"
+                                >
+                                    +
+                                </button>
+
+                            </div>
+
+                            <span class="movie-type">
+                                PELÍCULA
+                            </span>
+
+                        </div>
+
+
+                        <div class="movie-info">
+
+                            <h3>
+                                The Batman
+                            </h3>
+
+                            <div class="movie-meta">
+
+                                <span>2022</span>
+                                <i></i>
+                                <span>Acción</span>
+                                <i></i>
+                                <span>Crimen</span>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+
+                    <!-- AVENGERS -->
+
+                    <article
+                        class="movie-card"
+                        data-id="avengers"
+                        data-title="Avengers The Avengers"
+                        data-type="película"
+                        data-url="../Cinema-main/Avengers/index.html"
+                    >
+
+                        <div class="movie-poster">
+
+                            <img
+                                src="https://image.tmdb.org/t/p/w500/4ssDuvEDkSArWEdyBl2X5EHvYKU.jpg"
+                                alt="Avengers"
+                                loading="lazy"
+                            >
+
+                            <div class="movie-gradient"></div>
+
+                            <div class="movie-overlay">
+
+                                <button
+                                    class="add-button"
+                                    type="button"
+                                    aria-label="Agregar a mi lista"
+                                >
+                                    +
+                                </button>
+
+                            </div>
+
+                            <span class="movie-type">
+                                PELÍCULA
+                            </span>
+
+                        </div>
+
+
+                        <div class="movie-info">
+
+                            <h3>
+                                Avengers
+                            </h3>
+
+                            <div class="movie-meta">
+
+                                <span>2012</span>
+                                <i></i>
+                                <span>Acción</span>
+                                <i></i>
+                                <span>Fantasía</span>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+
+                    <!-- INTERSTELLAR -->
+
+                    <article
+                        class="movie-card"
+                        data-id="interstellar"
+                        data-title="Interstellar"
+                        data-type="película"
+                        data-url="../Cinema-main/Interstellar/index.html"
+                    >
+
+                        <div class="movie-poster">
+
+                            <img
+                                src="https://image.tmdb.org/t/p/w500/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg"
+                                alt="Interstellar"
+                                loading="lazy"
+                            >
+
+                            <div class="movie-gradient"></div>
+
+                            <div class="movie-overlay">
+
+                                <button
+                                    class="add-button"
+                                    type="button"
+                                    aria-label="Agregar a mi lista"
+                                >
+                                    +
+                                </button>
+
+                            </div>
+
+                            <span class="movie-type">
+                                PELÍCULA
+                            </span>
+
+                        </div>
+
+
+                        <div class="movie-info">
+
+                            <h3>
+                                Interstellar
+                            </h3>
+
+                            <div class="movie-meta">
+
+                                <span>2014</span>
+                                <i></i>
+                                <span>Ciencia ficción</span>
+                                <i></i>
+                                <span>Drama</span>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+
+                <button
+                    class="carousel-button carousel-right"
+                    type="button"
+                    aria-label="Siguientes películas"
+                >
+                    ›
+                </button>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             SERIES
+        ================================================== -->
+
+        <section
+            class="content-section"
+            id="series"
+        >
+
+            <div class="section-header">
+
+                <div>
+
+                    <span class="section-label">
+                        COLECCIÓN
+                    </span>
+
+                    <h2>
+                        Series
+                    </h2>
+
+                    <p class="section-description">
+                        Historias que no querrás dejar de ver.
+                    </p>
+
+                </div>
+
+
+                <a
+                    href="../series/index.html"
+                    class="view-all"
+                >
+                    Ver catálogo completo
+                    <span>→</span>
+                </a>
+
+            </div>
+
+
+            <div class="carousel">
+
+                <button
+                    class="carousel-button carousel-left"
+                    type="button"
+                    aria-label="Series anteriores"
+                >
+                    ‹
+                </button>
+
+
+                <div
+                    class="movie-carousel"
+                    id="seriesGrid"
+                >
+
+                    <!-- Las series existentes se mantienen como fallback -->
+
+                    <article
+                        class="movie-card"
+                        data-id="serie-1"
+                        data-title="Serie 1"
+                        data-type="serie"
+                        data-url="../Cinema-main/Serie1/index.html"
+                    >
+
+                        <div class="movie-poster">
+
+                            <img
+                                src="../Cinema-main/images/serie1.jpg"
+                                alt="Serie 1"
+                                loading="lazy"
+                            >
+
+                            <div class="movie-gradient"></div>
+
+                            <div class="movie-overlay">
+
+                                <button
+                                    class="add-button"
+                                    type="button"
+                                    aria-label="Agregar a mi lista"
+                                >
+                                    +
+                                </button>
+
+                            </div>
+
+                            <span class="movie-type">
+                                SERIE
+                            </span>
+
+                        </div>
+
+                        <div class="movie-info">
+
+                            <h3>Serie 1</h3>
+
+                            <div class="movie-meta">
+                                <span>Serie</span>
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                    <article
+                        class="movie-card"
+                        data-id="serie-2"
+                        data-title="Serie 2"
+                        data-type="serie"
+                        data-url="../Cinema-main/Serie2/index.html"
+                    >
+
+                        <div class="movie-poster">
+
+                            <img
+                                src="../Cinema-main/images/serie2.jpg"
+                                alt="Serie 2"
+                                loading="lazy"
+                            >
+
+                            <div class="movie-gradient"></div>
+
+                            <div class="movie-overlay">
+
+                                <button
+                                    class="add-button"
+                                    type="button"
+                                    aria-label="Agregar a mi lista"
+                                >
+                                    +
+                                </button>
+
+                            </div>
+
+                            <span class="movie-type">
+                                SERIE
+                            </span>
+
+                        </div>
+
+                        <div class="movie-info">
+
+                            <h3>Serie 2</h3>
+
+                            <div class="movie-meta">
+                                <span>Serie</span>
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                    <article
+                        class="movie-card"
+                        data-id="serie-3"
+                        data-title="Serie 3"
+                        data-type="serie"
+                        data-url="../Cinema-main/Serie3/index.html"
+                    >
+
+                        <div class="movie-poster">
+
+                            <img
+                                src="../Cinema-main/images/serie3.jpg"
+                                alt="Serie 3"
+                                loading="lazy"
+                            >
+
+                            <div class="movie-gradient"></div>
+
+                            <div class="movie-overlay">
+
+                                <button
+                                    class="add-button"
+                                    type="button"
+                                    aria-label="Agregar a mi lista"
+                                >
+                                    +
+                                </button>
+
+                            </div>
+
+                            <span class="movie-type">
+                                SERIE
+                            </span>
+
+                        </div>
+
+                        <div class="movie-info">
+
+                            <h3>Serie 3</h3>
+
+                            <div class="movie-meta">
+                                <span>Serie</span>
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                    <article
+                        class="movie-card"
+                        data-id="serie-4"
+                        data-title="Serie 4"
+                        data-type="serie"
+                        data-url="../Cinema-main/Serie%204/index.html"
+                    >
+
+                        <div class="movie-poster">
+
+                            <img
+                                src="../Cinema-main/images/serie4.jpg"
+                                alt="Serie 4"
+                                loading="lazy"
+                            >
+
+                            <div class="movie-gradient"></div>
+
+                            <div class="movie-overlay">
+
+                                <button
+                                    class="add-button"
+                                    type="button"
+                                    aria-label="Agregar a mi lista"
+                                >
+                                    +
+                                </button>
+
+                            </div>
+
+                            <span class="movie-type">
+                                SERIE
+                            </span>
+
+                        </div>
+
+                        <div class="movie-info">
+
+                            <h3>Serie 4</h3>
+
+                            <div class="movie-meta">
+                                <span>Serie</span>
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                    <article
+                        class="movie-card"
+                        data-id="serie-5"
+                        data-title="Serie 5"
+                        data-type="serie"
+                        data-url="../Cinema-main/Serie%205/index.html"
+                    >
+
+                        <div class="movie-poster">
+
+                            <img
+                                src="../Cinema-main/images/serie5.jpg"
+                                alt="Serie 5"
+                                loading="lazy"
+                            >
+
+                            <div class="movie-gradient"></div>
+
+                            <div class="movie-overlay">
+
+                                <button
+                                    class="add-button"
+                                    type="button"
+                                    aria-label="Agregar a mi lista"
+                                >
+                                    +
+                                </button>
+
+                            </div>
+
+                            <span class="movie-type">
+                                SERIE
+                            </span>
+
+                        </div>
+
+                        <div class="movie-info">
+
+                            <h3>Serie 5</h3>
+
+                            <div class="movie-meta">
+                                <span>Serie</span>
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                    <article
+                        class="movie-card"
+                        data-id="serie-6"
+                        data-title="Serie 6"
+                        data-type="serie"
+                        data-url="../Cinema-main/Serie%206/index.html"
+                    >
+
+                        <div class="movie-poster">
+
+                            <img
+                                src="../Cinema-main/images/serie6.jpg"
+                                alt="Serie 6"
+                                loading="lazy"
+                            >
+
+                            <div class="movie-gradient"></div>
+
+                            <div class="movie-overlay">
+
+                                <button
+                                    class="add-button"
+                                    type="button"
+                                    aria-label="Agregar a mi lista"
+                                >
+                                    +
+                                </button>
+
+                            </div>
+
+                            <span class="movie-type">
+                                SERIE
+                            </span>
+
+                        </div>
+
+                        <div class="movie-info">
+
+                            <h3>Serie 6</h3>
+
+                            <div class="movie-meta">
+                                <span>Serie</span>
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                    <article
+                        class="movie-card"
+                        data-id="serie-7"
+                        data-title="Serie 7"
+                        data-type="serie"
+                        data-url="../Cinema-main/Serie7/index.html"
+                    >
+
+                        <div class="movie-poster">
+
+                            <img
+                                src="../Cinema-main/images/serie7.jpg"
+                                alt="Serie 7"
+                                loading="lazy"
+                            >
+
+                            <div class="movie-gradient"></div>
+
+                            <div class="movie-overlay">
+
+                                <button
+                                    class="add-button"
+                                    type="button"
+                                    aria-label="Agregar a mi lista"
+                                >
+                                    +
+                                </button>
+
+                            </div>
+
+                            <span class="movie-type">
+                                SERIE
+                            </span>
+
+                        </div>
+
+                        <div class="movie-info">
+
+                            <h3>Serie 7</h3>
+
+                            <div class="movie-meta">
+                                <span>Serie</span>
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                    <article
+                        class="movie-card"
+                        data-id="serie-8"
+                        data-title="Serie 8"
+                        data-type="serie"
+                        data-url="../Cinema-main/Serie8/index.html"
+                    >
+
+                        <div class="movie-poster">
+
+                            <img
+                                src="../Cinema-main/images/serie8.jpg"
+                                alt="Serie 8"
+                                loading="lazy"
+                            >
+
+                            <div class="movie-gradient"></div>
+
+                            <div class="movie-overlay">
+
+                                <button
+                                    class="add-button"
+                                    type="button"
+                                    aria-label="Agregar a mi lista"
+                                >
+                                    +
+                                </button>
+
+                            </div>
+
+                            <span class="movie-type">
+                                SERIE
+                            </span>
+
+                        </div>
+
+                        <div class="movie-info">
+
+                            <h3>Serie 8</h3>
+
+                            <div class="movie-meta">
+                                <span>Serie</span>
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                    <article
+                        class="movie-card"
+                        data-id="serie-9"
+                        data-title="Serie 9"
+                        data-type="serie"
+                        data-url="../Cinema-main/serie9/index.html"
+                    >
+
+                        <div class="movie-poster">
+
+                            <img
+                                src="../Cinema-main/images/serie9.jpg"
+                                alt="Serie 9"
+                                loading="lazy"
+                            >
+
+                            <div class="movie-gradient"></div>
+
+                            <div class="movie-overlay">
+
+                                <button
+                                    class="add-button"
+                                    type="button"
+                                    aria-label="Agregar a mi lista"
+                                >
+                                    +
+                                </button>
+
+                            </div>
+
+                            <span class="movie-type">
+                                SERIE
+                            </span>
+
+                        </div>
+
+                        <div class="movie-info">
+
+                            <h3>Serie 9</h3>
+
+                            <div class="movie-meta">
+                                <span>Serie</span>
+                            </div>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+
+                <button
+                    class="carousel-button carousel-right"
+                    type="button"
+                    aria-label="Siguientes series"
+                >
+                    ›
+                </button>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             TERROR
+        ================================================== -->
+
+        <section
+            class="content-section horror-section"
+            id="terror"
+        >
+
+            <div class="horror-glow"></div>
+            <div class="horror-noise"></div>
+
+
+            <div class="section-header">
+
+                <div>
+
+                    <span class="section-label">
+                        ZONA OSCURA
+                    </span>
+
+                    <h2>
+                        Terror
+                    </h2>
+
+                    <p class="section-description">
+                        Para quienes se atreven a mirar.
+                    </p>
+
+                </div>
+
+
+                <a
+                    href="../terror/index.html"
+                    class="view-all"
+                >
+                    Ver catálogo completo
+                    <span>→</span>
+                </a>
+
+            </div>
+
+
+            <div class="carousel">
+
+                <button
+                    class="carousel-button carousel-left"
+                    type="button"
+                    aria-label="Terror anterior"
+                >
+                    ‹
+                </button>
+
+
+                <div
+                    class="movie-carousel"
+                    id="horrorGrid"
+                >
+
+                    <article
+                        class="movie-card"
+                        data-id="terror-1"
+                        data-title="Terror 1"
+                        data-type="terror"
+                        data-url="../Cinema-main/terror1/enlace1.html"
+                    >
+
+                        <div class="movie-poster">
+
+                            <img
+                                src="../Cinema-main/images/terror1.jpg"
+                                alt="Terror 1"
+                                loading="lazy"
+                            >
+
+                            <div class="movie-gradient"></div>
+
+                            <div class="movie-overlay">
+
+                                <button
+                                    class="add-button"
+                                    type="button"
+                                    aria-label="Agregar a mi lista"
+                                >
+                                    +
+                                </button>
+
+                            </div>
+
+                            <span class="movie-type horror-tag">
+                                TERROR
+                            </span>
+
+                        </div>
+
+                        <div class="movie-info">
+
+                            <h3>Terror 1</h3>
+
+                            <div class="movie-meta">
+                                <span>Terror</span>
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                    <article
+                        class="movie-card"
+                        data-id="terror-2"
+                        data-title="Terror 2"
+                        data-type="terror"
+                        data-url="../Cinema-main/terror2/enlace1.html"
+                    >
+
+                        <div class="movie-poster">
+
+                            <img
+                                src="../Cinema-main/images/terror2.jpg"
+                                alt="Terror 2"
+                                loading="lazy"
+                            >
+
+                            <div class="movie-gradient"></div>
+
+                            <div class="movie-overlay">
+
+                                <button
+                                    class="add-button"
+                                    type="button"
+                                    aria-label="Agregar a mi lista"
+                                >
+                                    +
+                                </button>
+
+                            </div>
+
+                            <span class="movie-type horror-tag">
+                                TERROR
+                            </span>
+
+                        </div>
+
+                        <div class="movie-info">
+
+                            <h3>Terror 2</h3>
+
+                            <div class="movie-meta">
+                                <span>Terror</span>
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                    <article
+                        class="movie-card"
+                        data-id="terror-3"
+                        data-title="Terror 3"
+                        data-type="terror"
+                        data-url="../Cinema-main/terror3/enlace1.html"
+                    >
+
+                        <div class="movie-poster">
+
+                            <img
+                                src="../Cinema-main/images/terror3.jpg"
+                                alt="Terror 3"
+                                loading="lazy"
+                            >
+
+                            <div class="movie-gradient"></div>
+
+                            <div class="movie-overlay">
+
+                                <button
+                                    class="add-button"
+                                    type="button"
+                                    aria-label="Agregar a mi lista"
+                                >
+                                    +
+                                </button>
+
+                            </div>
+
+                            <span class="movie-type horror-tag">
+                                TERROR
+                            </span>
+
+                        </div>
+
+                        <div class="movie-info">
+
+                            <h3>Terror 3</h3>
+
+                            <div class="movie-meta">
+                                <span>Terror</span>
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                    <article
+                        class="movie-card"
+                        data-id="terror-4"
+                        data-title="Terror 4"
+                        data-type="terror"
+                        data-url="../Cinema-main/terror4/enlace1.html"
+                    >
+
+                        <div class="movie-poster">
+
+                            <img
+                                src="../Cinema-main/images/terror6.jpg"
+                                alt="Terror 4"
+                                loading="lazy"
+                            >
+
+                            <div class="movie-gradient"></div>
+
+                            <div class="movie-overlay">
+
+                                <button
+                                    class="add-button"
+                                    type="button"
+                                    aria-label="Agregar a mi lista"
+                                >
+                                    +
+                                </button>
+
+                            </div>
+
+                            <span class="movie-type horror-tag">
+                                TERROR
+                            </span>
+
+                        </div>
+
+                        <div class="movie-info">
+
+                            <h3>Terror 4</h3>
+
+                            <div class="movie-meta">
+                                <span>Terror</span>
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                    <article
+                        class="movie-card"
+                        data-id="terror-5"
+                        data-title="Terror 5"
+                        data-type="terror"
+                        data-url="../Cinema-main/terror5/enlace1.html"
+                    >
+
+                        <div class="movie-poster">
+
+                            <img
+                                src="../Cinema-main/images/terror7.jpg"
+                                alt="Terror 5"
+                                loading="lazy"
+                            >
+
+                            <div class="movie-gradient"></div>
+
+                            <div class="movie-overlay">
+
+                                <button
+                                    class="add-button"
+                                    type="button"
+                                    aria-label="Agregar a mi lista"
+                                >
+                                    +
+                                </button>
+
+                            </div>
+
+                            <span class="movie-type horror-tag">
+                                TERROR
+                            </span>
+
+                        </div>
+
+                        <div class="movie-info">
+
+                            <h3>Terror 5</h3>
+
+                            <div class="movie-meta">
+                                <span>Terror</span>
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                    <article
+                        class="movie-card"
+                        data-id="terror-6"
+                        data-title="Terror 6"
+                        data-type="terror"
+                        data-url="../Cinema-main/terror6/enlace1.html"
+                    >
+
+                        <div class="movie-poster">
+
+                            <img
+                                src="../Cinema-main/images/terror8.jpg"
+                                alt="Terror 6"
+                                loading="lazy"
+                            >
+
+                            <div class="movie-gradient"></div>
+
+                            <div class="movie-overlay">
+
+                                <button
+                                    class="add-button"
+                                    type="button"
+                                    aria-label="Agregar a mi lista"
+                                >
+                                    +
+                                </button>
+
+                            </div>
+
+                            <span class="movie-type horror-tag">
+                                TERROR
+                            </span>
+
+                        </div>
+
+                        <div class="movie-info">
+
+                            <h3>Terror 6</h3>
+
+                            <div class="movie-meta">
+                                <span>Terror</span>
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                    <article
+                        class="movie-card"
+                        data-id="terror-7"
+                        data-title="Terror 7"
+                        data-type="terror"
+                        data-url="../Cinema-main/terror7/enlace1.html"
+                    >
+
+                        <div class="movie-poster">
+
+                            <img
+                                src="../Cinema-main/images/terror9.jpg"
+                                alt="Terror 7"
+                                loading="lazy"
+                            >
+
+                            <div class="movie-gradient"></div>
+
+                            <div class="movie-overlay">
+
+                                <button
+                                    class="add-button"
+                                    type="button"
+                                    aria-label="Agregar a mi lista"
+                                >
+                                    +
+                                </button>
+
+                            </div>
+
+                            <span class="movie-type horror-tag">
+                                TERROR
+                            </span>
+
+                        </div>
+
+                        <div class="movie-info">
+
+                            <h3>Terror 7</h3>
+
+                            <div class="movie-meta">
+                                <span>Terror</span>
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                    <article
+                        class="movie-card"
+                        data-id="terror-8"
+                        data-title="Terror 8"
+                        data-type="terror"
+                        data-url="../Cinema-main/terror8/enlace1.html"
+                    >
+
+                        <div class="movie-poster">
+
+                            <img
+                                src="../Cinema-main/images/terror10.jpg"
+                                alt="Terror 8"
+                                loading="lazy"
+                            >
+
+                            <div class="movie-gradient"></div>
+
+                            <div class="movie-overlay">
+
+                                <button
+                                    class="add-button"
+                                    type="button"
+                                    aria-label="Agregar a mi lista"
+                                >
+                                    +
+                                </button>
+
+                            </div>
+
+                            <span class="movie-type horror-tag">
+                                TERROR
+                            </span>
+
+                        </div>
+
+                        <div class="movie-info">
+
+                            <h3>Terror 8</h3>
+
+                            <div class="movie-meta">
+                                <span>Terror</span>
+                            </div>
+
+                        </div>
+
+                    </article>
+
+
+                    <article
+                        class="movie-card"
+                        data-id="terror-9"
+                        data-title="Terror 9"
+                        data-type="terror"
+                        data-url="../Cinema-main/terror9/enlace1.html"
+                    >
+
+                        <div class="movie-poster">
+
+                            <img
+                                src="../Cinema-main/images/terror11.jpg"
+                                alt="Terror 9"
+                                loading="lazy"
+                            >
+
+                            <div class="movie-gradient"></div>
+
+                            <div class="movie-overlay">
+
+                                <button
+                                    class="add-button"
+                                    type="button"
+                                    aria-label="Agregar a mi lista"
+                                >
+                                    +
+                                </button>
+
+                            </div>
+
+                            <span class="movie-type horror-tag">
+                                TERROR
+                            </span>
+
+                        </div>
+
+                        <div class="movie-info">
+
+                            <h3>Terror 9</h3>
+
+                            <div class="movie-meta">
+                                <span>Terror</span>
+                            </div>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+
+                <button
+                    class="carousel-button carousel-right"
+                    type="button"
+                    aria-label="Siguiente terror"
+                >
+                    ›
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- =====================================================
+         SEARCH OVERLAY
+    ====================================================== -->
+
+    <div
+        class="search-overlay"
+        id="searchOverlay"
+        aria-hidden="true"
+    >
+
+        <div class="search-overlay-backdrop"></div>
+
+
+        <div class="search-overlay-content">
+
+            <button
+                class="close-search"
+                id="closeSearch"
+                type="button"
+                aria-label="Cerrar búsqueda"
+            >
+                ×
+            </button>
+
+
+            <span class="overlay-label">
+                CINEMAX SEARCH
+            </span>
+
+
+            <h2>
+                ¿Qué quieres ver?
+            </h2>
+
+
+            <p>
+                Busca entre películas, series y terror.
+            </p>
+
+
+            <form
+                class="overlay-search-box"
+                id="overlaySearchForm"
+            >
+
+                <span>⌕</span>
+
+                <input
+                    type="text"
+                    id="overlaySearchInput"
+                    placeholder="Buscar..."
+                    autocomplete="off"
+                    aria-label="Buscar contenido"
+                >
+
+                <button
+                    type="submit"
+                    aria-label="Buscar"
+                >
+                    →
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+
+
+
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <footer class="footer">
+
+        <div class="footer-top">
+
+            <div class="footer-brand">
+
+                <div class="footer-logo">
+                    CINEMAX
+                </div>
+
+                <p>
+                    Tu cine, en un solo lugar.
+                </p>
+
+            </div>
+
+
+            <div class="footer-navigation">
+
+                <span>
+                    EXPLORAR
+                </span>
+
+                <a href="../Cinema-main/index.html">
+                    Inicio
+                </a>
+
+                <a href="../peliculas/index.html">
+                    Películas
+                </a>
+
+                <a href="../series/index.html">
+                    Series
+                </a>
+
+                <a href="../terror/index.html">
+                    Terror
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            <span>
+                © 2026 CinemaX
+            </span>
+
+            <span>
+                Hecho para amantes del cine.
+            </span>
+
+        </div>
+
+    </footer>
+
+
+
+```html
+<script>
+
+    document.addEventListener("DOMContentLoaded", () => {
+
+
+        /* =================================================
+           CONFIGURACIÓN DEL CATÁLOGO
+        ================================================== */
+
+        const CATALOG_API =
+            "/api/catalog";
+
+
+        const CATALOG_REFRESH_TIME =
+            30000;
+
+
+        let catalogData = [];
+
+        let catalogLoaded =
+            false;
+
+        let catalogRefreshTimer =
+            null;
+
+
+
+        /* =================================================
+           NAVBAR
+        ================================================= */
+
+        const navbar =
+            document.getElementById("navbar");
+
+
+        const updateNavbar = () => {
+
+            if (window.scrollY > 30) {
+
+                navbar.classList.add(
+                    "scrolled"
+                );
+
+            } else {
+
+                navbar.classList.remove(
+                    "scrolled"
+                );
+
+            }
+
+        };
+
+
+        updateNavbar();
+
+
+        window.addEventListener(
+            "scroll",
+            updateNavbar,
+            {
+                passive: true
+            }
+        );
+
+
+
+        /* =================================================
+           NORMALIZAR TEXTO
+        ================================================= */
+
+        const normalize = text => {
+
+            return String(text || "")
+                .toLowerCase()
+                .normalize("NFD")
+                .replace(
+                    /[\u0300-\u036f]/g,
+                    ""
+                )
+                .trim();
+
+        };
+
+
+
+        /* =================================================
+           FAVORITOS
+        ================================================= */
+
+        const FAVORITES_KEY =
+            "cinemax_favorites";
+
+
+        const getFavorites = () => {
+
+            try {
+
+                const saved =
+                    localStorage.getItem(
+                        FAVORITES_KEY
+                    );
+
+
+                if (!saved) {
+                    return [];
+                }
+
+
+                const parsed =
+                    JSON.parse(saved);
+
+
+                return Array.isArray(parsed)
+                    ? parsed
+                    : [];
+
+
+            } catch (error) {
+
+                console.warn(
+                    "CinemaX: error leyendo favoritos.",
+                    error
+                );
+
+
+                return [];
+
+            }
+
+        };
+
+
+        const saveFavorites = favorites => {
+
+            try {
+
+                localStorage.setItem(
+                    FAVORITES_KEY,
+                    JSON.stringify(
+                        favorites
+                    )
+                );
+
+
+            } catch (error) {
+
+                console.warn(
+                    "CinemaX: error guardando favoritos.",
+                    error
+                );
+
+            }
+
+        };
+
+
+        const getCardData = card => {
+
+            const image =
+                card.querySelector(
+                    ".movie-poster img"
+                );
+
+
+            const title =
+                card.querySelector(
+                    ".movie-info h3"
+                );
+
+
+            return {
+
+                id:
+                    card.dataset.id ||
+                    normalize(
+                        title
+                            ? title.textContent
+                            : card.dataset.title ||
+                              ""
+                    ),
+
+                title:
+                    title
+                        ? title.textContent.trim()
+                        : card.dataset.title ||
+                          "",
+
+                type:
+                    card.dataset.type ||
+                    "",
+
+                url:
+                    card.dataset.url ||
+                    "",
+
+                video:
+                    card.dataset.video ||
+                    "",
+
+                image:
+                    image
+                        ? image.currentSrc ||
+                          image.src ||
+                          image.getAttribute(
+                              "src"
+                          ) ||
+                          ""
+                        : "",
+
+                year:
+                    card.dataset.year ||
+                    "",
+
+                genre:
+                    card.dataset.genre ||
+                    "",
+
+                duration:
+                    card.dataset.duration ||
+                    "",
+
+                rating:
+                    card.dataset.rating ||
+                    "",
+
+                featured:
+                    card.dataset.featured ===
+                    "true"
+
+            };
+
+        };
+
+
+        const isFavorite = id => {
+
+            return getFavorites().some(
+                favorite =>
+                    String(
+                        favorite.id
+                    ) ===
+                    String(id)
+            );
+
+        };
+
+
+        const updateFavoriteButton =
+            (
+                button,
+                favorite
+            ) => {
+
+                if (!button) {
+                    return;
+                }
+
+
+                button.classList.toggle(
+                    "added",
+                    favorite
+                );
+
+
+                button.textContent =
+                    favorite
+                        ? "✓"
+                        : "+";
+
+
+                button.setAttribute(
+                    "aria-label",
+                    favorite
+                        ? "Quitar de mi lista"
+                        : "Agregar a mi lista"
+                );
+
+
+                button.setAttribute(
+                    "aria-pressed",
+                    favorite
+                        ? "true"
+                        : "false"
+                );
+
+            };
+
+
+        const syncFavoriteButtons = () => {
+
+            document
+                .querySelectorAll(
+                    ".movie-card"
+                )
+                .forEach(card => {
+
+                    const button =
+                        card.querySelector(
+                            ".add-button"
+                        );
+
+
+                    if (!button) {
+                        return;
+                    }
+
+
+                    const data =
+                        getCardData(card);
+
+
+                    updateFavoriteButton(
+                        button,
+                        isFavorite(
+                            data.id
+                        )
+                    );
+
+                });
+
+        };
+
+
+        const toggleFavorite = card => {
+
+            if (!card) {
+                return;
+            }
+
+
+            const data =
+                getCardData(card);
+
+
+            if (!data.id) {
+                return;
+            }
+
+
+            let favorites =
+                getFavorites();
+
+
+            const existingIndex =
+                favorites.findIndex(
+                    favorite =>
+                        String(
+                            favorite.id
+                        ) ===
+                        String(
+                            data.id
+                        )
+                );
+
+
+            if (
+                existingIndex !== -1
+            ) {
+
+                favorites.splice(
+                    existingIndex,
+                    1
+                );
+
+            } else {
+
+                favorites.push(
+                    data
+                );
+
+            }
+
+
+            saveFavorites(
+                favorites
+            );
+
+
+            syncFavoriteButtons();
+
+
+            window.dispatchEvent(
+                new CustomEvent(
+                    "cinemax:favorites-changed",
+                    {
+                        detail: {
+                            favorites
+                        }
+                    }
+                )
+            );
+
+        };
+
+
+        window.addEventListener(
+            "storage",
+            event => {
+
+                if (
+                    event.key ===
+                    FAVORITES_KEY
+                ) {
+
+                    syncFavoriteButtons();
+
+                }
+
+            }
+        );
+
+
+        window.addEventListener(
+            "cinemax:favorites-changed",
+            syncFavoriteButtons
+        );
+
+
+
+        /* =================================================
+           FALLBACK DE IMÁGENES
+        ================================================== */
+
+        const fallbackPoster =
+            "data:image/svg+xml;charset=UTF-8," +
+            encodeURIComponent(`
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="500"
+                    height="750"
+                    viewBox="0 0 500 750"
+                >
+
+                    <rect
+                        width="500"
+                        height="750"
+                        fill="#111"
+                    />
+
+                    <circle
+                        cx="250"
+                        cy="330"
+                        r="90"
+                        fill="none"
+                        stroke="#e50914"
+                        stroke-width="3"
+                        opacity=".65"
+                    />
+
+                    <text
+                        x="250"
+                        y="345"
+                        text-anchor="middle"
+                        fill="#e50914"
+                        font-family="Arial"
+                        font-size="42"
+                        font-weight="900"
+                    >
+                        C
+                    </text>
+
+                    <text
+                        x="250"
+                        y="470"
+                        text-anchor="middle"
+                        fill="#777"
+                        font-family="Arial"
+                        font-size="18"
+                        letter-spacing="4"
+                    >
+                        CINEMAX
+                    </text>
+
+                </svg>
+            `);
+
+
+        const applyImageFallbacks = () => {
+
+            document
+                .querySelectorAll(
+                    ".movie-poster img"
+                )
+                .forEach(img => {
+
+                    if (
+                        img.dataset
+                            .fallbackListener
+                    ) {
+                        return;
+                    }
+
+
+                    img.dataset
+                        .fallbackListener =
+                        "true";
+
+
+                    img.addEventListener(
+                        "error",
+                        () => {
+
+                            if (
+                                img.dataset
+                                    .fallbackApplied
+                            ) {
+                                return;
+                            }
+
+
+                            img.dataset
+                                .fallbackApplied =
+                                "true";
+
+
+                            img.src =
+                                fallbackPoster;
+
+                        },
+                        {
+                            once: true
+                        }
+                    );
+
+                });
+
+        };
+
+
+
+        /* =================================================
+           CAROUSELS
+        ================================================== */
+
+        const initializeCarousels =
+            () => {
+
+                document
+                    .querySelectorAll(
+                        ".carousel"
+                    )
+                    .forEach(
+                        carousel => {
+
+                            const track =
+                                carousel.querySelector(
+                                    ".movie-carousel"
+                                );
+
+
+                            const left =
+                                carousel.querySelector(
+                                    ".carousel-left"
+                                );
+
+
+                            const right =
+                                carousel.querySelector(
+                                    ".carousel-right"
+                                );
+
+
+                            if (
+                                !track ||
+                                !left ||
+                                !right
+                            ) {
+                                return;
+                            }
+
+
+                            if (
+                                track.dataset
+                                    .carouselInitialized
+                            ) {
+
+                                return;
+
+                            }
+
+
+                            track.dataset
+                                .carouselInitialized =
+                                "true";
+
+
+                            const getScrollAmount =
+                                () => {
+
+                                    const card =
+                                        track.querySelector(
+                                            ".movie-card"
+                                        );
+
+
+                                    if (!card) {
+                                        return 300;
+                                    }
+
+
+                                    const gap =
+                                        parseFloat(
+                                            getComputedStyle(
+                                                track
+                                            ).gap
+                                        ) || 14;
+
+
+                                    return (
+                                        card.offsetWidth +
+                                        gap
+                                    );
+
+                                };
+
+
+                            left.addEventListener(
+                                "click",
+                                () => {
+
+                                    track.scrollBy({
+
+                                        left:
+                                            -getScrollAmount() *
+                                            2,
+
+                                        behavior:
+                                            "smooth"
+
+                                    });
+
+                                }
+                            );
+
+
+                            right.addEventListener(
+                                "click",
+                                () => {
+
+                                    track.scrollBy({
+
+                                        left:
+                                            getScrollAmount() *
+                                            2,
+
+                                        behavior:
+                                            "smooth"
+
+                                    });
+
+                                }
+                            );
+
+
+                            const updateButtons =
+                                () => {
+
+                                    const maxScroll =
+                                        track.scrollWidth -
+                                        track.clientWidth;
+
+
+                                    if (
+                                        maxScroll <=
+                                        5
+                                    ) {
+
+                                        left.classList.add(
+                                            "disabled"
+                                        );
+
+                                        right.classList.add(
+                                            "disabled"
+                                        );
+
+                                        return;
+
+                                    }
+
+
+                                    left.classList.toggle(
+                                        "disabled",
+                                        track.scrollLeft <=
+                                        5
+                                    );
+
+
+                                    right.classList.toggle(
+                                        "disabled",
+                                        track.scrollLeft >=
+                                        maxScroll - 5
+                                    );
+
+                                };
+
+
+                            track.addEventListener(
+                                "scroll",
+                                updateButtons,
+                                {
+                                    passive: true
+                                }
+                            );
+
+
+                            window.addEventListener(
+                                "resize",
+                                updateButtons
+                            );
+
+
+                            updateButtons();
+
+                        }
+                    );
+
+            };
+
+
+
+        /* =================================================
+           OBTENER VALOR DE UN OBJETO
+        ================================================== */
+
+        const getValue = (
+            object,
+            keys,
+            fallback = ""
+        ) => {
+
+            for (
+                const key of keys
+            ) {
+
+                if (
+                    object &&
+                    object[key] !==
+                    undefined &&
+                    object[key] !==
+                    null &&
+                    object[key] !==
+                    ""
+                ) {
+
+                    return object[key];
+
+                }
+
+            }
+
+
+            return fallback;
+
+        };
+
+
+
+        /* =================================================
+           CONVERTIR DURACIÓN
+        ================================================== */
+
+        const formatDuration = value => {
+
+            if (
+                value === undefined ||
+                value === null ||
+                value === ""
+            ) {
+                return "";
+            }
+
+
+            const stringValue =
+                String(value).trim();
+
+
+            if (
+                /min|h|hora/i.test(
+                    stringValue
+                )
+            ) {
+
+                return stringValue;
+
+            }
+
+
+            const minutes =
+                Number(value);
+
+
+            if (
+                !Number.isNaN(minutes) &&
+                minutes > 0
+            ) {
+
+                const hours =
+                    Math.floor(
+                        minutes / 60
+                    );
+
+                const mins =
+                    minutes % 60;
+
+
+                if (hours > 0) {
+
+                    return (
+                        hours +
+                        "h " +
+                        (mins
+                            ? mins + "min"
+                            : "")
+                    ).trim();
+
+                }
+
+
+                return (
+                    minutes +
+                    " min"
+                );
+
+            }
+
+
+            return stringValue;
+
+        };
+
+
+
+        /* =================================================
+           NORMALIZAR TIPO
+        ================================================== */
+
+        const normalizeType = item => {
+
+            const type =
+                normalize(
+                    getValue(
+                        item,
+                        [
+                            "type",
+                            "tipo",
+                            "category",
+                            "categoria",
+                            "section"
+                        ]
+                    )
+                );
+
+
+            if (
+                type.includes(
+                    "terror"
+                ) ||
+                type.includes(
+                    "horror"
+                )
+            ) {
+
+                return "terror";
+
+            }
+
+
+            if (
+                type.includes(
+                    "serie"
+                ) ||
+                type.includes(
+                    "series"
+                ) ||
+                type.includes(
+                    "tv"
+                )
+            ) {
+
+                return "serie";
+
+            }
+
+
+            return "pelicula";
+
+        };
+
+
+
+        /* =================================================
+           OBTENER ITEMS DEL API
+        ================================================== */
+
+        const extractCatalogItems =
+            response => {
+
+                if (
+                    Array.isArray(
+                        response
+                    )
+                ) {
+
+                    return response;
+
+                }
+
+
+                if (
+                    !response ||
+                    typeof response !==
+                    "object"
+                ) {
+
+                    return [];
+
+                }
+
+
+                const possibleArrays = [
+
+                    response.catalog,
+
+                    response.catalogo,
+
+                    response.items,
+
+                    response.data,
+
+                    response.movies,
+
+                    response.peliculas,
+
+                    response.series,
+
+                    response.terror,
+
+                    response.horror
+
+                ];
+
+
+                const arrays =
+                    possibleArrays.filter(
+                        Array.isArray
+                    );
+
+
+                if (
+                    arrays.length
+                ) {
+
+                    const combined = [];
+
+
+                    if (
+                        Array.isArray(
+                            response.movies
+                        )
+                    ) {
+
+                        combined.push(
+                            ...response.movies.map(
+                                item => ({
+                                    ...item,
+                                    type:
+                                        item.type ||
+                                        "pelicula"
+                                })
+                            )
+                        );
+
+                    }
+
+
+                    if (
+                        Array.isArray(
+                            response.peliculas
+                        )
+                    ) {
+
+                        combined.push(
+                            ...response.peliculas.map(
+                                item => ({
+                                    ...item,
+                                    type:
+                                        item.type ||
+                                        "pelicula"
+                                })
+                            )
+                        );
+
+                    }
+
+
+                    if (
+                        Array.isArray(
+                            response.series
+                        )
+                    ) {
+
+                        combined.push(
+                            ...response.series.map(
+                                item => ({
+                                    ...item,
+                                    type:
+                                        item.type ||
+                                        "serie"
+                                })
+                            )
+                        );
+
+                    }
+
+
+                    if (
+                        Array.isArray(
+                            response.terror
+                        )
+                    ) {
+
+                        combined.push(
+                            ...response.terror.map(
+                                item => ({
+                                    ...item,
+                                    type:
+                                        item.type ||
+                                        "terror"
+                                })
+                            )
+                        );
+
+                    }
+
+
+                    if (
+                        Array.isArray(
+                            response.horror
+                        )
+                    ) {
+
+                        combined.push(
+                            ...response.horror.map(
+                                item => ({
+                                    ...item,
+                                    type:
+                                        item.type ||
+                                        "terror"
+                                })
+                            )
+                        );
+
+                    }
+
+
+                    if (
+                        combined.length
+                    ) {
+
+                        return combined;
+
+                    }
+
+
+                    return arrays[0];
+
+                }
+
+
+                if (
+                    response.data &&
+                    typeof response.data ===
+                    "object" &&
+                    !Array.isArray(
+                        response.data
+                    )
+                ) {
+
+                    return extractCatalogItems(
+                        response.data
+                    );
+
+                }
+
+
+                return [];
+
+            };
+
+
+
+        /* =================================================
+           NORMALIZAR ITEM DEL API
+        ================================================== */
+
+        const normalizeCatalogItem =
+            item => {
+
+                const title =
+                    getValue(
+                        item,
+                        [
+                            "title",
+                            "name",
+                            "titulo",
+                            "nombre"
+                        ],
+                        "Sin título"
+                    );
+
+
+                const image =
+                    getValue(
+                        item,
+                        [
+                            "image",
+                            "poster",
+                            "posterUrl",
+                            "poster_url",
+                            "imageUrl",
+                            "image_url"
+                        ]
+                    );
+
+
+                const video =
+                    getValue(
+                        item,
+                        [
+                            "video",
+                            "videoUrl",
+                            "video_url",
+                            "urlVideo",
+                            "videoUrl"
+                        ]
+                    );
+
+
+                const url =
+                    getValue(
+                        item,
+                        [
+                            "url",
+                            "link",
+                            "href",
+                            "page",
+                            "detailUrl",
+                            "detail_url"
+                        ]
+                    );
+
+
+                const year =
+                    getValue(
+                        item,
+                        [
+                            "year",
+                            "releaseYear",
+                            "release_year",
+                            "anio",
+                            "año"
+                        ]
+                    );
+
+
+                const genre =
+                    getValue(
+                        item,
+                        [
+                            "genre",
+                            "genres",
+                            "genero",
+                            "género",
+                            "category"
+                        ]
+                    );
+
+
+                const duration =
+                    formatDuration(
+                        getValue(
+                            item,
+                            [
+                                "duration",
+                                "duracion",
+                                "duración",
+                                "runtime",
+                                "minutes"
+                            ]
+                        )
+                    );
+
+
+                const rating =
+                    getValue(
+                        item,
+                        [
+                            "rating",
+                            "score",
+                            "vote_average",
+                            "stars",
+                            "calificacion",
+                            "calificación"
+                        ]
+                    );
+
+
+                const type =
+                    normalizeType(
+                        item
+                    );
+
+
+                const featuredValue =
+                    getValue(
+                        item,
+                        [
+                            "featured",
+                            "destacada",
+                            "destacado",
+                            "isFeatured",
+                            "is_featured"
+                        ],
+                        false
+                    );
+
+
+                const featured =
+                    featuredValue === true ||
+                    featuredValue === 1 ||
+                    normalize(
+                        featuredValue
+                    ) === "true" ||
+                    normalize(
+                        featuredValue
+                    ) === "1";
+
+
+                const id =
+                    getValue(
+                        item,
+                        [
+                            "id",
+                            "_id",
+                            "slug",
+                            "uuid"
+                        ]
+                    ) ||
+                    normalize(
+                        title
+                    ).replace(
+                        /\s+/g,
+                        "-"
+                    );
+
+
+                return {
+
+                    raw:
+                        item,
+
+                    id:
+                        String(id),
+
+                    title:
+                        String(title),
+
+                    image:
+                        String(image || ""),
+
+                    video:
+                        String(video || ""),
+
+                    url:
+                        String(url || ""),
+
+                    year:
+                        String(year || ""),
+
+                    genre:
+                        Array.isArray(
+                            genre
+                        )
+                            ? genre.join(
+                                ", "
+                            )
+                            : String(
+                                genre || ""
+                            ),
+
+                    duration:
+                        duration,
+
+                    rating:
+                        rating === ""
+                            ? ""
+                            : String(
+                                rating
+                            ),
+
+                    type:
+                        type,
+
+                    featured:
+                        featured
+
+                };
+
+            };
+
+
+
+        /* =================================================
+           CREAR TARJETA DINÁMICA
+        ================================================== */
+
+        const createMovieCard =
+            item => {
+
+                const card =
+                    document.createElement(
+                        "article"
+                    );
+
+
+                card.className =
+                    "movie-card";
+
+
+                card.dataset.id =
+                    item.id;
+
+
+                card.dataset.title =
+                    item.title;
+
+
+                card.dataset.type =
+                    item.type;
+
+
+                card.dataset.url =
+                    item.url;
+
+
+                card.dataset.video =
+                    item.video;
+
+
+                card.dataset.year =
+                    item.year;
+
+
+                card.dataset.genre =
+                    item.genre;
+
+
+                card.dataset.duration =
+                    item.duration;
+
+
+                card.dataset.rating =
+                    item.rating;
+
+
+                card.dataset.featured =
+                    item.featured
+                        ? "true"
+                        : "false";
+
+
+                if (
+                    item.featured
+                ) {
+
+                    card.classList.add(
+                        "featured"
+                    );
+
+                }
+
+
+                const poster =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                poster.className =
+                    "movie-poster";
+
+
+                const img =
+                    document.createElement(
+                        "img"
+                    );
+
+
+                img.src =
+                    item.image ||
+                    fallbackPoster;
+
+
+                img.alt =
+                    item.title;
+
+
+                img.loading =
+                    "lazy";
+
+
+                img.addEventListener(
+                    "error",
+                    () => {
+
+                        if (
+                            img.dataset
+                                .fallbackApplied
+                        ) {
+                            return;
+                        }
+
+
+                        img.dataset
+                            .fallbackApplied =
+                            "true";
+
+
+                        img.src =
+                            fallbackPoster;
+
+                    },
+                    {
+                        once: true
+                    }
+                );
+
+
+                poster.appendChild(
+                    img
+                );
+
+
+                const gradient =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                gradient.className =
+                    "movie-gradient";
+
+
+                poster.appendChild(
+                    gradient
+                );
+
+
+                const overlay =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                overlay.className =
+                    "movie-overlay";
+
+
+                const addButton =
+                    document.createElement(
+                        "button"
+                    );
+
+
+                addButton.className =
+                    "add-button";
+
+
+                addButton.type =
+                    "button";
+
+
+                addButton.textContent =
+                    isFavorite(
+                        item.id
+                    )
+                        ? "✓"
+                        : "+";
+
+
+                addButton.setAttribute(
+                    "aria-label",
+                    isFavorite(
+                        item.id
+                    )
+                        ? "Quitar de mi lista"
+                        : "Agregar a mi lista"
+                );
+
+
+                addButton.setAttribute(
+                    "aria-pressed",
+                    isFavorite(
+                        item.id
+                    )
+                        ? "true"
+                        : "false"
+                );
+
+
+                overlay.appendChild(
+                    addButton
+                );
+
+
+                poster.appendChild(
+                    overlay
+                );
+
+
+                const typeLabel =
+                    document.createElement(
+                        "span"
+                    );
+
+
+                typeLabel.className =
+                    "movie-type";
+
+
+                if (
+                    item.type ===
+                    "terror"
+                ) {
+
+                    typeLabel.classList.add(
+                        "horror-tag"
+                    );
+
+                }
+
+
+                if (
+                    item.type ===
+                    "serie"
+                ) {
+
+                    typeLabel.textContent =
+                        "SERIE";
+
+                } else if (
+                    item.type ===
+                    "terror"
+                ) {
+
+                    typeLabel.textContent =
+                        "TERROR";
+
+                } else {
+
+                    typeLabel.textContent =
+                        "PELÍCULA";
+
+                }
+
+
+                poster.appendChild(
+                    typeLabel
+                );
+
+
+                card.appendChild(
+                    poster
+                );
+
+
+                const info =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                info.className =
+                    "movie-info";
+
+
+                const heading =
+                    document.createElement(
+                        "h3"
+                    );
+
+
+                heading.textContent =
+                    item.title;
+
+
+                info.appendChild(
+                    heading
+                );
+
+
+                const meta =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                meta.className =
+                    "movie-meta";
+
+
+                const addMeta =
+                    (
+                        value,
+                        className = ""
+                    ) => {
+
+                        if (
+                            !value
+                        ) {
+                            return;
+                        }
+
+
+                        const span =
+                            document.createElement(
+                                "span"
+                            );
+
+
+                        span.textContent =
+                            value;
+
+
+                        if (
+                            className
+                        ) {
+
+                            span.className =
+                                className;
+
+                        }
+
+
+                        meta.appendChild(
+                            span
+                        );
+
+                    };
+
+
+                const addSeparator =
+                    () => {
+
+                        if (
+                            meta.children
+                                .length
+                        ) {
+
+                            const separator =
+                                document.createElement(
+                                    "i"
+                                );
+
+
+                            meta.appendChild(
+                                separator
+                            );
+
+                        }
+
+                    };
+
+
+                addMeta(
+                    item.year
+                );
+
+
+                if (
+                    item.genre
+                ) {
+
+                    addSeparator();
+
+                    addMeta(
+                        item.genre
+                    );
+
+                }
+
+
+                if (
+                    item.duration
+                ) {
+
+                    addSeparator();
+
+                    addMeta(
+                        item.duration
+                    );
+
+                }
+
+
+                if (
+                    item.rating
+                ) {
+
+                    addSeparator();
+
+                    addMeta(
+                        "★ " +
+                        item.rating
+                    );
+
+                }
+
+
+                if (
+                    !meta.children
+                        .length
+                ) {
+
+                    addMeta(
+                        item.type ===
+                        "serie"
+                            ? "Serie"
+                            : item.type ===
+                              "terror"
+                                ? "Terror"
+                                : "Película"
+                    );
+
+                }
+
+
+                info.appendChild(
+                    meta
+                );
+
+
+                card.appendChild(
+                    info
+                );
+
+
+                return card;
+
+            };
+
+
+
+        /* =================================================
+           ORDENAR POR FEATURED
+        ================================================== */
+
+        const sortFeatured =
+            items => {
+
+                return [
+                    ...items
+                ].sort(
+                    (
+                        a,
+                        b
+                    ) => {
+
+                        if (
+                            a.featured ===
+                            b.featured
+                        ) {
+                            return 0;
+                        }
+
+
+                        return a.featured
+                            ? -1
+                            : 1;
+
+                    }
+                );
+
+            };
+
+
+
+        /* =================================================
+           RENDERIZAR CATÁLOGO
+        ================================================== */
+
+        const renderCatalog =
+            items => {
+
+                if (
+                    !Array.isArray(
+                        items
+                    ) ||
+                    !items.length
+                ) {
+
+                    return false;
+
+                }
+
+
+                const normalized =
+                    items
+                        .map(
+                            normalizeCatalogItem
+                        )
+                        .filter(
+                            item =>
+                                item.title
+                        );
+
+
+                if (
+                    !normalized.length
+                ) {
+
+                    return false;
+
+                }
+
+
+                catalogData =
+                    sortFeatured(
+                        normalized
+                    );
+
+
+                const movies =
+                    catalogData.filter(
+                        item =>
+                            item.type ===
+                            "pelicula"
+                    );
+
+
+                const series =
+                    catalogData.filter(
+                        item =>
+                            item.type ===
+                            "serie"
+                    );
+
+
+                const horror =
+                    catalogData.filter(
+                        item =>
+                            item.type ===
+                            "terror"
+                    );
+
+
+                const renderSection =
+                    (
+                        selector,
+                        sectionItems
+                    ) => {
+
+                        if (
+                            !sectionItems.length
+                        ) {
+                            return;
+                        }
+
+
+                        const grid =
+                            document.querySelector(
+                                selector
+                            );
+
+
+                        if (!grid) {
+                            return;
+                        }
+
+
+                        grid.innerHTML =
+                            "";
+
+
+                        sectionItems.forEach(
+                            item => {
+
+                                grid.appendChild(
+                                    createMovieCard(
+                                        item
+                                    )
+                                );
+
+                            }
+                        );
+
+                    };
+
+
+                renderSection(
+                    "#moviesGrid",
+                    movies
+                );
+
+
+                renderSection(
+                    "#seriesGrid",
+                    series
+                );
+
+
+                renderSection(
+                    "#horrorGrid",
+                    horror
+                );
+
+
+                catalogLoaded =
+                    true;
+
+
+                applyImageFallbacks();
+
+                initializeCarousels();
+
+                syncFavoriteButtons();
+
+                updateAllCardsReference();
+
+
+                return true;
+
+            };
+
+
+
+        /* =================================================
+           CARGAR CATÁLOGO DESDE /api/catalog
+        ================================================== */
+
+        const loadCatalog =
+            async () => {
+
+                try {
+
+                    const response =
+                        await fetch(
+                            CATALOG_API,
+                            {
+                                method:
+                                    "GET",
+
+                                headers: {
+                                    "Accept":
+                                        "application/json"
+                                },
+
+                                cache:
+                                    "no-store"
+                            }
+                        );
+
+
+                    if (
+                        !response.ok
+                    ) {
+
+                        throw new Error(
+                            `HTTP ${response.status}`
+                        );
+
+                    }
+
+
+                    const data =
+                        await response.json();
+
+
+                    const items =
+                        extractCatalogItems(
+                            data
+                        );
+
+
+                    if (
+                        !items.length
+                    ) {
+
+                        console.warn(
+                            "CinemaX: /api/catalog no devolvió contenido."
+                        );
+
+
+                        return;
+
+                    }
+
+
+                    renderCatalog(
+                        items
+                    );
+
+
+                } catch (error) {
+
+                    console.warn(
+                        "CinemaX: no se pudo cargar /api/catalog. Se mantiene el catálogo de respaldo.",
+                        error
+                    );
+
+                }
+
+            };
+
+
+
+        /* =================================================
+           ACTUALIZACIÓN AUTOMÁTICA
+        ================================================== */
+
+        const startCatalogRefresh =
+            () => {
+
+                if (
+                    catalogRefreshTimer
+                ) {
+
+                    clearInterval(
+                        catalogRefreshTimer
+                    );
+
+                }
+
+
+                catalogRefreshTimer =
+                    setInterval(
+                        () => {
+
+                            loadCatalog();
+
+                        },
+                        CATALOG_REFRESH_TIME
+                    );
+
+            };
+
+
+        document.addEventListener(
+            "visibilitychange",
+            () => {
+
+                if (
+                    document.visibilityState ===
+                    "visible"
+                ) {
+
+                    loadCatalog();
+
+                }
+
+            }
+        );
+
+
+        window.addEventListener(
+            "focus",
+            () => {
+
+                loadCatalog();
+
+            }
+
+        );
+
+
+        window.addEventListener(
+            "storage",
+            event => {
+
+                if (
+                    event.key ===
+                    "cinemax_catalog_updated"
+                ) {
+
+                    loadCatalog();
+
+                }
+
+            }
+        );
+
+
+        window.addEventListener(
+            "cinemax:catalog-updated",
+            () => {
+
+                loadCatalog();
+
+            }
+        );
+
+
+        let catalogChannel =
+            null;
+
+
+        try {
+
+            if (
+                "BroadcastChannel" in
+                window
+            ) {
+
+                catalogChannel =
+                    new BroadcastChannel(
+                        "cinemax_catalog"
+                    );
+
+
+                catalogChannel.addEventListener(
+                    "message",
+                    event => {
+
+                        if (
+                            event.data ===
+                            "catalog-updated" ||
+                            event.data?.type ===
+                            "catalog-updated"
+                        ) {
+
+                            loadCatalog();
+
+                        }
+
+                    }
+                );
+
+            }
+
+        } catch (error) {
+
+            console.warn(
+                "CinemaX: BroadcastChannel no disponible.",
+                error
+            );
+
+        }
+
+
+
+        /* =================================================
+           BUSCADOR
+        ================================================== */
+
+        const searchButton =
+            document.getElementById(
+                "searchButton"
+            );
+
+
+        const searchOverlay =
+            document.getElementById(
+                "searchOverlay"
+            );
+
+
+        const closeSearch =
+            document.getElementById(
+                "closeSearch"
+            );
+
+
+        const mainSearchForm =
+            document.getElementById(
+                "mainSearchForm"
+            );
+
+
+        const mainSearchInput =
+            document.getElementById(
+                "mainSearchInput"
+            );
+
+
+        const overlaySearchForm =
+            document.getElementById(
+                "overlaySearchForm"
+            );
+
+
+        const overlaySearchInput =
+            document.getElementById(
+                "overlaySearchInput"
+            );
+
+
+        const resultsSection =
+            document.getElementById(
+                "searchResultsSection"
+            );
+
+
+        const resultsGrid =
+            document.getElementById(
+                "searchResults"
+            );
+
+
+        const resultsTitle =
+            document.getElementById(
+                "searchResultsTitle"
+            );
+
+
+        const noResults =
+            document.getElementById(
+                "noResults"
+            );
+
+
+        const clearSearch =
+            document.getElementById(
+                "clearSearch"
+            );
+
+
+        let allCards =
+            Array.from(
+                document.querySelectorAll(
+                    ".movie-card"
+                )
+            );
+
+
+        const updateAllCardsReference =
+            () => {
+
+                allCards =
+                    Array.from(
+                        document.querySelectorAll(
+                            ".movie-card"
+                        )
+                    );
+
+            };
+
+
+
+        /* =================================================
+           OPEN SEARCH
+        ================================================== */
+
+        const openSearch = () => {
+
+            searchOverlay.classList.add(
+                "active"
+            );
+
+
+            searchOverlay.setAttribute(
+                "aria-hidden",
+                "false"
+            );
+
+
+            document.body.classList.add(
+                "search-open"
+            );
+
+
+            setTimeout(
+                () => {
+
+                    overlaySearchInput.focus();
+
+                },
+                250
+            );
+
+        };
+
+
+
+        /* =================================================
+           CLOSE SEARCH
+        ================================================== */
+
+        const closeSearchOverlay =
+            () => {
+
+                searchOverlay.classList.remove(
+                    "active"
+                );
+
+
+                searchOverlay.setAttribute(
+                    "aria-hidden",
+                    "true"
+                );
+
+
+                document.body.classList.remove(
+                    "search-open"
+                );
+
+            };
+
+
+        searchButton.addEventListener(
+            "click",
+            openSearch
+        );
+
+
+        closeSearch.addEventListener(
+            "click",
+            closeSearchOverlay
+        );
+
+
+        searchOverlay.addEventListener(
+            "click",
+            event => {
+
+                if (
+                    event.target.classList.contains(
+                        "search-overlay-backdrop"
+                    )
+                ) {
+
+                    closeSearchOverlay();
+
+                }
+
+            }
+        );
+
+
+        document.addEventListener(
+            "keydown",
+            event => {
+
+                if (
+                    event.key ===
+                    "Escape"
+                ) {
+
+                    closeSearchOverlay();
+
+                    closeVideo();
+
+                }
+
+            }
+        );
+
+
+
+        /* =================================================
+           SEARCH
+        ================================================== */
+
+        const performSearch =
+            query => {
+
+                const cleanQuery =
+                    normalize(
+                        query
+                    );
+
+
+                if (
+                    !cleanQuery
+                ) {
+
+                    clearSearchResults();
+
+                    return;
+
+                }
+
+
+                updateAllCardsReference();
+
+
+                const matches =
+                    allCards.filter(
+                        card => {
+
+                            const title =
+                                normalize(
+                                    card.dataset
+                                        .title ||
+                                    card.innerText
+                                );
+
+
+                            const data =
+                                getCardData(
+                                    card
+                                );
+
+
+                            const searchable =
+                                normalize(
+                                    [
+                                        title,
+                                        data.year,
+                                        data.genre,
+                                        data.duration,
+                                        data.rating,
+                                        data.type
+                                    ].join(
+                                        " "
+                                    )
+                                );
+
+
+                            return searchable.includes(
+                                cleanQuery
+                            );
+
+                        }
+                    );
+
+
+                resultsGrid.innerHTML =
+                    "";
+
+
+                matches.forEach(
+                    card => {
+
+                        const clone =
+                            card.cloneNode(
+                                true
+                            );
+
+
+                        const button =
+                            clone.querySelector(
+                                ".add-button"
+                            );
+
+
+                        if (
+                            button
+                        ) {
+
+                            updateFavoriteButton(
+                                button,
+                                isFavorite(
+                                    clone.dataset
+                                        .id
+                                )
+                            );
+
+                        }
+
+
+                        resultsGrid.appendChild(
+                            clone
+                        );
+
+                    }
+                );
+
+
+                resultsTitle.textContent =
+                    `Resultados para "${query}"`;
+
+
+                resultsSection.classList.add(
+                    "visible"
+                );
+
+
+                noResults.classList.toggle(
+                    "visible",
+                    matches.length ===
+                    0
+                );
+
+
+                resultsSection.scrollIntoView({
+
+                    behavior:
+                        "smooth",
+
+                    block:
+                        matches.length > 0
+                            ? "start"
+                            : "center"
+
+                });
+
+
+                closeSearchOverlay();
+
+            };
+
+
+        mainSearchForm.addEventListener(
+            "submit",
+            event => {
+
+                event.preventDefault();
+
+
+                performSearch(
+                    mainSearchInput.value
+                );
+
+            }
+        );
+
+
+        overlaySearchForm.addEventListener(
+            "submit",
+            event => {
+
+                event.preventDefault();
+
+
+                performSearch(
+                    overlaySearchInput.value
+                );
+
+            }
+        );
+
+
+        mainSearchInput.addEventListener(
+            "keydown",
+            event => {
+
+                if (
+                    event.key ===
+                    "Enter"
+                ) {
+
+                    event.preventDefault();
+
+
+                    performSearch(
+                        mainSearchInput.value
+                    );
+
+                }
+
+            }
+        );
+
+
+
+        /* =================================================
+           CLEAR SEARCH
+        ================================================== */
+
+        const clearSearchResults =
+            () => {
+
+                resultsSection.classList.remove(
+                    "visible"
+                );
+
+
+                resultsGrid.innerHTML =
+                    "";
+
+
+                noResults.classList.remove(
+                    "visible"
+                );
+
+
+                resultsTitle.textContent =
+                    "Resultados";
+
+
+                mainSearchInput.value =
+                    "";
+
+            };
+
+
+        clearSearch.addEventListener(
+            "click",
+            clearSearchResults
+        );
+
+
+
+        document.addEventListener(
+            "keydown",
+            event => {
+
+                if (
+                    event.key ===
+                    "Escape"
+                ) {
+
+                    closeSearchOverlay();
+
+                }
+
+            }
+        );
+
+
+        /* =================================================
+           ABRIR CONTENIDO EN LA PLANTILLA
+        ================================================== */
+
+        const openMoviePage = card => {
+
+            if (!card) {
+                return;
+            }
+
+
+            const data =
+                getCardData(card);
+
+
+            const id =
+                data.id ||
+                normalize(
+                    data.title
+                ).replace(
+                    /\s+/g,
+                    "-"
+                );
+
+
+            if (!id) {
+                return;
+            }
+
+
+            let template =
+                "plantilla.html";
+
+
+            if (
+                data.type === "serie"
+            ) {
+
+                template =
+                    "planseries.html";
+
+            }
+
+
+            window.location.href =
+                `${template}?id=${encodeURIComponent(id)}`;
+
+        };
+
+
+        /* =================================================
+           CLICK EN LAS TARJETAS
+        ================================================== */
+
+        document.addEventListener(
+            "click",
+            event => {
+
+                const addButton =
+                    event.target.closest(
+                        ".add-button"
+                    );
+
+
+                if (addButton) {
+
+                    event.preventDefault();
+                    event.stopPropagation();
+
+
+                    const card =
+                        addButton.closest(
+                            ".movie-card"
+                        );
+
+
+                    if (card) {
+
+                        toggleFavorite(
+                            card
+                        );
+
+                    }
+
+
+                    return;
+
+                }
+
+
+                const card =
+                    event.target.closest(
+                        ".movie-card"
+                    );
+
+
+                if (!card) {
+                    return;
+                }
+
+
+                event.preventDefault();
+
+
+                openMoviePage(
+                    card
+                );
+
+            }
+        );
+
+
+
+        /* =================================================
+           QUICK LINKS
+        ================================================== */
+
+        document
+            .querySelectorAll(
+                '.quick-categories a[href^="#"]'
+            )
+            .forEach(
+                link => {
+
+                    link.addEventListener(
+                        "click",
+                        event => {
+
+                            const target =
+                                document.querySelector(
+                                    link.getAttribute(
+                                        "href"
+                                    )
+                                );
+
+
+                            if (
+                                !target
+                            ) {
+
+                                return;
+
+                            }
+
+
+                            event.preventDefault();
+
+
+                            const navbarHeight =
+                                navbar.offsetHeight;
+
+
+                            const position =
+                                target.offsetTop -
+                                navbarHeight -
+                                15;
+
+
+                            window.scrollTo({
+
+                                top:
+                                    position,
+
+                                behavior:
+                                    "smooth"
+
+                            });
+
+                        }
+                    );
+
+                }
+            );
+
+
+
+        /* =================================================
+           INICIALIZAR
+        ================================================== */
+
+        applyImageFallbacks();
+
+        initializeCarousels();
+
+        syncFavoriteButtons();
+
+        updateAllCardsReference();
+
+
+        loadCatalog();
+
+        startCatalogRefresh();
+
+
+
+        /* =================================================
+           EXPONER RECARGA MANUAL
+        ================================================== */
+
+        window.CinemaXCatalog = {
+
+            reload:
+                loadCatalog,
+
+            getData:
+                () => [
+                    ...catalogData
+                ]
+
+        };
+
+    });
+
+
+
+    /* =========================================================
+       CINEMAX — CONTROL DE SESIÓN
+    =========================================================
+
+       Comprueba constantemente si la sesión del usuario
+       continúa activa en el servidor.
+
+       Si el administrador desactiva la sesión:
+
+           active = false
+
+       CINEMAX:
+
+       1. Limpia la sesión local.
+       2. Detiene las comprobaciones.
+       3. Evita múltiples redirecciones.
+       4. Envía al usuario al login.
+
+    ========================================================= */
+
+
+
+    /* =========================================================
+       CONFIGURACIÓN
+    ========================================================= */
+
+    const CURRENT_USER_KEY =
+        "cinemax_current_user";
+
+
+    const SESSION_KEY =
+        "cinemax_session_id";
+
+
+    /*
+     * Ruta del login.
+     */
+    const LOGIN_URL =
+        "../login.html";
+
+
+    /*
+     * Comprobar sesión cada 1 segundo.
+     *
+     * Antes estaba en 5 segundos.
+     */
+    const SESSION_CHECK_INTERVAL =
+        1000;
+
+
+    /*
+     * Evita múltiples redirecciones
+     * simultáneas.
+     */
+    let cinemaXLoggingOut =
+        false;
+
+
+    /*
+     * Evita varias peticiones
+     * de comprobación al mismo tiempo.
+     */
+    let cinemaXSessionChecking =
+        false;
+
+
+    /*
+     * Guardamos el intervalo para poder
+     * detenerlo completamente cuando
+     * la sesión sea invalidada.
+     */
+    let cinemaXSessionInterval =
+        null;
+
+
+
+    /* =========================================================
+       OBTENER ID DE SESIÓN
+    ========================================================= */
+
+    function getCinemaXSessionId() {
+
+        try {
+
+            return localStorage.getItem(
+                SESSION_KEY
+            );
+
+        } catch (error) {
+
+            console.error(
+                "CinemaX: no se pudo leer el ID de sesión:",
+                error
+            );
+
+            return null;
+
+        }
+
+    }
+
+
+
+    /* =========================================================
+       OBTENER USUARIO ACTUAL
+    ========================================================= */
+
+    function getCinemaXCurrentUser() {
+
+        try {
+
+            return localStorage.getItem(
+                CURRENT_USER_KEY
+            );
+
+        } catch (error) {
+
+            console.error(
+                "CinemaX: no se pudo leer el usuario actual:",
+                error
+            );
+
+            return null;
+
+        }
+
+    }
+
+
+
+    /* =========================================================
+       LIMPIAR SESIÓN LOCAL
+    ========================================================= */
+
+    function clearCinemaXSession() {
+
+        try {
+
+            localStorage.removeItem(
+                CURRENT_USER_KEY
+            );
+
+
+            localStorage.removeItem(
+                SESSION_KEY
+            );
+
+        } catch (error) {
+
+            console.error(
+                "CinemaX: error limpiando sesión:",
+                error
+            );
+
+        }
+
+    }
+
+
+
+    /* =========================================================
+       DETENER COMPROBADOR DE SESIÓN
+    ========================================================= */
+
+    function stopCinemaXSessionChecker() {
+
+        if (
+            cinemaXSessionInterval
+        ) {
+
+            clearInterval(
+                cinemaXSessionInterval
+            );
+
+
+            cinemaXSessionInterval =
+                null;
+
+        }
+
+    }
+
+
+
+    /* =========================================================
+       VOLVER AL LOGIN
+    ========================================================= */
+
+    function returnToLogin() {
+
+        /*
+         * Evitar múltiples redirecciones.
+         */
+        if (
+            cinemaXLoggingOut
+        ) {
+
+            return;
+
+        }
+
+
+        /*
+         * Marcar inmediatamente el
+         * cierre de sesión.
+         */
+        cinemaXLoggingOut =
+            true;
+
+
+        /*
+         * Detener completamente
+         * las comprobaciones.
+         */
+        stopCinemaXSessionChecker();
+
+
+        /*
+         * Limpiar sesión local.
+         */
+        clearCinemaXSession();
+
+
+        /*
+         * Ir al login.
+         *
+         * replace evita que el usuario
+         * pueda regresar fácilmente
+         * con el botón Atrás.
+         */
+        window.location.replace(
+            LOGIN_URL
+        );
+
+    }
+
+
+
+    /* =========================================================
+       COMPROBAR SESIÓN EN EL SERVIDOR
+    ========================================================= */
+
+    async function checkCinemaXSession() {
+
+        /*
+         * Si ya estamos cerrando sesión,
+         * no hacemos ninguna petición.
+         */
+        if (
+            cinemaXLoggingOut
+        ) {
+
+            return;
+
+        }
+
+
+        /*
+         * Si ya hay una petición en curso,
+         * no hacemos otra.
+         */
+        if (
+            cinemaXSessionChecking
+        ) {
+
+            return;
+
+        }
+
+
+        /*
+         * Marcar comprobación en curso.
+         */
+        cinemaXSessionChecking =
+            true;
+
+
+        /*
+         * Obtener ID de sesión.
+         */
+        const sessionId =
+            getCinemaXSessionId();
+
+
+        /*
+         * Si no existe sesión local,
+         * regresar al login.
+         */
+        if (
+            !sessionId
+        ) {
+
+            cinemaXSessionChecking =
+                false;
+
+
+            console.warn(
+                "CinemaX: no existe una sesión local."
+            );
+
+
+            returnToLogin();
+
+            return;
+
+        }
+
+
+        try {
+
+            /*
+             * Consultar al servidor.
+             *
+             * Endpoint:
+             *
+             * /api/users/session/<session_id>
+             */
+            const response =
+                await fetch(
+                    "/api/users/session/" +
+                    encodeURIComponent(
+                        sessionId
+                    ),
+                    {
+                        method:
+                            "GET",
+
+                        cache:
+                            "no-store",
+
+                        credentials:
+                            "include",
+
+                        headers: {
+
+                            "Accept":
+                                "application/json",
+
+                            "Cache-Control":
+                                "no-cache",
+
+                            "Pragma":
+                                "no-cache"
+
+                        }
+                    }
+                );
+
+
+            /* =================================================
+               LEER RESPUESTA
+            ================================================= */
+
+            let result;
+
+
+            try {
+
+                result =
+                    await response.json();
+
+            } catch (jsonError) {
+
+                /*
+                 * Si el servidor respondió algo
+                 * que no es JSON, puede ser un
+                 * fallo temporal.
+                 *
+                 * No expulsamos al usuario.
+                 */
+                console.warn(
+                    "CinemaX: el servidor no devolvió JSON válido."
+                );
+
+
+                cinemaXSessionChecking =
+                    false;
+
+
+                return;
+
+            }
+
+
+            console.log(
+                "CinemaX: estado de sesión:",
+                result
+            );
+
+
+
+            /* =================================================
+               ADMINISTRADOR DESACTIVÓ LA SESIÓN
+            ================================================= */
+
+            if (
+                result &&
+                result.active === false
+            ) {
+
+                console.warn(
+                    "CinemaX: el administrador desconectó esta sesión."
+                );
+
+
+                /*
+                 * Liberar el estado
+                 * de comprobación.
+                 */
+                cinemaXSessionChecking =
+                    false;
+
+
+                /*
+                 * Expulsar inmediatamente.
+                 */
+                returnToLogin();
+
+
+                return;
+
+            }
+
+
+
+            /* =================================================
+               SESIÓN INVÁLIDA
+            ================================================= */
+
+            if (
+                !response.ok ||
+                !result ||
+                result.success !== true
+            ) {
+
+                console.warn(
+                    "CinemaX: sesión inválida."
+                );
+
+
+                cinemaXSessionChecking =
+                    false;
+
+
+                returnToLogin();
+
+
+                return;
+
+            }
+
+
+
+            /* =================================================
+               SESIÓN ACTIVA
+            ================================================= */
+
+            if (
+                result.active === true
+            ) {
+
+                cinemaXSessionChecking =
+                    false;
+
+
+                return;
+
+            }
+
+
+
+            /* =================================================
+               ESTADO DESCONOCIDO
+            ================================================= */
+
+            console.warn(
+                "CinemaX: estado de sesión desconocido."
+            );
+
+
+            cinemaXSessionChecking =
+                false;
+
+
+            /*
+             * No expulsar ante un estado
+             * desconocido.
+             *
+             * Se comprobará nuevamente
+             * en 1 segundo.
+             */
+            return;
+
+
+        } catch (error) {
+
+            /*
+             * Si el servidor está temporalmente
+             * caído, NO expulsamos al usuario.
+             *
+             * La próxima comprobación volverá
+             * a intentar la conexión.
+             */
+            console.warn(
+                "CinemaX: no se pudo comprobar la sesión:",
+                error
+            );
+
+
+            cinemaXSessionChecking =
+                false;
+
+        }
+
+    }
+
+
+
+    /* =========================================================
+       COMPROBAR INMEDIATAMENTE AL CARGAR
+    ========================================================= */
+
+    checkCinemaXSession();
+
+
+
+    /* =========================================================
+       COMPROBAR CADA 1 SEGUNDO
+    ========================================================= */
+
+    cinemaXSessionInterval =
+        setInterval(
+            checkCinemaXSession,
+            SESSION_CHECK_INTERVAL
+        );
+
+
+
+    /* =========================================================
+       COMPROBAR CUANDO EL USUARIO REGRESA A LA PESTAÑA
+    ========================================================= */
+
+    document.addEventListener(
+        "visibilitychange",
+        function () {
+
+            if (
+                document.visibilityState ===
+                "visible"
+            ) {
+
+                checkCinemaXSession();
+
+            }
+
+        }
+    );
+
+
+
+    /* =========================================================
+       COMPROBAR CUANDO LA VENTANA RECUPERA EL FOCO
+    ========================================================= */
+
+    window.addEventListener(
+        "focus",
+        function () {
+
+            checkCinemaXSession();
+
+        }
+    );
+
+</script>
+```

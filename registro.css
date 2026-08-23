@@ -1,0 +1,708 @@
+/* =========================================================
+   CINEMAX — REGISTRO
+========================================================= */
+
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+
+body {
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background:
+        #000;
+
+    color:
+        #fff;
+
+    overflow-x:
+        hidden;
+
+}
+
+
+/* =========================================================
+   FONDO
+========================================================= */
+
+.background {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: -3;
+
+    background:
+
+        radial-gradient(
+            circle at 50% 35%,
+            rgba(255, 255, 255, 0.08),
+            transparent 35%
+        ),
+
+        linear-gradient(
+            135deg,
+            #151515 0%,
+            #090909 45%,
+            #000 100%
+        );
+
+}
+
+
+.background::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+
+        radial-gradient(
+            circle at 20% 20%,
+            rgba(255, 255, 255, 0.035),
+            transparent 25%
+        ),
+
+        radial-gradient(
+            circle at 80% 70%,
+            rgba(255, 255, 255, 0.025),
+            transparent 30%
+        );
+
+}
+
+
+.background-overlay {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: -2;
+
+    background:
+
+        linear-gradient(
+            to bottom,
+            rgba(0, 0, 0, 0.35),
+            rgba(0, 0, 0, 0.8)
+        );
+
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.header {
+
+    position: absolute;
+
+    top: 0;
+
+    left: 0;
+
+    width: 100%;
+
+    height: 80px;
+
+    display: flex;
+
+    align-items: center;
+
+    padding:
+        0 5%;
+
+}
+
+
+.logo {
+
+    color:
+        #e50914;
+
+    font-size:
+        28px;
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        -1px;
+
+    text-decoration:
+        none;
+
+    cursor:
+        pointer;
+
+    transition:
+        opacity 0.2s ease;
+
+}
+
+
+.logo:hover {
+
+    opacity:
+        0.8;
+
+}
+
+
+/* =========================================================
+   CONTENEDOR
+========================================================= */
+
+.register-page {
+
+    min-height:
+        calc(100vh - 70px);
+
+    display:
+        flex;
+
+    justify-content:
+        center;
+
+    align-items:
+        center;
+
+    padding:
+        100px 20px 50px;
+
+}
+
+
+/* =========================================================
+   CAJA
+========================================================= */
+
+.register-box {
+
+    width:
+        100%;
+
+    max-width:
+        450px;
+
+    padding:
+        45px 45px 35px;
+
+    background:
+        rgba(0, 0, 0, 0.82);
+
+    border-radius:
+        4px;
+
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.65);
+
+}
+
+
+/* =========================================================
+   HEADER DEL REGISTRO
+========================================================= */
+
+.register-header {
+
+    margin-bottom:
+        28px;
+
+}
+
+
+.register-header h1 {
+
+    font-size:
+        30px;
+
+    font-weight:
+        700;
+
+    margin-bottom:
+        10px;
+
+}
+
+
+.register-header p {
+
+    color:
+        #b3b3b3;
+
+    font-size:
+        14px;
+
+    line-height:
+        1.5;
+
+}
+
+
+/* =========================================================
+   MENSAJES
+========================================================= */
+
+.message {
+
+    display:
+        none;
+
+    padding:
+        12px 14px;
+
+    margin-bottom:
+        18px;
+
+    border-radius:
+        4px;
+
+    font-size:
+        13px;
+
+    line-height:
+        1.4;
+
+}
+
+
+.message.show {
+
+    display:
+        block;
+
+}
+
+
+.message.error {
+
+    background:
+        rgba(229, 9, 20, 0.12);
+
+    border:
+        1px solid rgba(229, 9, 20, 0.4);
+
+    color:
+        #ff6b6b;
+
+}
+
+
+.message.success {
+
+    background:
+        rgba(70, 180, 100, 0.12);
+
+    border:
+        1px solid rgba(70, 180, 100, 0.4);
+
+    color:
+        #7ee2a8;
+
+}
+
+
+/* =========================================================
+   INPUTS
+========================================================= */
+
+.input-group {
+
+    margin-bottom:
+        20px;
+
+}
+
+
+.input-group label {
+
+    display:
+        block;
+
+    margin-bottom:
+        8px;
+
+    font-size:
+        13px;
+
+    font-weight:
+        600;
+
+    color:
+        #ddd;
+
+}
+
+
+.input-group input {
+
+    width:
+        100%;
+
+    height:
+        50px;
+
+    padding:
+        0 15px;
+
+    border:
+        1px solid #333;
+
+    border-radius:
+        3px;
+
+    outline:
+        none;
+
+    background:
+        #181818;
+
+    color:
+        #fff;
+
+    font-size:
+        15px;
+
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease;
+
+}
+
+
+.input-group input::placeholder {
+
+    color:
+        #777;
+
+}
+
+
+.input-group input:focus {
+
+    border-color:
+        #777;
+
+    background:
+        #202020;
+
+}
+
+
+/* =========================================================
+   CONTRASEÑA
+========================================================= */
+
+.password-wrapper {
+
+    position:
+        relative;
+
+}
+
+
+.password-wrapper input {
+
+    padding-right:
+        85px;
+
+}
+
+
+.show-password {
+
+    position:
+        absolute;
+
+    top:
+        50%;
+
+    right:
+        12px;
+
+    transform:
+        translateY(-50%);
+
+    border:
+        none;
+
+    background:
+        transparent;
+
+    color:
+        #aaa;
+
+    font-size:
+        12px;
+
+    font-weight:
+        600;
+
+    cursor:
+        pointer;
+
+}
+
+
+.show-password:hover {
+
+    color:
+        #fff;
+
+}
+
+
+/* =========================================================
+   BOTÓN
+========================================================= */
+
+.register-button {
+
+    width:
+        100%;
+
+    height:
+        50px;
+
+    margin-top:
+        5px;
+
+    border:
+        none;
+
+    border-radius:
+        4px;
+
+    background:
+        #e50914;
+
+    color:
+        #fff;
+
+    font-size:
+        15px;
+
+    font-weight:
+        700;
+
+    cursor:
+        pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.15s ease;
+
+}
+
+
+.register-button:hover {
+
+    background:
+        #f40612;
+
+}
+
+
+.register-button:active {
+
+    transform:
+        scale(0.99);
+
+}
+
+
+.register-button:disabled {
+
+    opacity:
+        0.65;
+
+    cursor:
+        default;
+
+}
+
+
+/* =========================================================
+   LOGIN
+========================================================= */
+
+.login-link {
+
+    display:
+        flex;
+
+    justify-content:
+        center;
+
+    align-items:
+        center;
+
+    gap:
+        6px;
+
+    margin-top:
+        28px;
+
+    color:
+        #888;
+
+    font-size:
+        14px;
+
+}
+
+
+.login-link a {
+
+    color:
+        #fff;
+
+    text-decoration:
+        none;
+
+    font-weight:
+        600;
+
+}
+
+
+.login-link a:hover {
+
+    text-decoration:
+        underline;
+
+}
+
+
+/* =========================================================
+   SEGURIDAD
+========================================================= */
+
+.security-text {
+
+    margin-top:
+        25px;
+
+    color:
+        #666;
+
+    font-size:
+        11px;
+
+    line-height:
+        1.5;
+
+    text-align:
+        center;
+
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer {
+
+    width:
+        100%;
+
+    padding:
+        20px;
+
+    text-align:
+        center;
+
+    color:
+        #555;
+
+    font-size:
+        11px;
+
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (
+    max-width: 600px
+) {
+
+    .header {
+
+        height:
+            70px;
+
+        padding:
+            0 25px;
+
+    }
+
+
+    .logo {
+
+        font-size:
+            24px;
+
+    }
+
+
+    .register-page {
+
+        padding:
+            90px 15px 35px;
+
+    }
+
+
+    .register-box {
+
+        padding:
+            35px 25px 30px;
+
+        background:
+            rgba(0, 0, 0, 0.88);
+
+    }
+
+
+    .register-header h1 {
+
+        font-size:
+            26px;
+
+    }
+
+
+    .input-group input {
+
+        height:
+            48px;
+
+    }
+
+}

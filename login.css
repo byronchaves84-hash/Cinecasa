@@ -1,0 +1,1589 @@
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+
+body {
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background: #000;
+
+    color: #fff;
+
+    overflow-x: hidden;
+}
+
+
+/* =========================================================
+   FONDO CINEMATOGRÁFICO
+========================================================= */
+
+.background {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: -10;
+
+    background-image:
+
+        linear-gradient(
+            to right,
+            rgba(0, 0, 0, 0.93),
+            rgba(0, 0, 0, 0.58),
+            rgba(0, 0, 0, 0.84)
+        ),
+
+        linear-gradient(
+            to top,
+            rgba(0, 0, 0, 0.98),
+            rgba(0, 0, 0, 0.18) 55%,
+            rgba(0, 0, 0, 0.72)
+        ),
+
+        url("https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=2400&q=90");
+
+    background-size: cover;
+
+    background-position: center;
+
+    background-repeat: no-repeat;
+
+    transform: scale(1.05);
+
+    animation:
+        cinematicZoom 15s ease-out forwards;
+}
+
+
+@keyframes cinematicZoom {
+
+    from {
+        transform: scale(1.10);
+    }
+
+    to {
+        transform: scale(1.05);
+    }
+
+}
+
+
+/* =========================================================
+   OSCURECIMIENTO
+========================================================= */
+
+.background::after {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        radial-gradient(
+            circle at center,
+            transparent 0%,
+            rgba(0, 0, 0, 0.18) 38%,
+            rgba(0, 0, 0, 0.75) 100%
+        );
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.top-header {
+    position: fixed;
+
+    top: 0;
+
+    left: 0;
+
+    right: 0;
+
+    height: 90px;
+
+    z-index: 20;
+
+    display: flex;
+
+    align-items: center;
+
+    padding-left: 45px;
+}
+
+
+/* =========================================================
+   LOGO
+========================================================= */
+
+.logo {
+    font-size: 34px;
+
+    font-weight: 900;
+
+    letter-spacing: 4px;
+
+    color: #e50914;
+
+    text-shadow:
+        0 0 20px
+        rgba(229, 9, 20, 0.28);
+}
+
+
+/* =========================================================
+   LOGIN PAGE
+========================================================= */
+
+.login-page {
+    min-height: 100vh;
+
+    width: 100%;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    padding:
+        90px
+        20px
+        70px;
+}
+
+
+/* =========================================================
+   LOGIN BOX
+========================================================= */
+
+.login-box {
+    width: 100%;
+
+    max-width: 450px;
+
+    padding:
+        55px
+        55px
+        45px;
+
+    background:
+        rgba(0, 0, 0, 0.80);
+
+    border-radius: 8px;
+
+    box-shadow:
+        0 25px 80px
+        rgba(0, 0, 0, 0.78);
+
+    backdrop-filter:
+        blur(6px);
+
+    -webkit-backdrop-filter:
+        blur(6px);
+
+    animation:
+        loginAppear 0.7s ease;
+}
+
+
+@keyframes loginAppear {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(25px);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0);
+
+    }
+
+}
+
+
+/* =========================================================
+   TITULO
+========================================================= */
+
+.login-box h1 {
+    font-size: 32px;
+
+    font-weight: 700;
+
+    line-height: 1.2;
+
+    margin-bottom: 30px;
+}
+
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+.error-message {
+    display: none;
+
+    margin-bottom: 18px;
+
+    padding:
+        12px
+        15px;
+
+    border-radius: 5px;
+
+    background:
+        rgba(229, 9, 20, 0.15);
+
+    border:
+        1px solid
+        rgba(229, 9, 20, 0.50);
+
+    color: #ff7777;
+
+    font-size: 14px;
+
+    line-height: 1.4;
+}
+
+
+.error-message.show {
+    display: block;
+
+    animation:
+        errorAppear 0.25s ease;
+}
+
+
+@keyframes errorAppear {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(-5px);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0);
+
+    }
+
+}
+
+
+/* =========================================================
+   INPUT GROUP
+========================================================= */
+
+.input-group {
+    position: relative;
+
+    margin-bottom: 18px;
+}
+
+
+/* =========================================================
+   INPUTS
+========================================================= */
+
+.input-group input {
+    width: 100%;
+
+    height: 55px;
+
+    padding:
+        0
+        18px;
+
+    border:
+        1px solid
+        #555;
+
+    border-radius: 5px;
+
+    outline: none;
+
+    background:
+        #333;
+
+    color: #fff;
+
+    font-size: 16px;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.input-group input:hover {
+    background:
+        #383838;
+}
+
+
+.input-group input:focus {
+    background:
+        #3d3d3d;
+
+    border-color:
+        #aaa;
+
+    box-shadow:
+        0 0 0 1px
+        rgba(255, 255, 255, 0.08);
+}
+
+
+.input-group input::placeholder {
+    color:
+        #aaa;
+}
+
+
+/* =========================================================
+   PASSWORD
+========================================================= */
+
+.password-group input {
+    padding-right: 85px;
+}
+
+
+.show-password {
+    position: absolute;
+
+    right: 12px;
+
+    top: 50%;
+
+    transform:
+        translateY(-50%);
+
+    border: none;
+
+    background: transparent;
+
+    color: #aaa;
+
+    font-size: 13px;
+
+    cursor: pointer;
+
+    padding: 5px;
+}
+
+
+.show-password:hover {
+    color: #fff;
+}
+
+
+/* =========================================================
+   LOGIN BUTTON
+========================================================= */
+
+.login-button {
+    width: 100%;
+
+    height: 50px;
+
+    margin-top: 8px;
+
+    border: none;
+
+    border-radius: 5px;
+
+    background:
+        #e50914;
+
+    color: #fff;
+
+    font-size: 16px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.login-button:hover {
+    background:
+        #f40612;
+
+    transform:
+        translateY(-1px);
+
+    box-shadow:
+        0 8px 25px
+        rgba(229, 9, 20, 0.30);
+}
+
+
+.login-button:active {
+    transform:
+        scale(0.98);
+}
+
+
+.login-button:disabled {
+    cursor:
+        default;
+}
+
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+.login-button.loading {
+    opacity:
+        0.75;
+}
+
+
+.login-button.loading::after {
+    content: "";
+
+    display: inline-block;
+
+    width: 14px;
+
+    height: 14px;
+
+    margin-left: 9px;
+
+    vertical-align: -2px;
+
+    border:
+        2px solid
+        rgba(255, 255, 255, 0.35);
+
+    border-top-color:
+        #fff;
+
+    border-radius:
+        50%;
+
+    animation:
+        spin 0.7s linear infinite;
+}
+
+
+@keyframes spin {
+
+    to {
+        transform:
+            rotate(360deg);
+    }
+
+}
+
+
+/* =========================================================
+   OPCIONES
+========================================================= */
+
+.login-options {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 15px;
+
+    margin-top: 14px;
+
+    color:
+        #b3b3b3;
+
+    font-size:
+        13px;
+}
+
+
+/* =========================================================
+   RECORDAR
+========================================================= */
+
+.remember {
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    cursor: pointer;
+
+    user-select: none;
+}
+
+
+.remember input {
+    width:
+        15px;
+
+    height:
+        15px;
+
+    accent-color:
+        #e50914;
+
+    cursor:
+        pointer;
+}
+
+
+/* =========================================================
+   AYUDA
+========================================================= */
+
+.login-options a {
+    color:
+        #b3b3b3;
+
+    text-decoration:
+        none;
+
+    transition:
+        color 0.2s ease;
+}
+
+
+.login-options a:hover {
+    color:
+        #fff;
+
+    text-decoration:
+        underline;
+}
+
+
+/* =========================================================
+   SIGN UP
+========================================================= */
+
+.signup {
+    margin-top:
+        45px;
+
+    color:
+        #737373;
+
+    font-size:
+        16px;
+}
+
+
+.signup a {
+    color:
+        #fff;
+
+    text-decoration:
+        none;
+
+    margin-left:
+        4px;
+}
+
+
+.signup a:hover {
+    text-decoration:
+        underline;
+}
+
+
+/* =========================================================
+   SECURITY
+========================================================= */
+
+.security-text {
+    margin-top:
+        20px;
+
+    color:
+        #8c8c8c;
+
+    font-size:
+        13px;
+
+    line-height:
+        1.5;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer {
+    position: fixed;
+
+    bottom:
+        22px;
+
+    left:
+        0;
+
+    right:
+        0;
+
+    z-index:
+        10;
+
+    text-align:
+        center;
+
+    color:
+        #777;
+
+    font-size:
+        12px;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 700px) {
+
+    .top-header {
+        padding-left:
+            25px;
+
+        height:
+            75px;
+    }
+
+
+    .logo {
+        font-size:
+            27px;
+
+        letter-spacing:
+            3px;
+    }
+
+
+    .login-page {
+        padding:
+            80px
+            15px
+            60px;
+    }
+
+
+    .login-box {
+        max-width:
+            430px;
+
+        padding:
+            45px
+            30px
+            35px;
+    }
+
+}
+
+
+/* =========================================================
+   MÓVIL
+========================================================= */
+
+@media (max-width: 480px) {
+
+    .background {
+
+        background-position:
+            center;
+
+    }
+
+
+    .top-header {
+        padding-left:
+            20px;
+    }
+
+
+    .logo {
+        font-size:
+            25px;
+
+        letter-spacing:
+            2px;
+    }
+
+
+    .login-page {
+        align-items:
+            center;
+
+        padding:
+            80px
+            12px
+            55px;
+    }
+
+
+    .login-box {
+
+        padding:
+            38px
+            22px
+            30px;
+
+        border-radius:
+            6px;
+
+        background:
+            rgba(0, 0, 0, 0.87);
+    }
+
+
+    .login-box h1 {
+        font-size:
+            28px;
+
+        margin-bottom:
+            25px;
+    }
+
+
+    .input-group input {
+        height:
+            53px;
+
+        font-size:
+            15px;
+    }
+
+
+    .login-options {
+        font-size:
+            12px;
+    }
+
+
+    .signup {
+        margin-top:
+            35px;
+
+        font-size:
+            15px;
+    }
+
+
+    .security-text {
+        font-size:
+            12px;
+    }
+
+
+    footer {
+        display:
+            none;
+    }
+
+}
+
+
+/* =========================================================
+   MÓVIL PEQUEÑO
+========================================================= */
+
+@media (max-width: 360px) {
+
+    .login-box {
+        padding:
+            32px
+            18px
+            28px;
+    }
+
+
+    .login-options {
+        flex-direction:
+            column;
+
+        align-items:
+            flex-start;
+    }
+
+}
+
+
+
+/* =========================================================
+   CINEMAX — ANIMACIÓN DESPUÉS DEL LOGIN
+========================================================= */
+
+.welcome-screen {
+
+    position: fixed;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    z-index: 9999;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: #000;
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    pointer-events: none;
+
+    overflow: hidden;
+
+    transition:
+        opacity .6s ease,
+        visibility .6s ease;
+
+}
+
+
+/* =========================================================
+   ACTIVAR
+========================================================= */
+
+.welcome-screen.active {
+
+    opacity: 1;
+
+    visibility: visible;
+
+}
+
+
+/* =========================================================
+   FONDO
+========================================================= */
+
+.welcome-background {
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+
+        radial-gradient(
+            ellipse at center,
+            #180406 0%,
+            #090203 38%,
+            #020102 72%,
+            #000 100%
+        );
+
+}
+
+
+/* =========================================================
+   GLOW
+========================================================= */
+
+.welcome-glow {
+
+    position: absolute;
+
+    width: 700px;
+    height: 500px;
+
+    left: 50%;
+    top: 50%;
+
+    transform:
+        translate(-50%, -50%)
+        scale(.5);
+
+    border-radius: 50%;
+
+    background:
+
+        radial-gradient(
+            ellipse,
+            rgba(
+                229,
+                9,
+                20,
+                .24
+            ) 0%,
+
+            rgba(
+                229,
+                9,
+                20,
+                .08
+            ) 35%,
+
+            transparent 70%
+        );
+
+    filter:
+        blur(35px);
+
+    opacity: 0;
+
+}
+
+
+.welcome-screen.active
+.welcome-glow {
+
+    animation:
+        welcomeGlow
+        3.8s
+        ease
+        forwards;
+
+}
+
+
+@keyframes welcomeGlow {
+
+    0% {
+
+        opacity: 0;
+
+        transform:
+            translate(-50%, -50%)
+            scale(.5);
+
+    }
+
+    35% {
+
+        opacity: 1;
+
+    }
+
+    100% {
+
+        opacity: .65;
+
+        transform:
+            translate(-50%, -50%)
+            scale(1.1);
+
+    }
+
+}
+
+
+/* =========================================================
+   LUZ HORIZONTAL
+========================================================= */
+
+.welcome-light {
+
+    position: absolute;
+
+    width: 180%;
+
+    height: 2px;
+
+    left: -40%;
+
+    top: 50%;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            transparent,
+            transparent 35%,
+            rgba(
+                229,
+                9,
+                20,
+                .9
+            ),
+            transparent 65%,
+            transparent
+        );
+
+    box-shadow:
+
+        0 0 30px
+        rgba(
+            229,
+            9,
+            20,
+            .55
+        );
+
+    filter:
+        blur(2px);
+
+    opacity: 0;
+
+    transform:
+        translateX(-40%);
+
+}
+
+
+.welcome-screen.active
+.welcome-light {
+
+    animation:
+        welcomeLight
+        2.2s
+        ease
+        .35s
+        forwards;
+
+}
+
+
+@keyframes welcomeLight {
+
+    0% {
+
+        opacity: 0;
+
+        transform:
+            translateX(-45%);
+
+    }
+
+    15% {
+
+        opacity: 1;
+
+    }
+
+    70% {
+
+        opacity: .8;
+
+    }
+
+    100% {
+
+        opacity: 0;
+
+        transform:
+            translateX(45%);
+
+    }
+
+}
+
+
+/* =========================================================
+   CONTENIDO
+========================================================= */
+
+.welcome-content {
+
+    position: relative;
+
+    z-index: 10;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    text-align: center;
+
+}
+
+
+/* =========================================================
+   LOGO
+========================================================= */
+
+.welcome-logo {
+
+    color:
+        #e50914;
+
+    font-size:
+        clamp(
+            55px,
+            9vw,
+            120px
+        );
+
+    font-weight:
+        900;
+
+    letter-spacing:
+        12px;
+
+    padding-left:
+        12px;
+
+    opacity: 0;
+
+    transform:
+        scale(.7)
+        translateY(20px);
+
+    text-shadow:
+
+        0 0 8px
+        rgba(
+            229,
+            9,
+            20,
+            .95
+        ),
+
+        0 0 25px
+        rgba(
+            229,
+            9,
+            20,
+            .5
+        ),
+
+        0 0 55px
+        rgba(
+            229,
+            9,
+            20,
+            .2
+        );
+
+}
+
+
+.welcome-screen.active
+.welcome-logo {
+
+    animation:
+        welcomeLogo
+        1s
+        cubic-bezier(
+            .16,
+            1,
+            .3,
+            1
+        )
+        .3s
+        forwards;
+
+}
+
+
+@keyframes welcomeLogo {
+
+    0% {
+
+        opacity: 0;
+
+        transform:
+            scale(.7)
+            translateY(20px);
+
+    }
+
+    65% {
+
+        opacity: 1;
+
+        transform:
+            scale(1.04)
+            translateY(0);
+
+    }
+
+    100% {
+
+        opacity: 1;
+
+        transform:
+            scale(1)
+            translateY(0);
+
+    }
+
+}
+
+
+/* =========================================================
+   LÍNEA
+========================================================= */
+
+.welcome-line {
+
+    width: 0;
+
+    height: 2px;
+
+    margin-top: 20px;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            transparent,
+            #e50914,
+            transparent
+        );
+
+    box-shadow:
+
+        0 0 15px
+        rgba(
+            229,
+            9,
+            20,
+            .7
+        );
+
+}
+
+
+.welcome-screen.active
+.welcome-line {
+
+    animation:
+        welcomeLine
+        .65s
+        ease
+        1s
+        forwards;
+
+}
+
+
+@keyframes welcomeLine {
+
+    from {
+
+        width: 0;
+
+    }
+
+    to {
+
+        width: 260px;
+
+    }
+
+}
+
+
+/* =========================================================
+   BIENVENIDO
+========================================================= */
+
+.welcome-text {
+
+    margin-top: 25px;
+
+    color: #fff;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    letter-spacing: 7px;
+
+    opacity: 0;
+
+    transform:
+        translateY(10px);
+
+}
+
+
+.welcome-screen.active
+.welcome-text {
+
+    animation:
+        welcomeText
+        .6s
+        ease
+        1.35s
+        forwards;
+
+}
+
+
+@keyframes welcomeText {
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0);
+
+    }
+
+}
+
+
+/* =========================================================
+   SUBTÍTULO
+========================================================= */
+
+.welcome-subtitle {
+
+    margin-top: 12px;
+
+    color:
+        rgba(
+            255,
+            255,
+            255,
+            .42
+        );
+
+    font-size: 10px;
+
+    letter-spacing: 4px;
+
+    opacity: 0;
+
+}
+
+
+.welcome-screen.active
+.welcome-subtitle {
+
+    animation:
+        welcomeSubtitle
+        .7s
+        ease
+        1.65s
+        forwards;
+
+}
+
+
+@keyframes welcomeSubtitle {
+
+    from {
+
+        opacity: 0;
+
+    }
+
+    to {
+
+        opacity: 1;
+
+    }
+
+}
+
+
+/* =========================================================
+   BARRA DE PROGRESO
+========================================================= */
+
+.welcome-progress {
+
+    position: absolute;
+
+    bottom: 55px;
+
+    left: 50%;
+
+    width: 220px;
+
+    height: 2px;
+
+    transform:
+        translateX(-50%);
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            .12
+        );
+
+    overflow: hidden;
+
+}
+
+
+.welcome-progress-bar {
+
+    width: 0;
+
+    height: 100%;
+
+    background:
+        #e50914;
+
+    box-shadow:
+
+        0 0 12px
+        rgba(
+            229,
+            9,
+            20,
+            .8
+        );
+
+}
+
+
+.welcome-screen.active
+.welcome-progress-bar {
+
+    animation:
+        progress
+        3s
+        linear
+        .2s
+        forwards;
+
+}
+
+
+@keyframes progress {
+
+    from {
+
+        width: 0;
+
+    }
+
+    to {
+
+        width: 100%;
+
+    }
+
+}
+
+
+/* =========================================================
+   SALIDA
+========================================================= */
+
+.welcome-screen.leaving {
+
+    opacity: 0;
+
+    transition:
+        opacity .7s
+        ease;
+
+}
+
+
+/* =========================================================
+   LOGIN DESAPARECE
+========================================================= */
+
+body.login-success
+.login-page,
+body.login-success
+.header,
+body.login-success
+footer {
+
+    opacity: 0;
+
+    transform:
+        scale(1.02);
+
+    transition:
+        opacity .45s ease,
+        transform .45s ease;
+
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 600px) {
+
+    .welcome-logo {
+
+        font-size: 48px;
+
+        letter-spacing: 7px;
+
+        padding-left: 7px;
+
+    }
+
+    .welcome-line {
+
+        margin-top: 15px;
+
+    }
+
+    .welcome-text {
+
+        font-size: 12px;
+
+        letter-spacing: 5px;
+
+    }
+
+    .welcome-subtitle {
+
+        font-size: 8px;
+
+        letter-spacing: 3px;
+
+    }
+
+}

@@ -1,0 +1,1811 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="theme-color"
+        content="#050505"
+    >
+
+    <meta
+        name="description"
+        content="The Last of Us - MiNetflix"
+    >
+
+    <title>
+        The Last of Us | MiNetflix
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="styles.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================================================
+         FONDO / TRAILER
+    ========================================================== -->
+
+    <div class="video-trailer">
+
+        <video
+            id="trailer"
+            autoplay
+            loop
+            muted
+            playsinline
+            preload="auto"
+        >
+
+            <source
+                src="peli/The Walking.mp4"
+                type="video/mp4"
+            >
+
+            Tu navegador no soporta video.
+
+        </video>
+
+        <div class="trailer-overlay"></div>
+
+        <div class="trailer-vignette"></div>
+
+    </div>
+
+
+
+    <!-- =========================================================
+         FONDO DEL VIDEO DEL EPISODIO
+    ========================================================== -->
+
+    <div
+        class="video-background"
+        id="videoBackground"
+    >
+
+        <video
+            id="videoPlayer"
+            muted
+            playsinline
+            preload="metadata"
+        ></video>
+
+        <div class="background-overlay"></div>
+
+    </div>
+
+
+
+    <!-- =========================================================
+         CONTENEDOR PRINCIPAL
+    ========================================================== -->
+
+    <main class="serie-container">
+
+
+        <!-- =====================================================
+             HERO
+        ====================================================== -->
+
+        <section class="hero-section">
+
+
+            <div class="hero-red-line"></div>
+
+
+            <div class="hero-content">
+
+
+                <!-- MARCA -->
+
+                <div class="serie-brand">
+
+                    <span class="brand-mark">
+                        M
+                    </span>
+
+                    <span class="brand-name">
+                        MINETFLIX
+                    </span>
+
+                </div>
+
+
+
+                <!-- SERIE ORIGINAL -->
+
+                <div class="original-label">
+
+                    <span class="original-line"></span>
+
+                    <span>
+                        SERIE ORIGINAL
+                    </span>
+
+                </div>
+
+
+
+                <!-- TITULO -->
+
+                <h1 class="serie-title">
+
+                    <span>
+                        THE
+                    </span>
+
+                    <span>
+                        LAST
+                    </span>
+
+                    <span>
+                        OF US
+                    </span>
+
+                </h1>
+
+
+
+                <!-- META -->
+
+                <div class="serie-meta">
+
+                    <span class="quality">
+                        HD
+                    </span>
+
+                    <span>
+                        2023
+                    </span>
+
+                    <span class="dot">
+                        •
+                    </span>
+
+                    <span>
+                        2 Temporadas
+                    </span>
+
+                    <span class="dot">
+                        •
+                    </span>
+
+                    <span>
+                        Drama
+                    </span>
+
+                    <span class="dot">
+                        •
+                    </span>
+
+                    <span>
+                        Terror
+                    </span>
+
+                </div>
+
+
+
+                <!-- DESCRIPCION -->
+
+                <div class="serie-description">
+
+                    <p>
+                        The Last of Us, Joel y Ellie, una joven con
+                        la llave de la salvación, deben atravesar un
+                        Estados Unidos devastado.
+                    </p>
+
+                </div>
+
+
+
+                <!-- ACCIONES -->
+
+                <div class="hero-actions">
+
+
+                    <button
+                        id="heroStartButton"
+                        class="hero-play-button"
+                        onclick="startEpisode()"
+                        type="button"
+                    >
+
+                        <span class="play-symbol">
+                            ▶
+                        </span>
+
+                        <strong id="heroStartButtonText">
+                            Iniciar
+                        </strong>
+
+                    </button>
+
+
+
+                    <a
+                        href="./episodios/Untitled-1.html"
+                        class="hero-info-button"
+                    >
+
+                        <span class="info-symbol">
+                            ⓘ
+                        </span>
+
+                        <span>
+                            Más información
+                        </span>
+
+                    </a>
+
+
+                </div>
+
+
+
+                <!-- REACCIONES -->
+
+                <div class="reaction-area">
+
+                    <span class="reaction-question">
+                        ¿Qué te parece?
+                    </span>
+
+
+                    <div class="like-dislike-buttons">
+
+
+                        <button
+                            id="likeButton"
+                            class="reaction-button"
+                            type="button"
+                            onclick="setReaction('like')"
+                        >
+
+                            <span class="reaction-icon">
+                                👍
+                            </span>
+
+                            <span>
+                                Me gusta
+                            </span>
+
+                        </button>
+
+
+
+                        <button
+                            id="dislikeButton"
+                            class="reaction-button"
+                            type="button"
+                            onclick="setReaction('dislike')"
+                        >
+
+                            <span class="reaction-icon">
+                                👎
+                            </span>
+
+                            <span>
+                                No me gusta
+                            </span>
+
+                        </button>
+
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="hero-bottom-fade"></div>
+
+
+        </section>
+
+
+
+        <!-- =====================================================
+             SECCION DE EPISODIOS
+        ====================================================== -->
+
+        <section class="episode-section">
+
+
+            <!-- CABECERA -->
+
+            <div class="section-heading">
+
+
+                <div class="heading-left">
+
+                    <span class="section-kicker">
+                        THE LAST OF US
+                    </span>
+
+
+                    <div class="section-title-row">
+
+                        <h2>
+                            Reproducción
+                        </h2>
+
+                        <span class="heading-red-line"></span>
+
+                    </div>
+
+                </div>
+
+
+
+                <div
+                    class="current-episode-badge"
+                    id="currentEpisodeBadge"
+                >
+                    T1 · E1
+                </div>
+
+
+            </div>
+
+
+
+            <!-- EXPLORADOR -->
+
+            <div class="episode-explorer">
+
+
+                <div class="explorer-header">
+
+
+                    <div>
+
+                        <span class="explorer-kicker">
+                            EXPLORA
+                        </span>
+
+                        <h3>
+                            Elige tu episodio
+                        </h3>
+
+                    </div>
+
+
+                    <button
+                        class="explorer-toggle"
+                        type="button"
+                        onclick="toggleExplorer()"
+                        aria-label="Mostrar opciones"
+                    >
+                        ▾
+                    </button>
+
+
+                </div>
+
+
+
+                <!-- SELECTORES -->
+
+                <div
+                    class="episode-selectors"
+                    id="episodeSelectors"
+                >
+
+
+                    <div class="selector-box">
+
+
+                        <label for="seasonSelect">
+                            TEMPORADA
+                        </label>
+
+
+                        <div class="select-wrapper">
+
+                            <select
+                                id="seasonSelect"
+                                onchange="changeSeason()"
+                            >
+                            </select>
+
+                            <span class="select-arrow">
+                                ▾
+                            </span>
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <div class="selector-box">
+
+
+                        <label for="episodeSelect">
+                            EPISODIO
+                        </label>
+
+
+                        <div class="select-wrapper">
+
+                            <select
+                                id="episodeSelect"
+                                onchange="changeEpisode()"
+                            >
+                            </select>
+
+                            <span class="select-arrow">
+                                ▾
+                            </span>
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- CONTROLES -->
+
+            <div
+                id="controlsContainer"
+                class="controls-container"
+            >
+
+
+                <button
+                    class="episode-button secondary"
+                    onclick="previousEpisode()"
+                    type="button"
+                    aria-label="Episodio anterior"
+                >
+
+                    <span class="button-icon">
+                        ‹
+                    </span>
+
+                    <span>
+                        Anterior
+                    </span>
+
+                </button>
+
+
+
+                <button
+                    id="startButton"
+                    class="episode-button primary"
+                    onclick="startEpisode()"
+                    type="button"
+                >
+
+                    <span class="button-icon">
+                        ▶
+                    </span>
+
+                    <span id="startButtonText">
+                        Iniciar T1-E1
+                    </span>
+
+                </button>
+
+
+
+                <button
+                    class="episode-button secondary"
+                    onclick="nextEpisode()"
+                    type="button"
+                    aria-label="Siguiente episodio"
+                >
+
+                    <span>
+                        Siguiente
+                    </span>
+
+                    <span class="button-icon">
+                        ›
+                    </span>
+
+                </button>
+
+
+            </div>
+
+
+
+            <!-- REPRODUCTOR -->
+
+            <div class="player-section">
+
+
+                <div
+                    id="videoContainer"
+                    class="video-container"
+                >
+
+
+                    <div
+                        class="player-placeholder"
+                        id="playerPlaceholder"
+                    >
+
+                        <div class="placeholder-glow"></div>
+
+
+                        <div class="placeholder-icon">
+                            ▶
+                        </div>
+
+
+                        <span class="placeholder-label">
+                            MI NETFLIX
+                        </span>
+
+
+                        <h3>
+                            Selecciona un episodio
+                        </h3>
+
+
+                        <p>
+                            Presiona el botón de reproducción
+                            para comenzar.
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- ESTADO -->
+
+                <div class="player-status-row">
+
+
+                    <div class="player-status">
+
+                        <span class="status-dot"></span>
+
+                        <span id="playerStatusText">
+                            Listo para reproducir
+                        </span>
+
+                    </div>
+
+
+
+                    <div
+                        class="player-current"
+                        id="playerCurrent"
+                    >
+                        T1 · E1
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- ACCIONES INFERIORES -->
+
+            <div class="series-actions">
+
+
+                <button
+                    id="restartButton"
+                    class="action-button"
+                    onclick="restartToFirstEpisode()"
+                    type="button"
+                >
+
+                    <span>
+                        ↺
+                    </span>
+
+                    <span>
+                        Ver desde el inicio
+                    </span>
+
+                </button>
+
+
+
+                <a
+                    href="./episodios/Untitled-1.html"
+                    class="action-button info-action"
+                >
+
+                    <span>
+                        ⓘ
+                    </span>
+
+                    <span>
+                        Ver más información
+                    </span>
+
+                </a>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =====================================================
+             INFORMACION INFERIOR
+        ====================================================== -->
+
+        <section class="bottom-info">
+
+
+            <div class="info-card">
+
+
+                <div class="info-card-icon">
+                    TV
+                </div>
+
+
+                <div class="info-card-content">
+
+                    <span class="info-card-label">
+                        SERIE
+                    </span>
+
+                    <strong>
+                        The Last of Us
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+
+
+            <div class="info-card">
+
+
+                <div class="info-card-icon status-icon">
+                    ●
+                </div>
+
+
+                <div class="info-card-content">
+
+                    <span class="info-card-label">
+                        ESTADO
+                    </span>
+
+                    <strong id="watchStatus">
+                        Listo para reproducir
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+
+
+            <div class="info-card">
+
+
+                <div class="info-card-icon">
+                    #
+                </div>
+
+
+                <div class="info-card-content">
+
+                    <span class="info-card-label">
+                        PROGRESO
+                    </span>
+
+                    <strong id="progressText">
+                        T1 · E1
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- ETIQUETA LATERAL -->
+
+        <div class="episodes-side-label">
+            EPISODIOS
+        </div>
+
+
+    </main>
+
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <footer>
+
+
+        <div class="footer-inner">
+
+
+            <!-- MARCA -->
+
+            <div class="footer-brand">
+
+
+                <div class="footer-logo">
+
+
+                    <span class="footer-logo-mark">
+                        M
+                    </span>
+
+
+                    <span class="footer-logo-text">
+                        MINETFLIX
+                    </span>
+
+
+                </div>
+
+
+                <p class="footer-description">
+                    Tu plataforma para disfrutar de tus series
+                    favoritas.
+                </p>
+
+
+            </div>
+
+
+
+            <!-- ENLACES -->
+
+            <div class="footer-links">
+
+
+                <a
+                    href="./index.html"
+                    class="footer-link"
+                >
+                    Inicio
+                </a>
+
+
+                <a
+                    href="./episodios/Untitled-1.html"
+                    class="footer-link"
+                >
+                    Información
+                </a>
+
+
+                <a
+                    href="#"
+                    class="footer-link"
+                >
+                    Series
+                </a>
+
+
+                <a
+                    href="#"
+                    class="footer-link"
+                >
+                    Contacto
+                </a>
+
+
+            </div>
+
+
+
+            <!-- ESTADO -->
+
+            <div class="footer-status">
+
+                <span class="footer-status-dot"></span>
+
+                <span>
+                    MiNetflix activo
+                </span>
+
+            </div>
+
+
+        </div>
+
+
+
+        <div class="footer-divider"></div>
+
+
+
+        <div class="footer-bottom">
+
+            <span>
+                © 2026 MiNetflix
+            </span>
+
+            <span>
+                The Last of Us
+            </span>
+
+        </div>
+
+
+    </footer>
+
+
+
+
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================== -->
+
+<script>
+
+
+/* =========================================================
+   CONFIGURACION DE EPISODIOS
+========================================================= */
+
+/*
+    Aquí están los episodios que me pasaste.
+
+    La estructura permite agregar fácilmente:
+
+    Temporada 1
+    Temporada 2
+    Temporada 3
+    etc.
+*/
+
+const seasons = {
+
+
+    1: [
+
+        'https://drive.google.com/file/d/1Igbio0qpmqQiBD5RHt_fDAreCvRpRSfQ/preview',
+
+        'https://drive.google.com/file/d/1FiIt3jq_Tuy1uuOa6G4tuTYkczladiHo/preview',
+
+        'https://drive.google.com/file/d/19cj01NCH7vxxqctrrPeOT8oab5cTAs6S/preview',
+
+        'https://drive.google.com/file/d/1NfjNObrrNzbf5jsLI1V97OoeyGwc_kTS/preview',
+
+        'https://drive.google.com/file/d/1LPyH95FW23EK7saPChqKDL5Xjfn4HgK1/preview',
+
+        'https://drive.google.com/file/d/1SKRPVW3WuKHcEo4_BZaEaMjQPYbDAame/preview',
+
+        'https://drive.google.com/file/d/1626eFsGUMJdzIkEWv7pOoFEzDXTy0Zll/preview',
+
+        'https://drive.google.com/file/d/12f0wt-jVaKXyWkoZ514bynlpIsz5VDdC/preview',
+
+        'https://drive.google.com/file/d/1dBqPCGPXcLVDX73EeaVQA-Tr3q0J3fmK/preview'
+
+    ],
+
+
+
+    /*
+        CUANDO ME PASES LOS EPISODIOS DE T2,
+        PUEDES PONERLOS AQUÍ:
+
+        2: [
+            'URL EPISODIO 1',
+            'URL EPISODIO 2'
+        ],
+
+    */
+
+
+};
+
+
+
+/* =========================================================
+   ESTADO
+========================================================= */
+
+let currentSeason = 1;
+
+let currentEpisode = 0;
+
+let playerFrame = null;
+
+
+
+/* =========================================================
+   ELEMENTOS
+========================================================= */
+
+const seasonSelect =
+    document.getElementById('seasonSelect');
+
+const episodeSelect =
+    document.getElementById('episodeSelect');
+
+const videoContainer =
+    document.getElementById('videoContainer');
+
+const playerPlaceholder =
+    document.getElementById('playerPlaceholder');
+
+const currentEpisodeBadge =
+    document.getElementById('currentEpisodeBadge');
+
+const playerCurrent =
+    document.getElementById('playerCurrent');
+
+const playerStatusText =
+    document.getElementById('playerStatusText');
+
+const watchStatus =
+    document.getElementById('watchStatus');
+
+const progressText =
+    document.getElementById('progressText');
+
+const startButtonText =
+    document.getElementById('startButtonText');
+
+const heroStartButtonText =
+    document.getElementById('heroStartButtonText');
+
+
+
+/* =========================================================
+   INICIALIZAR
+========================================================= */
+
+document.addEventListener(
+    'DOMContentLoaded',
+    function () {
+
+        loadSeasons();
+
+        loadEpisodes();
+
+        updateInterface();
+
+        restoreReaction();
+
+    }
+);
+
+
+
+/* =========================================================
+   CARGAR TEMPORADAS
+========================================================= */
+
+function loadSeasons() {
+
+
+    seasonSelect.innerHTML = '';
+
+
+    Object.keys(seasons).forEach(
+        function (season) {
+
+
+            const option =
+                document.createElement('option');
+
+
+            option.value =
+                season;
+
+
+            option.textContent =
+                'Temporada ' + season;
+
+
+            seasonSelect.appendChild(option);
+
+
+        }
+    );
+
+
+    seasonSelect.value =
+        currentSeason;
+
+}
+
+
+
+/* =========================================================
+   CARGAR EPISODIOS
+========================================================= */
+
+function loadEpisodes() {
+
+
+    episodeSelect.innerHTML = '';
+
+
+    const episodes =
+        seasons[currentSeason] || [];
+
+
+    episodes.forEach(
+        function (url, index) {
+
+
+            const option =
+                document.createElement('option');
+
+
+            option.value =
+                index;
+
+
+            option.textContent =
+                'Episodio ' + (index + 1);
+
+
+            episodeSelect.appendChild(option);
+
+
+        }
+    );
+
+
+    episodeSelect.value =
+        currentEpisode;
+
+
+}
+
+
+
+/* =========================================================
+   CAMBIAR TEMPORADA
+========================================================= */
+
+function changeSeason() {
+
+
+    currentSeason =
+        parseInt(seasonSelect.value);
+
+
+    currentEpisode =
+        0;
+
+
+    loadEpisodes();
+
+    updateInterface();
+
+    stopPlayer();
+
+
+}
+
+
+
+/* =========================================================
+   CAMBIAR EPISODIO
+========================================================= */
+
+function changeEpisode() {
+
+
+    currentEpisode =
+        parseInt(episodeSelect.value);
+
+
+    updateInterface();
+
+    stopPlayer();
+
+
+}
+
+
+
+/* =========================================================
+   ACTUALIZAR INTERFAZ
+========================================================= */
+
+function updateInterface() {
+
+
+    const episodeNumber =
+        currentEpisode + 1;
+
+
+    const label =
+        'T' +
+        currentSeason +
+        ' · E' +
+        episodeNumber;
+
+
+    const buttonLabel =
+        'Iniciar T' +
+        currentSeason +
+        '-E' +
+        episodeNumber;
+
+
+
+    currentEpisodeBadge.textContent =
+        label;
+
+
+    playerCurrent.textContent =
+        label;
+
+
+    progressText.textContent =
+        label;
+
+
+    startButtonText.textContent =
+        buttonLabel;
+
+
+    heroStartButtonText.textContent =
+        'Iniciar ' + label;
+
+
+    episodeSelect.value =
+        currentEpisode;
+
+
+    seasonSelect.value =
+        currentSeason;
+
+
+}
+
+
+
+/* =========================================================
+   INICIAR EPISODIO
+========================================================= */
+
+function startEpisode() {
+
+
+    const episodes =
+        seasons[currentSeason] || [];
+
+
+    if (
+        !episodes.length
+    ) {
+
+        alert(
+            'Esta temporada todavía no tiene episodios.'
+        );
+
+        return;
+
+    }
+
+
+    const episodeUrl =
+        episodes[currentEpisode];
+
+
+    if (!episodeUrl) {
+
+        alert(
+            'No se encontró este episodio.'
+        );
+
+        return;
+
+    }
+
+
+
+    /* Ocultar placeholder */
+
+    playerPlaceholder.style.display =
+        'none';
+
+
+
+    /* Mostrar reproductor */
+
+    videoContainer.classList.add(
+        'active'
+    );
+
+
+
+    /*
+        Google Drive /preview
+        se carga dentro de un iframe.
+    */
+
+    playerFrame =
+        document.createElement('iframe');
+
+
+    playerFrame.src =
+        episodeUrl;
+
+
+    playerFrame.allow =
+        'autoplay; fullscreen';
+
+
+    playerFrame.allowFullscreen =
+        true;
+
+
+    playerFrame.setAttribute(
+        'frameborder',
+        '0'
+    );
+
+
+    playerFrame.className =
+        'episode-frame';
+
+
+
+    /*
+        Limpiar reproductor anterior
+    */
+
+    const oldFrame =
+        videoContainer.querySelector(
+            '.episode-frame'
+        );
+
+
+    if (oldFrame) {
+
+        oldFrame.remove();
+
+    }
+
+
+
+    videoContainer.appendChild(
+        playerFrame
+    );
+
+
+
+    /* Estado */
+
+    playerStatusText.textContent =
+        'Reproduciendo T' +
+        currentSeason +
+        ' · E' +
+        (currentEpisode + 1);
+
+
+    watchStatus.textContent =
+        'Reproduciendo';
+
+
+    /* Guardar progreso */
+
+    localStorage.setItem(
+        'lastSeason',
+        currentSeason
+    );
+
+
+    localStorage.setItem(
+        'lastEpisode',
+        currentEpisode
+    );
+
+
+}
+
+
+
+/* =========================================================
+   DETENER REPRODUCTOR
+========================================================= */
+
+function stopPlayer() {
+
+
+    const frame =
+        videoContainer.querySelector(
+            '.episode-frame'
+        );
+
+
+    if (frame) {
+
+        frame.remove();
+
+    }
+
+
+    playerPlaceholder.style.display =
+        'flex';
+
+
+    videoContainer.classList.remove(
+        'active'
+    );
+
+
+    playerStatusText.textContent =
+        'Listo para reproducir';
+
+
+    watchStatus.textContent =
+        'Listo para reproducir';
+
+
+}
+
+
+
+/* =========================================================
+   EPISODIO ANTERIOR
+========================================================= */
+
+function previousEpisode() {
+
+
+    if (
+        currentEpisode > 0
+    ) {
+
+        currentEpisode--;
+
+    }
+
+    else if (
+        currentSeason > 1
+    ) {
+
+
+        const previousSeason =
+            currentSeason - 1;
+
+
+        if (
+            seasons[previousSeason]
+        ) {
+
+            currentSeason =
+                previousSeason;
+
+
+            currentEpisode =
+                seasons[currentSeason].length - 1;
+
+        }
+
+    }
+
+
+    loadEpisodes();
+
+    updateInterface();
+
+    stopPlayer();
+
+
+}
+
+
+
+/* =========================================================
+   SIGUIENTE EPISODIO
+========================================================= */
+
+function nextEpisode() {
+
+
+    const episodes =
+        seasons[currentSeason] || [];
+
+
+    if (
+        currentEpisode <
+        episodes.length - 1
+    ) {
+
+        currentEpisode++;
+
+    }
+
+    else {
+
+
+        const nextSeason =
+            currentSeason + 1;
+
+
+        if (
+            seasons[nextSeason]
+        ) {
+
+            currentSeason =
+                nextSeason;
+
+
+            currentEpisode =
+                0;
+
+        }
+
+        else {
+
+            alert(
+                'Has llegado al último episodio disponible.'
+            );
+
+            return;
+
+        }
+
+    }
+
+
+    loadEpisodes();
+
+    updateInterface();
+
+    stopPlayer();
+
+
+}
+
+
+
+/* =========================================================
+   REINICIAR DESDE EL PRIMER EPISODIO
+========================================================= */
+
+function restartToFirstEpisode() {
+
+
+    currentSeason =
+        1;
+
+
+    currentEpisode =
+        0;
+
+
+    loadEpisodes();
+
+    updateInterface();
+
+    stopPlayer();
+
+
+    window.scrollTo({
+
+        top: 0,
+
+        behavior: 'smooth'
+
+    });
+
+
+}
+
+
+
+/* =========================================================
+   LIKE / DISLIKE
+========================================================= */
+
+function setReaction(type) {
+
+
+    const likeButton =
+        document.getElementById(
+            'likeButton'
+        );
+
+
+    const dislikeButton =
+        document.getElementById(
+            'dislikeButton'
+        );
+
+
+    likeButton.classList.remove(
+        'selected'
+    );
+
+
+    dislikeButton.classList.remove(
+        'selected'
+    );
+
+
+    if (
+        type === 'like'
+    ) {
+
+        likeButton.classList.add(
+            'selected'
+        );
+
+    }
+
+
+    if (
+        type === 'dislike'
+    ) {
+
+        dislikeButton.classList.add(
+            'selected'
+        );
+
+    }
+
+
+    localStorage.setItem(
+        'theLastOfUsReaction',
+        type
+    );
+
+
+}
+
+
+
+/* =========================================================
+   RESTAURAR REACCION
+========================================================= */
+
+function restoreReaction() {
+
+
+    const reaction =
+        localStorage.getItem(
+            'theLastOfUsReaction'
+        );
+
+
+    if (
+        reaction
+    ) {
+
+        setReaction(
+            reaction
+        );
+
+    }
+
+
+}
+
+
+
+/* =========================================================
+   EXPLORADOR
+========================================================= */
+
+function toggleExplorer() {
+
+
+    const selectors =
+        document.getElementById(
+            'episodeSelectors'
+        );
+
+
+    selectors.classList.toggle(
+        'collapsed'
+    );
+
+
+}
+
+
+
+/* =========================================================
+   RESTAURAR ULTIMO EPISODIO
+========================================================= */
+
+function restoreLastEpisode() {
+
+
+    const savedSeason =
+        localStorage.getItem(
+            'lastSeason'
+        );
+
+
+    const savedEpisode =
+        localStorage.getItem(
+            'lastEpisode'
+        );
+
+
+    if (
+        savedSeason !== null &&
+        savedEpisode !== null
+    ) {
+
+
+        const season =
+            parseInt(
+                savedSeason
+            );
+
+
+        const episode =
+            parseInt(
+                savedEpisode
+            );
+
+
+        if (
+            seasons[season] &&
+            seasons[season][episode]
+        ) {
+
+            currentSeason =
+                season;
+
+
+            currentEpisode =
+                episode;
+
+
+            loadSeasons();
+
+            loadEpisodes();
+
+            updateInterface();
+
+        }
+
+    }
+
+
+}
+
+
+
+/* =========================================================
+   RESTAURAR AL CARGAR
+========================================================= */
+
+window.addEventListener(
+    'load',
+    function () {
+
+        restoreLastEpisode();
+
+    }
+);
+
+
+
+/* =========================================================
+   TECLADO
+========================================================= */
+
+document.addEventListener(
+    'keydown',
+    function (event) {
+
+
+        /*
+            Flecha izquierda
+            = episodio anterior
+        */
+
+        if (
+            event.key ===
+            'ArrowLeft'
+        ) {
+
+            previousEpisode();
+
+        }
+
+
+        /*
+            Flecha derecha
+            = siguiente episodio
+        */
+
+        if (
+            event.key ===
+            'ArrowRight'
+        ) {
+
+            nextEpisode();
+
+        }
+
+
+    }
+);
+
+
+
+/* =========================================================
+   TRAILER
+========================================================= */
+
+const trailer =
+    document.getElementById(
+        'trailer'
+    );
+
+
+if (trailer) {
+
+
+    trailer.play().catch(
+        function () {
+
+            /*
+                Algunos navegadores
+                bloquean autoplay.
+            */
+
+        }
+    );
+
+}
+
+
+
+</script>
+
+
+</body>
+
+</html>

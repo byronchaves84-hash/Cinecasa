@@ -1,0 +1,2025 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="theme-color"
+        content="#050505"
+    >
+
+    <meta
+        name="description"
+        content="Catálogo completo de películas de CinemaX."
+    >
+
+    <title>Catálogo — CinemaX</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         NAVBAR
+    ====================================================== -->
+
+    <header class="navbar" id="navbar">
+
+        <div class="navbar-left">
+
+            <a
+                href="../index.html"
+                class="logo"
+            >
+                CINEMAX
+            </a>
+
+
+            <nav class="nav-links">
+
+                <a href="../index.html">
+                    Inicio
+                </a>
+
+                <a href="../peliculas/index.html">
+                    Películas
+                </a>
+
+                <a
+                    href="index.html"
+                    class="active"
+                >
+                    Catálogo
+                </a>
+
+                <a href="../terror.html">
+                    Terror
+                </a>
+
+                <a href="../favoritos/index.html">
+                    Favoritos
+                </a>
+
+            </nav>
+
+        </div>
+
+
+        <div class="navbar-right">
+
+            <button
+                class="search-button"
+                id="searchButton"
+                type="button"
+                aria-label="Buscar"
+            >
+                ⌕
+            </button>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <main>
+
+
+        <!-- =================================================
+             HEADER DEL CATÁLOGO
+        ================================================== -->
+
+        <section class="catalog-header">
+
+            <div class="catalog-header-content">
+
+                <span class="section-label">
+                    CINEMAX / CATÁLOGO
+                </span>
+
+
+                <h1>
+                    Todo el cine.
+                    <span>En un solo lugar.</span>
+                </h1>
+
+
+                <p>
+                    Explora nuestra colección completa de películas
+                    y encuentra algo perfecto para ver.
+                </p>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             CATÁLOGO
+        ================================================== -->
+
+        <section class="catalog-section">
+
+
+            <!-- FILTROS -->
+
+            <div class="catalog-top">
+
+                <div class="filter-wrapper">
+
+                    <span class="filter-label">
+                        FILTRAR POR
+                    </span>
+
+
+                    <div class="filters">
+
+                        <button
+                            class="filter-button active"
+                            data-filter="all"
+                            type="button"
+                        >
+                            Todas
+                        </button>
+
+                        <button
+                            class="filter-button"
+                            data-filter="accion"
+                            type="button"
+                        >
+                            Acción
+                        </button>
+
+                        <button
+                            class="filter-button"
+                            data-filter="comedia"
+                            type="button"
+                        >
+                            Comedia
+                        </button>
+
+                        <button
+                            class="filter-button"
+                            data-filter="drama"
+                            type="button"
+                        >
+                            Drama
+                        </button>
+
+                        <button
+                            class="filter-button"
+                            data-filter="ciencia"
+                            type="button"
+                        >
+                            Ciencia ficción
+                        </button>
+
+                        <button
+                            class="filter-button"
+                            data-filter="aventura"
+                            type="button"
+                        >
+                            Aventura
+                        </button>
+
+                        <button
+                            class="filter-button"
+                            data-filter="suspenso"
+                            type="button"
+                        >
+                            Suspenso
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div class="catalog-count">
+
+                    <span id="movieCount">
+                        0 películas
+                    </span>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 GRID
+            ================================================== -->
+
+            <div
+                class="catalog-grid"
+                id="catalogGrid"
+            >
+
+
+                <!-- DEADPOOL -->
+
+                <article
+                    class="catalog-card"
+                    data-title="Deadpool & Wolverine"
+                    data-genre="accion comedia"
+                >
+
+                    <div class="catalog-poster">
+
+                        <img
+                            src="https://image.tmdb.org/t/p/w500/8cdWjvZQUExUUTzyp4t6EDMubfO.jpg"
+                            alt="Deadpool & Wolverine"
+                            loading="lazy"
+                        >
+
+                        <div class="poster-overlay">
+
+                            <button
+                                class="add-button"
+                                type="button"
+                                aria-label="Añadir Deadpool & Wolverine a favoritos"
+                                aria-pressed="false"
+                                data-movie="Deadpool & Wolverine"
+                            >
+                                +
+                            </button>
+
+                        </div>
+
+                        <span class="movie-year">
+                            2024
+                        </span>
+
+                    </div>
+
+
+                    <div class="catalog-info">
+
+                        <h2>
+                            Deadpool & Wolverine
+                        </h2>
+
+                        <div class="movie-meta">
+
+                            <span>2024</span>
+
+                            <i></i>
+
+                            <span>Acción</span>
+
+                            <i></i>
+
+                            <span>Comedia</span>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- OPPENHEIMER -->
+
+                <article
+                    class="catalog-card"
+                    data-title="Oppenheimer"
+                    data-genre="drama"
+                >
+
+                    <div class="catalog-poster">
+
+                        <img
+                            src="https://image.tmdb.org/t/p/w500/8Gxv8gSFCU0XGDykEGv7zR1n2ua.jpg"
+                            alt="Oppenheimer"
+                            loading="lazy"
+                        >
+
+                        <div class="poster-overlay">
+
+                            <button
+                                class="add-button"
+                                type="button"
+                                aria-label="Añadir Oppenheimer a favoritos"
+                                aria-pressed="false"
+                                data-movie="Oppenheimer"
+                            >
+                                +
+                            </button>
+
+                        </div>
+
+                        <span class="movie-year">
+                            2023
+                        </span>
+
+                    </div>
+
+
+                    <div class="catalog-info">
+
+                        <h2>
+                            Oppenheimer
+                        </h2>
+
+                        <div class="movie-meta">
+
+                            <span>2023</span>
+
+                            <i></i>
+
+                            <span>Drama</span>
+
+                            <i></i>
+
+                            <span>Historia</span>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- THE BATMAN -->
+
+                <article
+                    class="catalog-card"
+                    data-title="The Batman"
+                    data-genre="accion suspenso"
+                >
+
+                    <div class="catalog-poster">
+
+                        <img
+                            src="https://image.tmdb.org/t/p/w500/74xTEgt7R36Fpooo50r9T25onhq.jpg"
+                            alt="The Batman"
+                            loading="lazy"
+                        >
+
+                        <div class="poster-overlay">
+
+                            <button
+                                class="add-button"
+                                type="button"
+                                aria-label="Añadir The Batman a favoritos"
+                                aria-pressed="false"
+                                data-movie="The Batman"
+                            >
+                                +
+                            </button>
+
+                        </div>
+
+                        <span class="movie-year">
+                            2022
+                        </span>
+
+                    </div>
+
+
+                    <div class="catalog-info">
+
+                        <h2>
+                            The Batman
+                        </h2>
+
+                        <div class="movie-meta">
+
+                            <span>2022</span>
+
+                            <i></i>
+
+                            <span>Acción</span>
+
+                            <i></i>
+
+                            <span>Suspenso</span>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- INTERSTELLAR -->
+
+                <article
+                    class="catalog-card"
+                    data-title="Interstellar"
+                    data-genre="ciencia drama"
+                >
+
+                    <div class="catalog-poster">
+
+                        <img
+                            src="https://image.tmdb.org/t/p/w500/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg"
+                            alt="Interstellar"
+                            loading="lazy"
+                        >
+
+                        <div class="poster-overlay">
+
+                            <button
+                                class="add-button"
+                                type="button"
+                                aria-label="Añadir Interstellar a favoritos"
+                                aria-pressed="false"
+                                data-movie="Interstellar"
+                            >
+                                +
+                            </button>
+
+                        </div>
+
+                        <span class="movie-year">
+                            2014
+                        </span>
+
+                    </div>
+
+
+                    <div class="catalog-info">
+
+                        <h2>
+                            Interstellar
+                        </h2>
+
+                        <div class="movie-meta">
+
+                            <span>2014</span>
+
+                            <i></i>
+
+                            <span>Ciencia ficción</span>
+
+                            <i></i>
+
+                            <span>Drama</span>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- SPIDER-MAN -->
+
+                <article
+                    class="catalog-card"
+                    data-title="Spider-Man No Way Home"
+                    data-genre="accion aventura"
+                >
+
+                    <div class="catalog-poster">
+
+                        <img
+                            src="https://image.tmdb.org/t/p/w500/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg"
+                            alt="Spider-Man No Way Home"
+                            loading="lazy"
+                        >
+
+                        <div class="poster-overlay">
+
+                            <button
+                                class="add-button"
+                                type="button"
+                                aria-label="Añadir Spider-Man No Way Home a favoritos"
+                                aria-pressed="false"
+                                data-movie="Spider-Man No Way Home"
+                            >
+                                +
+                            </button>
+
+                        </div>
+
+                        <span class="movie-year">
+                            2021
+                        </span>
+
+                    </div>
+
+
+                    <div class="catalog-info">
+
+                        <h2>
+                            Spider-Man: No Way Home
+                        </h2>
+
+                        <div class="movie-meta">
+
+                            <span>2021</span>
+
+                            <i></i>
+
+                            <span>Acción</span>
+
+                            <i></i>
+
+                            <span>Aventura</span>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- AVENGERS -->
+
+                <article
+                    class="catalog-card"
+                    data-title="Avengers"
+                    data-genre="accion aventura"
+                >
+
+                    <div class="catalog-poster">
+
+                        <img
+                            src="https://image.tmdb.org/t/p/w500/4ssDuvEDkSArWEdyBl2X5EHvYKU.jpg"
+                            alt="Avengers"
+                            loading="lazy"
+                        >
+
+                        <div class="poster-overlay">
+
+                            <button
+                                class="add-button"
+                                type="button"
+                                aria-label="Añadir Avengers a favoritos"
+                                aria-pressed="false"
+                                data-movie="Avengers"
+                            >
+                                +
+                            </button>
+
+                        </div>
+
+                        <span class="movie-year">
+                            2012
+                        </span>
+
+                    </div>
+
+
+                    <div class="catalog-info">
+
+                        <h2>
+                            Avengers
+                        </h2>
+
+                        <div class="movie-meta">
+
+                            <span>2012</span>
+
+                            <i></i>
+
+                            <span>Acción</span>
+
+                            <i></i>
+
+                            <span>Aventura</span>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- DUNE -->
+
+                <article
+                    class="catalog-card"
+                    data-title="Dune"
+                    data-genre="ciencia aventura"
+                >
+
+                    <div class="catalog-poster">
+
+                        <img
+                            src="https://image.tmdb.org/t/p/w500/1pdfLvkbY9ohJlCjQH2CZjjYVvJ.jpg"
+                            alt="Dune"
+                            loading="lazy"
+                        >
+
+                        <div class="poster-overlay">
+
+                            <button
+                                class="add-button"
+                                type="button"
+                                aria-label="Añadir Dune a favoritos"
+                                aria-pressed="false"
+                                data-movie="Dune"
+                            >
+                                +
+                            </button>
+
+                        </div>
+
+                        <span class="movie-year">
+                            2021
+                        </span>
+
+                    </div>
+
+
+                    <div class="catalog-info">
+
+                        <h2>
+                            Dune
+                        </h2>
+
+                        <div class="movie-meta">
+
+                            <span>2021</span>
+
+                            <i></i>
+
+                            <span>Ciencia ficción</span>
+
+                            <i></i>
+
+                            <span>Aventura</span>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- GLADIATOR -->
+
+                <article
+                    class="catalog-card"
+                    data-title="Gladiator"
+                    data-genre="accion drama"
+                >
+
+                    <div class="catalog-poster">
+
+                        <img
+                            src="https://image.tmdb.org/t/p/w500/ty8TGRuvJLPUmAR1H1nRIsgwvim.jpg"
+                            alt="Gladiator"
+                            loading="lazy"
+                        >
+
+                        <div class="poster-overlay">
+
+                            <button
+                                class="add-button"
+                                type="button"
+                                aria-label="Añadir Gladiator a favoritos"
+                                aria-pressed="false"
+                                data-movie="Gladiator"
+                            >
+                                +
+                            </button>
+
+                        </div>
+
+                        <span class="movie-year">
+                            2000
+                        </span>
+
+                    </div>
+
+
+                    <div class="catalog-info">
+
+                        <h2>
+                            Gladiator
+                        </h2>
+
+                        <div class="movie-meta">
+
+                            <span>2000</span>
+
+                            <i></i>
+
+                            <span>Acción</span>
+
+                            <i></i>
+
+                            <span>Drama</span>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- INCEPTION -->
+
+                <article
+                    class="catalog-card"
+                    data-title="Inception"
+                    data-genre="ciencia suspenso"
+                >
+
+                    <div class="catalog-poster">
+
+                        <img
+                            src="https://image.tmdb.org/t/p/w500/oYuLEt3zVCKq57qu2F8dT7NIa6f.jpg"
+                            alt="Inception"
+                            loading="lazy"
+                        >
+
+                        <div class="poster-overlay">
+
+                            <button
+                                class="add-button"
+                                type="button"
+                                aria-label="Añadir Inception a favoritos"
+                                aria-pressed="false"
+                                data-movie="Inception"
+                            >
+                                +
+                            </button>
+
+                        </div>
+
+                        <span class="movie-year">
+                            2010
+                        </span>
+
+                    </div>
+
+
+                    <div class="catalog-info">
+
+                        <h2>
+                            Inception
+                        </h2>
+
+                        <div class="movie-meta">
+
+                            <span>2010</span>
+
+                            <i></i>
+
+                            <span>Ciencia ficción</span>
+
+                            <i></i>
+
+                            <span>Suspenso</span>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- JOKER -->
+
+                <article
+                    class="catalog-card"
+                    data-title="Joker"
+                    data-genre="drama suspenso"
+                >
+
+                    <div class="catalog-poster">
+
+                        <img
+                            src="https://image.tmdb.org/t/p/w500/udDclJoHjfjb8Ekgsd4FDteOkCU.jpg"
+                            alt="Joker"
+                            loading="lazy"
+                        >
+
+                        <div class="poster-overlay">
+
+                            <button
+                                class="add-button"
+                                type="button"
+                                aria-label="Añadir Joker a favoritos"
+                                aria-pressed="false"
+                                data-movie="Joker"
+                            >
+                                +
+                            </button>
+
+                        </div>
+
+                        <span class="movie-year">
+                            2019
+                        </span>
+
+                    </div>
+
+
+                    <div class="catalog-info">
+
+                        <h2>
+                            Joker
+                        </h2>
+
+                        <div class="movie-meta">
+
+                            <span>2019</span>
+
+                            <i></i>
+
+                            <span>Drama</span>
+
+                            <i></i>
+
+                            <span>Suspenso</span>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- TOP GUN -->
+
+                <article
+                    class="catalog-card"
+                    data-title="Top Gun Maverick"
+                    data-genre="accion drama"
+                >
+
+                    <div class="catalog-poster">
+
+                        <img
+                            src="https://image.tmdb.org/t/p/w500/62HCnUTziyWcpDaBO2i1i1VjaJY.jpg"
+                            alt="Top Gun Maverick"
+                            loading="lazy"
+                        >
+
+                        <div class="poster-overlay">
+
+                            <button
+                                class="add-button"
+                                type="button"
+                                aria-label="Añadir Top Gun Maverick a favoritos"
+                                aria-pressed="false"
+                                data-movie="Top Gun Maverick"
+                            >
+                                +
+                            </button>
+
+                        </div>
+
+                        <span class="movie-year">
+                            2022
+                        </span>
+
+                    </div>
+
+
+                    <div class="catalog-info">
+
+                        <h2>
+                            Top Gun: Maverick
+                        </h2>
+
+                        <div class="movie-meta">
+
+                            <span>2022</span>
+
+                            <i></i>
+
+                            <span>Acción</span>
+
+                            <i></i>
+
+                            <span>Drama</span>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- GUARDIANS -->
+
+                <article
+                    class="catalog-card"
+                    data-title="Guardians of the Galaxy"
+                    data-genre="accion comedia aventura"
+                >
+
+                    <div class="catalog-poster">
+
+                        <img
+                            src="https://image.tmdb.org/t/p/w500/r2J02Z2OpNTctfOSN1Ydgii51I3.jpg"
+                            alt="Guardians of the Galaxy"
+                            loading="lazy"
+                        >
+
+                        <div class="poster-overlay">
+
+                            <button
+                                class="add-button"
+                                type="button"
+                                aria-label="Añadir Guardians of the Galaxy a favoritos"
+                                aria-pressed="false"
+                                data-movie="Guardians of the Galaxy"
+                            >
+                                +
+                            </button>
+
+                        </div>
+
+                        <span class="movie-year">
+                            2014
+                        </span>
+
+                    </div>
+
+
+                    <div class="catalog-info">
+
+                        <h2>
+                            Guardians of the Galaxy
+                        </h2>
+
+                        <div class="movie-meta">
+
+                            <span>2014</span>
+
+                            <i></i>
+
+                            <span>Acción</span>
+
+                            <i></i>
+
+                            <span>Aventura</span>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 SIN RESULTADOS
+            ================================================== -->
+
+            <div
+                class="no-results"
+                id="noResults"
+            >
+
+                <div class="no-results-icon">
+                    ⌕
+                </div>
+
+                <h2>
+                    No encontramos películas
+                </h2>
+
+                <p>
+                    Prueba con otro género o vuelve a mostrar
+                    todo el catálogo.
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- =====================================================
+         SEARCH OVERLAY
+    ====================================================== -->
+
+    <div
+        class="search-overlay"
+        id="searchOverlay"
+        aria-hidden="true"
+    >
+
+        <div class="search-backdrop"></div>
+
+
+        <div class="search-content">
+
+            <button
+                class="close-search"
+                id="closeSearch"
+                type="button"
+                aria-label="Cerrar búsqueda"
+            >
+                ×
+            </button>
+
+
+            <span class="section-label">
+                CINEMAX SEARCH
+            </span>
+
+
+            <h2>
+                Buscar película
+            </h2>
+
+
+            <p>
+                Encuentra rápidamente una película del catálogo.
+            </p>
+
+
+            <form id="searchForm">
+
+                <span>
+                    ⌕
+                </span>
+
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Escribe el nombre..."
+                    autocomplete="off"
+                >
+
+
+                <button type="submit">
+                    →
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <footer class="footer">
+
+        <div class="footer-top">
+
+            <div>
+
+                <div class="footer-logo">
+                    CINEMAX
+                </div>
+
+                <p>
+                    Tu cine, en un solo lugar.
+                </p>
+
+            </div>
+
+
+            <div class="footer-links">
+
+                <span>
+                    EXPLORAR
+                </span>
+
+                <a href="../index.html">
+                    Inicio
+                </a>
+
+                <a href="../peliculas/index.html">
+                    Películas
+                </a>
+
+                <a href="index.html">
+                    Catálogo
+                </a>
+
+                <a href="../terror.html">
+                    Terror
+                </a>
+
+                <a href="../favoritos/index.html">
+                    Favoritos
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            <span>
+                © 2026 CinemaX
+            </span>
+
+            <span>
+                Hecho para amantes del cine.
+            </span>
+
+        </div>
+
+    </footer>
+
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
+
+    <script>
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            () => {
+
+
+                /* =================================================
+                   NAVBAR
+                ================================================= */
+
+                const navbar =
+                    document.getElementById("navbar");
+
+
+                const updateNavbar = () => {
+
+                    navbar.classList.toggle(
+                        "scrolled",
+                        window.scrollY > 30
+                    );
+
+                };
+
+
+                updateNavbar();
+
+
+                window.addEventListener(
+                    "scroll",
+                    updateNavbar,
+                    { passive: true }
+                );
+
+
+
+                /* =================================================
+                   FAVORITOS COMPARTIDOS
+                ================================================= */
+
+                const FAVORITES_KEY =
+                    "cinemaxFavorites";
+
+
+                const getFavorites = () => {
+
+                    try {
+
+                        const saved =
+                            localStorage.getItem(
+                                FAVORITES_KEY
+                            );
+
+
+                        if (!saved) {
+                            return [];
+                        }
+
+
+                        const parsed =
+                            JSON.parse(saved);
+
+
+                        return Array.isArray(parsed)
+                            ? parsed
+                            : [];
+
+                    } catch (error) {
+
+                        console.warn(
+                            "CinemaX: error leyendo favoritos.",
+                            error
+                        );
+
+                        return [];
+
+                    }
+
+                };
+
+
+                const saveFavorites = favorites => {
+
+                    try {
+
+                        localStorage.setItem(
+                            FAVORITES_KEY,
+                            JSON.stringify(favorites)
+                        );
+
+
+                        window.dispatchEvent(
+                            new CustomEvent(
+                                "cinemaxFavoritesChanged",
+                                {
+                                    detail: {
+                                        favorites
+                                    }
+                                }
+                            )
+                        );
+
+                    } catch (error) {
+
+                        console.warn(
+                            "CinemaX: error guardando favoritos.",
+                            error
+                        );
+
+                    }
+
+                };
+
+
+                const normalizeTitle = title => {
+
+                    return String(title || "")
+                        .trim()
+                        .toLowerCase();
+
+                };
+
+
+                const isFavorite = title => {
+
+                    const normalized =
+                        normalizeTitle(title);
+
+
+                    return getFavorites().some(
+                        favorite =>
+                            normalizeTitle(favorite) ===
+                            normalized
+                    );
+
+                };
+
+
+                const setFavoriteVisualState = (
+                    button,
+                    favorite
+                ) => {
+
+                    button.classList.toggle(
+                        "added",
+                        favorite
+                    );
+
+
+                    button.classList.toggle(
+                        "favorite-active",
+                        favorite
+                    );
+
+
+                    button.textContent =
+                        favorite
+                            ? "✓"
+                            : "+";
+
+
+                    button.setAttribute(
+                        "aria-pressed",
+                        favorite
+                            ? "true"
+                            : "false"
+                    );
+
+
+                    const movie =
+                        button.dataset.movie ||
+                        "película";
+
+
+                    button.setAttribute(
+                        "aria-label",
+                        favorite
+                            ? `Quitar ${movie} de favoritos`
+                            : `Añadir ${movie} a favoritos`
+                    );
+
+                };
+
+
+                const refreshFavoriteButtons = () => {
+
+                    document
+                        .querySelectorAll(".add-button")
+                        .forEach(button => {
+
+                            setFavoriteVisualState(
+                                button,
+                                isFavorite(
+                                    button.dataset.movie
+                                )
+                            );
+
+                        });
+
+                };
+
+
+                refreshFavoriteButtons();
+
+
+
+                /* =================================================
+                   FALLBACK DE IMÁGENES
+                ================================================= */
+
+                const fallbackPoster =
+                    "data:image/svg+xml;charset=UTF-8," +
+                    encodeURIComponent(`
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="500"
+                            height="750"
+                        >
+
+                            <rect
+                                width="500"
+                                height="750"
+                                fill="#111"
+                            />
+
+                            <circle
+                                cx="250"
+                                cy="330"
+                                r="90"
+                                fill="none"
+                                stroke="#e50914"
+                                stroke-width="3"
+                                opacity=".65"
+                            />
+
+                            <text
+                                x="250"
+                                y="345"
+                                text-anchor="middle"
+                                fill="#e50914"
+                                font-family="Arial"
+                                font-size="42"
+                                font-weight="900"
+                            >
+                                C
+                            </text>
+
+                            <text
+                                x="250"
+                                y="470"
+                                text-anchor="middle"
+                                fill="#777"
+                                font-family="Arial"
+                                font-size="18"
+                                letter-spacing="4"
+                            >
+                                CINEMAX
+                            </text>
+
+                        </svg>
+                    `);
+
+
+                document
+                    .querySelectorAll(
+                        ".catalog-poster img"
+                    )
+                    .forEach(img => {
+
+                        img.addEventListener(
+                            "error",
+                            () => {
+
+                                if (
+                                    img.dataset.fallbackApplied
+                                ) {
+                                    return;
+                                }
+
+                                img.dataset.fallbackApplied =
+                                    "true";
+
+                                img.src =
+                                    fallbackPoster;
+
+                            },
+                            { once: true }
+                        );
+
+                    });
+
+
+
+                /* =================================================
+                   ELEMENTOS DEL CATÁLOGO
+                ================================================= */
+
+                const filterButtons =
+                    document.querySelectorAll(
+                        ".filter-button"
+                    );
+
+
+                const movieCards =
+                    document.querySelectorAll(
+                        ".catalog-card"
+                    );
+
+
+                const movieCount =
+                    document.getElementById(
+                        "movieCount"
+                    );
+
+
+                const noResults =
+                    document.getElementById(
+                        "noResults"
+                    );
+
+
+
+                /* =================================================
+                   CONTADOR
+                ================================================= */
+
+                const updateMovieCount = count => {
+
+                    movieCount.textContent =
+                        `${count} película${count !== 1 ? "s" : ""}`;
+
+                };
+
+
+
+                /* =================================================
+                   FILTROS
+                ================================================= */
+
+                const applyFilter = filter => {
+
+                    let visibleCount = 0;
+
+
+                    movieCards.forEach(card => {
+
+                        const genres =
+                            (
+                                card.dataset.genre ||
+                                ""
+                            ).toLowerCase();
+
+
+                        const visible =
+                            filter === "all" ||
+                            genres.includes(filter);
+
+
+                        card.classList.toggle(
+                            "hidden",
+                            !visible
+                        );
+
+
+                        if (visible) {
+                            visibleCount++;
+                        }
+
+                    });
+
+
+                    updateMovieCount(
+                        visibleCount
+                    );
+
+
+                    noResults.classList.toggle(
+                        "visible",
+                        visibleCount === 0
+                    );
+
+                };
+
+
+                filterButtons.forEach(button => {
+
+                    button.addEventListener(
+                        "click",
+                        () => {
+
+                            filterButtons.forEach(
+                                item => {
+
+                                    item.classList.remove(
+                                        "active"
+                                    );
+
+                                }
+                            );
+
+
+                            button.classList.add(
+                                "active"
+                            );
+
+
+                            applyFilter(
+                                button.dataset.filter
+                            );
+
+                        }
+                    );
+
+                });
+
+
+                /*
+                 * Estado inicial.
+                 */
+
+                applyFilter("all");
+
+
+
+                /* =================================================
+                   FAVORITOS
+                ================================================= */
+
+                document.addEventListener(
+                    "click",
+                    event => {
+
+                        const addButton =
+                            event.target.closest(
+                                ".add-button"
+                            );
+
+
+                        if (!addButton) {
+                            return;
+                        }
+
+
+                        event.preventDefault();
+                        event.stopPropagation();
+
+
+                        const title =
+                            addButton.dataset.movie;
+
+
+                        if (!title) {
+                            return;
+                        }
+
+
+                        let favorites =
+                            getFavorites();
+
+
+                        const normalizedTitle =
+                            normalizeTitle(title);
+
+
+                        const existingIndex =
+                            favorites.findIndex(
+                                favorite =>
+                                    normalizeTitle(
+                                        favorite
+                                    ) ===
+                                    normalizedTitle
+                            );
+
+
+                        /*
+                         * YA ES FAVORITO
+                         * Lo quitamos.
+                         */
+
+                        if (existingIndex !== -1) {
+
+                            favorites.splice(
+                                existingIndex,
+                                1
+                            );
+
+
+                            saveFavorites(
+                                favorites
+                            );
+
+
+                            setFavoriteVisualState(
+                                addButton,
+                                false
+                            );
+
+
+                            addButton.classList.add(
+                                "favorite-removing"
+                            );
+
+
+                            setTimeout(
+                                () => {
+
+                                    addButton.classList.remove(
+                                        "favorite-removing"
+                                    );
+
+                                },
+                                250
+                            );
+
+
+                            return;
+
+                        }
+
+
+                        /*
+                         * NO ES FAVORITO
+                         * Lo añadimos.
+                         */
+
+                        favorites.push(title);
+
+
+                        saveFavorites(
+                            favorites
+                        );
+
+
+                        setFavoriteVisualState(
+                            addButton,
+                            true
+                        );
+
+
+                        addButton.classList.remove(
+                            "favorite-pop"
+                        );
+
+
+                        void addButton.offsetWidth;
+
+
+                        addButton.classList.add(
+                            "favorite-pop"
+                        );
+
+
+                        setTimeout(
+                            () => {
+
+                                addButton.classList.remove(
+                                    "favorite-pop"
+                                );
+
+                            },
+                            350
+                        );
+
+                    }
+                );
+
+
+
+                /* =================================================
+                   SINCRONIZACIÓN ENTRE PÁGINAS / PESTAÑAS
+                ================================================= */
+
+                window.addEventListener(
+                    "storage",
+                    event => {
+
+                        if (
+                            event.key ===
+                            FAVORITES_KEY
+                        ) {
+
+                            refreshFavoriteButtons();
+
+                        }
+
+                    }
+                );
+
+
+                window.addEventListener(
+                    "cinemaxFavoritesChanged",
+                    () => {
+
+                        refreshFavoriteButtons();
+
+                    }
+                );
+
+
+
+                /* =================================================
+                   SEARCH
+                ================================================= */
+
+                const searchButton =
+                    document.getElementById(
+                        "searchButton"
+                    );
+
+
+                const searchOverlay =
+                    document.getElementById(
+                        "searchOverlay"
+                    );
+
+
+                const closeSearch =
+                    document.getElementById(
+                        "closeSearch"
+                    );
+
+
+                const searchBackdrop =
+                    document.querySelector(
+                        ".search-backdrop"
+                    );
+
+
+                const searchForm =
+                    document.getElementById(
+                        "searchForm"
+                    );
+
+
+                const searchInput =
+                    document.getElementById(
+                        "searchInput"
+                    );
+
+
+                const openSearch = () => {
+
+                    searchOverlay.classList.add(
+                        "active"
+                    );
+
+
+                    searchOverlay.setAttribute(
+                        "aria-hidden",
+                        "false"
+                    );
+
+
+                    document.body.classList.add(
+                        "search-open"
+                    );
+
+
+                    setTimeout(
+                        () => {
+                            searchInput.focus();
+                        },
+                        200
+                    );
+
+                };
+
+
+                const closeSearchOverlay = () => {
+
+                    searchOverlay.classList.remove(
+                        "active"
+                    );
+
+
+                    searchOverlay.setAttribute(
+                        "aria-hidden",
+                        "true"
+                    );
+
+
+                    document.body.classList.remove(
+                        "search-open"
+                    );
+
+                };
+
+
+                searchButton.addEventListener(
+                    "click",
+                    openSearch
+                );
+
+
+                closeSearch.addEventListener(
+                    "click",
+                    closeSearchOverlay
+                );
+
+
+                searchBackdrop.addEventListener(
+                    "click",
+                    closeSearchOverlay
+                );
+
+
+                document.addEventListener(
+                    "keydown",
+                    event => {
+
+                        if (
+                            event.key ===
+                            "Escape"
+                        ) {
+
+                            closeSearchOverlay();
+
+                        }
+
+                    }
+                );
+
+
+
+                /* =================================================
+                   BÚSQUEDA
+                ================================================= */
+
+                searchForm.addEventListener(
+                    "submit",
+                    event => {
+
+                        event.preventDefault();
+
+
+                        const rawQuery =
+                            searchInput.value.trim();
+
+
+                        const query =
+                            rawQuery.toLowerCase();
+
+
+                        /*
+                         * Si está vacío,
+                         * mostramos todo nuevamente.
+                         */
+
+                        if (!query) {
+
+                            filterButtons.forEach(
+                                button => {
+
+                                    button.classList.remove(
+                                        "active"
+                                    );
+
+                                }
+                            );
+
+
+                            document
+                                .querySelector(
+                                    '[data-filter="all"]'
+                                )
+                                .classList.add(
+                                    "active"
+                                );
+
+
+                            applyFilter("all");
+
+                            closeSearchOverlay();
+
+                            return;
+
+                        }
+
+
+                        let found = 0;
+
+
+                        movieCards.forEach(card => {
+
+                            const title =
+                                (
+                                    card.dataset.title ||
+                                    ""
+                                ).toLowerCase();
+
+
+                            const genres =
+                                (
+                                    card.dataset.genre ||
+                                    ""
+                                ).toLowerCase();
+
+
+                            const visible =
+                                title.includes(query) ||
+                                genres.includes(query);
+
+
+                            card.classList.toggle(
+                                "hidden",
+                                !visible
+                            );
+
+
+                            if (visible) {
+                                found++;
+                            }
+
+                        });
+
+
+                        filterButtons.forEach(
+                            button =>
+                                button.classList.remove(
+                                    "active"
+                                )
+                        );
+
+
+                        updateMovieCount(found);
+
+
+                        noResults.classList.toggle(
+                            "visible",
+                            found === 0
+                        );
+
+
+                        closeSearchOverlay();
+
+
+                        if (!found) {
+
+                            alert(
+                                `No encontramos "${rawQuery}" en el catálogo.`
+                            );
+
+                        }
+
+
+                        searchInput.value = "";
+
+                    }
+                );
+
+            }
+
+        );
+
+    </script>
+
+
+</body>
+
+</html>

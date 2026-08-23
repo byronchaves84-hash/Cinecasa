@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reproduciendo Película</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>StreamZone</h1>
+        </div>
+    </header>
+
+    <div class="video-background">
+        <!-- Video del trailer como fondo -->
+        <video id="trailerBackground" autoplay loop muted>
+            <source src="peli/Movie.mp4" type="video/mp4">
+            Tu navegador no soporta la etiqueta de video.
+        </video>
+        <div class="background-overlay"></div> <!-- Capa de desenfoque -->
+    </div>
+
+    <div class="horror-anime-item" onclick="handleVideoClick(this)">
+        <a href="https://drive.google.com/file/d/1Bfr42FVFVMjYXWXGiB68RQqVX9kFJSP8/view?usp=sharing" target="_blank">
+            <div class="video-container">
+                <div class="video-overlay"></div> <!-- Overlay de nube -->
+                <iframe src="https://drive.google.com/file/d/1Bfr42FVFVMjYXWXGiB68RQqVX9kFJSP8/preview" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+            </div>
+        </a>
+    </div>
+    
+    <div class="movie-details">
+        <h2>La llorona.</h2> 
+        <p>*La Llorona* narra la historia de un antiguo espíritu que acecha a las personas en la oscuridad de la noche. La leyenda de La Llorona es conocida en muchas culturas, y esta película nos presenta a un demonio vengativo, una madre que llora por sus hijos perdidos. En un vecindario de Los Ángeles, la Llorona comienza a acechar a una familia, especialmente a los niños.</p>
+    </div>
+    
+    <hr class="separator">
+
+    <footer>
+        <p>&copy; 2025 MiNetflix. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>
+

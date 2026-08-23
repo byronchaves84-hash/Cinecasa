@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reproduciendo Película</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>StreamZone</h1>
+        </div>
+    </header>
+
+    <div class="video-background">
+        <!-- Video del trailer como fondo -->
+        <video id="trailerBackground" autoplay loop muted>
+            <source src="peli/Movie.mp4" type="video/mp4">
+            Tu navegador no soporta la etiqueta de video.
+        </video>
+        <div class="background-overlay"></div> <!-- Capa de desenfoque -->
+    </div>
+
+    <div class="horror-anime-item" onclick="handleVideoClick(this)">
+        <a href="https://drive.google.com/file/d/1XV884pTAsfcdNbZLZNOIRC6qjS416MBO/view?usp=sharing" target="_blank">
+            <div class="video-container">
+                <div class="video-overlay"></div> <!-- Overlay de nube -->
+                <iframe src="https://drive.google.com/file/d/1XV884pTAsfcdNbZLZNOIRC6qjS416MBO/preview" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+            </div>
+        </a>
+    </div>
+    
+    <div class="movie-details">
+        <h2>Silent Hill 2</h2> 
+        <p>James Sunderland recibe una carta misteriosa de su difunta esposa, Mary, quien le dice que lo está esperando en Silent Hill, el pueblo donde habían pasado algunos de los momentos más felices de su vida juntos. Al llegar, James se enfrenta a un pueblo oscuro y desolado, lleno de monstruos y visiones inquietantes. </p>
+    </div>
+    
+    <hr class="separator">
+
+    <footer>
+        <p>&copy; 2025 MiNetflix. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>
+

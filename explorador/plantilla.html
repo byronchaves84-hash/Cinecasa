@@ -1,0 +1,1334 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>CINEMAX</title>
+
+    <link rel="stylesheet" href="plantilla-styles.css">
+
+</head>
+
+
+<body>
+
+
+<!-- =================================================
+     FONDO DEL TRÁILER
+================================================== -->
+
+<div class="video-background">
+
+    <video
+        id="trailerBackground"
+        autoplay
+        loop
+        muted
+        playsinline
+    >
+
+        <source
+            id="trailerSource"
+            src=""
+            type="video/mp4"
+        >
+
+        Tu navegador no soporta la etiqueta de video.
+
+    </video>
+
+    <div class="background-overlay"></div>
+
+</div>
+
+
+
+<!-- =================================================
+     CONTENIDO PRINCIPAL
+================================================== -->
+
+<main class="movie-page">
+
+
+    <!-- =================================================
+         NAVEGACIÓN
+    ================================================== -->
+
+    <div class="top-navigation">
+
+        <button
+            class="back-button"
+            onclick="history.back()"
+            type="button"
+        >
+
+            <span>‹</span>
+
+            Volver
+
+        </button>
+
+    </div>
+
+
+
+    <!-- =================================================
+         REPRODUCTOR
+    ================================================== -->
+
+    <section
+        class="player-section"
+        id="playerSection"
+    >
+
+        <div
+            class="video-container"
+            id="videoContainer"
+        >
+
+            <div class="video-top-glow"></div>
+
+
+            <!-- Pantalla inicial -->
+
+            <div
+                class="player-start-screen"
+                id="playerStartScreen"
+            >
+
+                <div class="play-circle">
+                    ▶
+                </div>
+
+                <span id="playerMessage">
+                    Pulsa "Ver película" para comenzar
+                </span>
+
+            </div>
+
+
+            <!-- Reproductor -->
+
+            <iframe
+                id="moviePlayer"
+                src="about:blank"
+                frameborder="0"
+                allow="autoplay; fullscreen"
+                allowfullscreen
+                title="CINEMAX"
+            ></iframe>
+
+
+            <div class="video-overlay"></div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         INFORMACIÓN
+    ================================================== -->
+
+    <section class="movie-details">
+
+
+        <div
+            class="movie-brand"
+            id="movieBrand"
+        >
+            CINEMAX
+        </div>
+
+
+        <h1 id="movieTitle">
+            Cargando...
+        </h1>
+
+
+        <div class="movie-meta">
+
+            <span
+                class="quality"
+                id="movieQuality"
+            >
+                HD
+            </span>
+
+            <span id="movieType">
+                Película
+            </span>
+
+            <span
+                class="dot"
+                id="dot1"
+            >
+                •
+            </span>
+
+            <span id="movieGenre">
+                —
+            </span>
+
+            <span
+                class="dot"
+                id="dot2"
+            >
+                •
+            </span>
+
+            <span id="movieLanguage">
+                Español
+            </span>
+
+        </div>
+
+
+        <p
+            class="movie-description"
+            id="movieDescription"
+        >
+            Cargando información...
+        </p>
+
+
+
+        <!-- =================================================
+             BOTÓN
+        ================================================== -->
+
+        <div class="movie-actions">
+
+            <button
+                class="watch-button"
+                id="watchButton"
+                type="button"
+                onclick="startMovie()"
+            >
+
+                <span
+                    class="button-icon"
+                    id="buttonIcon"
+                >
+                    ▶
+                </span>
+
+                <span id="buttonText">
+                    Ver película
+                </span>
+
+            </button>
+
+        </div>
+
+
+        <div class="movie-line"></div>
+
+
+    </section>
+
+
+
+    <!-- =================================================
+         RECOMENDACIONES DINÁMICAS
+    ================================================== -->
+
+    <section class="recommendations">
+
+
+        <div class="section-heading">
+
+            <h2>
+                También te puede gustar
+            </h2>
+
+            <div class="heading-line"></div>
+
+        </div>
+
+
+        <div
+            class="recommendation-grid"
+            id="recommendationGrid"
+        >
+
+            <!--
+                Las recomendaciones se generan
+                automáticamente desde /api/catalog
+            -->
+
+        </div>
+
+    </section>
+
+
+</main>
+
+
+
+<!-- =================================================
+     FOOTER
+================================================== -->
+
+<footer>
+
+    <div class="footer-logo">
+        CINEMAX
+    </div>
+
+    <p>
+        &copy; 2026 CINEMAX.
+        Todos los derechos reservados.
+    </p>
+
+</footer>
+
+
+
+<!-- =================================================
+     JAVASCRIPT — PLANTILLA DINÁMICA
+================================================== -->
+
+<script>
+
+
+/* =========================================================
+   VARIABLES PRINCIPALES
+========================================================= */
+
+const moviePlayer =
+    document.getElementById("moviePlayer");
+
+const watchButton =
+    document.getElementById("watchButton");
+
+const buttonText =
+    document.getElementById("buttonText");
+
+const buttonIcon =
+    document.getElementById("buttonIcon");
+
+const playerStartScreen =
+    document.getElementById("playerStartScreen");
+
+const videoContainer =
+    document.getElementById("videoContainer");
+
+const trailerBackground =
+    document.getElementById("trailerBackground");
+
+const trailerSource =
+    document.getElementById("trailerSource");
+
+const movieTitle =
+    document.getElementById("movieTitle");
+
+const movieDescription =
+    document.getElementById("movieDescription");
+
+const movieGenre =
+    document.getElementById("movieGenre");
+
+const movieType =
+    document.getElementById("movieType");
+
+const movieQuality =
+    document.getElementById("movieQuality");
+
+const movieLanguage =
+    document.getElementById("movieLanguage");
+
+const movieBrand =
+    document.getElementById("movieBrand");
+
+const recommendationGrid =
+    document.getElementById("recommendationGrid");
+
+const playerMessage =
+    document.getElementById("playerMessage");
+
+
+/* =========================================================
+   ESTADO
+========================================================= */
+
+let moviePlaying = false;
+
+let currentMovie = null;
+
+let catalog = [];
+
+
+/* =========================================================
+   OBTENER ID DESDE LA URL
+========================================================= */
+
+function getMovieId() {
+
+    const params =
+        new URLSearchParams(
+            window.location.search
+        );
+
+    return params.get("id");
+
+}
+
+
+/* =========================================================
+   CONVERTIR VALORES A TEXTO
+========================================================= */
+
+function cleanValue(value) {
+
+    if (
+        value === undefined ||
+        value === null
+    ) {
+
+        return "";
+
+    }
+
+    return String(value).trim();
+
+}
+
+
+/* =========================================================
+   OBTENER PRIMER VALOR DISPONIBLE
+========================================================= */
+
+function firstValue(...values) {
+
+    for (
+        const value of values
+    ) {
+
+        const clean =
+            cleanValue(value);
+
+        if (clean) {
+
+            return clean;
+
+        }
+
+    }
+
+    return "";
+
+}
+
+
+/* =========================================================
+   NORMALIZAR CONTENIDO
+========================================================= */
+
+function normalizeMovie(item) {
+
+    if (!item) {
+
+        return null;
+
+    }
+
+
+    const raw =
+        item.raw &&
+        typeof item.raw === "object"
+
+            ? item.raw
+
+            : item;
+
+
+    return {
+
+        id:
+            firstValue(
+                item.id,
+                raw.id
+            ),
+
+        title:
+            firstValue(
+                item.title,
+                item.name,
+                raw.title,
+                raw.name,
+                "Sin título"
+            ),
+
+        image:
+            firstValue(
+                item.image,
+                item.poster,
+                item.posterUrl,
+                item.imageUrl,
+                raw.image,
+                raw.poster,
+                raw.posterUrl,
+                raw.imageUrl
+            ),
+
+        video:
+            firstValue(
+                item.video,
+                item.videoUrl,
+                item.urlVideo,
+                raw.video,
+                raw.videoUrl,
+                raw.urlVideo
+            ),
+
+        trailer:
+            firstValue(
+                item.trailer,
+                item.trailerUrl,
+                raw.trailer,
+                raw.trailerUrl
+            ),
+
+        description:
+            firstValue(
+                item.description,
+                raw.description,
+                "Disfruta de este contenido en CINEMAX."
+            ),
+
+        genre:
+            firstValue(
+                item.genre,
+                item.genres,
+                raw.genre,
+                raw.genres,
+                item.category,
+                raw.category
+            ),
+
+        year:
+            firstValue(
+                item.year,
+                item.releaseYear,
+                item.anio,
+                item["año"],
+                raw.year,
+                raw.releaseYear,
+                raw.anio,
+                raw["año"]
+            ),
+
+        duration:
+            firstValue(
+                item.duration,
+                raw.duration
+            ),
+
+        rating:
+            firstValue(
+                item.rating,
+                raw.rating
+            ),
+
+        type:
+            firstValue(
+                item.type,
+                item.tipo,
+                item.category,
+                item.categoria,
+                raw.type,
+                raw.tipo,
+                raw.category,
+                raw.categoria,
+                "Película"
+            ),
+
+        language:
+            firstValue(
+                item.language,
+                item.languages,
+                raw.language,
+                raw.languages,
+                "Español"
+            ),
+
+        featured:
+            item.featured ??
+            raw.featured ??
+            false
+
+    };
+
+}
+
+
+/* =========================================================
+   CARGAR CATÁLOGO
+========================================================= */
+
+async function loadCatalog() {
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/catalog",
+                {
+                    method: "GET",
+                    cache: "no-store"
+                }
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "No se pudo obtener el catálogo."
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        /*
+         * La API normalmente devuelve
+         * directamente un array.
+         */
+
+        if (Array.isArray(data)) {
+
+            catalog = data;
+
+        }
+
+        /*
+         * Por compatibilidad, también
+         * aceptamos { catalog: [...] }
+         */
+
+        else if (
+            data &&
+            Array.isArray(data.catalog)
+        ) {
+
+            catalog = data.catalog;
+
+        }
+
+        else if (
+            data &&
+            Array.isArray(data.items)
+        ) {
+
+            catalog = data.items;
+
+        }
+
+        else {
+
+            catalog = [];
+
+        }
+
+
+        catalog =
+            catalog
+                .map(normalizeMovie)
+                .filter(Boolean);
+
+
+        return catalog;
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "CINEMAX: error cargando catálogo:",
+            error
+        );
+
+        movieTitle.textContent =
+            "No se pudo cargar el contenido.";
+
+        movieDescription.textContent =
+            "No fue posible obtener la información del catálogo.";
+
+        return [];
+
+    }
+
+}
+
+
+/* =========================================================
+   BUSCAR PELÍCULA ACTUAL
+========================================================= */
+
+function findCurrentMovie() {
+
+    const movieId =
+        getMovieId();
+
+
+    if (!movieId) {
+
+        return null;
+
+    }
+
+
+    return catalog.find(
+        movie =>
+
+            String(movie.id) ===
+            String(movieId)
+    ) || null;
+
+}
+
+
+/* =========================================================
+   CARGAR INFORMACIÓN DE LA PELÍCULA
+========================================================= */
+
+function renderMovie(movie) {
+
+    if (!movie) {
+
+        movieTitle.textContent =
+            "Contenido no encontrado";
+
+        movieDescription.textContent =
+            "El contenido que estás buscando no existe o fue eliminado del catálogo.";
+
+        watchButton.disabled = true;
+
+        watchButton.classList.add(
+            "playing"
+        );
+
+        buttonIcon.textContent =
+            "×";
+
+        buttonText.textContent =
+            "No disponible";
+
+        return;
+
+    }
+
+
+    currentMovie =
+        movie;
+
+
+    /* =====================================================
+       TÍTULO
+    ===================================================== */
+
+    movieTitle.textContent =
+        movie.title;
+
+
+    document.title =
+        `${movie.title} | CINEMAX`;
+
+
+    /* =====================================================
+       DESCRIPCIÓN
+    ===================================================== */
+
+    movieDescription.textContent =
+        movie.description;
+
+
+    /* =====================================================
+       MARCA
+    ===================================================== */
+
+    movieBrand.textContent =
+        "CINEMAX";
+
+
+    /* =====================================================
+       TIPO
+    ===================================================== */
+
+    movieType.textContent =
+        movie.type || "Película";
+
+
+    /* =====================================================
+       GÉNERO
+    ===================================================== */
+
+    movieGenre.textContent =
+        movie.genre || "Contenido";
+
+
+    /* =====================================================
+       IDIOMA
+    ===================================================== */
+
+    movieLanguage.textContent =
+        movie.language || "Español";
+
+
+    /* =====================================================
+       CALIDAD
+    ===================================================== */
+
+    movieQuality.textContent =
+        movie.rating
+            ? movie.rating
+            : "HD";
+
+
+    /* =====================================================
+       FONDO
+    ===================================================== */
+
+    if (movie.trailer) {
+
+        trailerSource.src =
+            movie.trailer;
+
+        trailerBackground.load();
+
+        trailerBackground.play()
+            .catch(() => {});
+
+    }
+
+    else {
+
+        /*
+         * Si no existe tráiler, utilizamos
+         * la imagen de portada como fondo.
+         */
+
+        if (movie.image) {
+
+            trailerBackground.style.display =
+                "none";
+
+            document.querySelector(
+                ".video-background"
+            ).style.backgroundImage =
+                `url("${movie.image}")`;
+
+            document.querySelector(
+                ".video-background"
+            ).style.backgroundSize =
+                "cover";
+
+            document.querySelector(
+                ".video-background"
+            ).style.backgroundPosition =
+                "center";
+
+        }
+
+    }
+
+
+    /* =====================================================
+       ESTADO DEL REPRODUCTOR
+    ===================================================== */
+
+    resetPlayer();
+
+
+    /* =====================================================
+       RECOMENDACIONES
+    ===================================================== */
+
+    renderRecommendations(
+        movie
+    );
+
+}
+
+
+/* =========================================================
+   INICIAR PELÍCULA
+========================================================= */
+
+function startMovie() {
+
+    if (
+        moviePlaying ||
+        !currentMovie
+    ) {
+
+        return;
+
+    }
+
+
+    const video =
+        cleanValue(
+            currentMovie.video
+        );
+
+
+    if (!video) {
+
+        playerMessage.textContent =
+            "Este contenido no tiene video disponible.";
+
+        return;
+
+    }
+
+
+    moviePlaying = true;
+
+
+    /* =====================================================
+       OCULTAR PANTALLA INICIAL
+    ===================================================== */
+
+    playerStartScreen.classList.add(
+        "hidden"
+    );
+
+
+    /* =====================================================
+       AGRANDAR REPRODUCTOR
+    ===================================================== */
+
+    videoContainer.classList.add(
+        "movie-playing"
+    );
+
+
+    /* =====================================================
+       CARGAR VIDEO
+    ===================================================== */
+
+    moviePlayer.src =
+        normalizeVideoUrl(video);
+
+
+    /* =====================================================
+       BOTÓN
+    ===================================================== */
+
+    buttonIcon.textContent =
+        "●";
+
+    buttonText.textContent =
+        "Reproduciendo";
+
+
+    watchButton.disabled =
+        true;
+
+    watchButton.classList.add(
+        "playing"
+    );
+
+}
+
+
+/* =========================================================
+   NORMALIZAR URL DEL VIDEO
+========================================================= */
+
+function normalizeVideoUrl(url) {
+
+    url =
+        cleanValue(url);
+
+
+    if (!url) {
+
+        return "about:blank";
+
+    }
+
+
+    /*
+     * Google Drive
+     *
+     * Si el admin guarda:
+     *
+     * https://drive.google.com/file/d/ID/view
+     *
+     * lo convertimos automáticamente a:
+     *
+     * https://drive.google.com/file/d/ID/preview
+     */
+
+    const driveMatch =
+        url.match(
+            /drive\.google\.com\/file\/d\/([^/]+)/
+        );
+
+
+    if (driveMatch) {
+
+        return (
+            "https://drive.google.com/file/d/" +
+            driveMatch[1] +
+            "/preview"
+        );
+
+    }
+
+
+    /*
+     * Si ya es /preview,
+     * simplemente lo dejamos.
+     */
+
+    if (
+        url.includes(
+            "drive.google.com"
+        ) &&
+        url.includes(
+            "/preview"
+        )
+    ) {
+
+        return url;
+
+    }
+
+
+    return url;
+
+}
+
+
+/* =========================================================
+   REINICIAR REPRODUCTOR
+========================================================= */
+
+function resetPlayer() {
+
+    moviePlaying =
+        false;
+
+
+    moviePlayer.src =
+        "about:blank";
+
+
+    playerStartScreen.classList.remove(
+        "hidden"
+    );
+
+
+    videoContainer.classList.remove(
+        "movie-playing"
+    );
+
+
+    watchButton.disabled =
+        false;
+
+
+    watchButton.classList.remove(
+        "playing"
+    );
+
+
+    buttonIcon.textContent =
+        "▶";
+
+
+    buttonText.textContent =
+        "Ver película";
+
+
+    playerMessage.textContent =
+        "Pulsa \"Ver película\" para comenzar";
+
+}
+
+
+/* =========================================================
+   RECOMENDACIONES
+========================================================= */
+
+function renderRecommendations(currentMovie) {
+
+    recommendationGrid.innerHTML =
+        "";
+
+
+    const recommendations =
+        catalog
+            .filter(
+                movie =>
+
+                    String(movie.id) !==
+                    String(currentMovie.id)
+            )
+            .filter(
+                movie =>
+
+                    movie.image ||
+                    movie.title
+            )
+            .slice(
+                0,
+                6
+            );
+
+
+    if (
+        recommendations.length === 0
+    ) {
+
+        recommendationGrid.innerHTML = `
+
+            <div class="recommendation-card">
+
+                <div class="recommendation-placeholder">
+
+                    <span>🎬</span>
+
+                </div>
+
+                <div class="recommendation-info">
+
+                    <h3>
+                        Próximamente
+                    </h3>
+
+                    <p>
+                        Más películas
+                    </p>
+
+                </div>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    recommendations.forEach(
+        movie => {
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+
+            card.className =
+                "recommendation-card";
+
+
+            card.style.cursor =
+                "pointer";
+
+
+            card.innerHTML = `
+
+                <div
+                    class="recommendation-placeholder"
+                    style="
+                        ${
+                            movie.image
+                                ? `background-image:url("${movie.image}");`
+                                : ""
+                        }
+
+                        background-size:cover;
+                        background-position:center;
+                    "
+                >
+
+                    ${
+                        movie.image
+                            ? ""
+                            : "<span>🎬</span>"
+                    }
+
+                </div>
+
+
+                <div class="recommendation-info">
+
+                    <h3>
+                        ${escapeHtml(movie.title)}
+                    </h3>
+
+                    <p>
+                        ${escapeHtml(
+                            movie.genre ||
+                            movie.type ||
+                            "Contenido"
+                        )}
+                    </p>
+
+                </div>
+
+            `;
+
+
+            card.addEventListener(
+                "click",
+                () => {
+
+                    window.location.href =
+                        `?id=${encodeURIComponent(movie.id)}`;
+
+                }
+            );
+
+
+            recommendationGrid.appendChild(
+                card
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   SEGURIDAD PARA TEXTO
+========================================================= */
+
+function escapeHtml(value) {
+
+    return String(
+        value || ""
+    )
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+    .replace(
+        /</g,
+        "&lt;"
+    )
+    .replace(
+        />/g,
+        "&gt;"
+    )
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+    .replace(
+        /'/g,
+        "&#039;"
+    );
+
+}
+
+
+/* =========================================================
+   INICIALIZACIÓN
+========================================================= */
+
+async function initMoviePage() {
+
+    const movieId =
+        getMovieId();
+
+
+    /*
+     * No existe ID.
+     */
+
+    if (!movieId) {
+
+        movieTitle.textContent =
+            "Contenido no seleccionado";
+
+        movieDescription.textContent =
+            "Selecciona una película o serie desde CINEMAX.";
+
+        watchButton.disabled =
+            true;
+
+        return;
+
+    }
+
+
+    /*
+     * Cargar catálogo.
+     */
+
+    await loadCatalog();
+
+
+    /*
+     * Buscar contenido.
+     */
+
+    const movie =
+        findCurrentMovie();
+
+
+    /*
+     * Renderizar.
+     */
+
+    renderMovie(
+        movie
+    );
+
+}
+
+
+/* =========================================================
+   PAGESHOW
+========================================================= */
+
+window.addEventListener(
+    "pageshow",
+    function () {
+
+        resetPlayer();
+
+    }
+);
+
+
+/* =========================================================
+   INICIAR
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        initMoviePage();
+
+    }
+);
+
+
+</script>
+
+
+</body>
+
+</html>

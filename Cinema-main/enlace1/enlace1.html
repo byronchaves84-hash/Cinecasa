@@ -1,0 +1,472 @@
+```html
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Los Pitufos | MiNetflix
+    </title>
+
+    <link rel="stylesheet" href="styles.css">
+
+</head>
+
+
+<body>
+
+
+<!-- =================================================
+     FONDO DEL TRÁILER
+================================================== -->
+
+<div class="video-background">
+
+    <video
+        id="trailerBackground"
+        autoplay
+        loop
+        muted
+        playsinline
+    >
+
+        <source
+            src="peli/laaldea.mp4"
+            type="video/mp4"
+        >
+
+        Tu navegador no soporta la etiqueta de video.
+
+    </video>
+
+    <div class="background-overlay"></div>
+
+</div>
+
+
+
+<!-- =================================================
+     CONTENIDO PRINCIPAL
+================================================== -->
+
+<main class="movie-page">
+
+
+    <!-- =================================================
+         NAVEGACIÓN
+    ================================================== -->
+
+    <div class="top-navigation">
+
+        <button
+            class="back-button"
+            onclick="history.back()"
+            type="button"
+        >
+
+            <span>‹</span>
+
+            Volver
+
+        </button>
+
+    </div>
+
+
+
+    <!-- =================================================
+         REPRODUCTOR
+    ================================================== -->
+
+    <section
+        class="player-section"
+        id="playerSection"
+    >
+
+        <div
+            class="video-container"
+            id="videoContainer"
+        >
+
+            <div class="video-top-glow"></div>
+
+
+            <!-- Pantalla inicial -->
+
+            <div
+                class="player-start-screen"
+                id="playerStartScreen"
+            >
+
+                <div class="play-circle">
+                    ▶
+                </div>
+
+                <span>
+                    Pulsa "Ver película" para comenzar
+                </span>
+
+            </div>
+
+
+            <!-- Reproductor de Google Drive -->
+
+            <iframe
+                id="moviePlayer"
+                src="about:blank"
+                frameborder="0"
+                allow="autoplay; fullscreen"
+                allowfullscreen
+                title="Los Pitufos"
+            ></iframe>
+
+
+            <div class="video-overlay"></div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         INFORMACIÓN
+    ================================================== -->
+
+    <section class="movie-details">
+
+
+        <div class="movie-brand">
+            MINETFLIX
+        </div>
+
+
+        <h1>
+            Los Pitufos
+        </h1>
+
+
+        <div class="movie-meta">
+
+            <span class="quality">
+                HD
+            </span>
+
+            <span>
+                Animación
+            </span>
+
+            <span class="dot">
+                •
+            </span>
+
+            <span>
+                Aventura
+            </span>
+
+            <span class="dot">
+                •
+            </span>
+
+            <span>
+                Español
+            </span>
+
+        </div>
+
+
+        <p class="movie-description">
+
+            Una divertida aventura junto a los pequeños
+            Pitufos. Acompáñalos en una increíble historia
+            llena de aventuras, amistad y momentos
+            inolvidables en su mundo mágico.
+
+        </p>
+
+
+
+        <!-- =================================================
+             BOTÓN
+        ================================================== -->
+
+        <div class="movie-actions">
+
+            <button
+                class="watch-button"
+                id="watchButton"
+                type="button"
+                onclick="startMovie()"
+            >
+
+                <span
+                    class="button-icon"
+                    id="buttonIcon"
+                >
+                    ▶
+                </span>
+
+                <span id="buttonText">
+                    Ver película
+                </span>
+
+            </button>
+
+        </div>
+
+
+        <div class="movie-line"></div>
+
+
+    </section>
+
+
+
+    <!-- =================================================
+         RECOMENDACIONES
+    ================================================== -->
+
+    <section class="recommendations">
+
+
+        <div class="section-heading">
+
+            <h2>
+                También te puede gustar
+            </h2>
+
+            <div class="heading-line"></div>
+
+        </div>
+
+
+        <div class="recommendation-grid">
+
+
+            <!-- TARJETA 1 -->
+
+            <div class="recommendation-card">
+
+                <div class="recommendation-placeholder">
+
+                    <span>🎬</span>
+
+                </div>
+
+                <div class="recommendation-info">
+
+                    <h3>
+                        Próximamente
+                    </h3>
+
+                    <p>
+                        Más películas
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- TARJETA 2 -->
+
+            <div class="recommendation-card">
+
+                <div class="recommendation-placeholder">
+
+                    <span>🍿</span>
+
+                </div>
+
+                <div class="recommendation-info">
+
+                    <h3>
+                        Próximamente
+                    </h3>
+
+                    <p>
+                        Más aventuras
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- TARJETA 3 -->
+
+            <div class="recommendation-card">
+
+                <div class="recommendation-placeholder">
+
+                    <span>🎥</span>
+
+                </div>
+
+                <div class="recommendation-info">
+
+                    <h3>
+                        Próximos estrenos
+                    </h3>
+
+                    <p>
+                        Nuevas películas
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+</main>
+
+
+
+<!-- =================================================
+     FOOTER
+================================================== -->
+
+<footer>
+
+    <div class="footer-logo">
+        MINETFLIX
+    </div>
+
+    <p>
+        &copy; 2026 MiNetflix.
+        Todos los derechos reservados.
+    </p>
+
+</footer>
+
+
+
+<!-- =================================================
+     JAVASCRIPT
+================================================== -->
+
+<script>
+
+    const moviePlayer =
+        document.getElementById("moviePlayer");
+
+    const watchButton =
+        document.getElementById("watchButton");
+
+    const buttonText =
+        document.getElementById("buttonText");
+
+    const buttonIcon =
+        document.getElementById("buttonIcon");
+
+    const playerStartScreen =
+        document.getElementById("playerStartScreen");
+
+    const videoContainer =
+        document.getElementById("videoContainer");
+
+
+    let moviePlaying = false;
+
+
+    function startMovie() {
+
+        if (moviePlaying) {
+            return;
+        }
+
+
+        moviePlaying = true;
+
+
+        /*
+         * Ocultamos la pantalla inicial.
+         */
+
+        playerStartScreen.classList.add("hidden");
+
+
+        /*
+         * Agrandamos ligeramente el reproductor.
+         */
+
+        videoContainer.classList.add("movie-playing");
+
+
+        /*
+         * Cargamos la película de Google Drive.
+         */
+
+        moviePlayer.src =
+            "https://drive.google.com/file/d/1ATGcXZcVOmk4KEWbG-cw2kaYTyzEtL3I/preview";
+
+
+        /*
+         * Cambiamos el botón.
+         */
+
+        buttonIcon.textContent = "●";
+
+        buttonText.textContent =
+            "Reproduciendo";
+
+
+        /*
+         * Bloqueamos el botón para evitar
+         * abrir varias veces el reproductor.
+         */
+
+        watchButton.disabled = true;
+
+        watchButton.classList.add("playing");
+
+    }
+
+
+    /*
+     * Si el usuario vuelve a cargar la página,
+     * todo comienza nuevamente desde "Ver película".
+     */
+
+    window.addEventListener("pageshow", function () {
+
+        moviePlaying = false;
+
+        moviePlayer.src = "about:blank";
+
+        playerStartScreen.classList.remove("hidden");
+
+        videoContainer.classList.remove("movie-playing");
+
+        watchButton.disabled = false;
+
+        watchButton.classList.remove("playing");
+
+        buttonIcon.textContent = "▶";
+
+        buttonText.textContent =
+            "Ver película";
+
+    });
+
+</script>
+
+
+</body>
+
+</html>
+```

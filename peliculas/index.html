@@ -1,0 +1,2499 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="theme-color"
+        content="#050505"
+    >
+
+    <meta
+        name="description"
+        content="Explora películas en CinemaX."
+    >
+
+    <title>Películas — CinemaX</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+    <style>
+
+        /* =====================================================
+           TRANSICIÓN CINEMATOGRÁFICA DEL FONDO
+        ====================================================== */
+
+        .movie-hero {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .movie-hero .hero-background,
+        .movie-hero .hero-background-slide {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+
+            transition:
+                opacity 4.5s cubic-bezier(.22, .61, .36, 1),
+                transform 8s cubic-bezier(.22, .61, .36, 1);
+
+            will-change:
+                opacity,
+                transform;
+        }
+
+        .movie-hero .hero-background {
+            z-index: 0;
+            opacity: 1;
+            transform: scale(1.04);
+        }
+
+        .movie-hero .hero-background-slide {
+            z-index: 1;
+            opacity: 0;
+            transform: scale(1.07);
+        }
+
+        .movie-hero .hero-gradient {
+            z-index: 2;
+        }
+
+        .movie-hero .hero-content,
+        .movie-hero .hero-corner {
+            position: relative;
+            z-index: 3;
+        }
+
+        /* =====================================================
+           MOVIMIENTO CINEMATOGRÁFICO DURANTE EL CAMBIO
+        ====================================================== */
+
+        .movie-hero.background-transition
+        .hero-background {
+            transform: scale(1.08);
+        }
+
+        .movie-hero.background-transition
+        .hero-background-slide {
+            transform: scale(1.04);
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         NAVBAR
+    ====================================================== -->
+
+    <header class="navbar" id="navbar">
+
+        <div class="navbar-left">
+
+            <a
+                href="../Cinema-main/index.html"
+                class="logo"
+            >
+                CINEMAX
+            </a>
+
+
+            <nav class="nav-links">
+
+                <a href="../Cinema-main/index.html">
+                    Inicio
+                </a>
+
+                <a
+                    href="index.html"
+                    class="active"
+                >
+                    Películas
+                </a>
+
+                <a href="../catalogo/index.html">
+                    Catálogo
+                </a>
+
+                <a href="../terror.html">
+                    Terror
+                </a>
+
+            </nav>
+
+        </div>
+
+
+        <div class="navbar-right">
+
+            <button
+                class="search-button"
+                id="searchButton"
+                type="button"
+                aria-label="Abrir búsqueda"
+            >
+                ⌕
+            </button>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =====================================================
+         FAVORITOS TOAST
+    ====================================================== -->
+
+    <div
+        class="favorite-toast"
+        id="favoriteToast"
+        aria-live="polite"
+    >
+
+        <span class="favorite-toast-icon">
+            ♥
+        </span>
+
+        <span id="favoriteToastText">
+            Añadido a favoritos
+        </span>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         HERO
+    ====================================================== -->
+
+    <main>
+
+        <section class="movie-hero" id="movieHero">
+
+            <div class="hero-background"></div>
+
+            <div
+                class="hero-background-slide"
+                aria-hidden="true"
+            ></div>
+
+            <div class="hero-gradient"></div>
+
+
+            <div class="hero-content">
+
+                <span class="hero-label">
+                    CINEMAX · PELÍCULAS
+                </span>
+
+
+                <h1>
+                    Historias que
+                    <br>
+                    <span>merecen ser vistas.</span>
+                </h1>
+
+
+                <p>
+                    Descubre grandes películas, nuevos estrenos
+                    y clásicos que siempre vale la pena volver a ver.
+                </p>
+
+
+                <div class="hero-actions">
+
+                    <button
+                        class="secondary-button"
+                        type="button"
+                        id="featuredInfo"
+                    >
+                        <span>+</span>
+                        MI LISTA
+                    </button>
+
+                </div>
+
+
+                <div class="hero-meta">
+
+                    <span>2024</span>
+
+                    <i></i>
+
+                    <span>Acción</span>
+
+                    <i></i>
+
+                    <span>Comedia</span>
+
+                    <i></i>
+
+                    <strong>16+</strong>
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="hero-corner"
+                aria-hidden="true"
+            >
+                CINEMAX / MOVIES
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             DESTACADAS
+        ================================================== -->
+
+        <section class="content-section">
+
+            <div class="section-header">
+
+                <div>
+
+                    <span class="section-label">
+                        SELECCIÓN CINEMAX
+                    </span>
+
+                    <h2>
+                        Destacadas
+                    </h2>
+
+                    <p>
+                        Películas que no querrás perderte.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="movie-grid">
+
+
+                <!-- DEADPOOL -->
+
+                <article
+                    class="movie-card"
+                    data-title="Deadpool Wolverine Deadpool & Wolverine"
+                    data-movie-id="deadpool-wolverine"
+                >
+
+                    <div class="movie-poster">
+
+                        <img
+                            src="https://image.tmdb.org/t/p/w500/8cdWjvZQUExUUTzyp4t6EDMubfO.jpg"
+                            alt="Deadpool & Wolverine"
+                            loading="lazy"
+                        >
+
+                        <div class="movie-gradient"></div>
+
+                        <div class="movie-overlay">
+
+                            <button
+                                class="add-button"
+                                type="button"
+                                aria-label="Añadir Deadpool & Wolverine a favoritos"
+                                aria-pressed="false"
+                            >
+                                +
+                            </button>
+
+                        </div>
+
+                        <span class="movie-type">
+                            DESTACADA
+                        </span>
+
+                    </div>
+
+
+                    <div class="movie-info">
+
+                        <h3>
+                            Deadpool & Wolverine
+                        </h3>
+
+                        <div class="movie-meta">
+
+                            <span>2024</span>
+
+                            <i></i>
+
+                            <span>Acción</span>
+
+                            <i></i>
+
+                            <span>Comedia</span>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- OPPENHEIMER -->
+
+                <article
+                    class="movie-card"
+                    data-title="Oppenheimer"
+                    data-movie-id="oppenheimer"
+                >
+
+                    <div class="movie-poster">
+
+                        <img
+                            src="https://image.tmdb.org/t/p/w500/8Gxv8gSFCU0XGDykEGv7zR1n2ua.jpg"
+                            alt="Oppenheimer"
+                            loading="lazy"
+                        >
+
+                        <div class="movie-gradient"></div>
+
+                        <div class="movie-overlay">
+
+                            <button
+                                class="add-button"
+                                type="button"
+                                aria-label="Añadir Oppenheimer a favoritos"
+                                aria-pressed="false"
+                            >
+                                +
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="movie-info">
+
+                        <h3>
+                            Oppenheimer
+                        </h3>
+
+                        <div class="movie-meta">
+
+                            <span>2023</span>
+
+                            <i></i>
+
+                            <span>Drama</span>
+
+                            <i></i>
+
+                            <span>Historia</span>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- THE BATMAN -->
+
+                <article
+                    class="movie-card"
+                    data-title="The Batman Batman"
+                    data-movie-id="the-batman"
+                >
+
+                    <div class="movie-poster">
+
+                        <img
+                            src="https://image.tmdb.org/t/p/w500/74xTEgt7R36Fpooo50r9T25onhq.jpg"
+                            alt="The Batman"
+                            loading="lazy"
+                        >
+
+                        <div class="movie-gradient"></div>
+
+                        <div class="movie-overlay">
+
+                            <button
+                                class="add-button"
+                                type="button"
+                                aria-label="Añadir The Batman a favoritos"
+                                aria-pressed="false"
+                            >
+                                +
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="movie-info">
+
+                        <h3>
+                            The Batman
+                        </h3>
+
+                        <div class="movie-meta">
+
+                            <span>2022</span>
+
+                            <i></i>
+
+                            <span>Acción</span>
+
+                            <i></i>
+
+                            <span>Crimen</span>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- INTERSTELLAR -->
+
+                <article
+                    class="movie-card"
+                    data-title="Interstellar"
+                    data-movie-id="interstellar"
+                >
+
+                    <div class="movie-poster">
+
+                        <img
+                            src="https://image.tmdb.org/t/p/w500/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg"
+                            alt="Interstellar"
+                            loading="lazy"
+                        >
+
+                        <div class="movie-gradient"></div>
+
+                        <div class="movie-overlay">
+
+                            <button
+                                class="add-button"
+                                type="button"
+                                aria-label="Añadir Interstellar a favoritos"
+                                aria-pressed="false"
+                            >
+                                +
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="movie-info">
+
+                        <h3>
+                            Interstellar
+                        </h3>
+
+                        <div class="movie-meta">
+
+                            <span>2014</span>
+
+                            <i></i>
+
+                            <span>Ciencia ficción</span>
+
+                            <i></i>
+
+                            <span>Drama</span>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             MÁS POPULARES
+        ================================================== -->
+
+        <section class="content-section dark-section">
+
+            <div class="section-header">
+
+                <div>
+
+                    <span class="section-label">
+                        FAVORITAS DEL PÚBLICO
+                    </span>
+
+                    <h2>
+                        Más populares
+                    </h2>
+
+                    <p>
+                        Las películas que todos están viendo.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="movie-grid">
+
+
+                <!-- SPIDER-MAN -->
+
+                <article
+                    class="movie-card"
+                    data-title="Spider-Man"
+                    data-movie-id="spider-man"
+                >
+
+                    <div class="movie-poster">
+
+                        <img
+                            src="https://image.tmdb.org/t/p/w500/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg"
+                            alt="Spider-Man"
+                            loading="lazy"
+                        >
+
+                        <div class="movie-gradient"></div>
+
+                        <div class="movie-overlay">
+
+                            <button
+                                class="add-button"
+                                type="button"
+                                aria-label="Añadir Spider-Man a favoritos"
+                                aria-pressed="false"
+                            >
+                                +
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="movie-info">
+
+                        <h3>
+                            Spider-Man
+                        </h3>
+
+                        <div class="movie-meta">
+
+                            <span>2021</span>
+
+                            <i></i>
+
+                            <span>Acción</span>
+
+                            <i></i>
+
+                            <span>Aventura</span>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- AVENGERS -->
+
+                <article
+                    class="movie-card"
+                    data-title="Avengers The Avengers"
+                    data-movie-id="avengers"
+                >
+
+                    <div class="movie-poster">
+
+                        <img
+                            src="https://image.tmdb.org/t/p/w500/4ssDuvEDkSArWEdyBl2X5EHvYKU.jpg"
+                            alt="Avengers"
+                            loading="lazy"
+                        >
+
+                        <div class="movie-gradient"></div>
+
+                        <div class="movie-overlay">
+
+                            <button
+                                class="add-button"
+                                type="button"
+                                aria-label="Añadir Avengers a favoritos"
+                                aria-pressed="false"
+                            >
+                                +
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="movie-info">
+
+                        <h3>
+                            Avengers
+                        </h3>
+
+                        <div class="movie-meta">
+
+                            <span>2012</span>
+
+                            <i></i>
+
+                            <span>Acción</span>
+
+                            <i></i>
+
+                            <span>Fantasía</span>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- DUNE -->
+
+                <article
+                    class="movie-card"
+                    data-title="Dune"
+                    data-movie-id="dune"
+                >
+
+                    <div class="movie-poster">
+
+                        <img
+                            src="https://image.tmdb.org/t/p/w500/1pdfLvkbY9ohJlCjQH2CZjjYVvJ.jpg"
+                            alt="Dune"
+                            loading="lazy"
+                        >
+
+                        <div class="movie-gradient"></div>
+
+                        <div class="movie-overlay">
+
+                            <button
+                                class="add-button"
+                                type="button"
+                                aria-label="Añadir Dune a favoritos"
+                                aria-pressed="false"
+                            >
+                                +
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="movie-info">
+
+                        <h3>
+                            Dune
+                        </h3>
+
+                        <div class="movie-meta">
+
+                            <span>2021</span>
+
+                            <i></i>
+
+                            <span>Ciencia ficción</span>
+
+                            <i></i>
+
+                            <span>Aventura</span>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- GLADIATOR -->
+
+                <article
+                    class="movie-card"
+                    data-title="Gladiator"
+                    data-movie-id="gladiator"
+                >
+
+                    <div class="movie-poster">
+
+                        <img
+                            src="https://image.tmdb.org/t/p/w500/ty8TGRuvJLPUmAR1H1nRIsgwvim.jpg"
+                            alt="Gladiator"
+                            loading="lazy"
+                        >
+
+                        <div class="movie-gradient"></div>
+
+                        <div class="movie-overlay">
+
+                            <button
+                                class="add-button"
+                                type="button"
+                                aria-label="Añadir Gladiator a favoritos"
+                                aria-pressed="false"
+                            >
+                                +
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="movie-info">
+
+                        <h3>
+                            Gladiator
+                        </h3>
+
+                        <div class="movie-meta">
+
+                            <span>2000</span>
+
+                            <i></i>
+
+                            <span>Acción</span>
+
+                            <i></i>
+
+                            <span>Drama</span>
+
+                        </div>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             GÉNEROS
+        ================================================== -->
+
+        <section class="genre-section">
+
+            <div class="genre-header">
+
+                <span class="section-label">
+                    DESCUBRE
+                </span>
+
+                <h2>
+                    Explora por género
+                </h2>
+
+                <p>
+                    Encuentra una historia según tu estado de ánimo.
+                </p>
+
+            </div>
+
+
+            <div class="genre-grid">
+
+
+                <!-- ACCIÓN -->
+
+                <button
+                    class="genre-card genre-action"
+                    type="button"
+                >
+
+                    <div class="genre-image">
+
+                        <img
+                            src="https://image.tmdb.org/t/p/w780/8cdWjvZQUExUUTzyp4t6EDMubfO.jpg"
+                            alt="Películas de Acción"
+                            loading="lazy"
+                        >
+
+                    </div>
+
+                    <div class="genre-overlay"></div>
+
+                    <div class="genre-content">
+
+                        <span>01</span>
+
+                        <strong>
+                            Acción
+                        </strong>
+
+                        <small>
+                            Adrenalina
+                        </small>
+
+                    </div>
+
+                    <div class="genre-arrow">
+                        →
+                    </div>
+
+                </button>
+
+
+
+                <!-- COMEDIA -->
+
+                <button
+                    class="genre-card genre-comedy"
+                    type="button"
+                >
+
+                    <div class="genre-image">
+
+                        <img
+                            src="https://image.tmdb.org/t/p/w780/8cdWjvZQUExUUTzyp4t6EDMubfO.jpg"
+                            alt="Películas de Comedia"
+                            loading="lazy"
+                        >
+
+                    </div>
+
+                    <div class="genre-overlay"></div>
+
+                    <div class="genre-content">
+
+                        <span>02</span>
+
+                        <strong>
+                            Comedia
+                        </strong>
+
+                        <small>
+                            Para disfrutar
+                        </small>
+
+                    </div>
+
+                    <div class="genre-arrow">
+                        →
+                    </div>
+
+                </button>
+
+
+
+                <!-- DRAMA -->
+
+                <button
+                    class="genre-card genre-drama"
+                    type="button"
+                >
+
+                    <div class="genre-image">
+
+                        <img
+                            src="https://image.tmdb.org/t/p/w780/8Gxv8gSFCU0XGDykEGv7zR1n2ua.jpg"
+                            alt="Películas de Drama"
+                            loading="lazy"
+                        >
+
+                    </div>
+
+                    <div class="genre-overlay"></div>
+
+                    <div class="genre-content">
+
+                        <span>03</span>
+
+                        <strong>
+                            Drama
+                        </strong>
+
+                        <small>
+                            Grandes historias
+                        </small>
+
+                    </div>
+
+                    <div class="genre-arrow">
+                        →
+                    </div>
+
+                </button>
+
+
+
+                <!-- CIENCIA FICCIÓN -->
+
+                <button
+                    class="genre-card genre-sci-fi"
+                    type="button"
+                >
+
+                    <div class="genre-image">
+
+                        <img
+                            src="https://image.tmdb.org/t/p/w780/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg"
+                            alt="Películas de Ciencia ficción"
+                            loading="lazy"
+                        >
+
+                    </div>
+
+                    <div class="genre-overlay"></div>
+
+                    <div class="genre-content">
+
+                        <span>04</span>
+
+                        <strong>
+                            Ciencia ficción
+                        </strong>
+
+                        <small>
+                            Más allá
+                        </small>
+
+                    </div>
+
+                    <div class="genre-arrow">
+                        →
+                    </div>
+
+                </button>
+
+
+
+                <!-- AVENTURA -->
+
+                <button
+                    class="genre-card genre-adventure"
+                    type="button"
+                >
+
+                    <div class="genre-image">
+
+                        <img
+                            src="https://image.tmdb.org/t/p/w780/1pdfLvkbY9ohJlCjQH2CZjjYVvJ.jpg"
+                            alt="Películas de Aventura"
+                            loading="lazy"
+                        >
+
+                    </div>
+
+                    <div class="genre-overlay"></div>
+
+                    <div class="genre-content">
+
+                        <span>05</span>
+
+                        <strong>
+                            Aventura
+                        </strong>
+
+                        <small>
+                            Descubre mundos
+                        </small>
+
+                    </div>
+
+                    <div class="genre-arrow">
+                        →
+                    </div>
+
+                </button>
+
+
+
+                <!-- SUSPENSO -->
+
+                <button
+                    class="genre-card genre-thriller"
+                    type="button"
+                >
+
+                    <div class="genre-image">
+
+                        <img
+                            src="https://image.tmdb.org/t/p/w780/74xTEgt7R36Fpooo50r9T25onhq.jpg"
+                            alt="Películas de Suspenso"
+                            loading="lazy"
+                        >
+
+                    </div>
+
+                    <div class="genre-overlay"></div>
+
+                    <div class="genre-content">
+
+                        <span>06</span>
+
+                        <strong>
+                            Suspenso
+                        </strong>
+
+                        <small>
+                            No apartes la mirada
+                        </small>
+
+                    </div>
+
+                    <div class="genre-arrow">
+                        →
+                    </div>
+
+                </button>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             CTA FINAL
+        ================================================== -->
+
+        <section class="final-cta">
+
+            <div class="final-cta-content">
+
+                <span class="section-label">
+                    CINEMAX
+                </span>
+
+                <h2>
+                    ¿Todavía no sabes
+                    <span>qué ver?</span>
+                </h2>
+
+                <p>
+                    Descubre todo lo que CinemaX tiene preparado
+                    para ti.
+                </p>
+
+                <a
+                    href="../catalogo/index.html"
+                    class="cta-button"
+                >
+                    VER CATÁLOGO COMPLETO
+                    <span>→</span>
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- =====================================================
+         SEARCH
+    ====================================================== -->
+
+    <div
+        class="search-overlay"
+        id="searchOverlay"
+        aria-hidden="true"
+    >
+
+        <div class="search-backdrop"></div>
+
+        <div class="search-content">
+
+            <button
+                class="close-search"
+                id="closeSearch"
+                type="button"
+            >
+                ×
+            </button>
+
+            <span class="section-label">
+                CINEMAX SEARCH
+            </span>
+
+            <h2>
+                ¿Qué quieres ver?
+            </h2>
+
+            <p>
+                Busca una película dentro de CinemaX.
+            </p>
+
+
+            <form id="searchForm">
+
+                <span>
+                    ⌕
+                </span>
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Buscar película..."
+                    autocomplete="off"
+                >
+
+                <button type="submit">
+                    →
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <footer class="footer">
+
+        <div class="footer-top">
+
+            <div>
+
+                <div class="footer-logo">
+                    CINEMAX
+                </div>
+
+                <p>
+                    Tu cine, en un solo lugar.
+                </p>
+
+            </div>
+
+
+            <div class="footer-links">
+
+                <span>
+                    EXPLORAR
+                </span>
+
+                <a href="../Cinema-main/index.html">
+                    Inicio
+                </a>
+
+                <a href="index.html">
+                    Películas
+                </a>
+
+                <a href="../catalogo/index.html">
+                    Catálogo
+                </a>
+
+                <a href="../terror.html">
+                    Terror
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            <span>
+                © 2026 CinemaX
+            </span>
+
+            <span>
+                Hecho para amantes del cine.
+            </span>
+
+        </div>
+
+    </footer>
+
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
+
+    <script>
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            () => {
+
+
+                /* =============================================
+                   NAVBAR
+                ============================================== */
+
+                const navbar =
+                    document.getElementById("navbar");
+
+
+                const updateNavbar = () => {
+
+                    navbar.classList.toggle(
+                        "scrolled",
+                        window.scrollY > 30
+                    );
+
+                };
+
+
+                updateNavbar();
+
+
+                window.addEventListener(
+                    "scroll",
+                    updateNavbar,
+                    { passive: true }
+                );
+
+
+
+                /* =============================================
+                   FONDO DINÁMICO DEL HERO
+                ============================================== */
+
+                const movieHero =
+                    document.getElementById(
+                        "movieHero"
+                    );
+
+                const heroBackground =
+                    movieHero.querySelector(
+                        ".hero-background"
+                    );
+
+                const heroBackgroundSlide =
+                    movieHero.querySelector(
+                        ".hero-background-slide"
+                    );
+
+
+                /*
+                 * MUCHAS imágenes diferentes.
+                 *
+                 * Se mantienen separadas de las imágenes
+                 * de las tarjetas para que el hero tenga
+                 * su propia secuencia cinematográfica.
+                 */
+
+                const heroBackgrounds = [
+
+                    "https://image.tmdb.org/t/p/original/8cdWjvZQUExUUTzyp4t6EDMubfO.jpg",
+
+                    "https://image.tmdb.org/t/p/original/74xTEgt7R36Fpooo50r9T25onhq.jpg",
+
+                    "https://image.tmdb.org/t/p/original/8Gxv8gSFCU0XGDykEGv7zR1n2ua.jpg",
+
+                    "https://image.tmdb.org/t/p/original/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg",
+
+                    "https://image.tmdb.org/t/p/original/1pdfLvkbY9ohJlCjQH2CZjjYVvJ.jpg",
+
+                    "https://image.tmdb.org/t/p/original/5a4JdoFwll5DRtKMe7JLu9bqXrH.jpg",
+
+                    "https://image.tmdb.org/t/p/original/7WsyChQLEftFiDOVTGkv3hFpyyt.jpg",
+
+                    "https://image.tmdb.org/t/p/original/2E6pIbJien7B9yWpaz8Yd2yJ7wJ.jpg",
+
+                    "https://image.tmdb.org/t/p/original/1XDDXPXGiI8id7MrUxK36ke7gkX.jpg",
+
+                    "https://image.tmdb.org/t/p/original/6AGU5xe5mR9Y6fR8W6Q7W2wX5nL.jpg",
+
+                    "https://image.tmdb.org/t/p/original/4HodYYKEIsGOdinkGi2Ucz6X9i0.jpg",
+
+                    "https://image.tmdb.org/t/p/original/8YFL5QQVPy3AgrEQwNn5v9cT8lG.jpg"
+
+                ];
+
+
+                /*
+                 * Cada cuánto cambia el fondo.
+                 *
+                 * 12 segundos da suficiente tiempo para
+                 * disfrutar cada imagen sin que se sienta
+                 * demasiado lento.
+                 */
+
+                const HERO_CHANGE_INTERVAL =
+                    12 * 1000;
+
+
+                /*
+                 * Duración del crossfade.
+                 *
+                 * 4.5 segundos = cambio mucho más suave
+                 * y cinematográfico.
+                 */
+
+                const HERO_TRANSITION_DURATION =
+                    4500;
+
+
+                let currentHeroIndex = 0;
+
+                let heroTransitioning = false;
+
+
+                /*
+                 * Primera imagen.
+                 */
+
+                heroBackground.style.backgroundImage =
+                    `url("${heroBackgrounds[0]}")`;
+
+
+                /*
+                 * Precargar TODAS las imágenes.
+                 *
+                 * Así evitamos que aparezca un fondo negro
+                 * mientras el navegador descarga la siguiente.
+                 */
+
+                heroBackgrounds.forEach(
+                    imageUrl => {
+
+                        const image =
+                            new Image();
+
+                        image.src =
+                            imageUrl;
+
+                    }
+                );
+
+
+                /*
+                 * Cambiar imagen.
+                 */
+
+                const changeHeroBackground =
+                    () => {
+
+                        if (
+                            heroTransitioning ||
+                            heroBackgrounds.length < 2
+                        ) {
+
+                            return;
+
+                        }
+
+
+                        heroTransitioning = true;
+
+
+                        /*
+                         * Siguiente imagen.
+                         */
+
+                        const nextIndex =
+                            (
+                                currentHeroIndex + 1
+                            ) %
+                            heroBackgrounds.length;
+
+
+                        const nextImage =
+                            heroBackgrounds[
+                                nextIndex
+                            ];
+
+
+                        /*
+                         * Colocamos la nueva imagen
+                         * en la segunda capa.
+                         */
+
+                        heroBackgroundSlide.style.backgroundImage =
+                            `url("${nextImage}")`;
+
+
+                        /*
+                         * Estado inicial.
+                         */
+
+                        heroBackgroundSlide.style.opacity =
+                            "0";
+
+
+                        heroBackgroundSlide.style.transform =
+                            "scale(1.07)";
+
+
+                        heroBackground.style.opacity =
+                            "1";
+
+
+                        heroBackground.style.transform =
+                            "scale(1.04)";
+
+
+                        /*
+                         * Activamos la animación.
+                         */
+
+                        movieHero.classList.add(
+                            "background-transition"
+                        );
+
+
+                        /*
+                         * Esperamos dos frames para
+                         * garantizar que el navegador
+                         * registre el estado inicial.
+                         */
+
+                        requestAnimationFrame(
+                            () => {
+
+                                requestAnimationFrame(
+                                    () => {
+
+                                        /*
+                                         * La nueva imagen
+                                         * comienza a aparecer.
+                                         */
+
+                                        heroBackgroundSlide.style.opacity =
+                                            "1";
+
+
+                                        /*
+                                         * La imagen anterior
+                                         * comienza a desaparecer.
+                                         */
+
+                                        heroBackground.style.opacity =
+                                            "0";
+
+
+                                        /*
+                                         * Zoom muy lento para
+                                         * mantener sensación
+                                         * cinematográfica.
+                                         */
+
+                                        heroBackground.style.transform =
+                                            "scale(1.08)";
+
+
+                                        heroBackgroundSlide.style.transform =
+                                            "scale(1.04)";
+
+                                    }
+                                );
+
+                            }
+                        );
+
+
+                        /*
+                         * Esperamos a que termine
+                         * completamente el crossfade.
+                         */
+
+                        setTimeout(
+                            () => {
+
+                                /*
+                                 * Convertimos la imagen nueva
+                                 * en la capa principal.
+                                 */
+
+                                heroBackground.style.backgroundImage =
+                                    `url("${nextImage}")`;
+
+
+                                heroBackground.style.opacity =
+                                    "1";
+
+
+                                heroBackground.style.transform =
+                                    "scale(1.04)";
+
+
+                                /*
+                                 * Reiniciamos la capa secundaria.
+                                 */
+
+                                heroBackgroundSlide.style.opacity =
+                                    "0";
+
+
+                                heroBackgroundSlide.style.transform =
+                                    "scale(1.07)";
+
+
+                                /*
+                                 * Guardamos índice actual.
+                                 */
+
+                                currentHeroIndex =
+                                    nextIndex;
+
+
+                                movieHero.classList.remove(
+                                    "background-transition"
+                                );
+
+
+                                heroTransitioning =
+                                    false;
+
+                            },
+                            HERO_TRANSITION_DURATION + 150
+                        );
+
+                    };
+
+
+                /*
+                 * Primer cambio después de 12 segundos.
+                 */
+
+                setInterval(
+                    changeHeroBackground,
+                    HERO_CHANGE_INTERVAL
+                );
+
+
+
+                /* =============================================
+                   SISTEMA DE FAVORITOS COMPARTIDO CINEMAX
+                ============================================== */
+
+                const FAVORITES_KEY =
+                    "cinemax_favorites";
+
+
+                const getFavorites = () => {
+
+                    try {
+
+                        const stored =
+                            localStorage.getItem(
+                                FAVORITES_KEY
+                            );
+
+                        if (!stored) {
+                            return [];
+                        }
+
+                        const parsed =
+                            JSON.parse(stored);
+
+                        return Array.isArray(parsed)
+                            ? parsed
+                            : [];
+
+                    } catch (error) {
+
+                        console.warn(
+                            "CinemaX: no se pudieron leer los favoritos.",
+                            error
+                        );
+
+                        return [];
+
+                    }
+
+                };
+
+
+                const saveFavorites = favorites => {
+
+                    try {
+
+                        localStorage.setItem(
+                            FAVORITES_KEY,
+                            JSON.stringify(favorites)
+                        );
+
+                    } catch (error) {
+
+                        console.warn(
+                            "CinemaX: no se pudieron guardar los favoritos.",
+                            error
+                        );
+
+                    }
+
+                };
+
+
+                const isFavorite = movieId => {
+
+                    return getFavorites().some(
+                        favorite =>
+                            favorite.id === movieId
+                    );
+
+                };
+
+
+                const addFavorite = movie => {
+
+                    const favorites =
+                        getFavorites();
+
+
+                    const alreadyExists =
+                        favorites.some(
+                            favorite =>
+                                favorite.id === movie.id
+                        );
+
+
+                    if (!alreadyExists) {
+
+                        favorites.push(movie);
+
+                        saveFavorites(
+                            favorites
+                        );
+
+                    }
+
+                };
+
+
+                const removeFavorite = movieId => {
+
+                    const favorites =
+                        getFavorites();
+
+
+                    const updated =
+                        favorites.filter(
+                            favorite =>
+                                favorite.id !== movieId
+                        );
+
+
+                    saveFavorites(
+                        updated
+                    );
+
+                };
+
+
+
+                /* =============================================
+                   TOAST
+                ============================================== */
+
+                const favoriteToast =
+                    document.getElementById(
+                        "favoriteToast"
+                    );
+
+
+                const favoriteToastText =
+                    document.getElementById(
+                        "favoriteToastText"
+                    );
+
+
+                let toastTimer = null;
+
+
+                const showFavoriteToast =
+                    (message, removed = false) => {
+
+                        if (!favoriteToast) {
+                            return;
+                        }
+
+
+                        favoriteToastText.textContent =
+                            message;
+
+
+                        favoriteToast.classList.toggle(
+                            "removed",
+                            removed
+                        );
+
+
+                        favoriteToast.classList.add(
+                            "show"
+                        );
+
+
+                        clearTimeout(
+                            toastTimer
+                        );
+
+
+                        toastTimer =
+                            setTimeout(
+                                () => {
+
+                                    favoriteToast.classList.remove(
+                                        "show"
+                                    );
+
+                                },
+                                2200
+                            );
+
+                    };
+
+
+
+                /* =============================================
+                   ACTUALIZAR INTERFAZ DE FAVORITOS
+                ============================================== */
+
+                const updateFavoriteButton =
+                    (button, favorite) => {
+
+                        if (!button) {
+                            return;
+                        }
+
+
+                        button.classList.toggle(
+                            "added",
+                            favorite
+                        );
+
+
+                        button.setAttribute(
+                            "aria-pressed",
+                            favorite
+                                ? "true"
+                                : "false"
+                        );
+
+
+                        if (favorite) {
+
+                            button.textContent =
+                                "♥";
+
+                            button.setAttribute(
+                                "aria-label",
+                                "Quitar de favoritos"
+                            );
+
+                        } else {
+
+                            button.textContent =
+                                "+";
+
+                            button.setAttribute(
+                                "aria-label",
+                                "Añadir a favoritos"
+                            );
+
+                        }
+
+                    };
+
+
+
+                /* =============================================
+                   SINCRONIZAR TODAS LAS TARJETAS
+                ============================================== */
+
+                const syncFavoriteButtons = () => {
+
+                    const cards =
+                        document.querySelectorAll(
+                            ".movie-card[data-movie-id]"
+                        );
+
+
+                    cards.forEach(card => {
+
+                        const movieId =
+                            card.dataset.movieId;
+
+
+                        const button =
+                            card.querySelector(
+                                ".add-button"
+                            );
+
+
+                        updateFavoriteButton(
+                            button,
+                            isFavorite(movieId)
+                        );
+
+                    });
+
+
+                    const heroButton =
+                        document.getElementById(
+                            "featuredInfo"
+                        );
+
+
+                    if (heroButton) {
+
+                        const featuredFavorite =
+                            isFavorite(
+                                "deadpool-wolverine"
+                            );
+
+
+                        heroButton.classList.toggle(
+                            "added",
+                            featuredFavorite
+                        );
+
+
+                        heroButton.innerHTML =
+                            featuredFavorite
+                                ? "<span>♥</span> EN MI LISTA"
+                                : "<span>+</span> MI LISTA";
+
+                    }
+
+                };
+
+
+                syncFavoriteButtons();
+
+
+
+                /* =============================================
+                   BOTONES DE FAVORITOS
+                ============================================== */
+
+                document.addEventListener(
+                    "click",
+                    event => {
+
+                        const addButton =
+                            event.target.closest(
+                                ".add-button"
+                            );
+
+
+                        if (!addButton) {
+                            return;
+                        }
+
+
+                        const card =
+                            addButton.closest(
+                                ".movie-card"
+                            );
+
+
+                        if (!card) {
+                            return;
+                        }
+
+
+                        const movieId =
+                            card.dataset.movieId;
+
+
+                        const title =
+                            card.querySelector(
+                                ".movie-info h3"
+                            )?.textContent.trim()
+                            || card.dataset.title
+                            || "Película";
+
+
+                        const image =
+                            card.querySelector(
+                                ".movie-poster img"
+                            )?.src
+                            || "";
+
+
+                        const meta =
+                            Array.from(
+                                card.querySelectorAll(
+                                    ".movie-meta span"
+                                )
+                            ).map(
+                                element =>
+                                    element.textContent.trim()
+                            );
+
+
+                        const movie = {
+
+                            id: movieId,
+
+                            title: title,
+
+                            image: image,
+
+                            year:
+                                meta[0] || "",
+
+                            genre:
+                                meta.slice(1).join(
+                                    " · "
+                                )
+
+                        };
+
+
+                        const currentlyFavorite =
+                            isFavorite(movieId);
+
+
+                        if (currentlyFavorite) {
+
+                            removeFavorite(
+                                movieId
+                            );
+
+
+                            updateFavoriteButton(
+                                addButton,
+                                false
+                            );
+
+
+                            showFavoriteToast(
+                                `${title} eliminado de favoritos`,
+                                true
+                            );
+
+                        } else {
+
+                            addFavorite(
+                                movie
+                            );
+
+
+                            updateFavoriteButton(
+                                addButton,
+                                true
+                            );
+
+
+                            showFavoriteToast(
+                                `${title} añadido a favoritos`
+                            );
+
+                        }
+
+
+                        window.dispatchEvent(
+                            new CustomEvent(
+                                "cinemax:favoritesChanged"
+                            )
+                        );
+
+                    }
+                );
+
+
+
+                /* =============================================
+                   CAMBIOS DE FAVORITOS DESDE OTRA PÁGINA
+                ============================================== */
+
+                window.addEventListener(
+                    "storage",
+                    event => {
+
+                        if (
+                            event.key ===
+                            FAVORITES_KEY
+                        ) {
+
+                            syncFavoriteButtons();
+
+                        }
+
+                    }
+                );
+
+
+                window.addEventListener(
+                    "cinemax:favoritesChanged",
+                    () => {
+
+                        syncFavoriteButtons();
+
+                    }
+                );
+
+
+
+                /* =============================================
+                   FALLBACK DE IMÁGENES
+                ============================================== */
+
+                const fallbackPoster =
+                    "data:image/svg+xml;charset=UTF-8," +
+                    encodeURIComponent(`
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="500"
+                            height="750"
+                            viewBox="0 0 500 750"
+                        >
+
+                            <rect
+                                width="500"
+                                height="750"
+                                fill="#111"
+                            />
+
+                            <circle
+                                cx="250"
+                                cy="330"
+                                r="90"
+                                fill="none"
+                                stroke="#e50914"
+                                stroke-width="3"
+                                opacity=".65"
+                            />
+
+                            <text
+                                x="250"
+                                y="345"
+                                text-anchor="middle"
+                                fill="#e50914"
+                                font-family="Arial"
+                                font-size="42"
+                                font-weight="900"
+                            >
+                                C
+                            </text>
+
+                            <text
+                                x="250"
+                                y="470"
+                                text-anchor="middle"
+                                fill="#777"
+                                font-family="Arial"
+                                font-size="18"
+                                letter-spacing="4"
+                            >
+                                CINEMAX
+                            </text>
+
+                        </svg>
+                    `);
+
+
+                document
+                    .querySelectorAll(
+                        ".movie-poster img, .genre-image img"
+                    )
+                    .forEach(img => {
+
+                        img.addEventListener(
+                            "error",
+                            () => {
+
+                                if (
+                                    img.dataset.fallbackApplied
+                                ) {
+                                    return;
+                                }
+
+
+                                img.dataset.fallbackApplied =
+                                    "true";
+
+
+                                img.src =
+                                    fallbackPoster;
+
+                            },
+                            { once: true }
+                        );
+
+                    });
+
+
+
+                /* =============================================
+                   SEARCH
+                ============================================== */
+
+                const searchButton =
+                    document.getElementById(
+                        "searchButton"
+                    );
+
+
+                const searchOverlay =
+                    document.getElementById(
+                        "searchOverlay"
+                    );
+
+
+                const closeSearch =
+                    document.getElementById(
+                        "closeSearch"
+                    );
+
+
+                const searchBackdrop =
+                    document.querySelector(
+                        ".search-backdrop"
+                    );
+
+
+                const searchForm =
+                    document.getElementById(
+                        "searchForm"
+                    );
+
+
+                const searchInput =
+                    document.getElementById(
+                        "searchInput"
+                    );
+
+
+                const openSearch = () => {
+
+                    searchOverlay.classList.add(
+                        "active"
+                    );
+
+
+                    searchOverlay.setAttribute(
+                        "aria-hidden",
+                        "false"
+                    );
+
+
+                    document.body.classList.add(
+                        "search-open"
+                    );
+
+
+                    setTimeout(
+                        () =>
+                            searchInput.focus(),
+                        200
+                    );
+
+                };
+
+
+                const closeSearchOverlay = () => {
+
+                    searchOverlay.classList.remove(
+                        "active"
+                    );
+
+
+                    searchOverlay.setAttribute(
+                        "aria-hidden",
+                        "true"
+                    );
+
+
+                    document.body.classList.remove(
+                        "search-open"
+                    );
+
+                };
+
+
+                searchButton.addEventListener(
+                    "click",
+                    openSearch
+                );
+
+
+                closeSearch.addEventListener(
+                    "click",
+                    closeSearchOverlay
+                );
+
+
+                searchBackdrop.addEventListener(
+                    "click",
+                    closeSearchOverlay
+                );
+
+
+                document.addEventListener(
+                    "keydown",
+                    event => {
+
+                        if (
+                            event.key === "Escape"
+                        ) {
+
+                            closeSearchOverlay();
+
+                        }
+
+                    }
+                );
+
+
+                searchForm.addEventListener(
+                    "submit",
+                    event => {
+
+                        event.preventDefault();
+
+
+                        const query =
+                            searchInput.value
+                                .trim()
+                                .toLowerCase();
+
+
+                        if (!query) {
+                            return;
+                        }
+
+
+                        const cards =
+                            document.querySelectorAll(
+                                ".movie-card"
+                            );
+
+
+                        let found = false;
+
+
+                        cards.forEach(card => {
+
+                            const title =
+                                (
+                                    card.dataset.title ||
+                                    ""
+                                ).toLowerCase();
+
+
+                            const visible =
+                                title.includes(query);
+
+
+                            card.classList.toggle(
+                                "search-hidden",
+                                !visible
+                            );
+
+
+                            if (visible) {
+                                found = true;
+                            }
+
+                        });
+
+
+                        closeSearchOverlay();
+
+
+                        if (!found) {
+
+                            alert(
+                                `No encontramos "${searchInput.value}" en esta sección.`
+                            );
+
+                        }
+
+
+                        searchInput.value = "";
+
+                    }
+                );
+
+
+
+                /* =============================================
+                   GÉNEROS
+                ============================================== */
+
+                document
+                    .querySelectorAll(".genre-card")
+                    .forEach(button => {
+
+                        button.addEventListener(
+                            "click",
+                            () => {
+
+                                const genre =
+                                    button.querySelector(
+                                        "strong"
+                                    )?.textContent
+                                    || "este género";
+
+
+                                alert(
+                                    `Próximamente podrás explorar todas las películas de ${genre}.`
+                                );
+
+                            }
+                        );
+
+                    });
+
+
+
+                /* =============================================
+                   HERO — MI LISTA
+                ============================================== */
+
+                const featuredInfo =
+                    document.getElementById(
+                        "featuredInfo"
+                    );
+
+
+                if (featuredInfo) {
+
+                    featuredInfo.addEventListener(
+                        "click",
+                        () => {
+
+                            const movieId =
+                                "deadpool-wolverine";
+
+
+                            const currentlyFavorite =
+                                isFavorite(
+                                    movieId
+                                );
+
+
+                            if (currentlyFavorite) {
+
+                                removeFavorite(
+                                    movieId
+                                );
+
+
+                                showFavoriteToast(
+                                    "Deadpool & Wolverine eliminado de favoritos",
+                                    true
+                                );
+
+                            } else {
+
+                                addFavorite({
+
+                                    id:
+                                        movieId,
+
+                                    title:
+                                        "Deadpool & Wolverine",
+
+                                    image:
+                                        "https://image.tmdb.org/t/p/w500/8cdWjvZQUExUUTzyp4t6EDMubfO.jpg",
+
+                                    year:
+                                        "2024",
+
+                                    genre:
+                                        "Acción · Comedia"
+
+                                });
+
+
+                                showFavoriteToast(
+                                    "Deadpool & Wolverine añadido a favoritos"
+                                );
+
+                            }
+
+
+                            syncFavoriteButtons();
+
+
+                            window.dispatchEvent(
+                                new CustomEvent(
+                                    "cinemax:favoritesChanged"
+                                )
+                            );
+
+                        }
+                    );
+
+                }
+
+
+
+                /* =============================================
+                   ACTUALIZACIÓN AL VOLVER A LA PÁGINA
+                ============================================== */
+
+                document.addEventListener(
+                    "visibilitychange",
+                    () => {
+
+                        if (
+                            document.visibilityState ===
+                            "visible"
+                        ) {
+
+                            syncFavoriteButtons();
+
+                        }
+
+                    }
+                );
+
+            }
+
+        );
+
+    </script>
+
+
+</body>
+
+</html>

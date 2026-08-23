@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="theme-color"
+        content="#050505"
+    >
+
+    <meta
+        name="description"
+        content="CINEMAX — Panel de usuario"
+    >
+
+    <title>CINEMAX — Mi cuenta</title>
+
+    <link
+        rel="stylesheet"
+        href="usuario.css"
+    >
+</head>
+
+<body>
+
+    <!-- =====================================================
+         NAVBAR
+    ====================================================== -->
+
+    <header class="navbar">
+
+        <div class="nav-left">
+
+            <a
+                href="index.html"
+                class="logo"
+            >
+                CINEMAX
+            </a>
+
+            <nav class="main-nav">
+
+                <a href="index.html">
+                    Explorar
+                </a>
+
+                <a href="peliculas.html">
+                    Películas
+                </a>
+
+                <a href="series.html">
+                    Series
+                </a>
+
+                <a href="terror.html">
+                    Terror
+                </a>
+
+            </nav>
+
+        </div>
+
+
+        <div class="nav-right">
+
+            <button
+                class="search-button"
+                id="searchButton"
+                aria-label="Buscar"
+            >
+                🔍
+            </button>
+
+            <a
+                href="usuario.html"
+                class="profile-button active"
+                title="Mi cuenta"
+            >
+                <span class="profile-avatar">
+                    D
+                </span>
+
+                <span class="profile-name">
+                    Mi cuenta
+                </span>
+            </a>
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         CONTENIDO PRINCIPAL
+    ====================================================== -->
+
+    <main class="account-page">
+
+
+        <!-- =================================================
+             CABECERA DEL USUARIO
+        ================================================== -->
+
+        <section class="profile-header">
+
+            <div class="profile-info">
+
+                <div
+                    class="large-avatar"
+                    id="userAvatar"
+                >
+                    D
+                </div>
+
+                <div class="profile-details">
+
+                    <span class="profile-label">
+                        MI CUENTA
+                    </span>
+
+                    <h1 id="userName">
+                        Dario
+                    </h1>
+
+                    <p id="userEmail">
+                        dario@cinemax.com
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="profile-actions">
+
+                <button
+                    class="btn secondary"
+                    id="editProfileButton"
+                >
+                    Editar perfil
+                </button>
+
+                <button
+                    class="btn logout"
+                    id="logoutButton"
+                >
+                    Cerrar sesión
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             ESTADÍSTICAS
+        ================================================== -->
+
+        <section class="account-stats">
+
+            <div class="stat-card">
+
+                <span class="stat-icon">
+                    ❤️
+                </span>
+
+                <div>
+
+                    <strong id="favoriteCount">
+                        0
+                    </strong>
+
+                    <span>
+                        Favoritos
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <span class="stat-icon">
+                    🔖
+                </span>
+
+                <div>
+
+                    <strong id="watchlistCount">
+                        0
+                    </strong>
+
+                    <span>
+                        Mi lista
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <span class="stat-icon">
+                    ▶
+                </span>
+
+                <div>
+
+                    <strong id="continueCount">
+                        0
+                    </strong>
+
+                    <span>
+                        En progreso
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <span class="stat-icon">
+                    🎬
+                </span>
+
+                <div>
+
+                    <strong id="historyCount">
+                        0
+                    </strong>
+
+                    <span>
+                        Vistos
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             CONTINUAR VIENDO
+        ================================================== -->
+
+        <section class="content-section">
+
+            <div class="section-heading">
+
+                <div>
+
+                    <span class="section-kicker">
+                        SIGUE DISFRUTANDO
+                    </span>
+
+                    <h2>
+                        Continuar viendo
+                    </h2>
+
+                </div>
+
+                <button
+                    class="section-link"
+                    id="viewAllContinue"
+                >
+                    Ver todo
+                </button>
+
+            </div>
+
+
+            <div
+                class="movie-row"
+                id="continueWatching"
+            >
+
+                <div class="empty-state">
+
+                    <div class="empty-icon">
+                        ▶
+                    </div>
+
+                    <h3>
+                        Nada pendiente
+                    </h3>
+
+                    <p>
+                        Aquí aparecerán las películas y series
+                        que hayas comenzado a ver.
+                    </p>
+
+                    <a
+                        href="index.html"
+                        class="btn primary"
+                    >
+                        Explorar CINEMAX
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             MI LISTA
+        ================================================== -->
+
+        <section class="content-section">
+
+            <div class="section-heading">
+
+                <div>
+
+                    <span class="section-kicker">
+                        TU COLECCIÓN
+                    </span>
+
+                    <h2>
+                        Mi lista
+                    </h2>
+
+                </div>
+
+                <button
+                    class="section-link"
+                    id="viewAllWatchlist"
+                >
+                    Ver todo
+                </button>
+
+            </div>
+
+
+            <div
+                class="movie-row"
+                id="watchlist"
+            >
+
+                <div class="empty-state">
+
+                    <div class="empty-icon">
+                        🔖
+                    </div>
+
+                    <h3>
+                        Tu lista está vacía
+                    </h3>
+
+                    <p>
+                        Agrega películas y series para encontrarlas
+                        fácilmente después.
+                    </p>
+
+                    <a
+                        href="index.html"
+                        class="btn primary"
+                    >
+                        Explorar contenido
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             FAVORITOS
+        ================================================== -->
+
+        <section class="content-section">
+
+            <div class="section-heading">
+
+                <div>
+
+                    <span class="section-kicker">
+                        TUS FAVORITOS
+                    </span>
+
+                    <h2>
+                        Favoritos
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="movie-row"
+                id="favorites"
+            >
+
+                <div class="empty-state">
+
+                    <div class="empty-icon">
+                        ❤️
+                    </div>
+
+                    <h3>
+                        Aún no tienes favoritos
+                    </h3>
+
+                    <p>
+                        Marca tus contenidos favoritos y aparecerán aquí.
+                    </p>
+
+                    <a
+                        href="index.html"
+                        class="btn primary"
+                    >
+                        Descubrir películas
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             CONFIGURACIÓN
+        ================================================== -->
+
+        <section class="settings-section">
+
+            <div class="section-heading">
+
+                <div>
+
+                    <span class="section-kicker">
+                        PERSONALIZACIÓN
+                    </span>
+
+                    <h2>
+                        Configuración
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="settings-card">
+
+
+                <!-- Cuenta -->
+
+                <div class="settings-group">
+
+                    <div class="settings-title">
+
+                        <div class="settings-icon">
+                            👤
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Cuenta
+                            </h3>
+
+                            <p>
+                                Información de tu cuenta CINEMAX
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="setting-row">
+
+                        <div>
+
+                            <span>
+                                Correo electrónico
+                            </span>
+
+                            <small id="settingsEmail">
+                                dario@cinemax.com
+                            </small>
+
+                        </div>
+
+                        <button
+                            class="setting-button"
+                            id="changeEmailButton"
+                        >
+                            Cambiar
+                        </button>
+
+                    </div>
+
+
+                    <div class="setting-row">
+
+                        <div>
+
+                            <span>
+                                Contraseña
+                            </span>
+
+                            <small>
+                                ••••••••••••
+                            </small>
+
+                        </div>
+
+                        <button
+                            class="setting-button"
+                            id="changePasswordButton"
+                        >
+                            Cambiar
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Reproducción -->
+
+                <div class="settings-group">
+
+                    <div class="settings-title">
+
+                        <div class="settings-icon">
+                            ▶
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Reproducción
+                            </h3>
+
+                            <p>
+                                Controla cómo funciona el reproductor
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="setting-row">
+
+                        <div>
+
+                            <span>
+                                Reproducción automática
+                            </span>
+
+                            <small>
+                                Reproducir automáticamente el siguiente episodio
+                            </small>
+
+                        </div>
+
+                        <label class="switch">
+
+                            <input
+                                type="checkbox"
+                                id="autoplayToggle"
+                                checked
+                            >
+
+                            <span class="slider"></span>
+
+                        </label>
+
+                    </div>
+
+
+                    <div class="setting-row">
+
+                        <div>
+
+                            <span>
+                                Calidad de reproducción
+                            </span>
+
+                            <small>
+                                Calidad automática recomendada
+                            </small>
+
+                        </div>
+
+                        <select id="qualitySelect">
+
+                            <option value="auto">
+                                Automática
+                            </option>
+
+                            <option value="1080">
+                                1080p
+                            </option>
+
+                            <option value="720">
+                                720p
+                            </option>
+
+                            <option value="480">
+                                480p
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Sesión -->
+
+                <div class="settings-group danger-group">
+
+                    <div class="settings-title">
+
+                        <div class="settings-icon">
+                            ⚠
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Zona de peligro
+                            </h3>
+
+                            <p>
+                                Acciones importantes de tu cuenta
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="setting-row">
+
+                        <div>
+
+                            <span>
+                                Cerrar sesión
+                            </span>
+
+                            <small>
+                                Salir de tu cuenta CINEMAX
+                            </small>
+
+                        </div>
+
+                        <button
+                            class="setting-button danger"
+                            id="logoutButtonSettings"
+                        >
+                            Cerrar sesión
+                        </button>
+
+                    </div>
+
+
+                    <div class="setting-row delete-row">
+
+                        <div>
+
+                            <span>
+                                Eliminar cuenta
+                            </span>
+
+                            <small>
+                                Esta acción no se puede deshacer
+                            </small>
+
+                        </div>
+
+                        <button
+                            class="setting-button delete"
+                            id="deleteAccountButton"
+                        >
+                            Eliminar
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================================
+         MODAL EDITAR PERFIL
+    ====================================================== -->
+
+    <div
+        class="modal"
+        id="profileModal"
+    >
+
+        <div class="modal-overlay"></div>
+
+        <div class="modal-box">
+
+            <button
+                class="modal-close"
+                id="closeProfileModal"
+            >
+                ×
+            </button>
+
+            <span class="section-kicker">
+                MI PERFIL
+            </span>
+
+            <h2>
+                Editar perfil
+            </h2>
+
+            <p class="modal-description">
+                Actualiza la información de tu cuenta.
+            </p>
+
+
+            <form id="profileForm">
+
+                <label>
+                    Nombre
+
+                    <input
+                        type="text"
+                        id="editName"
+                        placeholder="Tu nombre"
+                        required
+                    >
+
+                </label>
+
+
+                <label>
+                    Correo electrónico
+
+                    <input
+                        type="email"
+                        id="editEmail"
+                        placeholder="correo@ejemplo.com"
+                        required
+                    >
+
+                </label>
+
+
+                <button
+                    type="submit"
+                    class="btn primary full-width"
+                >
+                    Guardar cambios
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
+
+    <script>
+
+        document.addEventListener("DOMContentLoaded", () => {
+
+            const profileModal =
+                document.getElementById("profileModal");
+
+            const editProfileButton =
+                document.getElementById("editProfileButton");
+
+            const closeProfileModal =
+                document.getElementById("closeProfileModal");
+
+            const profileForm =
+                document.getElementById("profileForm");
+
+
+            /* ================================================
+               ABRIR MODAL
+            ================================================= */
+
+            editProfileButton.addEventListener("click", () => {
+
+                const name =
+                    document.getElementById("userName").textContent.trim();
+
+                const email =
+                    document.getElementById("userEmail").textContent.trim();
+
+                document.getElementById("editName").value = name;
+
+                document.getElementById("editEmail").value = email;
+
+                profileModal.classList.add("show");
+
+            });
+
+
+            /* ================================================
+               CERRAR MODAL
+            ================================================= */
+
+            closeProfileModal.addEventListener("click", () => {
+
+                profileModal.classList.remove("show");
+
+            });
+
+
+            document
+                .querySelector(".modal-overlay")
+                .addEventListener("click", () => {
+
+                    profileModal.classList.remove("show");
+
+                });
+
+
+            /* ================================================
+               GUARDAR PERFIL
+            ================================================= */
+
+            profileForm.addEventListener("submit", (event) => {
+
+                event.preventDefault();
+
+                const name =
+                    document.getElementById("editName").value.trim();
+
+                const email =
+                    document.getElementById("editEmail").value.trim();
+
+
+                if (!name || !email) {
+                    return;
+                }
+
+
+                document.getElementById("userName").textContent =
+                    name;
+
+                document.getElementById("userEmail").textContent =
+                    email;
+
+                document.getElementById("settingsEmail").textContent =
+                    email;
+
+
+                document.getElementById("userAvatar").textContent =
+                    name.charAt(0).toUpperCase();
+
+
+                profileModal.classList.remove("show");
+
+            });
+
+
+            /* ================================================
+               CERRAR SESIÓN
+            ================================================= */
+
+            function logout() {
+
+                /*
+                 * Después conectaremos esto con el sistema
+                 * real de autenticación de CINEMAX.
+                 */
+
+                window.location.href = "login.html";
+
+            }
+
+
+            document
+                .getElementById("logoutButton")
+                .addEventListener("click", logout);
+
+
+            document
+                .getElementById("logoutButtonSettings")
+                .addEventListener("click", logout);
+
+
+            /* ================================================
+               CONFIGURACIÓN
+            ================================================= */
+
+            const autoplayToggle =
+                document.getElementById("autoplayToggle");
+
+            autoplayToggle.addEventListener("change", () => {
+
+                localStorage.setItem(
+                    "cinemax_autoplay",
+                    autoplayToggle.checked
+                );
+
+            });
+
+
+            const savedAutoplay =
+                localStorage.getItem("cinemax_autoplay");
+
+            if (savedAutoplay !== null) {
+
+                autoplayToggle.checked =
+                    savedAutoplay === "true";
+
+            }
+
+
+            const qualitySelect =
+                document.getElementById("qualitySelect");
+
+            qualitySelect.addEventListener("change", () => {
+
+                localStorage.setItem(
+                    "cinemax_quality",
+                    qualitySelect.value
+                );
+
+            });
+
+
+            const savedQuality =
+                localStorage.getItem("cinemax_quality");
+
+            if (savedQuality) {
+
+                qualitySelect.value =
+                    savedQuality;
+
+            }
+
+
+            /* ================================================
+               ELIMINAR CUENTA
+            ================================================= */
+
+            document
+                .getElementById("deleteAccountButton")
+                .addEventListener("click", () => {
+
+                    const confirmDelete =
+                        confirm(
+                            "¿Seguro que quieres eliminar tu cuenta CINEMAX?"
+                        );
+
+                    if (!confirmDelete) {
+                        return;
+                    }
+
+                    /*
+                     * Aquí conectaremos posteriormente
+                     * la eliminación real del usuario.
+                     */
+
+                    alert(
+                        "La función de eliminación de cuenta se conectará al sistema de usuarios."
+                    );
+
+                });
+
+        });
+
+    </script>
+
+</body>
+
+</html>

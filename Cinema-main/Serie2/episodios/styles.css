@@ -1,0 +1,615 @@
+/* Estilo general */
+html, body {
+    height: 100%; /* Asegura que el cuerpo ocupe toda la altura de la ventana */
+    margin: 0; /* Elimina márgenes por defecto */
+}
+
+body {
+    display: flex;
+    flex-direction: column; /* Coloca los elementos de manera vertical */
+    justify-content: space-between; /* Asegura que el footer quede al fondo */
+    font-family: 'Garamond', serif; /* Fuente para el texto */
+    background-color: #000000; /* Fondo de la página */
+    background-image: url('https://www.transparenttextures.com/patterns/black-marble.png'); /* Textura */
+    background-repeat: repeat;
+    background-size: cover;
+    color: #d3d3d3; /* Color gris claro para el texto */
+    height: 100vh; /* Ocupa toda la altura de la ventana */
+}
+
+/* Fondo del video (trailer) */
+.video-container {
+    position: relative;
+    width: 100%;
+    height: 100%; /* Asegura que ocupe toda la pantalla */
+}
+
+.video-trailer {
+    position: absolute;
+    width: 100%;
+    height: 220%; /* Cada video ocupará el 50% de la pantalla */
+    top: 50%; /* Los videos comenzarán después del encabezado */
+    left: 0;
+    overflow: hidden;
+}
+
+/* Video1 */
+.video1 {
+    top: 0; /* Primer video en la parte superior */
+}
+
+/* Video2 */
+.video2 {
+    top: 50%; /* Segundo video en la parte inferior */
+}
+
+/* Los videos deben cubrir el área sin deformarse */
+video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Asegura que el video cubra toda el área */
+}
+
+/* Contenido principal */
+.content {
+    position: relative;
+    z-index: 2;
+    padding: 20px;
+    color: #fff;
+    text-align: center;
+    margin-top: 50px; /* Espacio para que el contenido no esté pegado al borde superior */
+}
+
+
+
+
+
+
+
+
+
+
+
+/* Estilo para el contenedor de detalles de la película/serie */
+.movie-details {
+    text-align: center;
+}
+
+/* Aumentar el tamaño del nombre de la serie */
+.movie-details h2 {
+    font-size: 4.5em; /* Aumentamos el tamaño del título sin exagerar */
+    margin-bottom: 20px;
+    color: transparent; /* El color del texto es transparente para que se vea el gradiente */
+    background: linear-gradient(to right, #ff007f, #ff8c00); /* Gradiente de fucsia a naranja */
+    -webkit-background-clip: text; /* Aplica el gradiente al texto */
+    background-clip: text; /* Aplica el gradiente al texto (para navegadores no webkit) */
+    text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5); /* Sombra para resaltar el texto */
+}
+
+/* Aumentar el tamaño de la descripción de la serie */
+.movie-details p {
+    font-size: 1.5em;
+    color: #ddd;
+    line-height: 1.6;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Estilo para la imagen con efecto 3D */
+.imagen {
+    border-radius: 15px; /* Bordes redondeados */
+    overflow: hidden; /* Para que no sobresalga la imagen del borde */
+    position: relative;
+    display: inline-block; /* Asegura que la imagen se comporte de manera fluida */
+    transition: transform 0.3s, box-shadow 0.3s; /* Transición suave para el efecto */
+}
+
+.imagen img {
+    width: 100%; /* Asegura que la imagen ocupe el 100% del contenedor */
+    height: auto; /* Mantiene la proporción de la imagen */
+}
+
+.imagen:hover {
+    transform: scale(1.05); /* Aumenta un poco el tamaño cuando se pasa el cursor */
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.6), 0 0 25px rgba(255, 255, 255, 0.4); /* Efecto de luz en los bordes */
+}
+
+/* Efecto adicional de iluminación */
+.imagen:before {
+    content: ''; 
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.1));
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    pointer-events: none; /* Para no interferir con otros elementos */
+}
+
+.imagen:hover:before {
+    opacity: 1; /* Muestra el brillo en los bordes al pasar el cursor */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.horror-anime-item a {
+    pointer-events: none;
+}
+
+.horror-anime-item a:hover {
+    pointer-events: none;
+}
+
+
+
+
+
+
+
+
+/* Efecto de la nube */
+.video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Nube oscura */
+    opacity: 0; /* Inicialmente invisible */
+    transition: opacity 0.3s ease; /* Transición suave para la nube */
+}
+
+/* Cuando el ratón pasa sobre el contenedor */
+.horror-anime-item:hover .video-overlay {
+    opacity: 1; /* Muestra la nube */
+}
+
+/* Estilo del iframe para que no se desborde */
+.horror-anime-item iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* Título de cada episodio */
+.episodio-title {
+    text-align: center;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+/* Si quieres que se agrande al pasar el ratón */
+.horror-anime-item:hover {
+    transform: scale(1.05); /* Agranda el contenedor ligeramente */
+}
+
+
+
+
+
+
+
+
+
+/* Estilos para el contenedor de video */
+.video-container {
+    position: relative; /* Permite moverlo respecto a su posición original */
+    display: inline-block;
+    width: 100%;
+    height: 250px;
+    cursor: pointer; /* Indica que el área es interactiva */
+    margin: 0; /* Elimina el margen para acercarlo más a la parte superior izquierda */
+    top: -50px; /* Mueve el video 50px hacia arriba */
+    left: -0px; /* Mueve el video 50px hacia la izquierda */
+}
+
+
+/* Opcionalmente, puedes añadir estilos para mejorar la apariencia */
+.horror-anime-item {
+    margin: 0 40px;
+    cursor: pointer; /* El cursor indica que el contenedor es interactivo */
+}
+
+
+
+.horror-series-galery .horror-carousel-container {
+    display: flex;
+    justify-content: flex-start; /* O flex-end si quieres moverlo hacia la derecha */
+    align-items: center;
+    position: relative;
+    width: 200%; /* Ajusta el ancho a un 200% para hacerlo más ancho */
+    height: 100%; /* Mantiene la altura al 100% */
+    overflow: hidden;
+    margin: 40px; /* Añade margen de 40px alrededor */
+}
+
+.horror-series-galery .horror-carousel-images {
+    display: flex;
+    transition: transform 0.5s ease;
+    width: 200%; /* Ajusta el ancho al 200% para hacerlo más ancho */
+    height: 100%; /* Mantiene la altura al 100% */
+}
+
+.horror-series-galery .horror-anime-item {
+    margin: 0 40px;  /* Añade margen de 40px entre los items */
+    width: 100%; /* Hace que cada elemento ocupe todo el espacio disponible */
+    height: 100%; /* Hace que cada elemento ocupe toda la altura disponible */
+    cursor: pointer;
+    object-fit: cover; /* Asegura que las imágenes se ajusten a la caja sin distorsión */
+}
+
+.horror-series-galery .horror-anime-item {
+    width: 100%;  /* Hace que cada elemento ocupe todo el espacio disponible */
+    max-width: 100%; /* Previenes que se estire más allá del contenedor */
+    height: 100%; /* Ajusta la altura del elemento al 100% */
+}
+
+
+.horror-series-galery {
+    position: relative; /* Necesario para los botones */
+    width: 100%;
+    overflow: hidden;  /* Esto seguirá recortando el contenido, pero no afectará los botones si se posicionan correctamente */
+    padding: 130px 0;
+}
+
+button {
+    position: absolute; /* Posición absoluta dentro de .horror-series-galery */
+    top: 50%; /* Centra los botones verticalmente */
+    transform: translateY(-50%); /* Centra verticalmente respecto a la mitad del contenedor */
+    background: rgba(0, 0, 0, 0.5); /* Fondo oscuro semi-transparente */
+    color: white; /* Color blanco para el texto */
+    border: none; /* Sin bordes */
+    padding: 20px 20px; /* Espaciado dentro del botón */
+    cursor: pointer; /* Cambia el cursor cuando se pasa el ratón */
+    transition: background-color 0.3s ease; /* Transición al pasar el ratón */
+    z-index: 10; /* Asegura que los botones estén por encima del contenido */
+}
+
+button:hover {
+    background-color: rgba(0, 0, 0, 0.7); /* Fondo más oscuro cuando el ratón pasa por encima */
+}
+
+button.prev-horror {
+    left: 20px; /* Ajusta la distancia desde la izquierda */
+}
+
+button.next-horror {
+    right: 20px; /* Ajusta la distancia desde la derecha */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .horror-series-galery .horror-anime-item {
+        width: 240px; /* Ajusta el tamaño del item para pantallas medianas */
+    }
+}
+
+@media (max-width: 480px) {
+    .horror-series-galery .horror-anime-item {
+        width: 200px; /* Ajusta el tamaño del item para pantallas más pequeñas */
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+.horror-anime-item {
+    width: 800px; /* Aumenta el tamaño del contenedor de video */
+    height: 400px; /* Aumenta la altura del contenedor de video */
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    margin: 90px; /* Añade margen de 20px alrededor del contenedor */
+}
+
+.horror-anime-item iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    transform: scale(1.2); /* Hace el video más grande */
+}
+
+.horror-anime-item:hover {
+    transform: scale (0.6); /* Hace que el video crezca un poco al pasar el mouse */
+}
+
+.horror-anime-item p {
+    text-align: center;
+    font-size: 16px;
+    margin-top: 10px;
+    color: #fff;
+}
+
+
+
+
+
+
+
+
+
+.video-iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;  /* Se puede mostrar u ocultar según lo necesites */
+}
+
+
+
+
+
+
+
+
+/* Estilo para el borde brillante constante */
+.horror-anime-item {
+    position: relative;
+    overflow: hidden;
+    border: 2px solid #3d093f; /* Borde blanco constante */
+    box-shadow: 0 0 10px 3px rgba(255, 255, 255, 0.3); /* Resplandor suave y blanco */
+    transition: box-shadow 0.3s ease-in-out, border 0.3s ease-in-out; /* Suaviza la transición */
+}
+
+.video-container {
+    position: relative;
+    z-index: 1;
+}
+
+.video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.4); /* Semi-transparente */
+    z-index: 2;
+}
+
+/* Para el título, si quieres hacer algo especial con el texto */
+.episodio-title {
+    position: relative;
+    z-index: 3; /* Asegura que el texto esté encima del video y el overlay */
+    color: #391068;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 10px;
+}
+
+
+
+
+
+
+/* Estilo para el título de la temporada */
+.season-title {
+    text-align: center;
+    margin-bottom: 30px; /* Espacio entre el título y los videos */
+    font-size: 48px;  /* Tamaño más grande para el título */
+    font-weight: bold;
+    width: 100%;
+}
+
+.season-text-1 {
+    color: #10756dbe; /* Color para la primera parte (Tomato) */
+}
+
+.season-text-2 {
+    color: #3c0d57; /* Color para la segunda parte (Lime Green) */
+}
+
+
+
+/* Estilo para la descripción de la temporada */
+.season-description {
+    text-align: center;
+    font-size: 18px;
+    color: #f2f2f2; /* Color claro para el texto */
+    margin-top: 10px;
+    line-height: 1.6;
+    font-weight: 400;
+    padding: 0 20px;
+}
+
+
+
+
+
+
+.video-container {
+    position: relative;
+    width: 100%;
+    height: 24vh; /* Esto hace que el contenedor ocupe toda la altura de la ventana */
+  }
+  
+
+
+
+
+
+  /* Estilo general */
+html, body {
+    height: 100%; /* Asegura que el cuerpo ocupe toda la altura de la ventana */
+    margin: 0; /* Elimina márgenes por defecto */
+}
+
+body {
+    display: flex;
+    flex-direction: column; /* Coloca los elementos de manera vertical */
+    justify-content: space-between; /* Asegura que el footer quede al fondo */
+    font-family: 'Garamond', serif; /* Fuente para el texto */
+    background-color: #000000; /* Fondo de la página */
+    background-image: url('https://www.transparenttextures.com/patterns/black-marble.png'); /* Textura */
+    background-repeat: repeat;
+    background-size: cover;
+    color: #d3d3d3; /* Color gris claro para el texto */
+    height: 100vh; /* Ocupa toda la altura de la ventana */
+}
+
+/* Ajustes para dispositivos móviles */
+@media (max-width: 768px) {
+    /* Ajustar tamaño de las imágenes y los vídeos */
+    .video-container {
+        height: auto;
+        max-height: 70vh; /* Limita la altura en pantallas pequeñas */
+    }
+
+    .video-trailer {
+        height: 120%; /* Menos altura para los trailers en móviles */
+    }
+
+    /* Ajustar el texto del título y la descripción */
+    .movie-details h2 {
+        font-size: 3.5em; /* Reducir tamaño del título */
+    }
+
+    .movie-details p {
+        font-size: 1.2em; /* Reducir tamaño de la descripción */
+        margin: 10px auto;
+        max-width: 90%; /* Ajustar para que no se vea demasiado ancho */
+    }
+
+    /* Ajustar el tamaño de los botones de la galería */
+    .horror-anime-item {
+        width: 100%; /* Hacer que los elementos de la galería ocupen todo el ancho */
+        height: 250px; /* Ajustar la altura */
+        margin: 10px 0;
+    }
+
+    .horror-anime-item iframe {
+        transform: scale(1); /* No hacer el video más grande para evitar cortes */
+    }
+
+    /* Botones de navegación más grandes */
+    button.prev-horror, button.next-horror {
+        font-size: 20px;
+        padding: 15px;
+    }
+
+    .season-title {
+        font-size: 2.5em;
+        margin-bottom: 20px;
+    }
+
+    /* Contenedor de la galería de horror */
+    .horror-series-galery .horror-carousel-container {
+        width: 100%; /* Ancho completo */
+        margin: 20px 0;
+    }
+
+    .horror-series-galery .horror-carousel-images {
+        width: 100%; /* Ajustar el carrusel */
+        transition: none;
+    }
+
+    /* Mejorar la visibilidad del overlay en dispositivos táctiles */
+    .video-overlay {
+        background-color: rgba(0, 0, 0, 0.7); /* Aumentar la opacidad para mayor contraste */
+    }
+
+    .video-overlay:hover {
+        background-color: rgba(0, 0, 0, 0.8); /* Más oscuro al hacer hover */
+    }
+}
+
+/* Ajustes para pantallas muy pequeñas (móviles muy pequeños) */
+@media (max-width: 480px) {
+    /* Título más pequeño */
+    .movie-details h2 {
+        font-size: 2.5em;
+    }
+
+    .movie-details p {
+        font-size: 1.1em;
+    }
+
+    /* Imagen de la serie con menos espacio alrededor */
+    .imagen {
+        width: 100%;
+        height: auto;
+    }
+
+    /* Ajuste de los títulos de temporada */
+    .season-title {
+        font-size: 2em;
+    }
+
+    /* Ajustar los botones de navegación en la galería */
+    .prev-horror, .next-horror {
+        font-size: 18px;
+        padding: 12px;
+    }
+
+    .horror-anime-item {
+        width: 100%;
+        height: 220px; /* Menos altura en pantallas más pequeñas */
+        margin: 5px 0;
+    }
+
+    .horror-anime-item iframe {
+        transform: scale(1); /* Ajustar el iframe al tamaño sin zoom */
+    }
+}
+
+/* Asegurarse de que los enlaces no tengan subrayado */
+a {
+    text-decoration: none; /* Elimina el subrayado */
+}
+
+/* Estilo para el botón */
+#mostrartem2Btn {
+    background-color: #007bff;
+    color: white;
+    font-size: 16px;
+    padding: 12px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-left: 20px; /* Espaciado más pequeño en móviles */
+}
+
+#mostrartem2Btn:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+/* Reducción de márgenes en pantallas pequeñas */
+.horror-anime-item {
+    margin: 10px 0; /* Menos margen en pantallas pequeñas */
+}
+
+.horror-series-galery .horror-carousel-container {
+    margin: 0;
+}

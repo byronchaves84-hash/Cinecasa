@@ -1,0 +1,341 @@
+/* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #111;
+    color: #fff;
+    padding: 0;
+    margin: 0;
+    position: relative;
+    overflow: hidden; /* Asegura que no haya barras de desplazamiento */
+}
+
+/* Header con gradiente metálico rojo */
+header {
+    background: linear-gradient(135deg, #380707, #000000, #633018); /* Gradiente metálico rojo */
+    color: white;
+    text-align: center;
+    padding: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); /* Sombra suave para dar profundidad */
+    border-radius: 8px; /* Bordes redondeados para un toque elegante */
+    animation: fadeIn 2s ease-out; /* Animación de entrada del header */
+}
+
+/* Animación para el fade-in del header */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+header .logo h1 {
+    font-size: 60px;
+    color: #e50914;
+    text-align: center; /* Asegura que el texto esté centrado en el contenedor */
+}
+
+/* Video Background */
+.video-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 130%;
+    z-index: -1; /* Para que quede detrás del contenido */
+    overflow: hidden;
+}
+
+#trailerBackground {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.background-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Capa semi-translúcida oscura */
+    backdrop-filter: blur(10px); /* Efecto de desenfoque */
+    z-index: -1; /* Asegura que esta capa esté detrás del contenido */
+}
+
+
+
+
+
+
+
+
+/* Video Container */
+.video-container {
+    margin-top: 80px; /* Ajusta la distancia del top para no superponerse al header */
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    width: 100%; /* Asegura que el contenedor ocupe todo el ancho */
+    max-width: 900px; /* Limita el tamaño máximo */
+    margin-left: auto; /* Centra el contenedor horizontalmente */
+    margin-right: auto; /* Centra el contenedor horizontalmente */
+    border-radius: 15px; /* Bordes redondeados */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); /* Sombra sutil */
+    overflow: hidden; /* Asegura que los bordes redondeados se apliquen correctamente */
+    background: linear-gradient(145deg, #444, #111); /* Degradado sutil de fondo */
+    padding: 10px; /* Espaciado interno */
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease; /* Animación suave */
+}
+
+/* Efecto de borde de neón rojo al pasar el ratón */
+.video-container:hover {
+    transform: scale(1.05); /* Agranda el contenedor ligeramente */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6), 0 0 15px rgba(255, 0, 0, 0.7); /* Sombra más prominente con brillo rojo */
+    border: 3px solid #580e0e; /* Borde de neón rojo */
+    filter: brightness(1.2); /* Brillo adicional para hacer el borde más prominente */
+}
+
+
+.video-container {
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.7), 0 0 40px rgba(255, 255, 255, 0.4);
+    border: 2px solid #ff33cc; /* Borde de neón rosa */
+}
+
+
+/* Para los vídeos internos */
+#videoPlayer {
+    border-radius: 10px; /* Bordes redondeados para el video */
+    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.5); /* Sombra interna para el video */
+}
+
+
+
+
+
+
+
+
+#videoPlayer {
+    width: 100%;
+    max-width: 900px;
+    border-radius: 10px;
+}
+
+/* Movie Details */
+.movie-details {
+    text-align: center;
+    margin-top: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+
+
+
+
+.movie-details h2 {
+    font-size: 34px;
+    margin-bottom: 10px;
+    background: linear-gradient(to right, #0000FF 33%, #FFFFFF 33%, #0000FF 66%); /* Gradiente azul, blanco, azul */
+    -webkit-background-clip: text; /* Para que el gradiente se aplique solo al texto */
+    color: transparent; /* Hace el texto transparente para que se vea el fondo */
+    font-weight: bold;
+}
+
+.movie-details p {
+    font-size: 20px;
+    color: #ffffff;
+    line-height: 1.8;
+}
+
+
+
+
+
+
+/* Footer */
+footer {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 25px;
+    color: #888888;
+}
+
+/* Separador antes del pie de página */
+.separator {
+    border: none;
+    height: 15px;
+    background-color: rgba(106, 10, 126, 0.7);
+    margin-top: 50px; /* Aumenta este valor para moverlo más hacia abajo */
+    margin-bottom: 20px;
+}
+
+/* Media Queries para dispositivos móviles */
+@media (max-width: 768px) {
+    /* Ajustes para pantallas más pequeñas */
+    header .logo h1 {
+        font-size: 40px; /* Ajusta el tamaño del logo */
+    }
+
+    .video-background {
+        height: 100%; /* Ajusta la altura del fondo de video */
+    }
+
+    #trailerBackground {
+        object-fit: cover; /* Asegura que el video de fondo cubra la pantalla */
+    }
+
+    /* Ajustes para el contenedor del video */
+    .video-container {
+        margin-top: 60px; /* Reduce el margen superior */
+    }
+
+    #videoPlayer {
+        width: 100%; /* Asegura que el video principal ocupe toda la pantalla */
+        max-width: 100%; /* Elimina el límite máximo de ancho */
+        border-radius: 8px; /* Redondea ligeramente los bordes */
+    }
+
+    /* Ajustes para los detalles de la película */
+    .movie-details h2 {
+        font-size: 24px; /* Reduce el tamaño del título */
+    }
+
+    .movie-details p {
+        font-size: 14px; /* Reduce el tamaño del texto */
+    }
+
+    /* Ajustes para el pie de página */
+    footer {
+        font-size: 20px; /* Reduce el tamaño del texto del pie de página */
+        margin-top: 20px; /* Ajusta el margen superior */
+    }
+
+    .separator {
+        margin-top: 50px; /* Ajusta el espacio antes del pie de página */
+    }
+}
+
+/* Media Queries para dispositivos muy pequeños (teléfonos) */
+@media (max-width: 480px) {
+    header .logo h1 {
+        font-size: 30px; /* Ajusta aún más el tamaño del logo */
+    }
+
+    .video-background {
+        height: 100%; /* Ajusta la altura del fondo para pantallas pequeñas */
+    }
+
+    #trailerBackground {
+        object-fit: cover; /* Asegura que el video de fondo cubra la pantalla */
+    }
+
+    .video-container {
+        margin-top: 40px; /* Ajuste para reducir el margen */
+    }
+
+    #videoPlayer {
+        width: 100%; /* El video principal ocupa toda la pantalla */
+    }
+
+    .movie-details h2 {
+        font-size: 20px; /* Reducción significativa del tamaño del título */
+    }
+
+    .movie-details p {
+        font-size: 12px; /* Texto más pequeño para pantallas pequeñas */
+    }
+
+    footer {
+        font-size: 18px; /* Ajuste del tamaño del pie de página */
+    }
+}
+
+
+
+
+
+
+.video-container {
+    position: relative;
+    width: 100%;
+    height: 500px;  /* Establece una altura fija para el contenedor */
+    overflow: hidden;
+}
+
+iframe {
+    width: 100%;
+    height: 100%;  /* El iframe ocupará toda la altura del contenedor */
+    border: none;
+}
+
+
+
+/* Video Container */
+.video-container {
+    margin-top: 80px; /* Ajusta la distancia del top para no superponerse al header */
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    width: 100%; /* Asegura que el contenedor ocupe todo el ancho */
+    max-width: 900px; /* Limita el tamaño máximo */
+    margin-left: auto; /* Centra el contenedor horizontalmente */
+    margin-right: auto; /* Centra el contenedor horizontalmente */
+    border-radius: 15px; /* Bordes redondeados */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); /* Sombra sutil */
+    overflow: hidden; /* Asegura que los bordes redondeados se apliquen correctamente */
+    background: linear-gradient(145deg, #444, #111); /* Degradado sutil de fondo */
+    padding: 10px; /* Espaciado interno */
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease; /* Animación suave */
+}
+
+/* Efecto de borde de neón rojo al pasar el ratón */
+.video-container:hover {
+    transform: scale(1.05); /* Agranda el contenedor ligeramente */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6), 0 0 15px rgba(255, 0, 0, 0.7); /* Sombra más prominente con brillo rojo */
+    border: 3px solid #580e0e; /* Borde de neón rojo */
+    filter: brightness(1.2); /* Brillo adicional para hacer el borde más prominente */
+}
+
+/* Ajuste para el video */
+#videoPlayer {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.5); /* Sombra interna para el video */
+}
+
+/* Media Queries para pantallas pequeñas */
+@media (max-width: 768px) {
+    .video-container {
+        max-width: 100%; /* Asegura que el contenedor ocupe todo el ancho de la pantalla */
+        margin-top: 60px; /* Reduce el margen superior */
+    }
+
+    #videoPlayer {
+        width: 100%; /* El video ocupa todo el ancho */
+        height: auto; /* Asegura que el video no distorsione en pantallas pequeñas */
+    }
+}
+
+@media (max-width: 480px) {
+    .video-container {
+        margin-top: 40px; /* Ajuste para reducir el margen */
+    }
+
+    #videoPlayer {
+        width: 100%; /* El video ocupa todo el ancho */
+        height: auto; /* Mantiene la proporción */
+    }
+}

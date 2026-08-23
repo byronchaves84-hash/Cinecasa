@@ -1,0 +1,590 @@
+```html
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Up, Una Aventura De Altura | MiNetflix
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="styles.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- =================================================
+         FONDO DEL TRAILER
+    ================================================== -->
+
+    <div class="video-background">
+
+        <video
+            id="trailerBackground"
+            autoplay
+            loop
+            muted
+            playsinline
+        >
+
+            <source
+                src="peli/Up2.mp4"
+                type="video/mp4"
+            >
+
+            Tu navegador no soporta la etiqueta de video.
+
+        </video>
+
+        <div class="background-overlay"></div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         CONTENIDO PRINCIPAL
+    ================================================== -->
+
+    <main class="movie-page">
+
+
+        <!-- =================================================
+             NAVEGACIÓN
+        ================================================== -->
+
+        <div class="top-navigation">
+
+            <button
+                class="back-button"
+                onclick="history.back()"
+                type="button"
+            >
+
+                <span>‹</span>
+
+                Volver
+
+            </button>
+
+        </div>
+
+
+
+        <!-- =================================================
+             REPRODUCTOR
+        ================================================== -->
+
+        <section
+            class="player-section"
+            id="playerSection"
+        >
+
+            <div
+                class="video-container"
+                id="videoContainer"
+            >
+
+
+                <!-- Brillo rojo superior -->
+
+                <div class="video-top-glow"></div>
+
+
+
+                <!-- =================================================
+                     PANTALLA INICIAL
+                ================================================== -->
+
+                <div
+                    class="player-start-screen"
+                    id="playerStartScreen"
+                >
+
+                    <div class="play-circle">
+                        ▶
+                    </div>
+
+                    <span>
+                        Pulsa "Ver película" para comenzar
+                    </span>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     REPRODUCTOR GOOGLE DRIVE
+                ================================================== -->
+
+                <iframe
+                    id="moviePlayer"
+                    src="about:blank"
+                    frameborder="0"
+                    allow="autoplay; fullscreen"
+                    allowfullscreen
+                    title="Up, Una Aventura De Altura"
+                ></iframe>
+
+
+
+                <!-- Overlay visual -->
+
+                <div class="video-overlay"></div>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             INFORMACIÓN DE LA PELÍCULA
+        ================================================== -->
+
+        <section class="movie-details">
+
+
+            <div class="movie-brand">
+
+                MINETFLIX
+
+            </div>
+
+
+
+            <h1>
+
+                Up, Una Aventura De Altura.
+
+            </h1>
+
+
+
+            <!-- =================================================
+                 INFORMACIÓN
+            ================================================== -->
+
+            <div class="movie-meta">
+
+                <span class="quality">
+
+                    HD
+
+                </span>
+
+
+                <span>
+
+                    Animación
+
+                </span>
+
+
+                <span class="dot">
+
+                    •
+
+                </span>
+
+
+                <span>
+
+                    Aventura
+
+                </span>
+
+
+                <span class="dot">
+
+                    •
+
+                </span>
+
+
+                <span>
+
+                    Español
+
+                </span>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 DESCRIPCIÓN
+            ================================================== -->
+
+            <p class="movie-description">
+
+                Carl Fredricksen, un vendedor de globos de
+                setenta y ocho años, consigue cumplir el sueño
+                de su vida: viajar a Sudamérica en su casa
+                flotante impulsada por miles de globos.
+
+                Lo que no esperaba era llevarse como
+                acompañante a Russell, un joven explorador
+                que cambiará completamente su aventura.
+
+            </p>
+
+
+
+            <!-- =================================================
+                 BOTÓN VER PELÍCULA
+            ================================================== -->
+
+            <div class="movie-actions">
+
+                <button
+                    class="watch-button"
+                    id="watchButton"
+                    type="button"
+                    onclick="startMovie()"
+                >
+
+                    <span class="button-icon">
+
+                        ▶
+
+                    </span>
+
+                    <span id="buttonText">
+
+                        Ver película
+
+                    </span>
+
+                </button>
+
+            </div>
+
+
+
+            <!-- Separador -->
+
+            <div class="movie-line"></div>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             RECOMENDACIONES
+        ================================================== -->
+
+        <section class="recommendations">
+
+
+            <div class="section-heading">
+
+                <h2>
+
+                    También te puede gustar
+
+                </h2>
+
+                <div class="heading-line"></div>
+
+            </div>
+
+
+
+            <div class="recommendation-grid">
+
+
+                <!-- =================================================
+                     TARJETA 1
+                ================================================== -->
+
+                <div class="recommendation-card">
+
+                    <div class="recommendation-placeholder">
+
+                        <span>
+                            🎬
+                        </span>
+
+                    </div>
+
+                    <div class="recommendation-info">
+
+                        <h3>
+
+                            Próximamente
+
+                        </h3>
+
+                        <p>
+
+                            Más películas
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     TARJETA 2
+                ================================================== -->
+
+                <div class="recommendation-card">
+
+                    <div class="recommendation-placeholder">
+
+                        <span>
+                            🍿
+                        </span>
+
+                    </div>
+
+                    <div class="recommendation-info">
+
+                        <h3>
+
+                            Próximamente
+
+                        </h3>
+
+                        <p>
+
+                            Más aventuras
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     TARJETA 3
+                ================================================== -->
+
+                <div class="recommendation-card">
+
+                    <div class="recommendation-placeholder">
+
+                        <span>
+                            🎥
+                        </span>
+
+                    </div>
+
+                    <div class="recommendation-info">
+
+                        <h3>
+
+                            Próximos estrenos
+
+                        </h3>
+
+                        <p>
+
+                            Nuevas películas
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- =================================================
+         FOOTER
+    ================================================== -->
+
+    <footer>
+
+
+        <div class="footer-logo">
+
+            MINETFLIX
+
+        </div>
+
+
+        <p>
+
+            &copy; 2026 MiNetflix.
+            Todos los derechos reservados.
+
+        </p>
+
+
+    </footer>
+
+
+
+    <!-- =================================================
+         JAVASCRIPT
+         Control del botón "Ver película"
+    ================================================== -->
+
+    <script>
+
+        /*
+         * URL del reproductor de Google Drive.
+         */
+
+        const movieURL =
+            "https://drive.google.com/file/d/1xfJm06cHno2skRcWOBZC-ScQOAZLgKsj/preview";
+
+
+        /*
+         * Estado de la película.
+         */
+
+        let moviePlaying = false;
+
+
+
+        /*
+         * Iniciar película.
+         */
+
+        function startMovie() {
+
+
+            // Evitar que se vuelva a pulsar
+            // mientras está reproduciendo.
+
+            if (moviePlaying) {
+
+                return;
+
+            }
+
+
+            moviePlaying = true;
+
+
+
+            // Elementos de la página.
+
+            const player =
+                document.getElementById("moviePlayer");
+
+            const startScreen =
+                document.getElementById("playerStartScreen");
+
+            const button =
+                document.getElementById("watchButton");
+
+            const buttonText =
+                document.getElementById("buttonText");
+
+
+
+            /*
+             * Cargar Google Drive.
+             */
+
+            player.src = movieURL;
+
+
+
+            /*
+             * Ocultar pantalla inicial.
+             */
+
+            startScreen.classList.add("hidden");
+
+
+
+            /*
+             * Mostrar el iframe.
+             */
+
+            player.classList.add("active");
+
+
+
+            /*
+             * Cambiar el botón.
+             */
+
+            buttonText.textContent =
+                "Reproduciendo...";
+
+
+
+            /*
+             * Agregar estado visual.
+             */
+
+            button.classList.add("playing");
+
+
+
+            /*
+             * Bloquear botón.
+             */
+
+            button.disabled = true;
+
+
+
+            /*
+             * Evitar cualquier clic.
+             */
+
+            button.style.pointerEvents =
+                "none";
+
+
+
+            /*
+             * Llevar suavemente la vista
+             * hacia el reproductor.
+             */
+
+            setTimeout(function () {
+
+                document
+                    .getElementById("videoContainer")
+                    .scrollIntoView({
+                        behavior: "smooth",
+                        block: "center"
+                    });
+
+            }, 250);
+
+        }
+
+    </script>
+
+
+</body>
+
+</html>
+```

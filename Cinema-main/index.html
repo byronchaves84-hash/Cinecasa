@@ -1,0 +1,3393 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="theme-color"
+        content="#050505"
+    >
+
+    <meta
+        name="description"
+        content="CinemaX - Películas, series, anime y terror en un solo lugar."
+    >
+
+    <title>CinemaX</title>
+
+    <link
+        rel="stylesheet"
+        href="styles.css"
+    >
+
+    <style>
+
+        /* =====================================================
+           FAVORITOS
+        ====================================================== */
+
+        .favorites-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 16px;
+            border: 1px solid rgba(255,255,255,.15);
+            border-radius: 999px;
+            background: rgba(255,255,255,.06);
+            color: #fff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: .25s ease;
+        }
+
+        .favorites-button:hover {
+            background: rgba(255,255,255,.12);
+            border-color: rgba(255,255,255,.28);
+            transform: translateY(-1px);
+        }
+
+        .favorites-icon {
+            font-size: 18px;
+            line-height: 1;
+        }
+
+        .favorites-count {
+            min-width: 20px;
+            height: 20px;
+            padding: 0 6px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 999px;
+            background: #e50914;
+            color: #fff;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+
+        /* =====================================================
+           BOTÓN FAVORITO EN TARJETAS
+        ====================================================== */
+
+        .movie-card {
+            position: relative;
+        }
+
+        .favorite-card-button {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            z-index: 20;
+
+            width: 38px;
+            height: 38px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border: 1px solid rgba(255,255,255,.2);
+            border-radius: 50%;
+
+            background: rgba(0,0,0,.65);
+            backdrop-filter: blur(8px);
+
+            color: #fff;
+            font-size: 21px;
+            line-height: 1;
+
+            cursor: pointer;
+
+            transition:
+                transform .2s ease,
+                background .2s ease,
+                color .2s ease,
+                border-color .2s ease;
+        }
+
+        .favorite-card-button:hover {
+            transform: scale(1.08);
+            background: rgba(0,0,0,.85);
+            border-color: rgba(255,255,255,.4);
+        }
+
+        .favorite-card-button.active {
+            color: #ff3040;
+            background: rgba(0,0,0,.82);
+            border-color: rgba(255,48,64,.45);
+        }
+
+
+        /* =====================================================
+           FAVORITOS OVERLAY
+        ====================================================== */
+
+        .favorites-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 30px;
+
+            background: rgba(0,0,0,.82);
+            backdrop-filter: blur(12px);
+
+            opacity: 0;
+            visibility: hidden;
+
+            transition:
+                opacity .3s ease,
+                visibility .3s ease;
+        }
+
+        .favorites-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+
+        /* =====================================================
+           PANEL FAVORITOS
+        ====================================================== */
+
+        .favorites-panel {
+            width: min(1100px, 100%);
+            max-height: 88vh;
+
+            overflow-y: auto;
+
+            padding: 30px;
+
+            border: 1px solid rgba(255,255,255,.12);
+            border-radius: 22px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(25,25,25,.98),
+                    rgba(8,8,8,.98)
+                );
+
+            box-shadow:
+                0 30px 80px rgba(0,0,0,.65);
+
+            transform: translateY(20px) scale(.98);
+
+            transition:
+                transform .3s ease;
+        }
+
+        .favorites-overlay.active .favorites-panel {
+            transform: translateY(0) scale(1);
+        }
+
+
+        /* =====================================================
+           CABECERA FAVORITOS
+        ====================================================== */
+
+        .favorites-panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+
+            margin-bottom: 25px;
+        }
+
+        .favorites-panel-header h2 {
+            margin: 0;
+            color: #fff;
+            font-size: clamp(24px, 4vw, 36px);
+        }
+
+        .favorites-panel-header p {
+            margin: 7px 0 0;
+            color: rgba(255,255,255,.55);
+            font-size: 14px;
+        }
+
+        .close-favorites {
+            width: 42px;
+            height: 42px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border: 1px solid rgba(255,255,255,.15);
+            border-radius: 50%;
+
+            background: rgba(255,255,255,.06);
+            color: #fff;
+
+            font-size: 25px;
+            cursor: pointer;
+
+            transition: .2s ease;
+        }
+
+        .close-favorites:hover {
+            background: rgba(255,255,255,.13);
+            transform: rotate(90deg);
+        }
+
+
+        /* =====================================================
+           GRID FAVORITOS
+        ====================================================== */
+
+        .favorites-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fill,
+                    minmax(170px, 1fr)
+                );
+
+            gap: 20px;
+        }
+
+        .favorite-item {
+            position: relative;
+            overflow: hidden;
+
+            border-radius: 14px;
+
+            background: #111;
+
+            transition:
+                transform .25s ease,
+                box-shadow .25s ease;
+        }
+
+        .favorite-item:hover {
+            transform: translateY(-5px);
+
+            box-shadow:
+                0 15px 35px rgba(0,0,0,.45);
+        }
+
+        .favorite-item a {
+            display: block;
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .favorite-item img {
+            display: block;
+
+            width: 100%;
+            aspect-ratio: 2 / 3;
+
+            object-fit: cover;
+        }
+
+        .favorite-item-info {
+            padding: 13px;
+        }
+
+        .favorite-item-info span {
+            display: block;
+
+            margin-bottom: 5px;
+
+            color: rgba(255,255,255,.5);
+
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+        }
+
+        .favorite-item-info h3 {
+            margin: 0;
+
+            color: #fff;
+
+            font-size: 15px;
+        }
+
+
+        .favorite-remove {
+            position: absolute;
+
+            top: 10px;
+            right: 10px;
+
+            width: 34px;
+            height: 34px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border: 1px solid rgba(255,255,255,.2);
+            border-radius: 50%;
+
+            background: rgba(0,0,0,.75);
+            color: #fff;
+
+            font-size: 18px;
+
+            cursor: pointer;
+
+            z-index: 5;
+
+            transition: .2s ease;
+        }
+
+        .favorite-remove:hover {
+            background: #e50914;
+            border-color: #e50914;
+        }
+
+
+        /* =====================================================
+           FAVORITOS VACÍOS
+        ====================================================== */
+
+        .favorites-empty {
+            min-height: 280px;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            text-align: center;
+
+            padding: 30px;
+        }
+
+        .favorites-empty-icon {
+            margin-bottom: 15px;
+
+            color: rgba(255,255,255,.25);
+
+            font-size: 55px;
+        }
+
+        .favorites-empty h3 {
+            margin: 0 0 8px;
+
+            color: #fff;
+
+            font-size: 22px;
+        }
+
+        .favorites-empty p {
+            max-width: 430px;
+
+            margin: 0;
+
+            color: rgba(255,255,255,.5);
+
+            line-height: 1.6;
+        }
+
+
+        /* =====================================================
+           ERROR CATÁLOGO
+        ====================================================== */
+
+        .catalog-error {
+            width: 100%;
+            padding: 70px 20px;
+
+            text-align: center;
+            color: rgba(255,255,255,.6);
+        }
+
+        .catalog-error h3 {
+            margin: 0 0 10px;
+            color: #fff;
+            font-size: 22px;
+        }
+
+        .catalog-error p {
+            margin: 0;
+            line-height: 1.6;
+        }
+
+
+        /* =====================================================
+           SCROLL
+        ====================================================== */
+
+        .favorites-panel::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .favorites-panel::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .favorites-panel::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,.2);
+            border-radius: 20px;
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ====================================================== */
+
+        @media (max-width: 700px) {
+
+            .favorites-overlay {
+                padding: 15px;
+            }
+
+            .favorites-panel {
+                padding: 20px;
+                max-height: 92vh;
+            }
+
+            .favorites-grid {
+                grid-template-columns:
+                    repeat(
+                        2,
+                        minmax(0, 1fr)
+                    );
+
+                gap: 13px;
+            }
+
+            .favorites-button {
+                padding: 9px 12px;
+            }
+
+            .favorites-button .favorites-text {
+                display: none;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         NAVBAR
+    ====================================================== -->
+
+    <header class="navbar">
+
+        <div class="logo">
+            CINEMAX
+        </div>
+
+        <nav class="nav-links">
+
+            <a href="#inicio">
+                Inicio
+            </a>
+
+            <a href="#peliculas">
+                Catálogo
+            </a>
+
+        </nav>
+
+        <div class="nav-right">
+
+            <button
+                class="favorites-button"
+                id="favoritesButton"
+                type="button"
+                aria-label="Abrir favoritos"
+                title="Mis favoritos"
+            >
+
+                <span class="favorites-icon">
+                    ♡
+                </span>
+
+                <span class="favorites-text">
+                    Favoritos
+                </span>
+
+                <span
+                    class="favorites-count"
+                    id="favoritesCount"
+                >
+                    0
+                </span>
+
+            </button>
+
+
+            <a
+                href="../explorador/index.html"
+                class="search-button"
+                aria-label="Abrir buscador"
+                title="Buscar en CinemaX"
+            >
+                🔍
+            </a>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =====================================================
+         HERO
+    ====================================================== -->
+
+    <section
+        id="inicio"
+        class="hero"
+    >
+
+        <div class="hero-slides">
+
+            <div
+                class="hero-slide active"
+                style="background-image: url('https://image.tmdb.org/t/p/original/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg');"
+            >
+                <div class="hero-slide-overlay"></div>
+            </div>
+
+            <div
+                class="hero-slide"
+                style="background-image: url('https://image.tmdb.org/t/p/original/74xTEgt7R36Fpooo50r9T25onhq.jpg');"
+            >
+                <div class="hero-slide-overlay"></div>
+            </div>
+
+            <div
+                class="hero-slide"
+                style="background-image: url('https://image.tmdb.org/t/p/original/1pdfLvkbY9ohJlCjQH2CZjjYVvJ.jpg');"
+            >
+                <div class="hero-slide-overlay"></div>
+            </div>
+
+            <div
+                class="hero-slide"
+                style="background-image: url('https://image.tmdb.org/t/p/original/or06FN3Dka5tukK1e9sl16pB3iy.jpg');"
+            >
+                <div class="hero-slide-overlay"></div>
+            </div>
+
+            <div
+                class="hero-slide"
+                style="background-image: url('https://image.tmdb.org/t/p/original/8ZTVqvKDQ8emSGUEMjsS4yHAwrp.jpg');"
+            >
+                <div class="hero-slide-overlay"></div>
+            </div>
+
+        </div>
+
+
+        <div class="hero-base"></div>
+
+        <div class="hero-overlay"></div>
+
+
+        <!-- =================================================
+             HERO 1
+        ================================================== -->
+
+        <div class="hero-content active">
+
+            <span class="hero-badge">
+                CINEMAX
+            </span>
+
+            <h1>
+                INTERSTELLAR
+            </h1>
+
+            <div class="hero-meta">
+                <span>2014</span>
+                <span>•</span>
+                <span>Ciencia ficción</span>
+                <span>•</span>
+                <span>2h 49m</span>
+            </div>
+
+            <p>
+                Una misión más allá de los límites del espacio
+                en busca de un nuevo hogar para la humanidad.
+            </p>
+
+            <div class="hero-buttons">
+
+                <a
+                    href="#peliculas"
+                    class="hero-button primary hero-watch-button"
+                >
+                    ▶ Ver película
+                </a>
+
+                <a
+                    href="../explorador/index.html"
+                    class="hero-button secondary"
+                >
+                    🔍 Explorar catálogo
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             HERO 2
+        ================================================== -->
+
+        <div class="hero-content">
+
+            <span class="hero-badge">
+                DESTACADA
+            </span>
+
+            <h1>
+                THE BATMAN
+            </h1>
+
+            <div class="hero-meta">
+                <span>2022</span>
+                <span>•</span>
+                <span>Acción</span>
+                <span>•</span>
+                <span>2h 56m</span>
+            </div>
+
+            <p>
+                Cuando las sombras dominan Gotham,
+                un nuevo símbolo aparece para enfrentar
+                la oscuridad.
+            </p>
+
+            <div class="hero-buttons">
+
+                <a
+                    href="#peliculas"
+                    class="hero-button primary hero-watch-button"
+                >
+                    ▶ Ver película
+                </a>
+
+                <a
+                    href="../explorador/index.html"
+                    class="hero-button secondary"
+                >
+                    🔍 Explorar catálogo
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             HERO 3
+        ================================================== -->
+
+        <div class="hero-content">
+
+            <span class="hero-badge">
+                EPIC
+            </span>
+
+            <h1>
+                DUNE
+            </h1>
+
+            <div class="hero-meta">
+                <span>2021</span>
+                <span>•</span>
+                <span>Ciencia ficción</span>
+                <span>•</span>
+                <span>2h 35m</span>
+            </div>
+
+            <p>
+                En un planeta desértico se decide el destino
+                de una de las mayores fuerzas del universo.
+            </p>
+
+            <div class="hero-buttons">
+
+                <a
+                    href="#peliculas"
+                    class="hero-button primary hero-watch-button"
+                >
+                    ▶ Ver película
+                </a>
+
+                <a
+                    href="../explorador/index.html"
+                    class="hero-button secondary"
+                >
+                    🔍 Explorar catálogo
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             HERO 4
+        ================================================== -->
+
+        <div class="hero-content">
+
+            <span class="hero-badge">
+                MARVEL
+            </span>
+
+            <h1>
+                AVENGERS
+            </h1>
+
+            <div class="hero-meta">
+                <span>2019</span>
+                <span>•</span>
+                <span>Acción</span>
+                <span>•</span>
+                <span>3h 1m</span>
+            </div>
+
+            <p>
+                Los héroes más poderosos de la Tierra
+                enfrentan su batalla definitiva.
+            </p>
+
+            <div class="hero-buttons">
+
+                <a
+                    href="#peliculas"
+                    class="hero-button primary hero-watch-button"
+                >
+                    ▶ Ver película
+                </a>
+
+                <a
+                    href="../explorador/index.html"
+                    class="hero-button secondary"
+                >
+                    🔍 Explorar catálogo
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             HERO 5
+        ================================================== -->
+
+        <div class="hero-content">
+
+            <span class="hero-badge">
+                CINEMAX ORIGINAL
+            </span>
+
+            <h1>
+                TU CINE
+            </h1>
+
+            <div class="hero-meta">
+                <span>CINEMAX</span>
+                <span>•</span>
+                <span>Películas</span>
+                <span>•</span>
+                <span>Series</span>
+            </div>
+
+            <p>
+                Todo tu entretenimiento en un solo lugar.
+                Explora el catálogo de CinemaX.
+            </p>
+
+            <div class="hero-buttons">
+
+                <a
+                    href="#peliculas"
+                    class="hero-button primary hero-watch-button"
+                >
+                    ▶ Ver películas
+                </a>
+
+                <a
+                    href="../explorador/index.html"
+                    class="hero-button secondary"
+                >
+                    🔍 Explorar catálogo
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             INDICADORES
+        ================================================== -->
+
+        <div class="hero-indicators">
+
+            <button
+                class="hero-dot active"
+                onclick="goToSlide(0)"
+                aria-label="Slide 1"
+            ></button>
+
+            <button
+                class="hero-dot"
+                onclick="goToSlide(1)"
+                aria-label="Slide 2"
+            ></button>
+
+            <button
+                class="hero-dot"
+                onclick="goToSlide(2)"
+                aria-label="Slide 3"
+            ></button>
+
+            <button
+                class="hero-dot"
+                onclick="goToSlide(3)"
+                aria-label="Slide 4"
+            ></button>
+
+            <button
+                class="hero-dot"
+                onclick="goToSlide(4)"
+                aria-label="Slide 5"
+            ></button>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         CONTENIDO
+    ====================================================== -->
+
+    <main>
+
+        <section
+            id="peliculas"
+            class="content-section movies-section"
+        >
+
+            <div class="section-header">
+
+                <div>
+
+                    <span class="section-label">
+                        CATÁLOGO
+                    </span>
+
+                    <h2>
+                        Películas
+                    </h2>
+
+                </div>
+
+                <a
+                    href="../explorador/index.html?categoria=peliculas"
+                    class="view-all"
+                >
+                    Ver todas
+                    <span>›</span>
+                </a>
+
+            </div>
+
+
+            <div
+                class="movie-grid"
+                id="movieGrid"
+            >
+
+                <div
+                    class="catalog-error"
+                    id="catalogLoading"
+                >
+
+                    <p>
+                        Cargando catálogo...
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================================
+         FAVORITOS
+    ====================================================== -->
+
+    <div
+        class="favorites-overlay"
+        id="favoritesOverlay"
+        aria-hidden="true"
+    >
+
+        <div
+            class="favorites-panel"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="favoritesTitle"
+        >
+
+            <div class="favorites-panel-header">
+
+                <div>
+
+                    <h2 id="favoritesTitle">
+                        Mis favoritos
+                    </h2>
+
+                    <p id="favoritesSubtitle">
+                        Tus películas, series y contenido guardado en CinemaX.
+                    </p>
+
+                </div>
+
+                <button
+                    class="close-favorites"
+                    id="closeFavorites"
+                    type="button"
+                    aria-label="Cerrar favoritos"
+                >
+                    ×
+                </button>
+
+            </div>
+
+            <div
+                class="favorites-grid"
+                id="favoritesGrid"
+            ></div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <footer>
+
+        <div class="footer-logo">
+            CINEMAX
+        </div>
+
+        <p>
+            © CinemaX 2026 — Todos los derechos reservados.
+        </p>
+
+    </footer>
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
+
+    <script>
+
+        /* =====================================================
+           CONFIGURACIÓN DEL SERVIDOR
+        ====================================================== */
+
+        const CATALOG_API =
+            "/api/catalog";
+
+
+        const FEATURED_ROTATION_TIME =
+            24 * 60 * 60 * 1000;
+
+
+        const FEATURED_STORAGE_KEY =
+            "cinemax_featured_selection_v2";
+
+
+        const FEATURED_COUNT =
+            5;
+
+
+        const FAVORITES_STORAGE_KEY =
+            "cinemax_favorites";
+
+
+        const CATALOG_REFRESH_TIME =
+            30 * 1000;
+
+
+
+        /* =====================================================
+           CATÁLOGO
+        ====================================================== */
+
+        let catalogMovies = [];
+
+        let catalogRefreshTimer = null;
+
+
+
+        /* =====================================================
+           HERO
+        ====================================================== */
+
+        const heroSlides =
+            document.querySelectorAll(
+                ".hero-slide"
+            );
+
+
+        const heroContents =
+            document.querySelectorAll(
+                ".hero-content"
+            );
+
+
+        const heroDots =
+            document.querySelectorAll(
+                ".hero-dot"
+            );
+
+
+        let currentHeroSlide = 0;
+
+        let heroTimer;
+
+        let featuredRotationTimer;
+
+
+
+        /* =====================================================
+           FAVORITOS
+        ====================================================== */
+
+        let favorites = [];
+
+
+
+        /* =====================================================
+           ESCAPE HTML
+        ====================================================== */
+
+        function escapeHtml(value) {
+
+            return String(value ?? "")
+                .replaceAll("&", "&amp;")
+                .replaceAll("<", "&lt;")
+                .replaceAll(">", "&gt;")
+                .replaceAll('"', "&quot;")
+                .replaceAll("'", "&#039;");
+
+        }
+
+
+
+        function escapeAttribute(value) {
+
+            return escapeHtml(value);
+
+        }
+
+
+
+        /* =====================================================
+           CARGAR CATÁLOGO
+        ====================================================== */
+
+        async function loadCatalog() {
+
+            const movieGrid =
+                document.getElementById(
+                    "movieGrid"
+                );
+
+            try {
+
+                console.log(
+                    "CinemaX: consultando API:",
+                    CATALOG_API
+                );
+
+
+                const response =
+                    await fetch(
+                        CATALOG_API,
+                        {
+                            method: "GET",
+                            cache: "no-store"
+                        }
+                    );
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        `HTTP ${response.status}`
+                    );
+
+                }
+
+
+                const data =
+                    await response.json();
+
+
+                if (!Array.isArray(data)) {
+
+                    throw new Error(
+                        "La API no devolvió un array válido."
+                    );
+
+                }
+
+
+                catalogMovies =
+                    data;
+
+
+                console.log(
+                    "CinemaX: catálogo recibido:",
+                    catalogMovies
+                );
+
+
+                renderCatalog();
+
+                initializeFeaturedMovies();
+
+                restartFeaturedRotation();
+
+
+            } catch(error) {
+
+                console.error(
+                    "CinemaX: error conectando con el servidor:",
+                    error
+                );
+
+
+                if (movieGrid) {
+
+                    movieGrid.innerHTML = `
+
+                        <div class="catalog-error">
+
+                            <h3>
+                                No se pudo cargar el catálogo
+                            </h3>
+
+                            <p>
+                                Comprueba que el servidor
+                                de CinemaX esté ejecutándose
+                                en el puerto 8000.
+                            </p>
+
+                            <p style="margin-top:15px; opacity:.6;">
+                                Error: ${escapeHtml(error.message)}
+                            </p>
+
+                        </div>
+
+                    `;
+
+                }
+
+            }
+
+        }
+
+
+
+        /* =====================================================
+           ACTUALIZACIÓN AUTOMÁTICA DEL CATÁLOGO
+        ====================================================== */
+
+        async function refreshCatalog() {
+
+            try {
+
+                const response =
+                    await fetch(
+                        CATALOG_API,
+                        {
+                            method: "GET",
+                            cache: "no-store"
+                        }
+                    );
+
+
+                if (!response.ok) {
+
+                    return;
+
+                }
+
+
+                const data =
+                    await response.json();
+
+
+                if (!Array.isArray(data)) {
+
+                    return;
+
+                }
+
+
+                const oldCatalog =
+                    JSON.stringify(
+                        catalogMovies
+                    );
+
+
+                const newCatalog =
+                    JSON.stringify(
+                        data
+                    );
+
+
+                if (
+                    oldCatalog !==
+                    newCatalog
+                ) {
+
+                    console.log(
+                        "CinemaX: catálogo actualizado desde el servidor."
+                    );
+
+
+                    catalogMovies =
+                        data;
+
+
+                    renderCatalog();
+
+                }
+
+
+            } catch(error) {
+
+                console.warn(
+                    "CinemaX: no se pudo actualizar el catálogo:",
+                    error
+                );
+
+            }
+
+        }
+
+
+
+        function startCatalogAutoRefresh() {
+
+            clearInterval(
+                catalogRefreshTimer
+            );
+
+
+            catalogRefreshTimer =
+                setInterval(
+                    refreshCatalog,
+                    CATALOG_REFRESH_TIME
+                );
+
+        }
+
+
+
+        /* =====================================================
+           OBTENER PELÍCULAS
+        ====================================================== */
+
+        function getCatalogMovies() {
+
+            return catalogMovies.filter(
+                movie =>
+                    movie &&
+                    movie.category === "peliculas"
+            );
+
+        }
+
+
+
+        /* =====================================================
+           RENDERIZAR CATÁLOGO
+        ====================================================== */
+
+        function renderCatalog() {
+
+            const movieGrid =
+                document.getElementById(
+                    "movieGrid"
+                );
+
+
+            if (!movieGrid) {
+
+                return;
+
+            }
+
+
+            const movies =
+                getCatalogMovies();
+
+
+            movieGrid.innerHTML = "";
+
+
+            if (!movies.length) {
+
+                movieGrid.innerHTML = `
+
+                    <div class="catalog-error">
+
+                        <h3>
+                            No hay películas
+                        </h3>
+
+                        <p>
+                            No se encontraron películas
+                            en el catálogo.
+                        </p>
+
+                    </div>
+
+                `;
+
+                return;
+
+            }
+
+
+            movies.forEach(
+                function(movie) {
+
+                    const card =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    card.className =
+                        "movie-card";
+
+
+                    card.dataset.id =
+                        movie.id || "";
+
+
+                    card.dataset.title =
+                        movie.title || "Contenido";
+
+
+                    card.dataset.type =
+                        movie.type || "Contenido";
+
+
+                    card.dataset.url =
+                        movie.url || "#";
+
+
+                    card.dataset.image =
+                        movie.image || "";
+
+
+                    card.dataset.year =
+                        movie.year || "";
+
+
+                    card.dataset.genre =
+                        movie.genre ||
+                        movie.type ||
+                        "Contenido";
+
+
+                    card.dataset.duration =
+                        movie.duration || "";
+
+
+                    card.dataset.description =
+                        movie.description ||
+                        "Descubre este contenido en CinemaX";
+
+
+                    card.innerHTML = `
+
+                        <button
+                            class="favorite-card-button"
+                            type="button"
+                            aria-label="Agregar ${escapeAttribute(movie.title)} a favoritos"
+                            title="Agregar a favoritos"
+                        >
+                            ♡
+                        </button>
+
+
+                        <a
+                            href="${escapeAttribute(movie.url || "#")}"
+                        >
+
+                            <img
+                                src="${escapeAttribute(movie.image || "images/placeholder.jpg")}"
+                                alt="${escapeAttribute(movie.title || "Contenido")}"
+                                loading="lazy"
+                            >
+
+
+                            <div class="card-info">
+
+                                <span>
+                                    ${escapeHtml(
+                                        movie.genre ||
+                                        movie.type ||
+                                        "Contenido"
+                                    )}
+                                </span>
+
+
+                                <h3>
+                                    ${escapeHtml(
+                                        movie.title ||
+                                        "Contenido"
+                                    )}
+                                </h3>
+
+                            </div>
+
+                        </a>
+
+                    `;
+
+
+                    movieGrid.appendChild(
+                        card
+                    );
+
+                }
+            );
+
+
+            setupFavoriteButtons();
+
+            updateFavoriteButtons();
+
+            setupImageFallbacks();
+
+        }
+
+
+
+        /* =====================================================
+           SHUFFLE
+        ====================================================== */
+
+        function shuffleArray(array) {
+
+            const result =
+                [...array];
+
+
+            for (
+                let i = result.length - 1;
+                i > 0;
+                i--
+            ) {
+
+                const j =
+                    Math.floor(
+                        Math.random() *
+                        (i + 1)
+                    );
+
+
+                [
+                    result[i],
+                    result[j]
+                ] =
+                [
+                    result[j],
+                    result[i]
+                ];
+
+            }
+
+
+            return result;
+
+        }
+
+
+
+        /* =====================================================
+           CREAR DESTACADAS
+        ====================================================== */
+
+        function createRandomFeaturedSelection(
+            previousSelection = []
+        ) {
+
+            const catalog =
+                catalogMovies.filter(
+                    movie =>
+                        movie &&
+                        movie.image &&
+                        movie.url
+                );
+
+
+            if (!catalog.length) {
+
+                return [];
+
+            }
+
+
+            const previousIds =
+                previousSelection.map(
+                    movie =>
+                        typeof movie === "string"
+                            ? movie
+                            : movie.id
+                );
+
+
+            let available =
+                catalog.filter(
+                    function(movie) {
+
+                        return !previousIds.includes(
+                            movie.id
+                        );
+
+                    }
+                );
+
+
+            if (
+                available.length <
+                Math.min(
+                    FEATURED_COUNT,
+                    catalog.length
+                )
+            ) {
+
+                available =
+                    [...catalog];
+
+            }
+
+
+            return shuffleArray(
+                available
+            ).slice(
+                0,
+                Math.min(
+                    FEATURED_COUNT,
+                    catalog.length
+                )
+            );
+
+        }
+
+
+
+        /* =====================================================
+           GUARDAR DESTACADAS
+        ====================================================== */
+
+        function saveFeaturedSelection(
+            selection
+        ) {
+
+            try {
+
+                localStorage.setItem(
+                    FEATURED_STORAGE_KEY,
+                    JSON.stringify({
+
+                        timestamp:
+                            Date.now(),
+
+                        movies:
+                            selection
+
+                    })
+                );
+
+            } catch(error) {
+
+                console.error(
+                    "Error guardando destacadas:",
+                    error
+                );
+
+            }
+
+        }
+
+
+
+        /* =====================================================
+           CARGAR DESTACADAS
+        ====================================================== */
+
+        function loadFeaturedSelection() {
+
+            try {
+
+                const saved =
+                    localStorage.getItem(
+                        FEATURED_STORAGE_KEY
+                    );
+
+
+                if (!saved) {
+
+                    return null;
+
+                }
+
+
+                const parsed =
+                    JSON.parse(saved);
+
+
+                if (
+                    !parsed ||
+                    !Array.isArray(
+                        parsed.movies
+                    ) ||
+                    !parsed.timestamp
+                ) {
+
+                    return null;
+
+                }
+
+
+                const elapsed =
+                    Date.now() -
+                    parsed.timestamp;
+
+
+                if (
+                    elapsed <
+                    FEATURED_ROTATION_TIME
+                ) {
+
+                    const validMovies =
+                        parsed.movies.filter(
+                            featured =>
+                                catalogMovies.some(
+                                    movie =>
+                                        movie.id ===
+                                        featured.id
+                                )
+                        );
+
+
+                    if (validMovies.length) {
+
+                        return validMovies;
+
+                    }
+
+                }
+
+
+                return null;
+
+
+            } catch(error) {
+
+                console.error(
+                    "Error cargando destacadas:",
+                    error
+                );
+
+                return null;
+
+            }
+
+        }
+
+
+
+        /* =====================================================
+           OBTENER SELECCIÓN
+        ====================================================== */
+
+        function getFeaturedSelection() {
+
+            const saved =
+                loadFeaturedSelection();
+
+
+            if (
+                saved &&
+                saved.length
+            ) {
+
+                return saved;
+
+            }
+
+
+            let previousIds = [];
+
+
+            try {
+
+                const oldData =
+                    localStorage.getItem(
+                        FEATURED_STORAGE_KEY
+                    );
+
+
+                if (oldData) {
+
+                    const parsed =
+                        JSON.parse(
+                            oldData
+                        );
+
+
+                    if (
+                        parsed &&
+                        Array.isArray(
+                            parsed.movies
+                        )
+                    ) {
+
+                        previousIds =
+                            parsed.movies.map(
+                                movie =>
+                                    typeof movie === "string"
+                                        ? movie
+                                        : movie.id
+                            );
+
+                    }
+
+                }
+
+
+            } catch(error) {
+
+                previousIds = [];
+
+            }
+
+
+            const newSelection =
+                createRandomFeaturedSelection(
+                    previousIds
+                );
+
+
+            saveFeaturedSelection(
+                newSelection
+            );
+
+
+            return newSelection;
+
+        }
+
+
+
+        /* =====================================================
+           APLICAR DESTACADAS AL HERO
+        ====================================================== */
+
+        function applyFeaturedMovies(
+            movies
+        ) {
+
+            if (
+                !movies ||
+                !movies.length
+            ) {
+
+                return;
+
+            }
+
+
+            movies.forEach(
+                function(movie, index) {
+
+                    const slide =
+                        heroSlides[index];
+
+
+                    const content =
+                        heroContents[index];
+
+
+                    if (
+                        !slide ||
+                        !content
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    if (movie.image) {
+
+                        slide.style.backgroundImage =
+                            `url("${movie.image}")`;
+
+                    }
+
+
+                    const badge =
+                        content.querySelector(
+                            ".hero-badge"
+                        );
+
+
+                    if (badge) {
+
+                        const badges = [
+
+                            "CINEMAX",
+                            "DESTACADA",
+                            "EPIC",
+                            "ESTRENO",
+                            "CINEMAX"
+
+                        ];
+
+
+                        badge.textContent =
+                            badges[index] ||
+                            "CINEMAX";
+
+                    }
+
+
+                    const title =
+                        content.querySelector(
+                            "h1"
+                        );
+
+
+                    if (title) {
+
+                        title.textContent =
+                            movie.title ||
+                            "Contenido";
+
+                    }
+
+
+                    const meta =
+                        content.querySelector(
+                            ".hero-meta"
+                        );
+
+
+                    if (meta) {
+
+                        const spans =
+                            meta.querySelectorAll(
+                                "span"
+                            );
+
+
+                        if (
+                            spans.length >= 5
+                        ) {
+
+                            spans[0].textContent =
+                                movie.year ||
+                                "CinemaX";
+
+
+                            spans[1].textContent =
+                                "•";
+
+
+                            spans[2].textContent =
+                                movie.genre ||
+                                movie.type ||
+                                "Contenido";
+
+
+                            spans[3].textContent =
+                                "•";
+
+
+                            spans[4].textContent =
+                                movie.duration ||
+                                movie.type ||
+                                "CinemaX";
+
+                        }
+
+                    }
+
+
+                    const description =
+                        content.querySelector(
+                            "p"
+                        );
+
+
+                    if (description) {
+
+                        description.textContent =
+                            movie.description ||
+                            "Descubre este contenido en CinemaX.";
+
+                    }
+
+
+                    const watchButton =
+                        content.querySelector(
+                            ".hero-watch-button"
+                        );
+
+
+                    if (watchButton) {
+
+                        watchButton.href =
+                            movie.url ||
+                            "#";
+
+
+                        watchButton.textContent =
+                            movie.type === "Serie"
+                                ? "▶ Ver serie"
+                                : movie.type === "Anime"
+                                    ? "▶ Ver anime"
+                                    : "▶ Ver película";
+
+
+                        watchButton.setAttribute(
+                            "aria-label",
+                            `Ver ${movie.title}`
+                        );
+
+                    }
+
+                }
+            );
+
+        }
+
+
+
+        /* =====================================================
+           INICIALIZAR HERO
+        ====================================================== */
+
+        function initializeFeaturedMovies() {
+
+            const featuredMovies =
+                getFeaturedSelection();
+
+
+            applyFeaturedMovies(
+                featuredMovies
+            );
+
+        }
+
+
+
+        /* =====================================================
+           ROTACIÓN DESTACADAS
+        ====================================================== */
+
+        function rotateFeaturedMovies() {
+
+            const oldSelection =
+                loadFeaturedSelection();
+
+
+            const previousIds =
+                oldSelection
+                    ? oldSelection.map(
+                        movie =>
+                            typeof movie === "string"
+                                ? movie
+                                : movie.id
+                    )
+                    : [];
+
+
+            const newSelection =
+                createRandomFeaturedSelection(
+                    previousIds
+                );
+
+
+            saveFeaturedSelection(
+                newSelection
+            );
+
+
+            applyFeaturedMovies(
+                newSelection
+            );
+
+
+            showHeroSlide(0);
+
+
+            restartFeaturedRotation();
+
+        }
+
+
+
+        function restartFeaturedRotation() {
+
+            clearTimeout(
+                featuredRotationTimer
+            );
+
+
+            featuredRotationTimer =
+                setTimeout(
+                    rotateFeaturedMovies,
+                    FEATURED_ROTATION_TIME
+                );
+
+        }
+
+
+
+        /* =====================================================
+           SLIDER
+        ====================================================== */
+
+        function showHeroSlide(index) {
+
+            if (!heroSlides.length) {
+
+                return;
+
+            }
+
+
+            if (
+                index >=
+                heroSlides.length
+            ) {
+
+                index = 0;
+
+            }
+
+
+            if (index < 0) {
+
+                index =
+                    heroSlides.length - 1;
+
+            }
+
+
+            heroSlides.forEach(
+                slide => {
+
+                    slide.classList.remove(
+                        "active"
+                    );
+
+                }
+            );
+
+
+            heroContents.forEach(
+                content => {
+
+                    content.classList.remove(
+                        "active"
+                    );
+
+                }
+            );
+
+
+            heroDots.forEach(
+                dot => {
+
+                    dot.classList.remove(
+                        "active"
+                    );
+
+                }
+            );
+
+
+            heroSlides[index].classList.add(
+                "active"
+            );
+
+
+            if (heroContents[index]) {
+
+                heroContents[index].classList.add(
+                    "active"
+                );
+
+            }
+
+
+            if (heroDots[index]) {
+
+                heroDots[index].classList.add(
+                    "active"
+                );
+
+            }
+
+
+            currentHeroSlide =
+                index;
+
+        }
+
+
+
+        function nextHeroSlide() {
+
+            showHeroSlide(
+                currentHeroSlide + 1
+            );
+
+        }
+
+
+
+        function goToSlide(index) {
+
+            showHeroSlide(index);
+
+            restartHeroTimer();
+
+        }
+
+
+
+        function restartHeroTimer() {
+
+            clearInterval(
+                heroTimer
+            );
+
+
+            heroTimer =
+                setInterval(
+                    nextHeroSlide,
+                    7000
+                );
+
+        }
+
+
+
+        /* =====================================================
+           FAVORITOS - CARGAR
+        ====================================================== */
+
+        function loadFavorites() {
+
+            try {
+
+                const saved =
+                    localStorage.getItem(
+                        FAVORITES_STORAGE_KEY
+                    );
+
+
+                if (saved) {
+
+                    const parsed =
+                        JSON.parse(saved);
+
+
+                    if (
+                        Array.isArray(
+                            parsed
+                        )
+                    ) {
+
+                        favorites =
+                            parsed;
+
+                    }
+
+                }
+
+
+            } catch(error) {
+
+                favorites = [];
+
+            }
+
+        }
+
+
+
+        /* =====================================================
+           FAVORITOS - GUARDAR
+        ====================================================== */
+
+        function saveFavorites() {
+
+            try {
+
+                localStorage.setItem(
+                    FAVORITES_STORAGE_KEY,
+                    JSON.stringify(
+                        favorites
+                    )
+                );
+
+
+            } catch(error) {
+
+                console.error(
+                    "No se pudieron guardar favoritos:",
+                    error
+                );
+
+            }
+
+        }
+
+
+
+        /* =====================================================
+           ID PELÍCULA
+        ====================================================== */
+
+        function getMovieId(movie) {
+
+            return (
+                movie.dataset.id ||
+                movie.dataset.url ||
+                movie.dataset.title
+            );
+
+        }
+
+
+
+        /* =====================================================
+           DATOS PELÍCULA
+        ====================================================== */
+
+        function getMovieData(movie) {
+
+            return {
+
+                id:
+                    getMovieId(movie),
+
+                title:
+                    movie.dataset.title ||
+                    "Contenido",
+
+                type:
+                    movie.dataset.type ||
+                    "Contenido",
+
+                url:
+                    movie.dataset.url ||
+                    "#",
+
+                image:
+                    movie.dataset.image ||
+                    movie.querySelector(
+                        "img"
+                    )?.getAttribute(
+                        "src"
+                    ) ||
+                    ""
+
+            };
+
+        }
+
+
+
+        /* =====================================================
+           ES FAVORITO
+        ====================================================== */
+
+        function isFavorite(movie) {
+
+            const id =
+                getMovieId(movie);
+
+
+            return favorites.some(
+                favorite =>
+                    favorite.id === id
+            );
+
+        }
+
+
+
+        /* =====================================================
+           ACTUALIZAR BOTONES
+        ====================================================== */
+
+        function updateFavoriteButtons() {
+
+            const movieCards =
+                document.querySelectorAll(
+                    ".movie-card"
+                );
+
+
+            movieCards.forEach(
+                movie => {
+
+                    const button =
+                        movie.querySelector(
+                            ".favorite-card-button"
+                        );
+
+
+                    if (!button) {
+
+                        return;
+
+                    }
+
+
+                    const active =
+                        isFavorite(movie);
+
+
+                    button.classList.toggle(
+                        "active",
+                        active
+                    );
+
+
+                    button.textContent =
+                        active
+                            ? "♥"
+                            : "♡";
+
+
+                    button.setAttribute(
+                        "aria-label",
+                        active
+                            ? `Quitar ${movie.dataset.title} de favoritos`
+                            : `Agregar ${movie.dataset.title} a favoritos`
+                    );
+
+
+                    button.setAttribute(
+                        "title",
+                        active
+                            ? "Quitar de favoritos"
+                            : "Agregar a favoritos"
+                    );
+
+                }
+            );
+
+
+            updateFavoritesCount();
+
+        }
+
+
+
+        /* =====================================================
+           CONTADOR
+        ====================================================== */
+
+        function updateFavoritesCount() {
+
+            const count =
+                document.getElementById(
+                    "favoritesCount"
+                );
+
+
+            if (!count) {
+
+                return;
+
+            }
+
+
+            count.textContent =
+                favorites.length;
+
+        }
+
+
+
+        /* =====================================================
+           TOGGLE FAVORITO
+        ====================================================== */
+
+        function toggleFavorite(movie) {
+
+            const data =
+                getMovieData(movie);
+
+
+            const index =
+                favorites.findIndex(
+                    favorite =>
+                        favorite.id ===
+                        data.id
+                );
+
+
+            if (index !== -1) {
+
+                favorites.splice(
+                    index,
+                    1
+                );
+
+            } else {
+
+                favorites.push(
+                    data
+                );
+
+            }
+
+
+            saveFavorites();
+
+            updateFavoriteButtons();
+
+            renderFavorites();
+
+        }
+
+
+
+        /* =====================================================
+           CONFIGURAR BOTONES FAVORITOS
+        ====================================================== */
+
+        function setupFavoriteButtons() {
+
+            const movieCards =
+                document.querySelectorAll(
+                    ".movie-card"
+                );
+
+
+            movieCards.forEach(
+                movie => {
+
+                    const button =
+                        movie.querySelector(
+                            ".favorite-card-button"
+                        );
+
+
+                    if (!button) {
+
+                        return;
+
+                    }
+
+
+                    if (
+                        button.dataset.listenerAttached ===
+                        "true"
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    button.dataset.listenerAttached =
+                        "true";
+
+
+                    button.addEventListener(
+                        "click",
+                        function(event) {
+
+                            event.preventDefault();
+
+                            event.stopPropagation();
+
+
+                            toggleFavorite(
+                                movie
+                            );
+
+                        }
+                    );
+
+                }
+            );
+
+        }
+
+
+
+        /* =====================================================
+           RENDER FAVORITOS
+        ====================================================== */
+
+        function renderFavorites() {
+
+            const grid =
+                document.getElementById(
+                    "favoritesGrid"
+                );
+
+
+            if (!grid) {
+
+                return;
+
+            }
+
+
+            grid.innerHTML = "";
+
+
+            if (!favorites.length) {
+
+                grid.innerHTML = `
+
+                    <div class="favorites-empty">
+
+                        <div class="favorites-empty-icon">
+                            ♡
+                        </div>
+
+                        <h3>
+                            Todavía no tienes favoritos
+                        </h3>
+
+                        <p>
+                            Pulsa el corazón de cualquier
+                            película, serie o contenido para
+                            agregarlo a tu lista.
+                        </p>
+
+                    </div>
+
+                `;
+
+                return;
+
+            }
+
+
+            favorites.forEach(
+                favorite => {
+
+                    const item =
+                        document.createElement(
+                            "article"
+                        );
+
+
+                    item.className =
+                        "favorite-item";
+
+
+                    item.innerHTML = `
+
+                        <button
+                            class="favorite-remove"
+                            type="button"
+                            aria-label="Quitar ${escapeAttribute(favorite.title)} de favoritos"
+                            title="Quitar de favoritos"
+                        >
+                            ×
+                        </button>
+
+
+                        <a
+                            href="${escapeAttribute(favorite.url)}"
+                        >
+
+                            <img
+                                src="${escapeAttribute(favorite.image)}"
+                                alt="${escapeAttribute(favorite.title)}"
+                                loading="lazy"
+                            >
+
+
+                            <div class="favorite-item-info">
+
+                                <span>
+                                    ${escapeHtml(
+                                        favorite.type
+                                    )}
+                                </span>
+
+
+                                <h3>
+                                    ${escapeHtml(
+                                        favorite.title
+                                    )}
+                                </h3>
+
+                            </div>
+
+                        </a>
+
+                    `;
+
+
+                    const removeButton =
+                        item.querySelector(
+                            ".favorite-remove"
+                        );
+
+
+                    removeButton.addEventListener(
+                        "click",
+                        function(event) {
+
+                            event.preventDefault();
+
+                            event.stopPropagation();
+
+
+                            removeFavorite(
+                                favorite.id
+                            );
+
+                        }
+                    );
+
+
+                    grid.appendChild(
+                        item
+                    );
+
+                }
+            );
+
+
+            setupImageFallbacks();
+
+        }
+
+
+
+        /* =====================================================
+           ELIMINAR FAVORITO
+        ====================================================== */
+
+        function removeFavorite(id) {
+
+            favorites =
+                favorites.filter(
+                    favorite =>
+                        favorite.id !== id
+                );
+
+
+            saveFavorites();
+
+            updateFavoriteButtons();
+
+            renderFavorites();
+
+        }
+
+
+
+        /* =====================================================
+           PANEL FAVORITOS
+        ====================================================== */
+
+        const favoritesButton =
+            document.getElementById(
+                "favoritesButton"
+            );
+
+
+        const favoritesOverlay =
+            document.getElementById(
+                "favoritesOverlay"
+            );
+
+
+        const closeFavorites =
+            document.getElementById(
+                "closeFavorites"
+            );
+
+
+
+        function openFavorites() {
+
+            renderFavorites();
+
+
+            favoritesOverlay.classList.add(
+                "active"
+            );
+
+
+            favoritesOverlay.setAttribute(
+                "aria-hidden",
+                "false"
+            );
+
+
+            document.body.style.overflow =
+                "hidden";
+
+        }
+
+
+
+        function closeFavoritesPanel() {
+
+            favoritesOverlay.classList.remove(
+                "active"
+            );
+
+
+            favoritesOverlay.setAttribute(
+                "aria-hidden",
+                "true"
+            );
+
+
+            document.body.style.overflow =
+                "";
+
+        }
+
+
+
+        if (favoritesButton) {
+
+            favoritesButton.addEventListener(
+                "click",
+                openFavorites
+            );
+
+        }
+
+
+
+        if (closeFavorites) {
+
+            closeFavorites.addEventListener(
+                "click",
+                closeFavoritesPanel
+            );
+
+        }
+
+
+
+        /* =====================================================
+           CERRAR HACIENDO CLICK FUERA
+        ====================================================== */
+
+        if (favoritesOverlay) {
+
+            favoritesOverlay.addEventListener(
+                "click",
+                function(event) {
+
+                    if (
+                        event.target ===
+                        favoritesOverlay
+                    ) {
+
+                        closeFavoritesPanel();
+
+                    }
+
+                }
+            );
+
+        }
+
+
+
+        /* =====================================================
+           ESC
+        ====================================================== */
+
+        document.addEventListener(
+            "keydown",
+            function(event) {
+
+                if (
+                    event.key === "Escape" &&
+                    favoritesOverlay.classList.contains(
+                        "active"
+                    )
+                ) {
+
+                    closeFavoritesPanel();
+
+                }
+
+            }
+        );
+
+
+
+        /* =====================================================
+           FALLBACK IMÁGENES
+        ====================================================== */
+
+        function setupImageFallbacks() {
+
+            document
+                .querySelectorAll(
+                    "img"
+                )
+                .forEach(
+                    function(image) {
+
+                        if (
+                            image.dataset.fallbackListener ===
+                            "true"
+                        ) {
+
+                            return;
+
+                        }
+
+
+                        image.dataset.fallbackListener =
+                            "true";
+
+
+                        image.addEventListener(
+                            "error",
+                            function() {
+
+                                if (
+                                    !image.dataset.fallback
+                                ) {
+
+                                    image.dataset.fallback =
+                                        "true";
+
+
+                                    image.src =
+                                        "images/placeholder.jpg";
+
+                                }
+
+                            }
+                        );
+
+                    }
+                );
+
+        }
+
+
+
+        /* =====================================================
+           INICIALIZACIÓN
+        ====================================================== */
+
+        loadFavorites();
+
+        updateFavoritesCount();
+
+        renderFavorites();
+
+        restartHeroTimer();
+
+        loadCatalog();
+
+        startCatalogAutoRefresh();
+
+
+
+        /* =====================================================
+           CINEMAX — CONTROL DE SESIÓN
+        =====================================================
+
+           Este sistema comprueba si la sesión sigue activa
+           en el servidor.
+
+           Si el administrador desconecta al usuario:
+
+               active = false
+
+           CinemaX elimina la sesión local y vuelve al login.
+
+        ===================================================== */
+
+
+        /* =====================================================
+           CONFIGURACIÓN DE SESIÓN
+        ====================================================== */
+
+        const CURRENT_USER_KEY =
+            "cinemax_current_user";
+
+
+        const SESSION_KEY =
+            "cinemax_session_id";
+
+
+        const LOGIN_URL =
+            "../login.html";
+
+
+        /*
+         * Cada cuánto comprobamos el estado de la sesión.
+         *
+         * 5 segundos.
+         */
+
+        const SESSION_CHECK_INTERVAL =
+            5000;
+
+
+        /*
+         * Evita varias redirecciones al mismo tiempo.
+         */
+
+        let cinemaXLoggingOut =
+            false;
+
+
+
+        /* =====================================================
+           LIMPIAR SESIÓN LOCAL
+        ====================================================== */
+
+        function clearCinemaXSession() {
+
+            try {
+
+                localStorage.removeItem(
+                    CURRENT_USER_KEY
+                );
+
+
+                localStorage.removeItem(
+                    SESSION_KEY
+                );
+
+
+            } catch (error) {
+
+                console.error(
+                    "CinemaX: error limpiando sesión:",
+                    error
+                );
+
+            }
+
+        }
+
+
+
+        /* =====================================================
+           VOLVER AL LOGIN
+        ====================================================== */
+
+        function returnToLogin() {
+
+            /*
+             * Evitar múltiples redirecciones.
+             */
+
+            if (
+                cinemaXLoggingOut
+            ) {
+
+                return;
+
+            }
+
+
+            cinemaXLoggingOut =
+                true;
+
+
+            /*
+             * Limpiar datos locales.
+             */
+
+            clearCinemaXSession();
+
+
+            /*
+             * replace evita que el usuario pueda volver
+             * fácilmente con el botón Atrás a la página
+             * protegida.
+             */
+
+            window.location.replace(
+                LOGIN_URL
+            );
+
+        }
+
+
+
+        /* =====================================================
+           OBTENER ID DE SESIÓN
+        ====================================================== */
+
+        function getCinemaXSessionId() {
+
+            try {
+
+                return localStorage.getItem(
+                    SESSION_KEY
+                );
+
+            } catch (error) {
+
+                console.error(
+                    "CinemaX: no se pudo leer la sesión:",
+                    error
+                );
+
+                return null;
+
+            }
+
+        }
+
+
+
+        /* =====================================================
+           COMPROBAR SESIÓN EN EL SERVIDOR
+        ====================================================== */
+
+        async function checkCinemaXSession() {
+
+            /*
+             * Si ya estamos cerrando sesión,
+             * no hacemos más peticiones.
+             */
+
+            if (
+                cinemaXLoggingOut
+            ) {
+
+                return;
+
+            }
+
+
+            /*
+             * Obtener sesión local.
+             */
+
+            const sessionId =
+                getCinemaXSessionId();
+
+
+            /*
+             * Si no existe sesión local,
+             * regresar al login.
+             */
+
+            if (!sessionId) {
+
+                returnToLogin();
+
+                return;
+
+            }
+
+
+            try {
+
+                /*
+                 * Consultar al servidor.
+                 *
+                 * Ejemplo:
+                 *
+                 * /api/users/session/ABC123
+                 */
+
+                const response =
+                    await fetch(
+                        "/api/users/session/" +
+                        encodeURIComponent(
+                            sessionId
+                        ),
+                        {
+                            method: "GET",
+
+                            cache: "no-store",
+
+                            credentials: "include",
+
+                            headers: {
+                                "Accept":
+                                    "application/json"
+                            }
+                        }
+                    );
+
+
+                /*
+                 * Intentar leer JSON.
+                 */
+
+                let result;
+
+
+                try {
+
+                    result =
+                        await response.json();
+
+
+                } catch (jsonError) {
+
+                    console.warn(
+                        "CinemaX: el servidor no devolvió JSON válido."
+                    );
+
+
+                    /*
+                     * No expulsamos al usuario por un
+                     * fallo temporal de respuesta.
+                     */
+
+                    return;
+
+                }
+
+
+                console.log(
+                    "CinemaX: estado de sesión:",
+                    result
+                );
+
+
+
+                /* =================================================
+                   ADMINISTRADOR DESACTIVÓ LA SESIÓN
+                ================================================== */
+
+                /*
+                 * ESTA ES LA PARTE MÁS IMPORTANTE.
+                 *
+                 * Si el panel admin cambia:
+                 *
+                 * active = false
+                 *
+                 * el usuario será expulsado automáticamente.
+                 */
+
+                if (
+                    response.ok &&
+                    result &&
+                    result.active === false
+                ) {
+
+                    console.warn(
+                        "CinemaX: el administrador desconectó esta sesión."
+                    );
+
+
+                    returnToLogin();
+
+                    return;
+
+                }
+
+
+
+                /* =================================================
+                   SESIÓN INVÁLIDA
+                ================================================== */
+
+                if (
+                    !response.ok ||
+                    !result ||
+                    result.success !== true
+                ) {
+
+                    console.warn(
+                        "CinemaX: sesión inválida."
+                    );
+
+
+                    returnToLogin();
+
+                    return;
+
+                }
+
+
+
+                /* =================================================
+                   SESIÓN ACTIVA
+                ================================================== */
+
+                if (
+                    result.active === true
+                ) {
+
+                    console.log(
+                        "CinemaX: sesión activa."
+                    );
+
+
+                    return;
+
+                }
+
+
+
+                /*
+                 * Si llegamos aquí significa que el servidor
+                 * devolvió una respuesta que no podemos
+                 * interpretar como una sesión válida.
+                 */
+
+                console.warn(
+                    "CinemaX: estado de sesión desconocido."
+                );
+
+
+                returnToLogin();
+
+
+            } catch (error) {
+
+                /*
+                 * Si el servidor está temporalmente caído,
+                 * no expulsamos inmediatamente.
+                 *
+                 * Se volverá a comprobar en 5 segundos.
+                 */
+
+                console.warn(
+                    "CinemaX: no se pudo comprobar la sesión:",
+                    error
+                );
+
+            }
+
+        }
+
+
+
+        /* =====================================================
+           COMPROBAR INMEDIATAMENTE AL ENTRAR
+        ====================================================== */
+
+        checkCinemaXSession();
+
+
+
+        /* =====================================================
+           COMPROBAR CADA 5 SEGUNDOS
+        ====================================================== */
+
+        setInterval(
+            checkCinemaXSession,
+            SESSION_CHECK_INTERVAL
+        );
+
+
+
+        /* =====================================================
+           COMPROBAR CUANDO EL USUARIO REGRESA A LA PESTAÑA
+        ====================================================== */
+
+        document.addEventListener(
+            "visibilitychange",
+            function() {
+
+                if (
+                    document.visibilityState ===
+                    "visible"
+                ) {
+
+                    checkCinemaXSession();
+
+                }
+
+            }
+        );
+
+
+
+        /* =====================================================
+           COMPROBAR CUANDO LA VENTANA RECUPERA EL FOCO
+        ====================================================== */
+
+        window.addEventListener(
+            "focus",
+            function() {
+
+                checkCinemaXSession();
+
+            }
+        );
+
+
+    </script>
+
+
+</body>
+
+</html>

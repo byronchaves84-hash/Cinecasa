@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>La Purga</title>
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <!-- =====================================================
+         VIDEO DE FONDO GLOBAL
+         ===================================================== -->
+
+    <div class="video-trailer">
+
+        <!--
+        IMPORTANTE:
+        Mantén aquí tu video de fondo.
+        Cambia solamente el nombre/ruta si tu archivo tiene otro nombre.
+        -->
+
+        <video
+            id="trailerBackground"
+            autoplay
+            muted
+            loop
+            playsinline
+        >
+            <source src="peli/The Walking.mp4" type="video/mp4">
+        </video>
+
+        <div class="background-overlay"></div>
+
+        <div class="trailer-vignette"></div>
+
+    </div>
+
+
+    <!-- =====================================================
+         VIDEO DE EPISODIO / PELÍCULA
+         ===================================================== -->
+
+    <div class="video-background" id="episodeBackground">
+
+        <video
+            id="backgroundEpisodeVideo"
+            autoplay
+            muted
+            loop
+            playsinline
+        ></video>
+
+        <div class="background-overlay"></div>
+
+    </div>
+
+
+    <!-- =====================================================
+         CONTENEDOR GENERAL
+         ===================================================== -->
+
+    <main class="serie-container">
+
+        <!-- =================================================
+             HERO
+             ================================================= -->
+
+        <section class="hero-section">
+
+            <div class="hero-red-line"></div>
+
+            <div class="hero-content">
+
+                <!-- Marca -->
+
+                <div class="serie-brand">
+
+                    <div class="brand-mark">
+                        P
+                    </div>
+
+                    <div class="brand-name">
+                        MINETFLIX
+                    </div>
+
+                </div>
+
+
+                <!-- Original -->
+
+                <div class="original-label">
+
+                    <span class="original-line"></span>
+
+                    ORIGINAL
+
+                </div>
+
+
+                <!-- Título -->
+
+                <h1 class="serie-title">
+                    <span>LA</span>
+                    <span>PURGA</span>
+                </h1>
+
+
+                <!-- Información -->
+
+                <div class="serie-meta">
+
+                    <span>2013</span>
+
+                    <span class="dot">•</span>
+
+                    <span class="quality">
+                        HD
+                    </span>
+
+                    <span class="dot">•</span>
+
+                    <span>Películas</span>
+
+                    <span class="dot">•</span>
+
+                    <span>Acción</span>
+
+                </div>
+
+
+                <!-- Descripción -->
+
+                <div class="serie-description">
+
+                    <p>
+                        La saga nos transporta a un futuro distópico donde,
+                        durante una noche al año, todas las leyes son suspendidas
+                        y el crimen es legalizado.
+                    </p>
+
+                </div>
+
+
+                <!-- Acciones -->
+
+                <div class="hero-actions">
+
+                    <button
+                        class="hero-play-button"
+                        onclick="startEpisode()"
+                    >
+                        ▶ Iniciar película
+                    </button>
+
+                    <button
+                        class="hero-info-button"
+                        onclick="scrollToPlayer()"
+                    >
+                        ⓘ Ver reproductor
+                    </button>
+
+                </div>
+
+
+                <!-- =================================================
+                     LIKE / DISLIKE
+                     ================================================= -->
+
+                <div class="reaction-area">
+
+                    <span class="reaction-question">
+                        ¿Qué te pareció?
+                    </span>
+
+                    <div class="like-dislike-buttons">
+
+                        <button
+                            class="reaction-button like-button"
+                            onclick="selectReaction('like')"
+                        >
+                            👍 Me gusta
+                        </button>
+
+                        <button
+                            class="reaction-button dislike-button"
+                            onclick="selectReaction('dislike')"
+                        >
+                            👎 No me gusta
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="hero-bottom-fade"></div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             SECCIÓN DEL REPRODUCTOR
+             ================================================= -->
+
+        <section class="episode-section" id="playerSection">
+
+            <div class="section-heading">
+
+                <div>
+
+                    <span class="section-kicker">
+                        REPRODUCTOR
+                    </span>
+
+                    <div class="section-title-row">
+
+                        <h2>
+                            La Purga
+                        </h2>
+
+                        <div class="heading-red-line"></div>
+
+                    </div>
+
+                </div>
+
+                <div
+                    class="current-episode-badge"
+                    id="currentEpisodeBadge"
+                >
+                    Película 1
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 EXPLORADOR
+                 ================================================= -->
+
+            <div class="episode-explorer">
+
+                <div class="explorer-header">
+
+                    <div>
+
+                        <span class="explorer-kicker">
+                            CONTENIDO
+                        </span>
+
+                        <h3>
+                            Selección
+                        </h3>
+
+                    </div>
+
+                    <button
+                        class="explorer-toggle"
+                        onclick="toggleExplorer()"
+                        id="explorerToggle"
+                    >
+                        −
+                    </button>
+
+                </div>
+
+
+                <div
+                    class="episode-selectors"
+                    id="episodeSelectors"
+                >
+
+                    <div class="selector-box">
+
+                        <label>
+                            PELÍCULA
+                        </label>
+
+                        <div class="select-wrapper">
+
+                            <select
+                                id="episodeSelect"
+                                onchange="selectEpisode()"
+                            >
+                            </select>
+
+                            <span class="select-arrow">
+                                ▼
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 CONTROLES
+                 ================================================= -->
+
+            <div
+                id="controlsContainer"
+                class="controls-container"
+            >
+
+                <button
+                    class="episode-button secondary"
+                    onclick="previousEpisode()"
+                >
+                    <span class="button-icon">‹</span>
+                    Anterior
+                </button>
+
+
+                <button
+                    id="startButton"
+                    class="episode-button primary"
+                    onclick="startEpisode()"
+                >
+                    <span class="button-icon">▶</span>
+                    Iniciar Película 1
+                </button>
+
+
+                <button
+                    class="episode-button secondary"
+                    onclick="nextEpisode()"
+                >
+                    Siguiente
+                    <span class="button-icon">›</span>
+                </button>
+
+            </div>
+
+
+            <!-- =================================================
+                 REPRODUCTOR
+                 ================================================= -->
+
+            <div class="player-section">
+
+                <div
+                    class="video-container"
+                    id="videoContainer"
+                >
+
+                    <!--
+                    El iframe se crea mediante JavaScript.
+                    -->
+
+                    <div
+                        class="player-placeholder"
+                        id="playerPlaceholder"
+                    >
+
+                        <div class="placeholder-glow"></div>
+
+                        <div class="placeholder-icon">
+                            ▶
+                        </div>
+
+                        <span class="placeholder-label">
+                            MINETFLIX
+                        </span>
+
+                        <h3>
+                            La Purga
+                        </h3>
+
+                        <p>
+                            Pulsa "Iniciar película" para comenzar.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="player-status-row">
+
+                    <div class="player-status">
+
+                        <span class="status-dot"></span>
+
+                        <span id="playerStatus">
+                            Reproductor preparado
+                        </span>
+
+                    </div>
+
+                    <div
+                        class="player-current"
+                        id="playerCurrent"
+                    >
+                        Película 1
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     ACCIONES INFERIORES
+                     ================================================= -->
+
+                <div class="series-actions">
+
+                    <button
+                        class="action-button"
+                        onclick="restartEpisode()"
+                    >
+                        ↻ Reiniciar
+                    </button>
+
+                    <button
+                        class="action-button"
+                        onclick="scrollToTop()"
+                    >
+                        ↑ Volver arriba
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             INFORMACIÓN
+             ================================================= -->
+
+        <section class="bottom-info">
+
+            <div class="info-card">
+
+                <div class="info-card-icon">
+                    HD
+                </div>
+
+                <div class="info-card-content">
+
+                    <span class="info-card-label">
+                        CALIDAD
+                    </span>
+
+                    <strong>
+                        Alta definición
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="info-card">
+
+                <div class="info-card-icon">
+                    ▶
+                </div>
+
+                <div class="info-card-content">
+
+                    <span class="info-card-label">
+                        REPRODUCCIÓN
+                    </span>
+
+                    <strong>
+                        Google Drive
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="info-card">
+
+                <div class="info-card-icon">
+                    ↻
+                </div>
+
+                <div class="info-card-content">
+
+                    <span class="info-card-label">
+                        PROGRESO
+                    </span>
+
+                    <strong>
+                        Guardado automáticamente
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             FOOTER
+             ================================================= -->
+
+        <footer>
+
+            <div class="footer-inner">
+
+                <div>
+
+                    <div class="footer-logo">
+
+                        <div class="footer-logo-mark">
+                            P
+                        </div>
+
+                        <div class="footer-logo-text">
+                            MINETFLIX
+                        </div>
+
+                    </div>
+
+                    <p class="footer-description">
+                        Disfruta de tus películas y series favoritas
+                        desde un solo lugar.
+                    </p>
+
+                </div>
+
+
+                <div class="footer-links">
+
+                    <a
+                        href="#"
+                        class="footer-link"
+                    >
+                        Inicio
+                    </a>
+
+                    <a
+                        href="#playerSection"
+                        class="footer-link"
+                    >
+                        Reproductor
+                    </a>
+
+                </div>
+
+
+                <div>
+
+                    <div class="footer-status">
+
+                        <span class="footer-status-dot"></span>
+
+                        Sistema online
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="footer-divider"></div>
+
+
+            <div class="footer-bottom">
+
+                <span>
+                    © 2026 MINETFLIX
+                </span>
+
+                <span>
+                    La Purga
+                </span>
+
+            </div>
+
+        </footer>
+
+    </main>
+
+
+    <div class="episodes-side-label">
+        MINETFLIX • MOVIES
+    </div>
+
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+         ===================================================== -->
+
+    <script>
+
+    /* =========================================================
+       VARIABLES PRINCIPALES
+       ========================================================= */
+
+    let currentVideo = null;
+
+    let currentEpisode =
+        localStorage.getItem('currentEpisode')
+            ? parseInt(localStorage.getItem('currentEpisode'))
+            : 1;
+
+    let currentTime =
+        localStorage.getItem('currentTime')
+            ? parseFloat(localStorage.getItem('currentTime'))
+            : 0;
+
+
+    /* =========================================================
+       LINKS DE LAS PELÍCULAS
+       SE MANTIENEN TAL COMO LOS PASASTE
+       ========================================================= */
+
+    const episodes = [
+        'https://drive.google.com/file/d/1sLBj0fTrxExH78Wb0GU2SuPoimSl3ti8/preview',
+
+        'https://drive.google.com/file/d/1UMjuk2TKWDOAY05GrH5IRoALyemcDr5k/preview',
+
+        'https://drive.google.com/file/d/1PzFVDRUWb0BINdZJ-IJejTwnGDDR27-E/preview',
+
+        'https://drive.google.com/file/d/1KAyflIULeFUcC4Vfn6fg8cARBDj1hFiQ/preview',
+
+        'https://drive.google.com/file/d/1jem-UMsJeJOc4f5he1XLbhkQMxwx1qxR/preview'
+    ];
+
+
+    /* =========================================================
+       ELEMENTOS
+       ========================================================= */
+
+    const videoContainer =
+        document.getElementById('videoContainer');
+
+    const playerPlaceholder =
+        document.getElementById('playerPlaceholder');
+
+    const episodeSelect =
+        document.getElementById('episodeSelect');
+
+    const startButton =
+        document.getElementById('startButton');
+
+    const currentEpisodeBadge =
+        document.getElementById('currentEpisodeBadge');
+
+    const playerCurrent =
+        document.getElementById('playerCurrent');
+
+    const playerStatus =
+        document.getElementById('playerStatus');
+
+
+    /* =========================================================
+       CREAR SELECTOR DE PELÍCULAS
+       ========================================================= */
+
+    function createEpisodeSelector() {
+
+        episodeSelect.innerHTML = '';
+
+        episodes.forEach((url, index) => {
+
+            const option =
+                document.createElement('option');
+
+            option.value = index + 1;
+
+            option.textContent =
+                `Película ${index + 1}`;
+
+            episodeSelect.appendChild(option);
+
+        });
+
+        episodeSelect.value = currentEpisode;
+
+    }
+
+
+    /* =========================================================
+       ACTUALIZAR INTERFAZ
+       ========================================================= */
+
+    function updateInterface() {
+
+        currentEpisodeBadge.textContent =
+            `Película ${currentEpisode}`;
+
+        playerCurrent.textContent =
+            `Película ${currentEpisode}`;
+
+        startButton.innerHTML =
+            `<span class="button-icon">▶</span>
+             Iniciar Película ${currentEpisode}`;
+
+        episodeSelect.value =
+            currentEpisode;
+
+    }
+
+
+    /* =========================================================
+       INICIAR PELÍCULA
+       ========================================================= */
+
+    function startEpisode() {
+
+        if (currentEpisode < 1) {
+            currentEpisode = 1;
+        }
+
+        if (currentEpisode > episodes.length) {
+            currentEpisode = episodes.length;
+        }
+
+        localStorage.setItem(
+            'currentEpisode',
+            currentEpisode
+        );
+
+        currentTime =
+            localStorage.getItem('currentTime')
+                ? parseFloat(localStorage.getItem('currentTime'))
+                : 0;
+
+
+        /* Eliminar iframe anterior */
+
+        const oldIframe =
+            videoContainer.querySelector('iframe');
+
+        if (oldIframe) {
+            oldIframe.remove();
+        }
+
+
+        /* Ocultar placeholder */
+
+        playerPlaceholder.style.display =
+            'none';
+
+
+        /* Crear iframe */
+
+        const iframe =
+            document.createElement('iframe');
+
+        iframe.src =
+            episodes[currentEpisode - 1];
+
+        iframe.allow =
+            'autoplay; fullscreen';
+
+        iframe.allowFullscreen =
+            true;
+
+        iframe.frameBorder =
+            '0';
+
+        iframe.loading =
+            'lazy';
+
+        iframe.title =
+            `La Purga - Película ${currentEpisode}`;
+
+
+        /* Insertar */
+
+        videoContainer.appendChild(
+            iframe
+        );
+
+
+        /* Mostrar reproductor */
+
+        videoContainer.classList.add(
+            'player-active'
+        );
+
+
+        playerStatus.textContent =
+            'Reproduciendo';
+
+
+        updateInterface();
+
+
+        /* Ir al reproductor */
+
+        setTimeout(() => {
+
+            document.getElementById(
+                'playerSection'
+            ).scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+
+        }, 150);
+
+    }
+
+
+    /* =========================================================
+       PELÍCULA ANTERIOR
+       ========================================================= */
+
+    function previousEpisode() {
+
+        if (currentEpisode > 1) {
+
+            currentEpisode--;
+
+            currentTime = 0;
+
+            localStorage.setItem(
+                'currentEpisode',
+                currentEpisode
+            );
+
+            localStorage.setItem(
+                'currentTime',
+                0
+            );
+
+            startEpisode();
+
+        }
+
+    }
+
+
+    /* =========================================================
+       PELÍCULA SIGUIENTE
+       ========================================================= */
+
+    function nextEpisode() {
+
+        if (currentEpisode < episodes.length) {
+
+            currentEpisode++;
+
+            currentTime = 0;
+
+            localStorage.setItem(
+                'currentEpisode',
+                currentEpisode
+            );
+
+            localStorage.setItem(
+                'currentTime',
+                0
+            );
+
+            startEpisode();
+
+        }
+
+    }
+
+
+    /* =========================================================
+       SELECCIONAR PELÍCULA
+       ========================================================= */
+
+    function selectEpisode() {
+
+        currentEpisode =
+            parseInt(
+                episodeSelect.value
+            );
+
+        currentTime = 0;
+
+        localStorage.setItem(
+            'currentEpisode',
+            currentEpisode
+        );
+
+        localStorage.setItem(
+            'currentTime',
+            0
+        );
+
+        startEpisode();
+
+    }
+
+
+    /* =========================================================
+       REINICIAR
+       ========================================================= */
+
+    function restartEpisode() {
+
+        currentTime = 0;
+
+        localStorage.setItem(
+            'currentTime',
+            0
+        );
+
+        startEpisode();
+
+    }
+
+
+    /* =========================================================
+       REACCIÓN LIKE / DISLIKE
+       ========================================================= */
+
+    function selectReaction(type) {
+
+        const buttons =
+            document.querySelectorAll(
+                '.reaction-button'
+            );
+
+        buttons.forEach(button => {
+
+            button.classList.remove(
+                'selected'
+            );
+
+        });
+
+
+        if (type === 'like') {
+
+            document
+                .querySelector('.like-button')
+                .classList.add('selected');
+
+            localStorage.setItem(
+                'reaction',
+                'like'
+            );
+
+        }
+
+
+        if (type === 'dislike') {
+
+            document
+                .querySelector('.dislike-button')
+                .classList.add('selected');
+
+            localStorage.setItem(
+                'reaction',
+                'dislike'
+            );
+
+        }
+
+    }
+
+
+    /* =========================================================
+       EXPLORADOR
+       ========================================================= */
+
+    function toggleExplorer() {
+
+        const selectors =
+            document.getElementById(
+                'episodeSelectors'
+            );
+
+        const toggle =
+            document.getElementById(
+                'explorerToggle'
+            );
+
+
+        selectors.classList.toggle(
+            'collapsed'
+        );
+
+
+        if (
+            selectors.classList.contains(
+                'collapsed'
+            )
+        ) {
+
+            toggle.textContent = '+';
+
+        } else {
+
+            toggle.textContent = '−';
+
+        }
+
+    }
+
+
+    /* =========================================================
+       SCROLL AL REPRODUCTOR
+       ========================================================= */
+
+    function scrollToPlayer() {
+
+        document.getElementById(
+            'playerSection'
+        ).scrollIntoView({
+            behavior: 'smooth'
+        });
+
+    }
+
+
+    /* =========================================================
+       VOLVER ARRIBA
+       ========================================================= */
+
+    function scrollToTop() {
+
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+
+    }
+
+
+    /* =========================================================
+       CARGAR REACCIÓN GUARDADA
+       ========================================================= */
+
+    function loadReaction() {
+
+        const reaction =
+            localStorage.getItem(
+                'reaction'
+            );
+
+
+        if (reaction === 'like') {
+
+            document
+                .querySelector('.like-button')
+                .classList.add('selected');
+
+        }
+
+
+        if (reaction === 'dislike') {
+
+            document
+                .querySelector('.dislike-button')
+                .classList.add('selected');
+
+        }
+
+    }
+
+
+    /* =========================================================
+       INICIALIZACIÓN
+       ========================================================= */
+
+    document.addEventListener(
+        'DOMContentLoaded',
+        function () {
+
+            createEpisodeSelector();
+
+            updateInterface();
+
+            loadReaction();
+
+        }
+    );
+
+
+    /* =========================================================
+       GUARDAR EPISODIO
+       ========================================================= */
+
+    window.addEventListener(
+        'beforeunload',
+        function () {
+
+            localStorage.setItem(
+                'currentEpisode',
+                currentEpisode
+            );
+
+            localStorage.setItem(
+                'currentTime',
+                currentTime
+            );
+
+        }
+    );
+
+
+    </script>
+
+</body>
+</html>

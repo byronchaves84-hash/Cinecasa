@@ -1,0 +1,2871 @@
+```html
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="theme-color"
+        content="#050505"
+    >
+
+    <title>CINEMAX — Administración</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --red: #e50914;
+            --red-hover: #f20d18;
+            --bg: #050505;
+            --panel: #111;
+            --panel2: #171717;
+            --border: rgba(255,255,255,.09);
+            --muted: rgba(255,255,255,.55);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+            background:
+                radial-gradient(
+                    circle at top right,
+                    rgba(229,9,20,.12),
+                    transparent 35%
+                ),
+                #050505;
+            color: #fff;
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+        }
+
+        button,
+        input,
+        select,
+        textarea {
+            font-family: inherit;
+        }
+
+        /* =====================================================
+           LOGIN
+        ===================================================== */
+
+        .login-screen {
+            min-height: 100vh;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 25px;
+        }
+
+        .login-box {
+            width: min(430px, 100%);
+
+            padding: 40px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #151515,
+                    #090909
+                );
+
+            border: 1px solid var(--border);
+
+            border-radius: 22px;
+
+            box-shadow:
+                0 30px 80px rgba(0,0,0,.6);
+        }
+
+        .login-logo {
+            text-align: center;
+
+            margin-bottom: 10px;
+
+            color: var(--red);
+
+            font-size: 34px;
+
+            font-weight: 900;
+
+            letter-spacing: 3px;
+        }
+
+        .login-title {
+            text-align: center;
+
+            margin-bottom: 7px;
+
+            font-size: 24px;
+        }
+
+        .login-subtitle {
+            text-align: center;
+
+            margin-bottom: 30px;
+
+            color: var(--muted);
+
+            font-size: 14px;
+        }
+
+        /* =====================================================
+           INPUTS
+        ===================================================== */
+
+        .field {
+            margin-bottom: 18px;
+        }
+
+        .field label {
+            display: block;
+
+            margin-bottom: 8px;
+
+            color: rgba(255,255,255,.75);
+
+            font-size: 13px;
+
+            font-weight: 600;
+        }
+
+        .field input,
+        .field select,
+        .field textarea {
+
+            width: 100%;
+
+            padding: 13px 14px;
+
+            border:
+                1px solid rgba(255,255,255,.1);
+
+            border-radius: 10px;
+
+            outline: none;
+
+            background: #0b0b0b;
+
+            color: #fff;
+
+            font-size: 14px;
+
+            transition: .2s ease;
+        }
+
+        .field textarea {
+            min-height: 110px;
+            resize: vertical;
+        }
+
+        .field input:focus,
+        .field select:focus,
+        .field textarea:focus {
+
+            border-color: var(--red);
+
+            box-shadow:
+                0 0 0 3px rgba(229,9,20,.12);
+        }
+
+        /* =====================================================
+           BUTTONS
+        ===================================================== */
+
+        .btn {
+
+            border: 0;
+
+            border-radius: 10px;
+
+            padding: 12px 18px;
+
+            cursor: pointer;
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            transition:
+                transform .2s ease,
+                opacity .2s ease,
+                background .2s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .btn-primary {
+
+            background: var(--red);
+
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: var(--red-hover);
+        }
+
+        .btn-secondary {
+
+            background:
+                rgba(255,255,255,.08);
+
+            color: #fff;
+        }
+
+        .btn-secondary:hover {
+
+            background:
+                rgba(255,255,255,.13);
+        }
+
+        .btn-danger {
+
+            background:
+                rgba(229,9,20,.12);
+
+            color: #ff5b63;
+
+            border:
+                1px solid rgba(229,9,20,.25);
+        }
+
+        .btn-danger:hover {
+
+            background: var(--red);
+
+            color: #fff;
+        }
+
+        .btn-small {
+
+            padding: 8px 11px;
+
+            font-size: 12px;
+        }
+
+        /* =====================================================
+           LOGIN ERROR
+        ===================================================== */
+
+        .login-error {
+
+            display: none;
+
+            margin-top: 15px;
+
+            padding: 12px;
+
+            border-radius: 9px;
+
+            background:
+                rgba(229,9,20,.1);
+
+            border:
+                1px solid rgba(229,9,20,.25);
+
+            color: #ff7077;
+
+            font-size: 13px;
+
+            text-align: center;
+        }
+
+        .login-error.show {
+            display: block;
+        }
+
+        /* =====================================================
+           ADMIN
+        ===================================================== */
+
+        .admin-app {
+            display: none;
+            min-height: 100vh;
+        }
+
+        .admin-app.active {
+            display: block;
+        }
+
+        /* =====================================================
+           NAVBAR
+        ===================================================== */
+
+        .admin-navbar {
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 100;
+
+            height: 70px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 20px;
+
+            padding: 0 30px;
+
+            background:
+                rgba(5,5,5,.94);
+
+            backdrop-filter: blur(15px);
+
+            border-bottom:
+                1px solid var(--border);
+        }
+
+        .admin-logo {
+
+            color: var(--red);
+
+            font-size: 24px;
+
+            font-weight: 900;
+
+            letter-spacing: 2px;
+        }
+
+        .admin-logo span {
+
+            color: #fff;
+
+            font-size: 12px;
+
+            margin-left: 8px;
+
+            letter-spacing: 1px;
+
+            opacity: .55;
+        }
+
+        .admin-nav-right {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+        }
+
+        /* =====================================================
+           LAYOUT
+        ===================================================== */
+
+        .admin-container {
+
+            width: min(1450px, 100%);
+
+            margin: auto;
+
+            padding: 35px 25px 60px;
+        }
+
+        .dashboard-header {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: flex-end;
+
+            gap: 20px;
+
+            margin-bottom: 30px;
+        }
+
+        .dashboard-header h1 {
+
+            font-size:
+                clamp(28px, 5vw, 42px);
+
+            margin-bottom: 7px;
+        }
+
+        .dashboard-header p {
+
+            color: var(--muted);
+
+            font-size: 14px;
+        }
+
+        /* =====================================================
+           STATS
+        ===================================================== */
+
+        .stats-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 15px;
+
+            margin-bottom: 35px;
+        }
+
+        .stat-card {
+
+            padding: 22px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #151515,
+                    #0c0c0c
+                );
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 15px;
+        }
+
+        .stat-label {
+
+            color: var(--muted);
+
+            font-size: 12px;
+
+            text-transform: uppercase;
+
+            letter-spacing: .08em;
+
+            margin-bottom: 10px;
+        }
+
+        .stat-number {
+
+            font-size: 32px;
+
+            font-weight: 800;
+        }
+
+        /* =====================================================
+           TOOLBAR
+        ===================================================== */
+
+        .toolbar {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 15px;
+
+            flex-wrap: wrap;
+
+            margin-bottom: 20px;
+        }
+
+        .toolbar-left {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            flex-wrap: wrap;
+        }
+
+        .category-button {
+
+            padding: 10px 15px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 999px;
+
+            background:
+                rgba(255,255,255,.05);
+
+            color: #fff;
+
+            cursor: pointer;
+
+            transition: .2s ease;
+        }
+
+        .category-button:hover {
+
+            background:
+                rgba(255,255,255,.1);
+        }
+
+        .category-button.active {
+
+            background: var(--red);
+
+            border-color: var(--red);
+        }
+
+        .search-box {
+
+            width: min(330px, 100%);
+        }
+
+        .search-box input {
+
+            width: 100%;
+
+            padding: 12px 14px;
+
+            background: #111;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 10px;
+
+            color: #fff;
+
+            outline: none;
+        }
+
+        /* =====================================================
+           PANEL
+        ===================================================== */
+
+        .content-panel {
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #111,
+                    #090909
+                );
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 18px;
+
+            overflow: hidden;
+        }
+
+        .content-panel-header {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 15px;
+
+            padding: 20px;
+
+            border-bottom:
+                1px solid var(--border);
+        }
+
+        .content-panel-header h2 {
+            font-size: 20px;
+        }
+
+        .content-panel-header span {
+
+            color: var(--muted);
+
+            font-size: 13px;
+        }
+
+        /* =====================================================
+           TABLE
+        ===================================================== */
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+
+            width: 100%;
+
+            border-collapse: collapse;
+
+            min-width: 850px;
+        }
+
+        th {
+
+            padding: 14px 16px;
+
+            text-align: left;
+
+            color: rgba(255,255,255,.45);
+
+            font-size: 11px;
+
+            text-transform: uppercase;
+
+            letter-spacing: .08em;
+
+            background: #0b0b0b;
+        }
+
+        td {
+
+            padding: 14px 16px;
+
+            border-top:
+                1px solid rgba(255,255,255,.05);
+
+            vertical-align: middle;
+
+            font-size: 13px;
+        }
+
+        tr:hover td {
+
+            background:
+                rgba(255,255,255,.025);
+        }
+
+        .content-preview {
+
+            width: 55px;
+
+            height: 75px;
+
+            object-fit: cover;
+
+            border-radius: 7px;
+
+            background: #222;
+        }
+
+        .content-title {
+
+            font-weight: 700;
+
+            margin-bottom: 4px;
+        }
+
+        .content-id {
+
+            color:
+                rgba(255,255,255,.3);
+
+            font-size: 10px;
+        }
+
+        .category-badge {
+
+            display: inline-flex;
+
+            padding: 5px 8px;
+
+            border-radius: 999px;
+
+            background:
+                rgba(255,255,255,.07);
+
+            color:
+                rgba(255,255,255,.75);
+
+            font-size: 10px;
+
+            text-transform: uppercase;
+        }
+
+        .actions {
+
+            display: flex;
+
+            gap: 7px;
+        }
+
+        /* =====================================================
+           MODAL
+        ===================================================== */
+
+        .modal {
+
+            position: fixed;
+
+            inset: 0;
+
+            z-index: 500;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 20px;
+
+            background:
+                rgba(0,0,0,.82);
+
+            backdrop-filter: blur(10px);
+
+            opacity: 0;
+
+            visibility: hidden;
+
+            transition:
+                opacity .25s ease,
+                visibility .25s ease;
+        }
+
+        .modal.active {
+
+            opacity: 1;
+
+            visibility: visible;
+        }
+
+        .modal-box {
+
+            width: min(760px, 100%);
+
+            max-height: 92vh;
+
+            overflow-y: auto;
+
+            padding: 28px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #181818,
+                    #0b0b0b
+                );
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 20px;
+
+            transform:
+                translateY(20px)
+                scale(.98);
+
+            transition:
+                transform .25s ease;
+        }
+
+        .modal.active .modal-box {
+
+            transform:
+                translateY(0)
+                scale(1);
+        }
+
+        .modal-header {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            margin-bottom: 25px;
+        }
+
+        .modal-header h2 {
+            font-size: 24px;
+        }
+
+        .close-modal {
+
+            width: 40px;
+
+            height: 40px;
+
+            border-radius: 50%;
+
+            border:
+                1px solid var(--border);
+
+            background:
+                rgba(255,255,255,.06);
+
+            color: #fff;
+
+            font-size: 23px;
+
+            cursor: pointer;
+        }
+
+        .close-modal:hover {
+            background: var(--red);
+        }
+
+        .form-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 16px;
+        }
+
+        .form-full {
+            grid-column: 1 / -1;
+        }
+
+        .form-actions {
+
+            display: flex;
+
+            justify-content: flex-end;
+
+            gap: 10px;
+
+            margin-top: 10px;
+
+            padding-top: 20px;
+
+            border-top:
+                1px solid var(--border);
+        }
+
+        /* =====================================================
+           EMPTY
+        ===================================================== */
+
+        .empty-state {
+
+            padding: 70px 20px;
+
+            text-align: center;
+
+            color: var(--muted);
+        }
+
+        .empty-state-icon {
+
+            font-size: 50px;
+
+            margin-bottom: 15px;
+
+            opacity: .35;
+        }
+
+        .empty-state h3 {
+
+            color: #fff;
+
+            margin-bottom: 8px;
+        }
+
+        /* =====================================================
+           LOADING
+        ===================================================== */
+
+        .loading {
+
+            padding: 60px 20px;
+
+            text-align: center;
+
+            color: var(--muted);
+        }
+
+        .spinner {
+
+            width: 35px;
+
+            height: 35px;
+
+            margin: 0 auto 15px;
+
+            border:
+                3px solid rgba(255,255,255,.1);
+
+            border-top-color:
+                var(--red);
+
+            border-radius: 50%;
+
+            animation:
+                spin .8s linear infinite;
+        }
+
+        @keyframes spin {
+
+            to {
+                transform: rotate(360deg);
+            }
+
+        }
+
+        /* =====================================================
+           TOAST
+        ===================================================== */
+
+        .toast {
+
+            position: fixed;
+
+            right: 25px;
+
+            bottom: 25px;
+
+            z-index: 1000;
+
+            max-width: 360px;
+
+            padding: 14px 18px;
+
+            border-radius: 11px;
+
+            background: #181818;
+
+            border:
+                1px solid var(--border);
+
+            box-shadow:
+                0 20px 50px rgba(0,0,0,.5);
+
+            transform:
+                translateY(20px);
+
+            opacity: 0;
+
+            pointer-events: none;
+
+            transition: .25s ease;
+
+            font-size: 13px;
+        }
+
+        .toast.show {
+
+            opacity: 1;
+
+            transform:
+                translateY(0);
+        }
+
+        .toast.success {
+
+            border-color:
+                rgba(40,200,100,.35);
+        }
+
+        .toast.error {
+
+            border-color:
+                rgba(229,9,20,.4);
+        }
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 1000px) {
+
+            .stats-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+        }
+
+        @media (max-width: 700px) {
+
+            .admin-navbar {
+                padding: 0 15px;
+            }
+
+            .admin-logo span {
+                display: none;
+            }
+
+            .admin-container {
+                padding:
+                    25px 15px 50px;
+            }
+
+            .dashboard-header {
+
+                align-items: flex-start;
+
+                flex-direction: column;
+            }
+
+            .form-grid {
+
+                grid-template-columns: 1fr;
+            }
+
+            .form-full {
+                grid-column: auto;
+            }
+
+            .modal-box {
+                padding: 20px;
+            }
+
+        }
+
+        @media (max-width: 480px) {
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .toolbar {
+                align-items: stretch;
+            }
+
+            .search-box {
+                width: 100%;
+            }
+
+            .toolbar-left {
+                width: 100%;
+            }
+
+            .category-button {
+                flex: 1;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+<!-- =========================================================
+     LOGIN
+========================================================== -->
+
+<section
+    class="login-screen"
+    id="loginScreen"
+>
+
+    <div class="login-box">
+
+        <div class="login-logo">
+            CINEMAX
+        </div>
+
+        <h1 class="login-title">
+            Panel de administración
+        </h1>
+
+        <p class="login-subtitle">
+            Acceso exclusivo para administradores
+        </p>
+
+        <form id="loginForm">
+
+            <div class="field">
+
+                <label for="adminEmail">
+                    Correo electrónico
+                </label>
+
+                <input
+                    id="adminEmail"
+                    type="email"
+                    autocomplete="username"
+                    placeholder="admin@cinemax.com"
+                    required
+                >
+
+            </div>
+
+            <div class="field">
+
+                <label for="adminPassword">
+                    Contraseña
+                </label>
+
+                <input
+                    id="adminPassword"
+                    type="password"
+                    autocomplete="current-password"
+                    placeholder="Contraseña"
+                    required
+                >
+
+            </div>
+
+            <button
+                class="btn btn-primary"
+                type="submit"
+                style="width:100%;"
+            >
+                Entrar al panel
+            </button>
+
+        </form>
+
+        <div
+            class="login-error"
+            id="loginError"
+        >
+            Correo electrónico o contraseña incorrectos.
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     ADMIN
+========================================================== -->
+
+<div
+    class="admin-app"
+    id="adminApp"
+>
+
+    <header class="admin-navbar">
+
+        <div class="admin-logo">
+
+            CINEMAX
+
+            <span>
+                ADMIN
+            </span>
+
+        </div>
+
+        <div class="admin-nav-right">
+
+            <a
+                href="/index.html"
+                class="btn btn-secondary btn-small"
+            >
+                Ver CINEMAX
+            </a>
+
+            <button
+                class="btn btn-danger btn-small"
+                id="logoutButton"
+                type="button"
+            >
+                Cerrar sesión
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <main class="admin-container">
+
+        <div class="dashboard-header">
+
+            <div>
+
+                <h1>
+                    Dashboard
+                </h1>
+
+                <p>
+                    Gestiona el catálogo de CinemaX.
+                </p>
+
+            </div>
+
+            <button
+                class="btn btn-primary"
+                id="addContentButton"
+                type="button"
+            >
+                + Agregar contenido
+            </button>
+
+        </div>
+
+
+        <section class="stats-grid">
+
+            <div class="stat-card">
+
+                <div class="stat-label">
+                    Total
+                </div>
+
+                <div
+                    class="stat-number"
+                    id="totalCount"
+                >
+                    0
+                </div>
+
+            </div>
+
+            <div class="stat-card">
+
+                <div class="stat-label">
+                    Películas
+                </div>
+
+                <div
+                    class="stat-number"
+                    id="moviesCount"
+                >
+                    0
+                </div>
+
+            </div>
+
+            <div class="stat-card">
+
+                <div class="stat-label">
+                    Series
+                </div>
+
+                <div
+                    class="stat-number"
+                    id="seriesCount"
+                >
+                    0
+                </div>
+
+            </div>
+
+            <div class="stat-card">
+
+                <div class="stat-label">
+                    Terror
+                </div>
+
+                <div
+                    class="stat-number"
+                    id="terrorCount"
+                >
+                    0
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section class="toolbar">
+
+            <div class="toolbar-left">
+
+                <button
+                    class="category-button active"
+                    data-category="todos"
+                    type="button"
+                >
+                    Todos
+                </button>
+
+                <button
+                    class="category-button"
+                    data-category="peliculas"
+                    type="button"
+                >
+                    🎬 Películas
+                </button>
+
+                <button
+                    class="category-button"
+                    data-category="series"
+                    type="button"
+                >
+                    📺 Series
+                </button>
+
+                <button
+                    class="category-button"
+                    data-category="terror"
+                    type="button"
+                >
+                    👻 Terror
+                </button>
+
+                <button
+                    class="category-button"
+                    data-category="anime"
+                    type="button"
+                >
+                    🎌 Anime
+                </button>
+
+            </div>
+
+            <div class="search-box">
+
+                <input
+                    id="searchInput"
+                    type="search"
+                    placeholder="Buscar contenido..."
+                >
+
+            </div>
+
+        </section>
+
+
+        <section class="content-panel">
+
+            <div class="content-panel-header">
+
+                <div>
+
+                    <h2>
+                        Catálogo
+                    </h2>
+
+                    <span id="catalogCount">
+                        0 contenidos
+                    </span>
+
+                </div>
+
+            </div>
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Imagen
+                            </th>
+
+                            <th>
+                                Contenido
+                            </th>
+
+                            <th>
+                                Categoría
+                            </th>
+
+                            <th>
+                                Año
+                            </th>
+
+                            <th>
+                                Género
+                            </th>
+
+                            <th>
+                                Acciones
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="catalogTable">
+
+                        <tr>
+
+                            <td colspan="6">
+
+                                <div class="loading">
+
+                                    <div class="spinner"></div>
+
+                                    Cargando catálogo...
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- =========================================================
+     MODAL
+========================================================== -->
+
+<div
+    class="modal"
+    id="contentModal"
+>
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+
+            <h2 id="modalTitle">
+                Agregar contenido
+            </h2>
+
+            <button
+                class="close-modal"
+                id="closeModal"
+                type="button"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <form id="contentForm">
+
+            <input
+                type="hidden"
+                id="contentId"
+            >
+
+            <div class="form-grid">
+
+                <div class="field">
+
+                    <label for="contentTitle">
+                        Título
+                    </label>
+
+                    <input
+                        id="contentTitle"
+                        type="text"
+                        placeholder="Ej. Interstellar"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="field">
+
+                    <label for="contentType">
+                        Tipo
+                    </label>
+
+                    <select
+                        id="contentType"
+                        required
+                    >
+
+                        <option value="Película">
+                            Película
+                        </option>
+
+                        <option value="Serie">
+                            Serie
+                        </option>
+
+                        <option value="Anime">
+                            Anime
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label for="contentCategory">
+                        Categoría
+                    </label>
+
+                    <select
+                        id="contentCategory"
+                        required
+                    >
+
+                        <option value="peliculas">
+                            Películas
+                        </option>
+
+                        <option value="series">
+                            Series
+                        </option>
+
+                        <option value="terror">
+                            Terror
+                        </option>
+
+                        <option value="anime">
+                            Anime
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label for="contentYear">
+                        Año
+                    </label>
+
+                    <input
+                        id="contentYear"
+                        type="text"
+                        placeholder="2026"
+                    >
+
+                </div>
+
+
+                <div class="field">
+
+                    <label for="contentGenre">
+                        Género
+                    </label>
+
+                    <input
+                        id="contentGenre"
+                        type="text"
+                        placeholder="Acción"
+                    >
+
+                </div>
+
+
+                <div class="field">
+
+                    <label for="contentDuration">
+                        Duración
+                    </label>
+
+                    <input
+                        id="contentDuration"
+                        type="text"
+                        placeholder="2h 15m"
+                    >
+
+                </div>
+
+
+                <div class="field form-full">
+
+                    <label for="contentImage">
+                        Ruta de imagen
+                    </label>
+
+                    <input
+                        id="contentImage"
+                        type="text"
+                        placeholder="images/interstellar.jpg"
+                    >
+
+                </div>
+
+
+                <div class="field form-full">
+
+                    <label for="contentUrl">
+                        Página del contenido
+                    </label>
+
+                    <input
+                        id="contentUrl"
+                        type="text"
+                        placeholder="enlace1/enlace1.html"
+                    >
+
+                </div>
+
+
+                <div class="field form-full">
+
+                    <label for="contentDescription">
+                        Descripción
+                    </label>
+
+                    <textarea
+                        id="contentDescription"
+                        placeholder="Escribe una descripción..."
+                    ></textarea>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-actions">
+
+                <button
+                    class="btn btn-secondary"
+                    id="cancelModal"
+                    type="button"
+                >
+                    Cancelar
+                </button>
+
+                <button
+                    class="btn btn-primary"
+                    type="submit"
+                >
+                    Guardar contenido
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     TOAST
+========================================================== -->
+
+<div
+    class="toast"
+    id="toast"
+></div>
+
+
+<script>
+
+    /* =====================================================
+       CONFIGURACIÓN
+    ===================================================== */
+
+    const API_URL = "/api/catalog";
+
+
+    /* =====================================================
+       LOGIN
+    ===================================================== */
+
+    const ADMIN_EMAIL =
+        "admin@cinemax.com";
+
+    const ADMIN_PASSWORD =
+        "cinemax2026";
+
+
+    /* =====================================================
+       ESTADO
+    ===================================================== */
+
+    let catalog = [];
+
+    let currentCategory = "todos";
+
+    let editingId = null;
+
+
+    /* =====================================================
+       ELEMENTOS
+    ===================================================== */
+
+    const loginScreen =
+        document.getElementById("loginScreen");
+
+    const adminApp =
+        document.getElementById("adminApp");
+
+    const loginForm =
+        document.getElementById("loginForm");
+
+    const loginError =
+        document.getElementById("loginError");
+
+    const logoutButton =
+        document.getElementById("logoutButton");
+
+    const catalogTable =
+        document.getElementById("catalogTable");
+
+    const searchInput =
+        document.getElementById("searchInput");
+
+    const contentModal =
+        document.getElementById("contentModal");
+
+    const contentForm =
+        document.getElementById("contentForm");
+
+
+    /* =====================================================
+       ESCAPAR HTML
+    ===================================================== */
+
+    function escapeHtml(value) {
+
+        return String(value ?? "")
+            .replaceAll("&", "&amp;")
+            .replaceAll("<", "&lt;")
+            .replaceAll(">", "&gt;")
+            .replaceAll('"', "&quot;")
+            .replaceAll("'", "&#039;");
+
+    }
+
+
+    /* =====================================================
+       RUTA DE IMAGEN
+    ===================================================== */
+
+    function contentPath(path) {
+
+        if (!path) {
+            return "";
+        }
+
+        if (
+            path.startsWith("http://") ||
+            path.startsWith("https://") ||
+            path.startsWith("/")
+        ) {
+            return path;
+        }
+
+        return "/" + path;
+
+    }
+
+
+    /* =====================================================
+       LOGIN
+    ===================================================== */
+
+    loginForm.addEventListener(
+        "submit",
+        function(event) {
+
+            event.preventDefault();
+
+            const email =
+                document
+                    .getElementById("adminEmail")
+                    .value
+                    .trim();
+
+            const password =
+                document
+                    .getElementById("adminPassword")
+                    .value;
+
+            if (
+                email === ADMIN_EMAIL &&
+                password === ADMIN_PASSWORD
+            ) {
+
+                sessionStorage.setItem(
+                    "cinemax_admin_logged",
+                    "true"
+                );
+
+                loginError.classList.remove(
+                    "show"
+                );
+
+                showAdmin();
+
+            } else {
+
+                loginError.classList.add(
+                    "show"
+                );
+
+            }
+
+        }
+    );
+
+
+    /* =====================================================
+       MOSTRAR ADMIN
+    ===================================================== */
+
+    function showAdmin() {
+
+        loginScreen.style.display =
+            "none";
+
+        adminApp.classList.add(
+            "active"
+        );
+
+        loadCatalog();
+
+    }
+
+
+    /* =====================================================
+       LOGOUT
+    ===================================================== */
+
+    logoutButton.addEventListener(
+        "click",
+        function() {
+
+            sessionStorage.removeItem(
+                "cinemax_admin_logged"
+            );
+
+            location.reload();
+
+        }
+    );
+
+
+    /* =====================================================
+       CARGAR CATÁLOGO DESDE API
+    ===================================================== */
+
+    async function loadCatalog() {
+
+        catalogTable.innerHTML = `
+
+            <tr>
+
+                <td colspan="6">
+
+                    <div class="loading">
+
+                        <div class="spinner"></div>
+
+                        Cargando catálogo...
+
+                    </div>
+
+                </td>
+
+            </tr>
+
+        `;
+
+        try {
+
+            const response =
+                await fetch(
+                    API_URL,
+                    {
+                        method: "GET",
+                        cache: "no-store"
+                    }
+                );
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "HTTP " + response.status
+                );
+
+            }
+
+            const data =
+                await response.json();
+
+            if (!Array.isArray(data)) {
+
+                throw new Error(
+                    "La API no devolvió un array."
+                );
+
+            }
+
+            catalog = data;
+
+            renderCatalog();
+
+            showToast(
+                `Catálogo cargado: ${catalog.length} contenidos.`,
+                "success"
+            );
+
+        } catch(error) {
+
+            console.error(
+                "Error cargando catálogo:",
+                error
+            );
+
+            catalog = [];
+
+            renderCatalog();
+
+            showToast(
+                "No se pudo conectar con /api/catalog.",
+                "error"
+            );
+
+        }
+
+    }
+
+
+    /* =====================================================
+       RENDER
+    ===================================================== */
+
+    function renderCatalog() {
+
+        updateStats();
+
+        const search =
+            searchInput.value
+                .trim()
+                .toLowerCase();
+
+
+        const filtered =
+            catalog.filter(
+                function(item) {
+
+                    const matchesCategory =
+                        currentCategory === "todos" ||
+                        item.category === currentCategory;
+
+
+                    const matchesSearch =
+                        !search ||
+
+                        String(item.title || "")
+                            .toLowerCase()
+                            .includes(search) ||
+
+                        String(item.genre || "")
+                            .toLowerCase()
+                            .includes(search);
+
+
+                    return (
+                        matchesCategory &&
+                        matchesSearch
+                    );
+
+                }
+            );
+
+
+        document.getElementById(
+            "catalogCount"
+        ).textContent =
+            `${filtered.length} contenido${filtered.length === 1 ? "" : "s"}`;
+
+
+        if (!filtered.length) {
+
+            catalogTable.innerHTML = `
+
+                <tr>
+
+                    <td colspan="6">
+
+                        <div class="empty-state">
+
+                            <div class="empty-state-icon">
+                                🎬
+                            </div>
+
+                            <h3>
+                                No hay contenido
+                            </h3>
+
+                            <p>
+                                No encontramos contenido
+                                con los filtros actuales.
+                            </p>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+            `;
+
+            return;
+
+        }
+
+
+        catalogTable.innerHTML =
+            filtered
+                .map(
+                    function(item) {
+
+                        const imagePath =
+                            contentPath(item.image);
+
+
+                        return `
+
+                            <tr>
+
+                                <td>
+
+                                    <img
+                                        class="content-preview"
+                                        src="${escapeHtml(imagePath || "/images/placeholder.jpg")}"
+                                        alt="${escapeHtml(item.title || "Contenido")}"
+                                        onerror="this.onerror=null;this.src='/images/placeholder.jpg'"
+                                    >
+
+                                </td>
+
+
+                                <td>
+
+                                    <div class="content-title">
+                                        ${escapeHtml(item.title || "Sin título")}
+                                    </div>
+
+                                    <div class="content-id">
+                                        ID: ${escapeHtml(item.id || "")}
+                                    </div>
+
+                                </td>
+
+
+                                <td>
+
+                                    <span class="category-badge">
+
+                                        ${escapeHtml(
+                                            item.category ||
+                                            "sin categoría"
+                                        )}
+
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+                                    ${escapeHtml(
+                                        item.year || "-"
+                                    )}
+                                </td>
+
+
+                                <td>
+                                    ${escapeHtml(
+                                        item.genre || "-"
+                                    )}
+                                </td>
+
+
+                                <td>
+
+                                    <div class="actions">
+
+                                        <button
+                                            class="btn btn-secondary btn-small"
+                                            type="button"
+                                            onclick="editContent(${JSON.stringify(item.id)})"
+                                        >
+                                            ✏️ Editar
+                                        </button>
+
+
+                                        <button
+                                            class="btn btn-danger btn-small"
+                                            type="button"
+                                            onclick="deleteContent(${JSON.stringify(item.id)})"
+                                        >
+                                            🗑️
+                                        </button>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+                        `;
+
+                    }
+                )
+                .join("");
+
+    }
+
+
+    /* =====================================================
+       ESTADÍSTICAS
+    ===================================================== */
+
+    function updateStats() {
+
+        document.getElementById(
+            "totalCount"
+        ).textContent =
+            catalog.length;
+
+
+        document.getElementById(
+            "moviesCount"
+        ).textContent =
+            catalog.filter(
+                item =>
+                    item.category === "peliculas"
+            ).length;
+
+
+        document.getElementById(
+            "seriesCount"
+        ).textContent =
+            catalog.filter(
+                item =>
+                    item.category === "series"
+            ).length;
+
+
+        document.getElementById(
+            "terrorCount"
+        ).textContent =
+            catalog.filter(
+                item =>
+                    item.category === "terror"
+            ).length;
+
+    }
+
+
+    /* =====================================================
+       FILTROS
+    ===================================================== */
+
+    document
+        .querySelectorAll(".category-button")
+        .forEach(
+            function(button) {
+
+                button.addEventListener(
+                    "click",
+                    function() {
+
+                        document
+                            .querySelectorAll(
+                                ".category-button"
+                            )
+                            .forEach(
+                                btn =>
+                                    btn.classList.remove(
+                                        "active"
+                                    )
+                            );
+
+
+                        button.classList.add(
+                            "active"
+                        );
+
+
+                        currentCategory =
+                            button.dataset.category;
+
+
+                        renderCatalog();
+
+                    }
+                );
+
+            }
+        );
+
+
+    /* =====================================================
+       BUSCAR
+    ===================================================== */
+
+    searchInput.addEventListener(
+        "input",
+        function() {
+
+            renderCatalog();
+
+        }
+    );
+
+
+    /* =====================================================
+       ABRIR AGREGAR
+    ===================================================== */
+
+    document
+        .getElementById("addContentButton")
+        .addEventListener(
+            "click",
+            openAddModal
+        );
+
+
+    function openAddModal() {
+
+        editingId = null;
+
+        contentForm.reset();
+
+        document.getElementById(
+            "contentId"
+        ).value = "";
+
+        document.getElementById(
+            "modalTitle"
+        ).textContent =
+            "Agregar contenido";
+
+        contentModal.classList.add(
+            "active"
+        );
+
+    }
+
+
+    /* =====================================================
+       CERRAR MODAL
+    ===================================================== */
+
+    document
+        .getElementById("closeModal")
+        .addEventListener(
+            "click",
+            closeModal
+        );
+
+
+    document
+        .getElementById("cancelModal")
+        .addEventListener(
+            "click",
+            closeModal
+        );
+
+
+    contentModal.addEventListener(
+        "click",
+        function(event) {
+
+            if (
+                event.target === contentModal
+            ) {
+
+                closeModal();
+
+            }
+
+        }
+    );
+
+
+    function closeModal() {
+
+        contentModal.classList.remove(
+            "active"
+        );
+
+        editingId = null;
+
+    }
+
+
+    /* =====================================================
+       GUARDAR
+    ===================================================== */
+
+    contentForm.addEventListener(
+        "submit",
+        async function(event) {
+
+            event.preventDefault();
+
+
+            const title =
+                document
+                    .getElementById("contentTitle")
+                    .value
+                    .trim();
+
+
+            const type =
+                document
+                    .getElementById("contentType")
+                    .value;
+
+
+            const category =
+                document
+                    .getElementById("contentCategory")
+                    .value;
+
+
+            const year =
+                document
+                    .getElementById("contentYear")
+                    .value
+                    .trim();
+
+
+            const genre =
+                document
+                    .getElementById("contentGenre")
+                    .value
+                    .trim();
+
+
+            const duration =
+                document
+                    .getElementById("contentDuration")
+                    .value
+                    .trim();
+
+
+            const image =
+                document
+                    .getElementById("contentImage")
+                    .value
+                    .trim();
+
+
+            const url =
+                document
+                    .getElementById("contentUrl")
+                    .value
+                    .trim();
+
+
+            const description =
+                document
+                    .getElementById("contentDescription")
+                    .value
+                    .trim();
+
+
+            if (!title) {
+
+                showToast(
+                    "Escribe un título.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            const content = {
+
+                title,
+                type,
+                category,
+                year,
+                genre,
+                duration,
+                image,
+                url,
+                description:
+                    description ||
+                    "Descubre este contenido en CinemaX."
+
+            };
+
+
+            /* =================================================
+               EDITAR
+            ================================================== */
+
+            if (editingId) {
+
+                try {
+
+                    const response =
+                        await fetch(
+                            `${API_URL}/${encodeURIComponent(editingId)}`,
+                            {
+                                method: "PUT",
+
+                                headers: {
+                                    "Content-Type":
+                                        "application/json"
+                                },
+
+                                body:
+                                    JSON.stringify(
+                                        content
+                                    )
+                            }
+                        );
+
+
+                    if (!response.ok) {
+
+                        const errorText =
+                            await response.text();
+
+                        throw new Error(
+                            errorText ||
+                            "Error HTTP " +
+                            response.status
+                        );
+
+                    }
+
+
+                    showToast(
+                        "Contenido actualizado correctamente.",
+                        "success"
+                    );
+
+
+                    closeModal();
+
+                    await loadCatalog();
+
+                } catch(error) {
+
+                    console.error(
+                        "Error actualizando:",
+                        error
+                    );
+
+                    showToast(
+                        "No se pudo actualizar el contenido.",
+                        "error"
+                    );
+
+                }
+
+                return;
+
+            }
+
+
+            /* =================================================
+               AGREGAR
+            ================================================== */
+
+            content.id =
+                createUniqueId(title);
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        API_URL,
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body:
+                                JSON.stringify(
+                                    content
+                                )
+                        }
+                    );
+
+
+                if (!response.ok) {
+
+                    const errorText =
+                        await response.text();
+
+                    throw new Error(
+                        errorText ||
+                        "Error HTTP " +
+                        response.status
+                    );
+
+                }
+
+
+                showToast(
+                    "Contenido agregado correctamente.",
+                    "success"
+                );
+
+
+                closeModal();
+
+                await loadCatalog();
+
+            } catch(error) {
+
+                console.error(
+                    "Error agregando:",
+                    error
+                );
+
+                showToast(
+                    "No se pudo agregar el contenido.",
+                    "error"
+                );
+
+            }
+
+        }
+    );
+
+
+    /* =====================================================
+       ID ÚNICO
+    ===================================================== */
+
+    function createUniqueId(title) {
+
+        let base =
+            title
+                .toLowerCase()
+                .normalize("NFD")
+                .replace(
+                    /[\u0300-\u036f]/g,
+                    ""
+                )
+                .replace(
+                    /[^a-z0-9]+/g,
+                    "-"
+                )
+                .replace(
+                    /^-+|-+$/g,
+                    ""
+                );
+
+
+        if (!base) {
+            base = "contenido";
+        }
+
+
+        let id = base;
+
+        let counter = 2;
+
+
+        while (
+            catalog.some(
+                item =>
+                    item.id === id
+            )
+        ) {
+
+            id =
+                `${base}-${counter}`;
+
+            counter++;
+
+        }
+
+
+        return id;
+
+    }
+
+
+    /* =====================================================
+       EDITAR
+    ===================================================== */
+
+    window.editContent =
+        function(id) {
+
+            const item =
+                catalog.find(
+                    content =>
+                        content.id === id
+                );
+
+
+            if (!item) {
+
+                showToast(
+                    "Contenido no encontrado.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            editingId = id;
+
+
+            document.getElementById(
+                "modalTitle"
+            ).textContent =
+                "Editar contenido";
+
+
+            document.getElementById(
+                "contentId"
+            ).value =
+                item.id || "";
+
+
+            document.getElementById(
+                "contentTitle"
+            ).value =
+                item.title || "";
+
+
+            document.getElementById(
+                "contentType"
+            ).value =
+                item.type || "Película";
+
+
+            document.getElementById(
+                "contentCategory"
+            ).value =
+                item.category || "peliculas";
+
+
+            document.getElementById(
+                "contentYear"
+            ).value =
+                item.year || "";
+
+
+            document.getElementById(
+                "contentGenre"
+            ).value =
+                item.genre || "";
+
+
+            document.getElementById(
+                "contentDuration"
+            ).value =
+                item.duration || "";
+
+
+            document.getElementById(
+                "contentImage"
+            ).value =
+                item.image || "";
+
+
+            document.getElementById(
+                "contentUrl"
+            ).value =
+                item.url || "";
+
+
+            document.getElementById(
+                "contentDescription"
+            ).value =
+                item.description || "";
+
+
+            contentModal.classList.add(
+                "active"
+            );
+
+        };
+
+
+    /* =====================================================
+       ELIMINAR
+    ===================================================== */
+
+    window.deleteContent =
+        async function(id) {
+
+            const item =
+                catalog.find(
+                    content =>
+                        content.id === id
+                );
+
+
+            if (!item) {
+                return;
+            }
+
+
+            const confirmed =
+                confirm(
+                    `¿Seguro que quieres eliminar "${item.title}"?`
+                );
+
+
+            if (!confirmed) {
+                return;
+            }
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        `${API_URL}/${encodeURIComponent(id)}`,
+                        {
+                            method: "DELETE"
+                        }
+                    );
+
+
+                if (!response.ok) {
+
+                    const errorText =
+                        await response.text();
+
+                    throw new Error(
+                        errorText ||
+                        "Error HTTP " +
+                        response.status
+                    );
+
+                }
+
+
+                showToast(
+                    "Contenido eliminado correctamente.",
+                    "success"
+                );
+
+
+                await loadCatalog();
+
+            } catch(error) {
+
+                console.error(
+                    "Error eliminando:",
+                    error
+                );
+
+                showToast(
+                    "No se pudo eliminar el contenido.",
+                    "error"
+                );
+
+            }
+
+        };
+
+
+    /* =====================================================
+       TOAST
+    ===================================================== */
+
+    let toastTimer;
+
+
+    function showToast(
+        message,
+        type = "success"
+    ) {
+
+        const toast =
+            document.getElementById("toast");
+
+
+        toast.textContent =
+            message;
+
+
+        toast.className =
+            "toast show " +
+            type;
+
+
+        clearTimeout(
+            toastTimer
+        );
+
+
+        toastTimer =
+            setTimeout(
+                function() {
+
+                    toast.classList.remove(
+                        "show"
+                    );
+
+                },
+                3000
+            );
+
+    }
+
+
+    /* =====================================================
+       ESC
+    ===================================================== */
+
+    document.addEventListener(
+        "keydown",
+        function(event) {
+
+            if (
+                event.key === "Escape"
+            ) {
+
+                closeModal();
+
+            }
+
+        }
+    );
+
+
+    /* =====================================================
+       SESIÓN
+    ===================================================== */
+
+    if (
+        sessionStorage.getItem(
+            "cinemax_admin_logged"
+        ) === "true"
+    ) {
+
+        showAdmin();
+
+    }
+
+</script>
+
+</body>
+
+</html>
+```

@@ -1,0 +1,2314 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>CINEMAX — Administración</title>
+
+    <!-- ICONOS -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <!-- CSS PRINCIPAL -->
+    <link rel="stylesheet" href="admin2.css">
+</head>
+
+<body>
+
+<!-- =====================================================
+     LOADING
+===================================================== -->
+
+<div id="loadingScreen">
+
+    <div class="loading-orbit"></div>
+
+    <div class="loading-box">
+
+        <div class="loading-mark">
+            <i class="fa-solid fa-film"></i>
+        </div>
+
+        <div class="loading-logo">
+            CINEMAX
+        </div>
+
+        <div class="loading-label">
+            ADMINISTRATION
+        </div>
+
+        <div class="loading-spinner"></div>
+
+        <div class="loading-text">
+            Preparando panel de administración...
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     ACCESS DENIED
+===================================================== -->
+
+<div id="accessDenied">
+
+    <div class="access-glow"></div>
+
+    <div class="access-box">
+
+        <div class="access-logo">
+            CINEMAX
+        </div>
+
+        <span class="access-kicker">
+            ADMINISTRATION
+        </span>
+
+        <div class="access-mark">
+            <i class="fa-solid fa-lock"></i>
+        </div>
+
+        <h1>
+            Acceso restringido
+        </h1>
+
+        <p>
+            Esta sección está disponible únicamente
+            para usuarios con permisos de administrador.
+        </p>
+
+        <button
+            class="btn btn-primary btn-large"
+            onclick="window.location.href='login.html'"
+        >
+            <i class="fa-solid fa-arrow-right"></i>
+            Volver al inicio de sesión
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     ADMIN APP
+===================================================== -->
+
+<div id="adminApp">
+
+
+    <!-- =================================================
+         SIDEBAR
+    ================================================== -->
+
+    <aside class="sidebar" id="sidebar">
+
+
+        <!-- BRAND -->
+
+        <div class="sidebar-brand">
+
+            <div class="brand-symbol">
+                <i class="fa-solid fa-film"></i>
+            </div>
+
+            <div>
+
+                <div class="sidebar-title">
+                    CINEMAX
+                </div>
+
+                <div class="sidebar-subtitle">
+                    ADMIN PANEL
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- MAIN -->
+
+        <div class="sidebar-section-label">
+            PRINCIPAL
+        </div>
+
+        <nav class="sidebar-nav">
+
+
+            <button
+                class="nav-btn active"
+                data-section="dashboard"
+                onclick="showSection('dashboard')"
+            >
+
+                <span class="nav-icon">
+                    <i class="fa-solid fa-chart-pie"></i>
+                </span>
+
+                <span>
+                    Dashboard
+                </span>
+
+                <span class="nav-dot"></span>
+
+            </button>
+
+
+            <button
+                class="nav-btn"
+                data-section="analytics"
+                onclick="showSection('analytics')"
+            >
+
+                <span class="nav-icon">
+                    <i class="fa-solid fa-chart-line"></i>
+                </span>
+
+                <span>
+                    Analíticas
+                </span>
+
+            </button>
+
+
+            <button
+                class="nav-btn"
+                data-section="content"
+                onclick="showSection('content')"
+            >
+
+                <span class="nav-icon">
+                    <i class="fa-solid fa-clapperboard"></i>
+                </span>
+
+                <span>
+                    Contenido
+                </span>
+
+            </button>
+
+
+            <button
+                class="nav-btn"
+                data-section="series"
+                onclick="showSection('series')"
+            >
+
+                <span class="nav-icon">
+                    <i class="fa-solid fa-tv"></i>
+                </span>
+
+                <span>
+                    Series
+                </span>
+
+            </button>
+
+
+            <button
+                class="nav-btn"
+                data-section="users"
+                onclick="showSection('users')"
+            >
+
+                <span class="nav-icon">
+                    <i class="fa-solid fa-users"></i>
+                </span>
+
+                <span>
+                    Usuarios
+                </span>
+
+            </button>
+
+
+        </nav>
+
+
+        <!-- MANAGEMENT -->
+
+        <div class="sidebar-section-label">
+            GESTIÓN
+        </div>
+
+        <nav class="sidebar-nav">
+
+
+            <button
+                class="nav-btn"
+                data-section="activity"
+                onclick="showSection('activity')"
+            >
+
+                <span class="nav-icon">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                </span>
+
+                <span>
+                    Actividad
+                </span>
+
+            </button>
+
+
+            <button
+                class="nav-btn"
+                data-section="settings"
+                onclick="showSection('settings')"
+            >
+
+                <span class="nav-icon">
+                    <i class="fa-solid fa-sliders"></i>
+                </span>
+
+                <span>
+                    Configuración
+                </span>
+
+            </button>
+
+
+        </nav>
+
+
+        <!-- BOTTOM -->
+
+        <div class="sidebar-bottom">
+
+            <div class="system-status">
+
+                <span class="status-pulse"></span>
+
+                <div>
+
+                    <strong>
+                        Sistema operativo
+                    </strong>
+
+                    <small>
+                        CINEMAX API conectada
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =================================================
+         MAIN SHELL
+    ================================================== -->
+
+    <div class="app-shell">
+
+
+        <!-- =================================================
+             TOPBAR
+        ================================================== -->
+
+        <header class="topbar">
+
+
+            <div class="topbar-left">
+
+                <button
+                    class="mobile-menu"
+                    onclick="toggleSidebar()"
+                >
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+
+                <div>
+
+                    <div class="topbar-kicker">
+                        CINEMAX / ADMIN
+                    </div>
+
+                    <div
+                        class="topbar-title"
+                        id="topbarTitle"
+                    >
+                        Centro de administración
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="top-actions">
+
+
+                <button
+                    class="top-btn"
+                    onclick="refreshAdminData()"
+                    title="Actualizar"
+                >
+
+                    <i class="fa-solid fa-rotate"></i>
+
+                    <span class="top-btn-text">
+                        Actualizar
+                    </span>
+
+                </button>
+
+
+                <button
+                    class="top-btn"
+                    onclick="window.open('index.html','_blank')"
+                    title="Ver CINEMAX"
+                >
+
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+
+                    <span class="top-btn-text">
+                        Ver sitio
+                    </span>
+
+                </button>
+
+
+                <div class="top-user">
+
+                    <div class="top-user-avatar">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+
+                    <div class="top-user-info">
+
+                        <strong id="adminName">
+                            Administrador
+                        </strong>
+
+                        <span id="adminEmail">
+                            admin@cinemax.com
+                        </span>
+
+                    </div>
+
+                    <span class="user-chevron">
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </span>
+
+                </div>
+
+
+                <button
+                    class="logout-btn"
+                    onclick="logoutAdmin2()"
+                    title="Cerrar sesión"
+                >
+
+                    <i class="fa-solid fa-right-from-bracket"></i>
+
+                    <span class="logout-text">
+                        Salir
+                    </span>
+
+                </button>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- =================================================
+             CONTENT
+        ================================================== -->
+
+        <main class="content">
+
+
+            <!-- =================================================
+                 DASHBOARD
+            ================================================== -->
+
+            <section
+                id="dashboard"
+                class="admin-section active"
+            >
+
+                <div class="hero-header">
+
+                    <div>
+
+                        <div class="section-eyebrow">
+                            CONTROL CENTER
+                        </div>
+
+                        <h1>
+                            Bienvenido a
+                            <em>CINEMAX.</em>
+                        </h1>
+
+                        <p>
+                            Administra todo el contenido
+                            de tu plataforma desde un solo lugar.
+                        </p>
+
+                    </div>
+
+
+                    <button
+                        class="btn btn-primary btn-large"
+                        onclick="openAdvancedContentAdd()"
+                    >
+
+                        <i class="fa-solid fa-plus"></i>
+
+                        Agregar contenido
+
+                    </button>
+
+                </div>
+
+
+                <!-- STATS -->
+
+                <div class="stats-grid">
+
+
+                    <div class="stat-card stat-red">
+
+                        <div class="stat-icon">
+                            <i class="fa-solid fa-film"></i>
+                        </div>
+
+                        <div class="stat-content">
+
+                            <span>
+                                PELÍCULAS
+                            </span>
+
+                            <strong id="statMovies">
+                                0
+                            </strong>
+
+                            <small>
+                                En catálogo
+                            </small>
+
+                        </div>
+
+                        <div class="stat-decoration"></div>
+
+                    </div>
+
+
+                    <div class="stat-card stat-purple">
+
+                        <div class="stat-icon">
+                            <i class="fa-solid fa-tv"></i>
+                        </div>
+
+                        <div class="stat-content">
+
+                            <span>
+                                SERIES
+                            </span>
+
+                            <strong id="statSeries">
+                                0
+                            </strong>
+
+                            <small>
+                                En catálogo
+                            </small>
+
+                        </div>
+
+                        <div class="stat-decoration"></div>
+
+                    </div>
+
+
+                    <div class="stat-card stat-blue">
+
+                        <div class="stat-icon">
+                            <i class="fa-solid fa-skull-crossbones"></i>
+                        </div>
+
+                        <div class="stat-content">
+
+                            <span>
+                                TERROR
+                            </span>
+
+                            <strong id="statTerror">
+                                0
+                            </strong>
+
+                            <small>
+                                En catálogo
+                            </small>
+
+                        </div>
+
+                        <div class="stat-decoration"></div>
+
+                    </div>
+
+
+                    <div class="stat-card stat-green">
+
+                        <div class="stat-icon">
+                            <i class="fa-solid fa-users"></i>
+                        </div>
+
+                        <div class="stat-content">
+
+                            <span>
+                                USUARIOS
+                            </span>
+
+                            <strong id="statUsers">
+                                0
+                            </strong>
+
+                            <small>
+                                Registrados
+                            </small>
+
+                        </div>
+
+                        <div class="stat-decoration"></div>
+
+                    </div>
+
+
+                    <div class="stat-card stat-cyan">
+
+                        <div class="stat-icon">
+                            <i class="fa-solid fa-heart"></i>
+                        </div>
+
+                        <div class="stat-content">
+
+                            <span>
+                                FAVORITOS
+                            </span>
+
+                            <strong id="statFavorites">
+                                0
+                            </strong>
+
+                            <small>
+                                Guardados
+                            </small>
+
+                        </div>
+
+                        <div class="stat-decoration"></div>
+
+                    </div>
+
+
+                    <div class="stat-card stat-gold">
+
+                        <div class="stat-icon">
+                            <i class="fa-solid fa-eye"></i>
+                        </div>
+
+                        <div class="stat-content">
+
+                            <span>
+                                VISUALIZACIONES
+                            </span>
+
+                            <strong id="statViews">
+                                0
+                            </strong>
+
+                            <small>
+                                Total
+                            </small>
+
+                        </div>
+
+                        <div class="stat-decoration"></div>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- DASHBOARD GRID -->
+
+                <div class="dashboard-grid">
+
+
+                    <!-- QUICK ACTIONS -->
+
+                    <div class="panel">
+
+                        <div class="panel-header">
+
+                            <div>
+
+                                <span class="panel-kicker">
+                                    ACCIONES
+                                </span>
+
+                                <h2>
+                                    Acciones rápidas
+                                </h2>
+
+                                <p>
+                                    Gestiona tu plataforma rápidamente.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="quick-actions">
+
+
+                            <button
+                                class="quick-action quick-red"
+                                onclick="openAdvancedContentAdd('pelicula')"
+                            >
+
+                                <span class="quick-icon">
+                                    <i class="fa-solid fa-film"></i>
+                                </span>
+
+                                <strong>
+                                    Nueva película
+                                </strong>
+
+                                <small>
+                                    Agregar al catálogo
+                                </small>
+
+                                <span class="quick-arrow">
+                                    →
+                                </span>
+
+                            </button>
+
+
+                            <button
+                                class="quick-action quick-purple"
+                                onclick="openAdvancedContentAdd('serie')"
+                            >
+
+                                <span class="quick-icon">
+                                    <i class="fa-solid fa-tv"></i>
+                                </span>
+
+                                <strong>
+                                    Nueva serie
+                                </strong>
+
+                                <small>
+                                    Crear contenido episódico
+                                </small>
+
+                                <span class="quick-arrow">
+                                    →
+                                </span>
+
+                            </button>
+
+
+                            <button
+                                class="quick-action quick-blue"
+                                onclick="showSection('users')"
+                            >
+
+                                <span class="quick-icon">
+                                    <i class="fa-solid fa-user-plus"></i>
+                                </span>
+
+                                <strong>
+                                    Administrar usuarios
+                                </strong>
+
+                                <small>
+                                    Ver cuentas y permisos
+                                </small>
+
+                                <span class="quick-arrow">
+                                    →
+                                </span>
+
+                            </button>
+
+
+                            <button
+                                class="quick-action quick-gold"
+                                onclick="showSection('activity')"
+                            >
+
+                                <span class="quick-icon">
+                                    <i class="fa-solid fa-clock-rotate-left"></i>
+                                </span>
+
+                                <strong>
+                                    Ver actividad
+                                </strong>
+
+                                <small>
+                                    Revisar movimientos
+                                </small>
+
+                                <span class="quick-arrow">
+                                    →
+                                </span>
+
+                            </button>
+
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- RECENT ACTIVITY -->
+
+                    <div class="panel">
+
+                        <div class="panel-header">
+
+                            <div>
+
+                                <span class="panel-kicker">
+                                    SISTEMA
+                                </span>
+
+                                <h2>
+                                    Actividad reciente
+                                </h2>
+
+                            </div>
+
+                            <button
+                                class="text-btn"
+                                onclick="showSection('activity')"
+                            >
+                                Ver todo
+                            </button>
+
+                        </div>
+
+
+                        <div id="recentActivity">
+
+                            <div class="empty">
+
+                                <div class="empty-icon">
+                                    <i class="fa-solid fa-clock"></i>
+                                </div>
+
+                                <strong>
+                                    Sin actividad reciente
+                                </strong>
+
+                                <span>
+                                    Las acciones aparecerán aquí.
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =================================================
+                 ANALYTICS
+            ================================================== -->
+
+            <section
+                id="analytics"
+                class="admin-section"
+            >
+
+                <div class="section-header">
+
+                    <div>
+
+                        <div class="section-eyebrow">
+                            PERFORMANCE
+                        </div>
+
+                        <h1>
+                            Analíticas
+                        </h1>
+
+                        <p>
+                            Estadísticas y rendimiento de CINEMAX.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stats-grid">
+
+                    <div class="stat-card stat-red">
+
+                        <div class="stat-icon">
+                            <i class="fa-solid fa-eye"></i>
+                        </div>
+
+                        <div class="stat-content">
+
+                            <span>
+                                VISUALIZACIONES
+                            </span>
+
+                            <strong id="analyticsViews">
+                                0
+                            </strong>
+
+                            <small>
+                                Total
+                            </small>
+
+                        </div>
+
+                        <div class="stat-decoration"></div>
+
+                    </div>
+
+
+                    <div class="stat-card stat-green">
+
+                        <div class="stat-icon">
+                            <i class="fa-solid fa-heart"></i>
+                        </div>
+
+                        <div class="stat-content">
+
+                            <span>
+                                FAVORITOS
+                            </span>
+
+                            <strong id="analyticsFavorites">
+                                0
+                            </strong>
+
+                            <small>
+                                Total
+                            </small>
+
+                        </div>
+
+                        <div class="stat-decoration"></div>
+
+                    </div>
+
+
+                    <div class="stat-card stat-blue">
+
+                        <div class="stat-icon">
+                            <i class="fa-solid fa-user-group"></i>
+                        </div>
+
+                        <div class="stat-content">
+
+                            <span>
+                                USUARIOS
+                            </span>
+
+                            <strong id="analyticsUsers">
+                                0
+                            </strong>
+
+                            <small>
+                                Registrados
+                            </small>
+
+                        </div>
+
+                        <div class="stat-decoration"></div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="panel">
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <span class="panel-kicker">
+                                RESUMEN
+                            </span>
+
+                            <h2>
+                                Rendimiento del catálogo
+                            </h2>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        id="analyticsContent"
+                        class="empty"
+                    >
+
+                        <div class="empty-icon">
+                            <i class="fa-solid fa-chart-line"></i>
+                        </div>
+
+                        <strong>
+                            Cargando estadísticas
+                        </strong>
+
+                        <span>
+                            Los datos aparecerán aquí.
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =================================================
+                 CONTENT
+            ================================================== -->
+
+            <section
+                id="content"
+                class="admin-section"
+            >
+
+                <div class="section-header">
+
+                    <div>
+
+                        <div class="section-eyebrow">
+                            CONTENT LIBRARY
+                        </div>
+
+                        <h1>
+                            Películas
+                        </h1>
+
+                        <p>
+                            Administra las películas disponibles
+                            en CINEMAX.
+                        </p>
+
+                    </div>
+
+
+                    <button
+                        class="btn btn-primary"
+                        onclick="openAdvancedContentAdd('pelicula')"
+                    >
+
+                        <i class="fa-solid fa-plus"></i>
+
+                        Nueva película
+
+                    </button>
+
+                </div>
+
+
+                <div class="panel">
+
+                    <div class="toolbar">
+
+                        <div class="search-wrap">
+
+                            <span>
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </span>
+
+                            <input
+                                id="contentSearch"
+                                type="search"
+                                placeholder="Buscar películas..."
+                                oninput="filterContent()"
+                            >
+
+                        </div>
+
+
+                        <select
+                            id="contentCategory"
+                            onchange="filterContent()"
+                        >
+
+                            <option value="">
+                                Todas las categorías
+                            </option>
+
+                            <option value="accion">
+                                Acción
+                            </option>
+
+                            <option value="comedia">
+                                Comedia
+                            </option>
+
+                            <option value="drama">
+                                Drama
+                            </option>
+
+                            <option value="ciencia ficcion">
+                                Ciencia ficción
+                            </option>
+
+                            <option value="aventura">
+                                Aventura
+                            </option>
+
+                            <option value="suspenso">
+                                Suspenso
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="catalog-toolbar-meta">
+
+                        <span class="live-dot"></span>
+
+                        <span id="contentCount">
+                            0 contenidos
+                        </span>
+
+                    </div>
+
+
+                    <div
+                        id="contentGrid"
+                        class="catalog-grid"
+                    >
+
+                        <div class="empty">
+
+                            <div class="empty-icon">
+                                <i class="fa-solid fa-film"></i>
+                            </div>
+
+                            <strong>
+                                Cargando catálogo
+                            </strong>
+
+                            <span>
+                                Espera un momento...
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =================================================
+                 SERIES
+            ================================================== -->
+
+            <section
+                id="series"
+                class="admin-section"
+            >
+
+                <div class="section-header">
+
+                    <div>
+
+                        <div class="section-eyebrow">
+                            CONTENT LIBRARY
+                        </div>
+
+                        <h1>
+                            Series
+                        </h1>
+
+                        <p>
+                            Administra las series y episodios
+                            de CINEMAX.
+                        </p>
+
+                    </div>
+
+
+                    <button
+                        class="btn btn-primary"
+                        onclick="openAdvancedContentAdd('serie')"
+                    >
+
+                        <i class="fa-solid fa-plus"></i>
+
+                        Nueva serie
+
+                    </button>
+
+                </div>
+
+
+                <div class="panel">
+
+                    <div class="toolbar">
+
+                        <div class="search-wrap">
+
+                            <span>
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </span>
+
+                            <input
+                                id="seriesSearch"
+                                type="search"
+                                placeholder="Buscar series..."
+                                oninput="filterSeries()"
+                            >
+
+                        </div>
+
+
+                        <select
+                            id="seriesGenre"
+                            onchange="filterSeries()"
+                        >
+
+                            <option value="">
+                                Todos los géneros
+                            </option>
+
+                            <option value="accion">
+                                Acción
+                            </option>
+
+                            <option value="drama">
+                                Drama
+                            </option>
+
+                            <option value="comedia">
+                                Comedia
+                            </option>
+
+                            <option value="terror">
+                                Terror
+                            </option>
+
+                            <option value="ciencia ficcion">
+                                Ciencia ficción
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="catalog-toolbar-meta">
+
+                        <span class="live-dot"></span>
+
+                        <span id="seriesCount">
+                            0 series
+                        </span>
+
+                    </div>
+
+
+                    <div
+                        id="seriesGrid"
+                        class="catalog-grid"
+                    >
+
+                        <div class="empty">
+
+                            <div class="empty-icon">
+                                <i class="fa-solid fa-tv"></i>
+                            </div>
+
+                            <strong>
+                                Cargando series
+                            </strong>
+
+                            <span>
+                                Espera un momento...
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =================================================
+                 USERS
+            ================================================== -->
+
+            <section
+                id="users"
+                class="admin-section"
+            >
+
+                <div class="section-header">
+
+                    <div>
+
+                        <div class="section-eyebrow">
+                            USER MANAGEMENT
+                        </div>
+
+                        <h1>
+                            Usuarios
+                        </h1>
+
+                        <p>
+                            Gestiona las cuentas registradas
+                            en CINEMAX.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="panel">
+
+                    <div class="toolbar">
+
+                        <div class="search-wrap">
+
+                            <span>
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </span>
+
+                            <input
+                                id="userSearch"
+                                type="search"
+                                placeholder="Buscar usuario o correo..."
+                                oninput="filterUsers()"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="table-container">
+
+                        <table>
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>
+                                        Usuario
+                                    </th>
+
+                                    <th>
+                                        Correo
+                                    </th>
+
+                                    <th>
+                                        Rol
+                                    </th>
+
+                                    <th>
+                                        Estado
+                                    </th>
+
+                                    <th>
+                                        Registro
+                                    </th>
+
+                                    <th>
+                                        Acciones
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody id="usersTable">
+
+                                <tr>
+
+                                    <td colspan="6">
+
+                                        <div class="empty">
+
+                                            <div class="empty-icon">
+                                                <i class="fa-solid fa-users"></i>
+                                            </div>
+
+                                            <strong>
+                                                Cargando usuarios
+                                            </strong>
+
+                                            <span>
+                                                Espera un momento...
+                                            </span>
+
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =================================================
+                 ACTIVITY
+            ================================================== -->
+
+            <section
+                id="activity"
+                class="admin-section"
+            >
+
+                <div class="section-header">
+
+                    <div>
+
+                        <div class="section-eyebrow">
+                            SYSTEM LOG
+                        </div>
+
+                        <h1>
+                            Actividad
+                        </h1>
+
+                        <p>
+                            Historial de acciones realizadas
+                            dentro del panel.
+                        </p>
+
+                    </div>
+
+
+                    <button
+                        class="btn btn-secondary"
+                        onclick="loadActivity()"
+                    >
+
+                        <i class="fa-solid fa-rotate"></i>
+
+                        Actualizar
+
+                    </button>
+
+                </div>
+
+
+                <div class="panel">
+
+                    <div
+                        id="activityList"
+                        class="empty"
+                    >
+
+                        <div class="empty-icon">
+                            <i class="fa-solid fa-clock-rotate-left"></i>
+                        </div>
+
+                        <strong>
+                            Cargando actividad
+                        </strong>
+
+                        <span>
+                            Espera un momento...
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =================================================
+                 SETTINGS
+            ================================================== -->
+
+            <section
+                id="settings"
+                class="admin-section"
+            >
+
+                <div class="section-header">
+
+                    <div>
+
+                        <div class="section-eyebrow">
+                            SYSTEM CONTROL
+                        </div>
+
+                        <h1>
+                            Configuración
+                        </h1>
+
+                        <p>
+                            Configura el comportamiento
+                            de tu panel CINEMAX.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="panel settings-hero">
+
+                    <div class="settings-hero-icon">
+
+                        <i class="fa-solid fa-server"></i>
+
+                    </div>
+
+                    <div>
+
+                        <h2>
+                            Sistema CINEMAX
+                        </h2>
+
+                        <p>
+                            Backend conectado y funcionando
+                            correctamente.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="settings-grid">
+
+
+                    <div class="setting-card">
+
+                        <div class="setting-icon">
+                            <i class="fa-solid fa-database"></i>
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Base de datos
+                            </strong>
+
+                            <p>
+                                Gestionar datos del catálogo
+                            </p>
+
+                        </div>
+
+                        <span>
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </span>
+
+                    </div>
+
+
+                    <div class="setting-card">
+
+                        <div class="setting-icon">
+                            <i class="fa-solid fa-shield-halved"></i>
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Seguridad
+                            </strong>
+
+                            <p>
+                                Sesiones y permisos
+                            </p>
+
+                        </div>
+
+                        <span>
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </span>
+
+                    </div>
+
+
+                    <div class="setting-card">
+
+                        <div class="setting-icon">
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Sincronización
+                            </strong>
+
+                            <p>
+                                Actualizar catálogo
+                            </p>
+
+                        </div>
+
+                        <span>
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </span>
+
+                    </div>
+
+
+                    <div class="setting-card">
+
+                        <div class="setting-icon">
+                            <i class="fa-solid fa-server"></i>
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Servidor
+                            </strong>
+
+                            <p>
+                                Estado de la API
+                            </p>
+
+                        </div>
+
+                        <span>
+                            <i class="fa-solid fa-circle-check"></i>
+                        </span>
+
+                    </div>
+
+
+                </div>
+
+            </section>
+
+
+        </main>
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     MODAL — ADD CONTENT
+===================================================== -->
+
+<div
+    id="contentModal"
+    class="modal"
+>
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <div>
+
+                <span class="panel-kicker">
+                    CONTENT MANAGEMENT
+                </span>
+
+                <h2>
+                    Agregar contenido
+                </h2>
+
+            </div>
+
+            <button
+                class="modal-close"
+                onclick="closeContentModal()"
+            >
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+
+        <form
+            id="contentForm"
+            onsubmit="saveAdvancedContent(event)"
+        >
+
+
+            <div class="settings-grid">
+
+
+                <div>
+
+                    <label
+                        for="contentTitle"
+                        class="panel-kicker"
+                    >
+                        TÍTULO
+                    </label>
+
+                    <input
+                        id="contentTitle"
+                        name="title"
+                        type="text"
+                        placeholder="Nombre del contenido"
+                        required
+                    >
+
+                </div>
+
+
+                <div>
+
+                    <label
+                        for="contentType"
+                        class="panel-kicker"
+                    >
+                        TIPO
+                    </label>
+
+                    <select
+                        id="contentType"
+                        name="type"
+                    >
+
+                        <option value="pelicula">
+                            Película
+                        </option>
+
+                        <option value="serie">
+                            Serie
+                        </option>
+
+                        <option value="terror">
+                            Terror
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div>
+
+                    <label
+                        for="contentGenre"
+                        class="panel-kicker"
+                    >
+                        GÉNERO
+                    </label>
+
+                    <input
+                        id="contentGenre"
+                        name="genre"
+                        type="text"
+                        placeholder="Acción, Drama..."
+                    >
+
+                </div>
+
+
+                <div>
+
+                    <label
+                        for="contentYear"
+                        class="panel-kicker"
+                    >
+                        AÑO
+                    </label>
+
+                    <input
+                        id="contentYear"
+                        name="year"
+                        type="number"
+                        placeholder="2026"
+                    >
+
+                </div>
+
+
+                <div>
+
+                    <label
+                        for="contentPoster"
+                        class="panel-kicker"
+                    >
+                        POSTER
+                    </label>
+
+                    <input
+                        id="contentPoster"
+                        name="poster"
+                        type="url"
+                        placeholder="https://..."
+                    >
+
+                </div>
+
+
+                <div>
+
+                    <label
+                        for="contentBackdrop"
+                        class="panel-kicker"
+                    >
+                        BACKDROP
+                    </label>
+
+                    <input
+                        id="contentBackdrop"
+                        name="backdrop"
+                        type="url"
+                        placeholder="https://..."
+                    >
+
+                </div>
+
+
+                <div>
+
+                    <label
+                        for="contentRating"
+                        class="panel-kicker"
+                    >
+                        CALIFICACIÓN
+                    </label>
+
+                    <input
+                        id="contentRating"
+                        name="rating"
+                        type="number"
+                        min="0"
+                        max="10"
+                        step="0.1"
+                        placeholder="8.5"
+                    >
+
+                </div>
+
+
+                <div>
+
+                    <label
+                        for="contentDuration"
+                        class="panel-kicker"
+                    >
+                        DURACIÓN
+                    </label>
+
+                    <input
+                        id="contentDuration"
+                        name="duration"
+                        type="text"
+                        placeholder="2h 15min"
+                    >
+
+                </div>
+
+
+            </div>
+
+
+            <div style="margin-top:18px;">
+
+                <label
+                    for="contentDescription"
+                    class="panel-kicker"
+                >
+                    DESCRIPCIÓN
+                </label>
+
+                <textarea
+                    id="contentDescription"
+                    name="description"
+                    placeholder="Descripción del contenido..."
+                ></textarea>
+
+            </div>
+
+
+            <div
+                style="
+                    display:flex;
+                    justify-content:flex-end;
+                    gap:9px;
+                    margin-top:20px;
+                "
+            >
+
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                    onclick="closeContentModal()"
+                >
+                    Cancelar
+                </button>
+
+                <button
+                    type="submit"
+                    class="btn btn-primary"
+                >
+
+                    <i class="fa-solid fa-check"></i>
+
+                    Guardar contenido
+
+                </button>
+
+            </div>
+
+
+        </form>
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     TOAST
+===================================================== -->
+
+<div id="toast"></div>
+
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script src="admin2.js"></script>
+
+
+<script>
+
+/* =========================================================
+   NAVEGACIÓN
+========================================================= */
+
+function showSection(sectionId) {
+
+    document
+        .querySelectorAll(".admin-section")
+        .forEach(section => {
+
+            section.classList.remove("active");
+
+        });
+
+
+    const target =
+        document.getElementById(sectionId);
+
+    if (target) {
+        target.classList.add("active");
+    }
+
+
+    document
+        .querySelectorAll(".nav-btn")
+        .forEach(button => {
+
+            button.classList.remove("active");
+
+            if (
+                button.dataset.section === sectionId
+            ) {
+
+                button.classList.add("active");
+
+            }
+
+        });
+
+
+    const titles = {
+
+        dashboard:
+            "Centro de administración",
+
+        analytics:
+            "Analíticas del sistema",
+
+        content:
+            "Gestión de películas",
+
+        series:
+            "Gestión de series",
+
+        users:
+            "Gestión de usuarios",
+
+        activity:
+            "Registro de actividad",
+
+        settings:
+            "Configuración del sistema"
+
+    };
+
+
+    const title =
+        document.getElementById("topbarTitle");
+
+    if (title) {
+
+        title.textContent =
+            titles[sectionId] ||
+            "Centro de administración";
+
+    }
+
+
+    if (window.innerWidth <= 760) {
+
+        const sidebar =
+            document.getElementById("sidebar");
+
+        if (sidebar) {
+
+            sidebar.classList.remove(
+                "mobile-open"
+            );
+
+        }
+
+    }
+
+
+    if (
+        sectionId === "content" &&
+        typeof loadAdvancedContent === "function"
+    ) {
+
+        loadAdvancedContent();
+
+    }
+
+
+    if (
+        sectionId === "series" &&
+        typeof loadAdvancedContent === "function"
+    ) {
+
+        loadAdvancedContent("serie");
+
+    }
+
+
+    if (
+        sectionId === "users" &&
+        typeof loadUsers === "function"
+    ) {
+
+        loadUsers();
+
+    }
+
+
+    if (
+        sectionId === "activity" &&
+        typeof loadActivity === "function"
+    ) {
+
+        loadActivity();
+
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE SIDEBAR
+========================================================= */
+
+function toggleSidebar() {
+
+    const sidebar =
+        document.getElementById("sidebar");
+
+    if (!sidebar) return;
+
+    sidebar.classList.toggle(
+        "mobile-open"
+    );
+
+}
+
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+function openAdvancedContentAdd(type) {
+
+    const modal =
+        document.getElementById(
+            "contentModal"
+        );
+
+    const select =
+        document.getElementById(
+            "contentType"
+        );
+
+
+    if (select && type) {
+
+        select.value = type;
+
+    }
+
+
+    if (modal) {
+
+        modal.classList.add("show");
+
+    }
+
+}
+
+
+function closeContentModal() {
+
+    const modal =
+        document.getElementById(
+            "contentModal"
+        );
+
+    if (modal) {
+
+        modal.classList.remove(
+            "show"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+function showToast(
+    message,
+    type = "success"
+) {
+
+    const toast =
+        document.getElementById("toast");
+
+    if (!toast) return;
+
+
+    toast.textContent =
+        message;
+
+    toast.className =
+        type;
+
+    toast.style.display =
+        "block";
+
+
+    clearTimeout(
+        window.__cinemaxToast
+    );
+
+
+    window.__cinemaxToast =
+        setTimeout(() => {
+
+            toast.style.display =
+                "none";
+
+        }, 3500);
+
+}
+
+
+/* =========================================================
+   ACTUALIZAR
+========================================================= */
+
+function refreshAdminData() {
+
+    if (
+        typeof loadDashboard ===
+        "function"
+    ) {
+
+        loadDashboard();
+
+    }
+
+    if (
+        typeof loadAdvancedContent ===
+        "function"
+    ) {
+
+        loadAdvancedContent();
+
+    }
+
+    if (
+        typeof loadUsers ===
+        "function"
+    ) {
+
+        loadUsers();
+
+    }
+
+    showToast(
+        "Datos actualizados",
+        "success"
+    );
+
+}
+
+
+/* =========================================================
+   CERRAR MODAL AL HACER CLICK FUERA
+========================================================= */
+
+document.addEventListener(
+    "click",
+    function(event) {
+
+        const modal =
+            document.getElementById(
+                "contentModal"
+            );
+
+        if (
+            modal &&
+            event.target === modal
+        ) {
+
+            closeContentModal();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   ESC
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (
+            event.key === "Escape"
+        ) {
+
+            closeContentModal();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   INICIALIZACIÓN VISUAL
+========================================================= */
+
+window.addEventListener(
+    "load",
+    function() {
+
+        setTimeout(() => {
+
+            const loading =
+                document.getElementById(
+                    "loadingScreen"
+                );
+
+            if (loading) {
+
+                loading.style.opacity =
+                    "0";
+
+                loading.style.pointerEvents =
+                    "none";
+
+                setTimeout(() => {
+
+                    loading.style.display =
+                        "none";
+
+                }, 350);
+
+            }
+
+        }, 500);
+
+    }
+);
+
+</script>
+
+</body>
+</html>
