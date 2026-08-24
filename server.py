@@ -4276,6 +4276,8 @@ class CinemaXServer(
 # ============================================================
 
 if __name__ == "__main__":
+    
+    print("🔥🔥🔥 CINEMAX SERVER.PY EJECUTADO 🔥🔥🔥", flush=True)
 
     os.makedirs(
         CINEMA_DIR,
