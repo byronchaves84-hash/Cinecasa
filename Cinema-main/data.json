@@ -383,9 +383,9 @@
     },
     {
         "id": "serie-2",
-        "title": "Serie 2",
+        "title": "The Last Of Us",
         "type": "Serie",
-        "category": "series",
+        "category": "serie",
         "url": "../Cinema-main/Serie2/index.html",
         "image": "../Cinema-main/images/serie2.jpg",
         "year": "",
@@ -453,7 +453,10 @@
                 ]
             }
         ],
-        "session_id": "DqCehNek_bRDn9MYiwtQlW4iXtkKlkNaL1Xd_NdywLs"
+        "session_id": "DqCehNek_bRDn9MYiwtQlW4iXtkKlkNaL1Xd_NdywLs",
+        "video": "../Cinema-main/Serie2/index.html",
+        "rating": "",
+        "featured": false
     },
     {
         "id": "serie-3",
