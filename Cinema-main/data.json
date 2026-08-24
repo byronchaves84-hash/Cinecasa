@@ -466,7 +466,139 @@
         "video": "../Cinema-main/Serie3/index.html",
         "rating": "",
         "featured": false,
-        "session_id": "6a933722-8829-4e30-8e41-16f3f3c62879"
+        "session_id": "6a933722-8829-4e30-8e41-16f3f3c62879",
+        "seasons": [
+            {
+                "number": 1,
+                "episodes": [
+                    {
+                        "number": 1,
+                        "title": "Episodio 1",
+                        "video": "https://drive.google.com/file/d/1A6150sx30rk1-0wx7ABHUGNfbXoyf2gD/preview",
+                        "image": ""
+                    },
+                    {
+                        "number": 2,
+                        "title": "Episodio 2",
+                        "video": "https://drive.google.com/file/d/1jhmOY4oW90oTabdUtTm_KK76ke7UYzVm/preview",
+                        "image": ""
+                    },
+                    {
+                        "number": 3,
+                        "title": "Episodio 3",
+                        "video": "https://drive.google.com/file/d/16Vuq4-1h1VH_u2nUC16wtiJGzIsqZUr5/preview",
+                        "image": ""
+                    },
+                    {
+                        "number": 4,
+                        "title": "Episodio 4",
+                        "video": "https://drive.google.com/file/d/1nj0ygk5sFQ0dgZHumOWeXYhDqMjQMAlb/preview",
+                        "image": ""
+                    },
+                    {
+                        "number": 5,
+                        "title": "Episodio 5",
+                        "video": "https://drive.google.com/file/d/11RtNz-ylgeAyRN0lkDGFjoX2-9xxIHea/preview",
+                        "image": ""
+                    },
+                    {
+                        "number": 6,
+                        "title": "Episodio 6",
+                        "video": "https://drive.google.com/file/d/1tS4El77638m9WBJvqgV8FeM02AiBkK3p/preview",
+                        "image": ""
+                    },
+                    {
+                        "number": 7,
+                        "title": "Episodio 7",
+                        "video": "https://drive.google.com/file/d/1W-Wv-tlsUlRwODEUNItiMjCznTlqV05Z/preview",
+                        "image": ""
+                    }
+                ]
+            },
+            {
+                "number": 2,
+                "episodes": [
+                    {
+                        "number": 1,
+                        "title": "Episodio 1",
+                        "video": "https://drive.google.com/file/d/1wTRYpL71hHDADCx0ZjJX0SH9UT3_EXVU/preview",
+                        "image": ""
+                    },
+                    {
+                        "number": 2,
+                        "title": "Episodio 2",
+                        "video": "https://drive.google.com/file/d/1fZInlvajaO-wLFqJFugxv2qCj6ZHHa5G/preview",
+                        "image": ""
+                    },
+                    {
+                        "number": 3,
+                        "title": "Episodio 3",
+                        "video": "https://drive.google.com/file/d/1fjsSTpDtiXlkkmH-sQ1mj6j7qRJ5-sXr/preview",
+                        "image": ""
+                    },
+                    {
+                        "number": 4,
+                        "title": "Episodio 4",
+                        "video": "https://drive.google.com/file/d/11RJQGIC_RUNsLMFIryIHwU-stC0MWw2G/preview",
+                        "image": ""
+                    },
+                    {
+                        "number": 5,
+                        "title": "Episodio 5",
+                        "video": "https://drive.google.com/file/d/1XAqDRlQeGe18KVkCY8HMjZ6uKGhGWr7z/preview",
+                        "image": ""
+                    },
+                    {
+                        "number": 6,
+                        "title": "Episodio 6",
+                        "video": "https://drive.google.com/file/d/12gmD5DOvgYxd2Hg-F3XeJ_aH83YY4cg9/preview",
+                        "image": ""
+                    },
+                    {
+                        "number": 7,
+                        "title": "Episodio 7",
+                        "video": "https://drive.google.com/file/d/1iqC2Yd20wB95DXjyr6oLL8kupRs0ZMX7/preview",
+                        "image": ""
+                    },
+                    {
+                        "number": 8,
+                        "title": "Episodio 8",
+                        "video": "https://drive.google.com/file/d/1PcGX0Es3CW0JiDNPMF-6_9HyT11_cIxP/preview",
+                        "image": ""
+                    },
+                    {
+                        "number": 9,
+                        "title": "Episodio 9",
+                        "video": "https://drive.google.com/file/d/1fmzuAo1FngqwE488Gj6s75UpZwhNsiNP/preview",
+                        "image": ""
+                    },
+                    {
+                        "number": 10,
+                        "title": "Episodio 10",
+                        "video": "https://drive.google.com/file/d/1dDwV2QiOhDDphthaOSqx8gD_2qx-eCDj/preview",
+                        "image": ""
+                    },
+                    {
+                        "number": 11,
+                        "title": "Episodio 11",
+                        "video": "https://drive.google.com/file/d/1_AanjFKiwBlXH-I-qgHv4NGnfdO2g451/preview",
+                        "image": ""
+                    },
+                    {
+                        "number": 12,
+                        "title": "Episodio 12",
+                        "video": "https://drive.google.com/file/d/1AMjCZmUZ5RG3Pp0413xJCTFoyX75VD9m/preview",
+                        "image": ""
+                    },
+                    {
+                        "number": 13,
+                        "title": "Episodio 13",
+                        "video": "https://drive.google.com/file/d/1Do2HofXl9eTQI9Os5aLZ1bXpu3WDma9g/preview",
+                        "image": ""
+                    }
+                ]
+            }
+        ]
     },
     {
         "id": "serie-4",
