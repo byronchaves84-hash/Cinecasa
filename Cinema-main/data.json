@@ -309,7 +309,27 @@
         "year": "",
         "genre": "Serie",
         "duration": "",
-        "description": ""
+        "description": "",
+        "seasons": [
+            {
+                "number": 1,
+                "episodes": [
+                    {
+                        "number": 1,
+                        "title": "Episodio 1",
+                        "video": "https://drive.google.com/file/d/1Igbio0qpmqQiBD5RHt_fDAreCvRpRSfQ/preview",
+                        "image": ""
+                    },
+                    {
+                        "number": 2,
+                        "title": "Episodio 2",
+                        "video": "https://drive.google.com/file/d/1FiIt3jq_Tuy1uuOa6G4tuTYkczladiHo/preview",
+                        "image": ""
+                    }
+                ]
+            }
+        ],
+        "session_id": "DqCehNek_bRDn9MYiwtQlW4iXtkKlkNaL1Xd_NdywLs"
     },
     {
         "id": "serie-3",
