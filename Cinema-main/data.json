@@ -291,6 +291,10 @@
                         "image": ""
                     }
                 ]
+            },
+            {
+                "number": 2,
+                "episodes": []
             }
         ],
         "session_id": "1decbe64-d53e-441d-93be-2ec83052d795"
