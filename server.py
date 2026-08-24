@@ -4,6 +4,10 @@ import threading
 import uuid
 import time
 import base64
+import hashlib
+import hmac
+import secrets
+
 from datetime import datetime, timezone
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import urlparse, parse_qs
@@ -30,7 +34,32 @@ PORT = int(os.environ.get("PORT", 8000))
 
 
 # ============================================================
-# GITHUB - CONFIGURACIÓN
+# SEGURIDAD
+# ============================================================
+
+# PBKDF2-SHA256
+PASSWORD_HASH_ITERATIONS = 310_000
+
+# 32 bytes de entropía para sesiones
+SESSION_BYTES = 32
+
+# Una sesión puede vivir como máximo 7 días
+SESSION_MAX_AGE = 60 * 60 * 24 * 7
+
+# Si pasan 4 horas sin actividad, la sesión expira
+SESSION_IDLE_TIMEOUT = 60 * 60 * 4
+
+# Rate limiting de login
+LOGIN_MAX_ATTEMPTS = 5
+LOGIN_WINDOW_SECONDS = 15 * 60
+LOGIN_BLOCK_SECONDS = 15 * 60
+
+LOGIN_ATTEMPTS = {}
+LOGIN_ATTEMPTS_LOCK = threading.RLock()
+
+
+# ============================================================
+# GITHUB
 # ============================================================
 
 GITHUB_TOKEN = os.environ.get(
@@ -69,14 +98,11 @@ GITHUB_COMMITTER_EMAIL = os.environ.get(
 ).strip() or "cinemax-server@users.noreply.github.com"
 
 GITHUB_API_VERSION = "2026-03-10"
-
 GITHUB_API_BASE = "https://api.github.com"
 
 
 # ============================================================
-# GITHUB - ARCHIVOS PERSISTENTES
-#
-# sessions.json NO se sincroniza con GitHub.
+# ARCHIVOS PERSISTENTES
 # ============================================================
 
 GITHUB_FILES = {
@@ -94,10 +120,6 @@ DATA_LOCK = threading.RLock()
 TRASH_LOCK = threading.RLock()
 USERS_LOCK = threading.RLock()
 SESSIONS_LOCK = threading.RLock()
-
-# Importante:
-# GitHub exige que las operaciones de actualización
-# de archivos sean seriales.
 GITHUB_LOCK = threading.RLock()
 
 
@@ -109,37 +131,359 @@ def now_iso():
     return datetime.now(timezone.utc).isoformat()
 
 
+def now_epoch():
+    return time.time()
+
+
 def clean_id(value):
     return str(value or "").strip()
 
 
 # ============================================================
-# GITHUB - ESTADO
+# PASSWORDS
 # ============================================================
 
-def github_enabled():
+def hash_password(password):
     """
-    Devuelve True únicamente cuando están configuradas
-    las variables necesarias para usar GitHub.
+    Genera:
+
+    pbkdf2_sha256$iteraciones$salt$hash
     """
 
-    return bool(
-        GITHUB_TOKEN
-        and GITHUB_OWNER
-        and GITHUB_REPO
+    password = str(password)
+
+    salt = secrets.token_bytes(16)
+
+    password_hash = hashlib.pbkdf2_hmac(
+        "sha256",
+        password.encode("utf-8"),
+        salt,
+        PASSWORD_HASH_ITERATIONS
+    )
+
+    return (
+        "pbkdf2_sha256$"
+        f"{PASSWORD_HASH_ITERATIONS}$"
+        f"{base64.b64encode(salt).decode('ascii')}$"
+        f"{base64.b64encode(password_hash).decode('ascii')}"
     )
 
 
-def github_path(local_filename):
+def verify_password(password, stored_hash):
     """
-    Convierte:
-
-        C:\\...\\Cinema-main\\data.json
-
-    en:
-
-        Cinema-main/data.json
+    Comprueba una contraseña contra un hash PBKDF2.
     """
+
+    try:
+
+        parts = str(
+            stored_hash
+        ).split("$")
+
+        if len(parts) != 4:
+            return False
+
+        algorithm = parts[0]
+        iterations = int(parts[1])
+        salt_b64 = parts[2]
+        hash_b64 = parts[3]
+
+        if algorithm != "pbkdf2_sha256":
+            return False
+
+        salt = base64.b64decode(
+            salt_b64
+        )
+
+        expected = base64.b64decode(
+            hash_b64
+        )
+
+        actual = hashlib.pbkdf2_hmac(
+            "sha256",
+            str(password).encode("utf-8"),
+            salt,
+            iterations
+        )
+
+        return hmac.compare_digest(
+            actual,
+            expected
+        )
+
+    except Exception:
+        return False
+
+
+def is_password_hash(value):
+    return (
+        isinstance(value, str)
+        and value.startswith(
+            "pbkdf2_sha256$"
+        )
+    )
+
+
+def verify_user_password(user, password):
+    """
+    Soporta temporalmente dos formatos:
+
+    1. Nuevo:
+       password_hash
+
+    2. Antiguo:
+       password
+
+    Si encuentra el formato antiguo y la contraseña
+    es correcta, el usuario será migrado automáticamente.
+    """
+
+    password_hash = user.get(
+        "password_hash"
+    )
+
+    if is_password_hash(
+        password_hash
+    ):
+
+        return (
+            verify_password(
+                password,
+                password_hash
+            ),
+            False
+        )
+
+    # --------------------------------------------------------
+    # MIGRACIÓN LEGACY
+    # --------------------------------------------------------
+
+    old_password = str(
+        user.get(
+            "password",
+            ""
+        )
+    )
+
+    if old_password == "":
+        return False, False
+
+    if hmac.compare_digest(
+        old_password,
+        str(password)
+    ):
+
+        return True, True
+
+    return False, False
+
+
+def generate_session_token():
+    return secrets.token_urlsafe(
+        SESSION_BYTES
+    )
+
+
+# ============================================================
+# RATE LIMIT LOGIN
+# ============================================================
+
+def get_client_ip(handler):
+
+    try:
+        return str(
+            handler.client_address[0]
+        )
+
+    except Exception:
+        return "unknown"
+
+
+def check_login_rate_limit(ip):
+
+    current = time.time()
+
+    with LOGIN_ATTEMPTS_LOCK:
+
+        record = LOGIN_ATTEMPTS.get(
+            ip
+        )
+
+        if not record:
+            return True, 0
+
+        if (
+            current -
+            record["first"]
+            >
+            LOGIN_WINDOW_SECONDS
+        ):
+
+            del LOGIN_ATTEMPTS[ip]
+
+            return True, 0
+
+        blocked_until = record.get(
+            "blocked_until",
+            0
+        )
+
+        if blocked_until > current:
+
+            remaining = int(
+                blocked_until -
+                current
+            ) + 1
+
+            return False, remaining
+
+        return True, 0
+
+
+def register_failed_login(ip):
+
+    current = time.time()
+
+    with LOGIN_ATTEMPTS_LOCK:
+
+        record = LOGIN_ATTEMPTS.get(
+            ip
+        )
+
+        if not record:
+
+            LOGIN_ATTEMPTS[ip] = {
+                "count": 1,
+                "first": current,
+                "blocked_until": 0
+            }
+
+            return
+
+        if (
+            current -
+            record["first"]
+            >
+            LOGIN_WINDOW_SECONDS
+        ):
+
+            LOGIN_ATTEMPTS[ip] = {
+                "count": 1,
+                "first": current,
+                "blocked_until": 0
+            }
+
+            return
+
+        record["count"] += 1
+
+        if (
+            record["count"]
+            >=
+            LOGIN_MAX_ATTEMPTS
+        ):
+
+            record["blocked_until"] = (
+                current +
+                LOGIN_BLOCK_SECONDS
+            )
+
+
+def clear_login_attempts(ip):
+
+    with LOGIN_ATTEMPTS_LOCK:
+
+        LOGIN_ATTEMPTS.pop(
+            ip,
+            None
+        )
+
+
+# ============================================================
+# VALIDAR SESIÓN
+# ============================================================
+
+def session_is_valid(session):
+
+    if not isinstance(
+        session,
+        dict
+    ):
+        return False
+
+    if session.get(
+        "active"
+    ) is not True:
+
+        return False
+
+    try:
+
+        created = float(
+            session.get(
+                "created_at_epoch",
+                0
+            )
+        )
+
+        last_activity = float(
+            session.get(
+                "last_activity_epoch",
+                0
+            )
+        )
+
+    except Exception:
+
+        return False
+
+    if created <= 0:
+        return False
+
+    if last_activity <= 0:
+        return False
+
+    current = time.time()
+
+    if (
+        current -
+        created
+        >
+        SESSION_MAX_AGE
+    ):
+
+        return False
+
+    if (
+        current -
+        last_activity
+        >
+        SESSION_IDLE_TIMEOUT
+    ):
+
+        return False
+
+    return True
+
+
+# ============================================================
+# GITHUB
+# ============================================================
+
+def github_enabled():
+
+    return bool(
+        GITHUB_TOKEN
+        and
+        GITHUB_OWNER
+        and
+        GITHUB_REPO
+    )
+
+
+def github_path(
+    local_filename
+):
 
     relative_name = GITHUB_FILES.get(
         local_filename
@@ -159,9 +503,6 @@ def github_path(local_filename):
 
 
 def github_url(path):
-    """
-    Construye la URL de la API de GitHub.
-    """
 
     return (
         f"{GITHUB_API_BASE}/repos/"
@@ -172,9 +513,6 @@ def github_url(path):
 
 
 def github_headers():
-    """
-    Headers utilizados por GitHub.
-    """
 
     return {
         "Accept": "application/vnd.github+json",
@@ -184,22 +522,12 @@ def github_headers():
     }
 
 
-# ============================================================
-# GITHUB - REQUEST
-# ============================================================
-
 def github_request(
     method,
     url,
     payload=None,
     timeout=20
 ):
-    """
-    Realiza una petición HTTP a GitHub.
-
-    No utiliza requests para que el servidor
-    pueda funcionar sin instalar dependencias adicionales.
-    """
 
     body = None
 
@@ -227,6 +555,7 @@ def github_request(
             raw = response.read()
 
             if not raw:
+
                 return (
                     response.status,
                     {}
@@ -289,9 +618,8 @@ def github_request(
         return (
             0,
             {
-                "message": (
+                "message":
                     f"Error de conexión con GitHub: {e}"
-                )
             }
         )
 
@@ -305,40 +633,17 @@ def github_request(
         )
 
 
-# ============================================================
-# GITHUB - LEER ARCHIVO
-# ============================================================
-
 def github_get_file(
     local_filename
 ):
-    """
-    Obtiene un archivo JSON desde GitHub.
-
-    Devuelve:
-
-        {
-            "success": True,
-            "sha": "...",
-            "content": [...]
-        }
-
-    o:
-
-        {
-            "success": False,
-            ...
-        }
-    """
 
     if not github_enabled():
 
         return {
             "success": False,
             "enabled": False,
-            "error": (
+            "error":
                 "GitHub no está configurado."
-            )
         }
 
     path = github_path(
@@ -349,17 +654,13 @@ def github_get_file(
 
         return {
             "success": False,
-            "error": (
-                "Archivo no configurado "
-                "para persistencia GitHub."
-            )
+            "error":
+                "Archivo no configurado para GitHub."
         }
-
-    url = github_url(path)
 
     status, response = github_request(
         "GET",
-        url
+        github_url(path)
     )
 
     if status == 200:
@@ -376,8 +677,6 @@ def github_get_file(
 
         try:
 
-            # GitHub puede devolver saltos de línea
-            # dentro del Base64.
             encoded = encoded.replace(
                 "\n",
                 ""
@@ -412,10 +711,8 @@ def github_get_file(
 
             return {
                 "success": False,
-                "error": (
-                    "No se pudo decodificar "
-                    f"{path}: {e}"
-                )
+                "error":
+                    f"No se pudo decodificar {path}: {e}"
             }
 
     if status == 404:
@@ -424,50 +721,20 @@ def github_get_file(
             "success": False,
             "not_found": True,
             "status": status,
-            "error": (
+            "error":
                 f"No existe {path} en GitHub."
-            )
         }
 
     return {
         "success": False,
         "status": status,
-        "error": (
+        "error":
             response.get(
                 "message",
                 f"GitHub respondió HTTP {status}."
             )
-        )
     }
 
-
-# ============================================================
-# GITHUB - OBTENER SHA
-# ============================================================
-
-def github_get_sha(
-    local_filename
-):
-    """
-    Obtiene exclusivamente el SHA actual del archivo.
-    """
-
-    result = github_get_file(
-        local_filename
-    )
-
-    if not result.get("success"):
-
-        return None
-
-    return result.get(
-        "sha"
-    )
-
-
-# ============================================================
-# GITHUB - CREAR / ACTUALIZAR JSON
-# ============================================================
 
 def github_save_json(
     local_filename,
@@ -475,25 +742,14 @@ def github_save_json(
     commit_message=None,
     retries=3
 ):
-    """
-    Guarda un JSON en GitHub.
-
-    GitHub exige el SHA actual para actualizar
-    un archivo existente.
-
-    Si hay conflicto 409:
-        vuelve a obtener SHA
-        y reintenta.
-    """
 
     if not github_enabled():
 
         return {
             "success": False,
             "enabled": False,
-            "error": (
+            "error":
                 "GitHub no está configurado."
-            )
         }
 
     path = github_path(
@@ -504,10 +760,8 @@ def github_save_json(
 
         return {
             "success": False,
-            "error": (
-                "Archivo no configurado "
-                "para persistencia GitHub."
-            )
+            "error":
+                "Archivo no configurado para GitHub."
         }
 
     if commit_message is None:
@@ -516,10 +770,6 @@ def github_save_json(
             "CINEMAX: actualizar "
             f"{os.path.basename(local_filename)}"
         )
-
-    # --------------------------------------------------------
-    # JSON
-    # --------------------------------------------------------
 
     try:
 
@@ -537,16 +787,11 @@ def github_save_json(
 
         return {
             "success": False,
-            "error": (
+            "error":
                 f"No se pudo preparar JSON: {e}"
-            )
         }
 
     url = github_url(path)
-
-    # --------------------------------------------------------
-    # LOCK GITHUB
-    # --------------------------------------------------------
 
     with GITHUB_LOCK:
 
@@ -554,17 +799,15 @@ def github_save_json(
             retries
         ):
 
-            # -----------------------------------------------
-            # Obtener SHA actual
-            # -----------------------------------------------
-
             current = github_get_file(
                 local_filename
             )
 
             sha = None
 
-            if current.get("success"):
+            if current.get(
+                "success"
+            ):
 
                 sha = current.get(
                     "sha"
@@ -581,44 +824,33 @@ def github_save_json(
 
                 return {
                     "success": False,
-                    "error": current.get(
-                        "error",
-                        "No se pudo consultar GitHub."
-                    )
+                    "error":
+                        current.get(
+                            "error",
+                            "No se pudo consultar GitHub."
+                        )
                 }
-
-            # -----------------------------------------------
-            # Payload
-            # -----------------------------------------------
 
             payload = {
                 "message": commit_message,
                 "content": encoded,
                 "branch": GITHUB_BRANCH,
                 "committer": {
-                    "name": GITHUB_COMMITTER_NAME,
-                    "email": GITHUB_COMMITTER_EMAIL
+                    "name":
+                        GITHUB_COMMITTER_NAME,
+                    "email":
+                        GITHUB_COMMITTER_EMAIL
                 }
             }
 
-            # Si existe, GitHub exige SHA.
             if sha:
-
                 payload["sha"] = sha
-
-            # -----------------------------------------------
-            # PUT
-            # -----------------------------------------------
 
             status, response = github_request(
                 "PUT",
                 url,
                 payload
             )
-
-            # -----------------------------------------------
-            # ÉXITO
-            # -----------------------------------------------
 
             if status in (
                 200,
@@ -634,33 +866,31 @@ def github_save_json(
                     "sha"
                 )
 
-                print()
                 print(
                     "☁️ GITHUB: archivo guardado"
                 )
+
                 print(
                     f"   Archivo: {path}"
                 )
+
                 print(
-                    f"   Commit:  {commit_sha or 'OK'}"
+                    f"   Commit: {commit_sha or 'OK'}"
                 )
-                print()
 
                 return {
                     "success": True,
                     "path": path,
-                    "sha": response.get(
-                        "content",
-                        {}
-                    ).get(
-                        "sha"
-                    ),
-                    "commit_sha": commit_sha
+                    "sha":
+                        response.get(
+                            "content",
+                            {}
+                        ).get(
+                            "sha"
+                        ),
+                    "commit_sha":
+                        commit_sha
                 }
-
-            # -----------------------------------------------
-            # CONFLICTO
-            # -----------------------------------------------
 
             if status == 409:
 
@@ -671,16 +901,13 @@ def github_save_json(
                 if attempt < retries - 1:
 
                     time.sleep(
-                        0.5 * (
+                        0.5 *
+                        (
                             attempt + 1
                         )
                     )
 
                     continue
-
-            # -----------------------------------------------
-            # ERROR
-            # -----------------------------------------------
 
             error_message = response.get(
                 "message",
@@ -700,36 +927,25 @@ def github_save_json(
 
     return {
         "success": False,
-        "error": (
-            "No se pudo guardar el archivo "
-            "en GitHub después de varios intentos."
-        )
+        "error":
+            "No se pudo guardar en GitHub."
     }
 
-
-# ============================================================
-# GITHUB - SINCRONIZACIÓN INICIAL
-# ============================================================
 
 def github_restore_file(
     local_filename
 ):
-    """
-    Descarga un archivo persistente desde GitHub
-    y lo guarda localmente.
-
-    Se utiliza durante el arranque de Render.
-    """
 
     if not github_enabled():
-
         return False
 
     result = github_get_file(
         local_filename
     )
 
-    if not result.get("success"):
+    if not result.get(
+        "success"
+    ):
 
         print(
             "⚠️ GitHub no pudo restaurar:",
@@ -782,9 +998,7 @@ def github_restore_file(
     except Exception as e:
 
         print(
-            "❌ Error restaurando",
-            local_filename,
-            ":",
+            "❌ Error restaurando:",
             e
         )
 
@@ -792,24 +1006,16 @@ def github_restore_file(
 
 
 def github_initial_sync():
-    """
-    Sincroniza al arrancar el servidor:
-
-        GitHub → Render
-
-    Únicamente los archivos persistentes.
-    """
 
     if not github_enabled():
 
-        print()
         print(
             "ℹ️ GitHub Persistence: DESACTIVADA"
         )
+
         print(
             "   Se utilizará almacenamiento local."
         )
-        print()
 
         return
 
@@ -838,38 +1044,17 @@ def github_initial_sync():
 
     print()
 
-    # --------------------------------------------------------
-    # DATA
-    # --------------------------------------------------------
-
     github_restore_file(
         DATA_FILE
     )
-
-    # --------------------------------------------------------
-    # TRASH
-    # --------------------------------------------------------
 
     github_restore_file(
         TRASH_FILE
     )
 
-    # --------------------------------------------------------
-    # USERS
-    # --------------------------------------------------------
-
     github_restore_file(
         USERS_FILE
     )
-
-    # --------------------------------------------------------
-    # SESSIONS
-    # --------------------------------------------------------
-
-    # NO se restaura desde GitHub.
-    #
-    # Las sesiones son temporales y se regeneran
-    # después de reiniciar Render.
 
     print(
         "🔐 sessions.json: local/temporal"
@@ -921,7 +1106,7 @@ class CinemaXHandler(
         )
 
     # ========================================================
-    # JSON - LECTURA
+    # JSON
     # ========================================================
 
     def load_json_file(
@@ -929,92 +1114,9 @@ class CinemaXHandler(
         filename
     ):
 
-        """
-        Lee un JSON de forma segura.
-
-        Si el archivo no existe:
-            devuelve []
-
-        Si hay error:
-            intenta leer un .tmp reciente.
-
-        Nunca hace que el servidor se caiga
-        por un JSON corrupto.
-        """
-
         if not os.path.exists(
             filename
         ):
-
-            temp_candidates = []
-
-            directory = os.path.dirname(
-                filename
-            )
-
-            basename = os.path.basename(
-                filename
-            )
-
-            if os.path.exists(
-                directory
-            ):
-
-                try:
-
-                    for name in os.listdir(
-                        directory
-                    ):
-
-                        if (
-                            name.startswith(
-                                basename + "."
-                            )
-                            and
-                            name.endswith(
-                                ".tmp"
-                            )
-                        ):
-
-                            temp_candidates.append(
-                                os.path.join(
-                                    directory,
-                                    name
-                                )
-                            )
-
-                except Exception:
-                    pass
-
-            if temp_candidates:
-
-                try:
-
-                    temp_candidates.sort(
-                        key=lambda x:
-                        os.path.getmtime(x),
-                        reverse=True
-                    )
-
-                    with open(
-                        temp_candidates[0],
-                        "r",
-                        encoding="utf-8"
-                    ) as f:
-
-                        data = json.load(
-                            f
-                        )
-
-                    if isinstance(
-                        data,
-                        list
-                    ):
-
-                        return data
-
-                except Exception:
-                    pass
 
             return []
 
@@ -1042,17 +1144,7 @@ class CinemaXHandler(
         except json.JSONDecodeError as e:
 
             print(
-                f"ERROR JSON corrupto "
-                f"en {filename}: {e}"
-            )
-
-            return []
-
-        except PermissionError as e:
-
-            print(
-                f"ERROR permiso leyendo "
-                f"{filename}: {e}"
+                f"ERROR JSON corrupto en {filename}: {e}"
             )
 
             return []
@@ -1060,15 +1152,10 @@ class CinemaXHandler(
         except Exception as e:
 
             print(
-                f"ERROR leyendo "
-                f"{filename}: {e}"
+                f"ERROR leyendo {filename}: {e}"
             )
 
             return []
-
-    # ========================================================
-    # JSON - ESCRITURA SEGURA
-    # ========================================================
 
     def save_json_file(
         self,
@@ -1077,22 +1164,8 @@ class CinemaXHandler(
         github_commit_message=None
     ):
 
-        """
-        Escritura segura local + GitHub.
-
-        Para archivos persistentes:
-
-            Local
-              ↓
-            GitHub
-
-        sessions.json NO se sube a GitHub.
-        """
-
         os.makedirs(
-            os.path.dirname(
-                filename
-            ),
+            os.path.dirname(filename),
             exist_ok=True
         )
 
@@ -1108,12 +1181,6 @@ class CinemaXHandler(
             directory,
             f"{basename}.{uuid.uuid4().hex}.tmp"
         )
-
-        last_error = None
-
-        # ----------------------------------------------------
-        # LOCAL
-        # ----------------------------------------------------
 
         try:
 
@@ -1135,72 +1202,37 @@ class CinemaXHandler(
                 f.flush()
 
                 try:
-
                     os.fsync(
                         f.fileno()
                     )
-
                 except Exception:
                     pass
 
-            for attempt in range(
-                5
-            ):
-
-                try:
-
-                    os.replace(
-                        temp,
-                        filename
-                    )
-
-                    last_error = None
-
-                    break
-
-                except PermissionError as e:
-
-                    last_error = e
-
-                    if attempt < 4:
-
-                        time.sleep(
-                            0.15
-                        )
-
-            if last_error:
-
-                raise last_error
+            os.replace(
+                temp,
+                filename
+            )
 
         except Exception as e:
 
             print(
-                f"ERROR guardando "
-                f"{filename}: {e}"
+                f"ERROR guardando {filename}: {e}"
             )
 
             try:
 
-                if os.path.exists(
-                    temp
-                ):
-
-                    os.remove(
-                        temp
-                    )
+                if os.path.exists(temp):
+                    os.remove(temp)
 
             except Exception:
                 pass
 
             return False
 
-        # ----------------------------------------------------
-        # GITHUB
-        # ----------------------------------------------------
-
         if (
             github_enabled()
-            and filename in GITHUB_FILES
+            and
+            filename in GITHUB_FILES
         ):
 
             github_result = github_save_json(
@@ -1213,42 +1245,26 @@ class CinemaXHandler(
                 "success"
             ):
 
-                print()
                 print(
                     "⚠️ LOCAL GUARDADO"
                 )
-                print(
-                    "❌ GITHUB NO GUARDADO"
-                )
-                print(
-                    "Archivo:",
-                    filename
-                )
-                print(
-                    "Error:",
-                    github_result.get(
-                        "error"
-                    )
-                )
-                print()
 
-                # Muy importante:
-                # devolvemos False para que el panel
-                # sepa que la persistencia completa
-                # no terminó correctamente.
+                print(
+                    "❌ GITHUB NO GUARDADO:",
+                    github_result.get("error")
+                )
 
                 return False
 
         return True
 
     # ========================================================
-    # ARCHIVOS
+    # LOAD
     # ========================================================
 
     def load_catalog(self):
 
         with DATA_LOCK:
-
             return self.load_json_file(
                 DATA_FILE
             )
@@ -1256,7 +1272,6 @@ class CinemaXHandler(
     def load_trash(self):
 
         with TRASH_LOCK:
-
             return self.load_json_file(
                 TRASH_FILE
             )
@@ -1264,7 +1279,6 @@ class CinemaXHandler(
     def load_users(self):
 
         with USERS_LOCK:
-
             return self.load_json_file(
                 USERS_FILE
             )
@@ -1272,13 +1286,12 @@ class CinemaXHandler(
     def load_sessions(self):
 
         with SESSIONS_LOCK:
-
             return self.load_json_file(
                 SESSIONS_FILE
             )
 
     # ========================================================
-    # GUARDADOS
+    # SAVE
     # ========================================================
 
     def save_catalog(
@@ -1327,20 +1340,20 @@ class CinemaXHandler(
 
         with SESSIONS_LOCK:
 
-            # sessions.json NO va a GitHub.
             return self.save_json_file(
                 SESSIONS_FILE,
                 data
             )
 
     # ========================================================
-    # RESPUESTA JSON
+    # RESPUESTA
     # ========================================================
 
     def send_json(
         self,
         data,
-        status=200
+        status=200,
+        extra_headers=None
     ):
 
         body = json.dumps(
@@ -1394,18 +1407,24 @@ class CinemaXHandler(
             "Content-Type, X-Session-ID, Authorization, Cache-Control"
         )
 
+        if extra_headers:
+
+            for key, value in extra_headers.items():
+
+                self.send_header(
+                    key,
+                    value
+                )
+
         self.end_headers()
 
         try:
+            self.wfile.write(body)
 
-            self.wfile.write(
-                body
-            )
-
-        except BrokenPipeError:
-            pass
-
-        except ConnectionResetError:
+        except (
+            BrokenPipeError,
+            ConnectionResetError
+        ):
             pass
 
     # ========================================================
@@ -1442,15 +1461,13 @@ class CinemaXHandler(
         if not raw:
 
             raise ValueError(
-                "El cuerpo de la petición está vacío."
+                "El cuerpo está vacío."
             )
 
         try:
 
             data = json.loads(
-                raw.decode(
-                    "utf-8"
-                )
+                raw.decode("utf-8")
             )
 
         except json.JSONDecodeError:
@@ -1471,16 +1488,12 @@ class CinemaXHandler(
         return data
 
     # ========================================================
-    # SESIONES
+    # SESSION ID
     # ========================================================
 
     def get_session_id_from_request(
         self
     ):
-
-        # ----------------------------------------------------
-        # X-Session-ID
-        # ----------------------------------------------------
 
         value = clean_id(
             self.headers.get(
@@ -1489,12 +1502,7 @@ class CinemaXHandler(
         )
 
         if value:
-
             return value
-
-        # ----------------------------------------------------
-        # Authorization Bearer
-        # ----------------------------------------------------
 
         authorization = clean_id(
             self.headers.get(
@@ -1511,12 +1519,7 @@ class CinemaXHandler(
             )
 
             if token:
-
                 return token
-
-        # ----------------------------------------------------
-        # Cookie
-        # ----------------------------------------------------
 
         cookie = clean_id(
             self.headers.get(
@@ -1528,9 +1531,7 @@ class CinemaXHandler(
 
             cookies = {}
 
-            for part in cookie.split(
-                ";"
-            ):
+            for part in cookie.split(";"):
 
                 if "=" in part:
 
@@ -1551,17 +1552,11 @@ class CinemaXHandler(
                 "token"
             ):
 
-                if cookies.get(
-                    key
-                ):
+                if cookies.get(key):
 
                     return clean_id(
                         cookies[key]
                     )
-
-        # ----------------------------------------------------
-        # Query
-        # ----------------------------------------------------
 
         try:
 
@@ -1586,9 +1581,7 @@ class CinemaXHandler(
                 if (
                     values
                     and
-                    clean_id(
-                        values[0]
-                    )
+                    clean_id(values[0])
                 ):
 
                     return clean_id(
@@ -1601,7 +1594,7 @@ class CinemaXHandler(
         return None
 
     # ========================================================
-    # BUSCAR SESIÓN
+    # FIND SESSION
     # ========================================================
 
     def find_session(
@@ -1614,7 +1607,6 @@ class CinemaXHandler(
         )
 
         if not session_id:
-
             return None, None
 
         sessions = self.load_sessions()
@@ -1627,25 +1619,21 @@ class CinemaXHandler(
                 session,
                 dict
             ):
-
                 continue
 
-            if (
+            if hmac.compare_digest(
                 clean_id(
                     session.get("id")
-                )
-                == session_id
+                ),
+                session_id
             ):
 
-                return (
-                    session,
-                    index
-                )
+                return session, index
 
         return None, None
 
     # ========================================================
-    # BUSCAR USUARIO
+    # FIND USER
     # ========================================================
 
     def find_user_by_id(
@@ -1658,7 +1646,6 @@ class CinemaXHandler(
         )
 
         if not user_id:
-
             return None
 
         users = self.load_users()
@@ -1669,14 +1656,14 @@ class CinemaXHandler(
                 user,
                 dict
             ):
-
                 continue
 
             if (
                 clean_id(
                     user.get("id")
                 )
-                == user_id
+                ==
+                user_id
             ):
 
                 return user
@@ -1684,7 +1671,7 @@ class CinemaXHandler(
         return None
 
     # ========================================================
-    # INVALIDAR SESIONES
+    # INVALIDATE
     # ========================================================
 
     def invalidate_user_sessions(
@@ -1703,8 +1690,8 @@ class CinemaXHandler(
             )
 
             changed = False
-
-            current_time = now_iso()
+            current = now_iso()
+            epoch = now_epoch()
 
             for session in sessions:
 
@@ -1712,24 +1699,19 @@ class CinemaXHandler(
                     session,
                     dict
                 ):
-
                     continue
 
                 if (
                     clean_id(
-                        session.get(
-                            "user_id"
-                        )
+                        session.get("user_id")
                     )
-                    == user_id
+                    ==
+                    user_id
                 ):
 
-                    if (
-                        session.get(
-                            "active"
-                        )
-                        is not False
-                    ):
+                    if session.get(
+                        "active"
+                    ) is not False:
 
                         changed = True
 
@@ -1739,11 +1721,15 @@ class CinemaXHandler(
 
                     session[
                         "last_activity"
-                    ] = current_time
+                    ] = current
+
+                    session[
+                        "last_activity_epoch"
+                    ] = epoch
 
                     session[
                         "disconnected_at"
-                    ] = current_time
+                    ] = current
 
             if changed:
 
@@ -1755,7 +1741,58 @@ class CinemaXHandler(
             return changed
 
     # ========================================================
-    # ADMIN
+    # CLEAN EXPIRED SESSIONS
+    # ========================================================
+
+    def cleanup_expired_sessions(
+        self
+    ):
+
+        with SESSIONS_LOCK:
+
+            sessions = self.load_json_file(
+                SESSIONS_FILE
+            )
+
+            changed = False
+            current = now_iso()
+
+            for session in sessions:
+
+                if not isinstance(
+                    session,
+                    dict
+                ):
+                    continue
+
+                if (
+                    session.get("active")
+                    is True
+                    and
+                    not session_is_valid(
+                        session
+                    )
+                ):
+
+                    session[
+                        "active"
+                    ] = False
+
+                    session[
+                        "expired_at"
+                    ] = current
+
+                    changed = True
+
+            if changed:
+
+                self.save_json_file(
+                    SESSIONS_FILE,
+                    sessions
+                )
+
+    # ========================================================
+    # REQUIRE ADMIN
     # ========================================================
 
     def require_admin(
@@ -1776,17 +1813,17 @@ class CinemaXHandler(
                 self.send_json(
                     {
                         "success": False,
-                        "error": (
-                            "Sesión de administrador requerida."
-                        ),
-                        "code": "SESSION_REQUIRED"
+                        "error":
+                            "Sesión de administrador requerida.",
+                        "code":
+                            "SESSION_REQUIRED"
                     },
                     401
                 )
 
                 return None
 
-            session, _ = self.find_session(
+            session, index = self.find_session(
                 session_id
             )
 
@@ -1795,8 +1832,56 @@ class CinemaXHandler(
                 self.send_json(
                     {
                         "success": False,
-                        "error": "Sesión inválida.",
-                        "code": "INVALID_SESSION"
+                        "error":
+                            "Sesión inválida.",
+                        "code":
+                            "INVALID_SESSION"
+                    },
+                    401
+                )
+
+                return None
+
+            # ------------------------------------------------
+            # EXPIRACIÓN
+            # ------------------------------------------------
+
+            if not session_is_valid(
+                session
+            ):
+
+                with SESSIONS_LOCK:
+
+                    sessions = self.load_json_file(
+                        SESSIONS_FILE
+                    )
+
+                    if (
+                        index is not None
+                        and
+                        index < len(sessions)
+                    ):
+
+                        sessions[index][
+                            "active"
+                        ] = False
+
+                        sessions[index][
+                            "expired_at"
+                        ] = now_iso()
+
+                        self.save_json_file(
+                            SESSIONS_FILE,
+                            sessions
+                        )
+
+                self.send_json(
+                    {
+                        "success": False,
+                        "error":
+                            "La sesión ha expirado.",
+                        "code":
+                            "SESSION_EXPIRED"
                     },
                     401
                 )
@@ -1810,8 +1895,10 @@ class CinemaXHandler(
                 self.send_json(
                     {
                         "success": False,
-                        "error": "La sesión ha sido cerrada.",
-                        "code": "SESSION_INACTIVE"
+                        "error":
+                            "La sesión ha sido cerrada.",
+                        "code":
+                            "SESSION_INACTIVE"
                     },
                     401
                 )
@@ -1837,8 +1924,10 @@ class CinemaXHandler(
                 self.send_json(
                     {
                         "success": False,
-                        "error": "Usuario no encontrado.",
-                        "code": "USER_NOT_FOUND"
+                        "error":
+                            "Usuario no encontrado.",
+                        "code":
+                            "USER_NOT_FOUND"
                     },
                     401
                 )
@@ -1857,16 +1946,50 @@ class CinemaXHandler(
                 self.send_json(
                     {
                         "success": False,
-                        "error": (
-                            "Acceso denegado. "
-                            "Se requiere una cuenta de administrador."
-                        ),
-                        "code": "ADMIN_REQUIRED"
+                        "error":
+                            "Acceso denegado.",
+                        "code":
+                            "ADMIN_REQUIRED"
                     },
                     403
                 )
 
                 return None
+
+            # ------------------------------------------------
+            # REFRESCAR ACTIVIDAD
+            # ------------------------------------------------
+
+            with SESSIONS_LOCK:
+
+                sessions = self.load_json_file(
+                    SESSIONS_FILE
+                )
+
+                for stored in sessions:
+
+                    if (
+                        clean_id(
+                            stored.get("id")
+                        )
+                        ==
+                        session_id
+                    ):
+
+                        stored[
+                            "last_activity"
+                        ] = now_iso()
+
+                        stored[
+                            "last_activity_epoch"
+                        ] = now_epoch()
+
+                        break
+
+                self.save_json_file(
+                    SESSIONS_FILE,
+                    sessions
+                )
 
             return user
 
@@ -1880,8 +2003,8 @@ class CinemaXHandler(
             self.send_json(
                 {
                     "success": False,
-                    "error": "Error verificando permisos.",
-                    "details": str(e)
+                    "error":
+                        "Error verificando permisos."
                 },
                 500
             )
@@ -1934,10 +2057,6 @@ class CinemaXHandler(
             self.path
         ).path
 
-        # ----------------------------------------------------
-        # HEALTH
-        # ----------------------------------------------------
-
         if path == "/api/health":
 
             self.send_json(
@@ -1946,27 +2065,36 @@ class CinemaXHandler(
                     "server": "CINEMAX",
                     "status": "online",
                     "time": now_iso(),
+                    "security": {
+                        "password_hash":
+                            "PBKDF2-SHA256",
+                        "session_max_age":
+                            SESSION_MAX_AGE,
+                        "idle_timeout":
+                            SESSION_IDLE_TIMEOUT,
+                        "rate_limit":
+                            True
+                    },
                     "github": {
-                        "enabled": github_enabled(),
-                        "repository": (
-                            f"{GITHUB_OWNER}/{GITHUB_REPO}"
-                            if github_enabled()
-                            else None
-                        ),
-                        "branch": (
-                            GITHUB_BRANCH
-                            if github_enabled()
-                            else None
-                        )
+                        "enabled":
+                            github_enabled(),
+                        "repository":
+                            (
+                                f"{GITHUB_OWNER}/{GITHUB_REPO}"
+                                if github_enabled()
+                                else None
+                            ),
+                        "branch":
+                            (
+                                GITHUB_BRANCH
+                                if github_enabled()
+                                else None
+                            )
                     }
                 }
             )
 
             return
-
-        # ----------------------------------------------------
-        # CATÁLOGO
-        # ----------------------------------------------------
 
         if path == "/api/catalog":
 
@@ -1976,14 +2104,9 @@ class CinemaXHandler(
 
             return
 
-        # ----------------------------------------------------
-        # PAPELERA
-        # ----------------------------------------------------
-
         if path == "/api/trash":
 
             if not self.require_admin():
-
                 return
 
             self.send_json(
@@ -1992,32 +2115,21 @@ class CinemaXHandler(
 
             return
 
-        # ----------------------------------------------------
-        # USUARIOS
-        # ----------------------------------------------------
-
         if path == "/api/users":
 
             if not self.require_admin():
-
                 return
 
             self.send_users()
 
             return
 
-        # ----------------------------------------------------
-        # SESIÓN
-        # ----------------------------------------------------
-
         if path.startswith(
             "/api/users/session/"
         ):
 
             session_id = path[
-                len(
-                    "/api/users/session/"
-                ):
+                len("/api/users/session/"):
             ]
 
             self.check_session(
@@ -2025,10 +2137,6 @@ class CinemaXHandler(
             )
 
             return
-
-        # ----------------------------------------------------
-        # ARCHIVOS
-        # ----------------------------------------------------
 
         super().do_GET()
 
@@ -2044,36 +2152,21 @@ class CinemaXHandler(
             self.path
         ).path
 
-        # ----------------------------------------------------
-        # AGREGAR CATÁLOGO
-        # ----------------------------------------------------
-
         if path == "/api/catalog":
 
             if not self.require_admin():
-
                 return
 
             self.add_catalog_item()
-
             return
 
-        # ----------------------------------------------------
-        # RESTAURAR PAPELERA
-        # ----------------------------------------------------
-
         if (
-            path.startswith(
-                "/api/trash/"
-            )
+            path.startswith("/api/trash/")
             and
-            path.endswith(
-                "/restore"
-            )
+            path.endswith("/restore")
         ):
 
             if not self.require_admin():
-
                 return
 
             item_id = path[
@@ -2087,52 +2180,28 @@ class CinemaXHandler(
 
             return
 
-        # ----------------------------------------------------
-        # REGISTRO
-        # ----------------------------------------------------
-
         if path == "/api/users/register":
 
             self.user_register()
-
             return
-
-        # ----------------------------------------------------
-        # LOGIN
-        # ----------------------------------------------------
 
         if path == "/api/users/login":
 
             self.user_login()
-
             return
-
-        # ----------------------------------------------------
-        # LOGOUT
-        # ----------------------------------------------------
 
         if path == "/api/users/logout":
 
             self.user_logout()
-
             return
 
-        # ----------------------------------------------------
-        # DESCONECTAR
-        # ----------------------------------------------------
-
         if (
-            path.startswith(
-                "/api/users/"
-            )
+            path.startswith("/api/users/")
             and
-            path.endswith(
-                "/disconnect"
-            )
+            path.endswith("/disconnect")
         ):
 
             if not self.require_admin():
-
                 return
 
             user_id = path[
@@ -2163,31 +2232,20 @@ class CinemaXHandler(
             self.path
         ).path
 
-        # ----------------------------------------------------
-        # EDITAR CATÁLOGO
-        # ----------------------------------------------------
-
         if path.startswith(
             "/api/catalog/"
         ):
 
             if not self.require_admin():
-
                 return
 
-            item_id = path[
-                len("/api/catalog/"):
-            ]
-
             self.update_catalog_item(
-                item_id
+                path[
+                    len("/api/catalog/"):
+                ]
             )
 
             return
-
-        # ----------------------------------------------------
-        # EDITAR USUARIO
-        # ----------------------------------------------------
 
         if path.startswith(
             "/api/users/"
@@ -2200,7 +2258,8 @@ class CinemaXHandler(
                 self.send_json(
                     {
                         "success": False,
-                        "error": "Ruta no válida."
+                        "error":
+                            "Ruta no válida."
                     },
                     400
                 )
@@ -2208,15 +2267,12 @@ class CinemaXHandler(
                 return
 
             if not self.require_admin():
-
                 return
 
-            user_id = path[
-                len("/api/users/"):
-            ]
-
             self.update_user(
-                user_id
+                path[
+                    len("/api/users/"):
+                ]
             )
 
             return
@@ -2238,16 +2294,11 @@ class CinemaXHandler(
             self.path
         ).path
 
-        # ----------------------------------------------------
-        # ELIMINAR CATÁLOGO
-        # ----------------------------------------------------
-
         if path.startswith(
             "/api/catalog/"
         ):
 
             if not self.require_admin():
-
                 return
 
             self.delete_catalog_item(
@@ -2258,16 +2309,11 @@ class CinemaXHandler(
 
             return
 
-        # ----------------------------------------------------
-        # ELIMINAR PAPELERA
-        # ----------------------------------------------------
-
         if path.startswith(
             "/api/trash/"
         ):
 
             if not self.require_admin():
-
                 return
 
             self.permanently_delete_trash_item(
@@ -2278,16 +2324,11 @@ class CinemaXHandler(
 
             return
 
-        # ----------------------------------------------------
-        # ELIMINAR USUARIO
-        # ----------------------------------------------------
-
         if path.startswith(
             "/api/users/"
         ):
 
             if not self.require_admin():
-
                 return
 
             self.delete_user(
@@ -2304,7 +2345,7 @@ class CinemaXHandler(
         )
 
     # ========================================================
-    # USUARIOS
+    # USERS
     # ========================================================
 
     def send_users(
@@ -2320,14 +2361,11 @@ class CinemaXHandler(
             )
             for s in sessions
             if (
-                isinstance(
-                    s,
-                    dict
-                )
+                isinstance(s, dict)
                 and
-                s.get(
-                    "active"
-                ) is True
+                s.get("active") is True
+                and
+                session_is_valid(s)
             )
         }
 
@@ -2339,33 +2377,23 @@ class CinemaXHandler(
                 user,
                 dict
             ):
-
                 continue
 
             user_id = clean_id(
-                user.get(
-                    "id"
-                )
+                user.get("id")
             )
 
             result.append(
                 {
                     "id": user_id,
-                    "username": user.get(
-                        "username",
-                        ""
-                    ),
-                    "email": user.get(
-                        "email",
-                        ""
-                    ),
-                    "role": user.get(
-                        "role",
-                        "user"
-                    ),
-                    "connected": (
+                    "username":
+                        user.get("username", ""),
+                    "email":
+                        user.get("email", ""),
+                    "role":
+                        user.get("role", "user"),
+                    "connected":
                         user_id in active_ids
-                    )
                 }
             )
 
@@ -2374,7 +2402,7 @@ class CinemaXHandler(
         )
 
     # ========================================================
-    # REGISTRO
+    # REGISTER
     # ========================================================
 
     def user_register(
@@ -2386,15 +2414,11 @@ class CinemaXHandler(
             data = self.read_body()
 
             username = clean_id(
-                data.get(
-                    "username"
-                )
+                data.get("username")
             )
 
             email = clean_id(
-                data.get(
-                    "email"
-                )
+                data.get("email")
             ).lower()
 
             password = str(
@@ -2409,10 +2433,8 @@ class CinemaXHandler(
                 self.send_json(
                     {
                         "success": False,
-                        "error": (
-                            "El nombre de usuario "
-                            "debe tener al menos 3 caracteres."
-                        )
+                        "error":
+                            "El nombre de usuario debe tener al menos 3 caracteres."
                     },
                     400
                 )
@@ -2424,10 +2446,8 @@ class CinemaXHandler(
                 self.send_json(
                     {
                         "success": False,
-                        "error": (
-                            "El nombre de usuario "
-                            "no puede superar 20 caracteres."
-                        )
+                        "error":
+                            "El nombre de usuario no puede superar 20 caracteres."
                     },
                     400
                 )
@@ -2439,10 +2459,8 @@ class CinemaXHandler(
                 self.send_json(
                     {
                         "success": False,
-                        "error": (
-                            "El correo electrónico "
-                            "es obligatorio."
-                        )
+                        "error":
+                            "El correo electrónico es obligatorio."
                     },
                     400
                 )
@@ -2454,10 +2472,8 @@ class CinemaXHandler(
                 self.send_json(
                     {
                         "success": False,
-                        "error": (
-                            "La contraseña "
-                            "debe tener al menos 6 caracteres."
-                        )
+                        "error":
+                            "La contraseña debe tener al menos 6 caracteres."
                     },
                     400
                 )
@@ -2470,20 +2486,17 @@ class CinemaXHandler(
 
                 if (
                     clean_id(
-                        user.get(
-                            "email"
-                        )
+                        user.get("email")
                     ).lower()
-                    == email
+                    ==
+                    email
                 ):
 
                     self.send_json(
                         {
                             "success": False,
-                            "error": (
-                                "Este correo electrónico "
-                                "ya está registrado."
-                            )
+                            "error":
+                                "Este correo electrónico ya está registrado."
                         },
                         409
                     )
@@ -2492,20 +2505,17 @@ class CinemaXHandler(
 
                 if (
                     clean_id(
-                        user.get(
-                            "username"
-                        )
+                        user.get("username")
                     ).lower()
-                    == username.lower()
+                    ==
+                    username.lower()
                 ):
 
                     self.send_json(
                         {
                             "success": False,
-                            "error": (
-                                "Este nombre de usuario "
-                                "ya está en uso."
-                            )
+                            "error":
+                                "Este nombre de usuario ya está en uso."
                         },
                         409
                     )
@@ -2518,7 +2528,14 @@ class CinemaXHandler(
                 ),
                 "username": username,
                 "email": email,
-                "password": password,
+
+                # ====================================================
+                # YA NO GUARDAMOS password EN TEXTO PLANO
+                # ====================================================
+
+                "password_hash":
+                    hash_password(password),
+
                 "role": "user",
                 "createdAt": now_iso()
             }
@@ -2534,10 +2551,8 @@ class CinemaXHandler(
                 self.send_json(
                     {
                         "success": False,
-                        "error": (
-                            "No se pudo guardar "
-                            "el usuario."
-                        )
+                        "error":
+                            "No se pudo guardar el usuario."
                     },
                     500
                 )
@@ -2547,22 +2562,17 @@ class CinemaXHandler(
             self.send_json(
                 {
                     "success": True,
-                    "message": (
-                        "Cuenta creada correctamente."
-                    ),
+                    "message":
+                        "Cuenta creada correctamente.",
                     "user": {
-                        "id": new_user[
-                            "id"
-                        ],
-                        "username": new_user[
-                            "username"
-                        ],
-                        "email": new_user[
-                            "email"
-                        ],
-                        "role": new_user[
-                            "role"
-                        ]
+                        "id":
+                            new_user["id"],
+                        "username":
+                            new_user["username"],
+                        "email":
+                            new_user["email"],
+                        "role":
+                            new_user["role"]
                     }
                 },
                 201
@@ -2591,14 +2601,41 @@ class CinemaXHandler(
         self
     ):
 
+        ip = get_client_ip(
+            self
+        )
+
+        allowed, remaining = (
+            check_login_rate_limit(ip)
+        )
+
+        if not allowed:
+
+            self.send_json(
+                {
+                    "success": False,
+                    "error":
+                        "Demasiados intentos de inicio de sesión.",
+                    "code":
+                        "LOGIN_RATE_LIMIT",
+                    "retry_after":
+                        remaining
+                },
+                429,
+                {
+                    "Retry-After":
+                        str(remaining)
+                }
+            )
+
+            return
+
         try:
 
             data = self.read_body()
 
             email = clean_id(
-                data.get(
-                    "email"
-                )
+                data.get("email")
             ).lower()
 
             password = str(
@@ -2617,10 +2654,8 @@ class CinemaXHandler(
                 self.send_json(
                     {
                         "success": False,
-                        "error": (
-                            "Correo y contraseña "
-                            "son obligatorios."
-                        )
+                        "error":
+                            "Correo y contraseña son obligatorios."
                     },
                     400
                 )
@@ -2630,54 +2665,91 @@ class CinemaXHandler(
             users = self.load_users()
 
             found_user = None
+            needs_migration = False
 
             for user in users:
 
                 if (
                     clean_id(
-                        user.get(
-                            "email"
-                        )
+                        user.get("email")
                     ).lower()
-                    == email
-                    and
-                    str(
-                        user.get(
-                            "password",
-                            ""
-                        )
-                    )
-                    == password
+                    !=
+                    email
                 ):
+                    continue
+
+                valid, legacy = (
+                    verify_user_password(
+                        user,
+                        password
+                    )
+                )
+
+                if valid:
 
                     found_user = user
+                    needs_migration = legacy
 
-                    break
+                break
 
             if found_user is None:
+
+                register_failed_login(
+                    ip
+                )
 
                 self.send_json(
                     {
                         "success": False,
-                        "error": (
-                            "Correo electrónico "
-                            "o contraseña incorrectos."
-                        )
+                        "error":
+                            "Correo electrónico o contraseña incorrectos."
                     },
                     401
                 )
 
                 return
 
-            user_id = clean_id(
-                found_user.get(
-                    "id"
-                )
+            clear_login_attempts(
+                ip
             )
 
-            # ------------------------------------------------
-            # UNA SOLA SESIÓN ACTIVA
-            # ------------------------------------------------
+            # ====================================================
+            # MIGRACIÓN AUTOMÁTICA
+            # ====================================================
+
+            if needs_migration:
+
+                print(
+                    "🔐 MIGRANDO CONTRASEÑA LEGACY:",
+                    found_user.get(
+                        "username",
+                        ""
+                    )
+                )
+
+                found_user[
+                    "password_hash"
+                ] = hash_password(
+                    password
+                )
+
+                # Eliminamos el password antiguo
+                found_user.pop(
+                    "password",
+                    None
+                )
+
+                self.save_users(
+                    users
+                )
+
+            user_id = clean_id(
+                found_user.get("id")
+            )
+
+            # ====================================================
+            # UNA SOLA SESIÓN
+            # ====================================================
 
             with SESSIONS_LOCK:
 
@@ -2685,29 +2757,49 @@ class CinemaXHandler(
                     SESSIONS_FILE
                 )
 
-                sessions = [
-                    s
-                    for s in sessions
+                current = now_iso()
+                epoch = now_epoch()
+
+                for session in sessions:
+
                     if (
                         clean_id(
-                            s.get(
+                            session.get(
                                 "user_id"
                             )
                         )
-                        != user_id
-                    )
-                ]
+                        ==
+                        user_id
+                    ):
 
-                session_id = str(
-                    uuid.uuid4()
+                        session[
+                            "active"
+                        ] = False
+
+                        session[
+                            "replaced_at"
+                        ] = current
+
+                session_id = (
+                    generate_session_token()
                 )
 
                 sessions.append(
                     {
-                        "id": session_id,
-                        "user_id": user_id,
-                        "active": True,
-                        "last_activity": now_iso()
+                        "id":
+                            session_id,
+                        "user_id":
+                            user_id,
+                        "active":
+                            True,
+                        "created_at":
+                            current,
+                        "created_at_epoch":
+                            epoch,
+                        "last_activity":
+                            current,
+                        "last_activity_epoch":
+                            epoch
                     }
                 )
 
@@ -2721,10 +2813,8 @@ class CinemaXHandler(
                 self.send_json(
                     {
                         "success": False,
-                        "error": (
-                            "No se pudo crear "
-                            "la sesión."
-                        )
+                        "error":
+                            "No se pudo crear la sesión."
                     },
                     500
                 )
@@ -2767,8 +2857,13 @@ class CinemaXHandler(
             )
 
             print(
-                "Session:",
-                session_id
+                "🔐 Autenticación:",
+                "PBKDF2-SHA256"
+            )
+
+            print(
+                "🔑 Sesión:",
+                "token seguro generado"
             )
 
             print(
@@ -2776,30 +2871,51 @@ class CinemaXHandler(
             )
             print()
 
+            # ====================================================
+            # COOKIE HTTPONLY
+            # ====================================================
+
+            cookie = (
+                "session_id="
+                + session_id
+                + "; Path=/; HttpOnly; SameSite=Lax"
+            )
+
             self.send_json(
                 {
                     "success": True,
-                    "message": (
-                        "Inicio de sesión correcto."
-                    ),
-                    "session_id": session_id,
-                    "sessionId": session_id,
-                    "token": session_id,
+                    "message":
+                        "Inicio de sesión correcto.",
+                    "session_id":
+                        session_id,
+                    "sessionId":
+                        session_id,
+                    "token":
+                        session_id,
                     "user": {
-                        "id": user_id,
-                        "username": found_user.get(
-                            "username",
-                            ""
-                        ),
-                        "email": found_user.get(
-                            "email",
-                            ""
-                        ),
-                        "role": found_user.get(
-                            "role",
-                            "user"
-                        )
+                        "id":
+                            user_id,
+                        "username":
+                            found_user.get(
+                                "username",
+                                ""
+                            ),
+                        "email":
+                            found_user.get(
+                                "email",
+                                ""
+                            ),
+                        "role":
+                            found_user.get(
+                                "role",
+                                "user"
+                            )
                     }
+                },
+                200,
+                {
+                    "Set-Cookie":
+                        cookie
                 }
             )
 
@@ -2813,7 +2929,8 @@ class CinemaXHandler(
             self.send_json(
                 {
                     "success": False,
-                    "error": str(e)
+                    "error":
+                        "Error interno durante el inicio de sesión."
                 },
                 500
             )
@@ -2830,9 +2947,7 @@ class CinemaXHandler(
         try:
 
             session_id = (
-                clean_id(
-                    session_id
-                )
+                clean_id(session_id)
                 or
                 self.get_session_id_from_request()
             )
@@ -2843,16 +2958,15 @@ class CinemaXHandler(
                     {
                         "success": False,
                         "active": False,
-                        "error": (
+                        "error":
                             "Sesión no especificada."
-                        )
                     },
                     400
                 )
 
                 return
 
-            session, _ = self.find_session(
+            session, index = self.find_session(
                 session_id
             )
 
@@ -2862,26 +2976,53 @@ class CinemaXHandler(
                     {
                         "success": False,
                         "active": False,
-                        "error": "Sesión inválida.",
-                        "code": "INVALID_SESSION"
+                        "error":
+                            "Sesión inválida.",
+                        "code":
+                            "INVALID_SESSION"
                     },
                     401
                 )
 
                 return
 
-            if session.get(
-                "active"
-            ) is not True:
+            if not session_is_valid(
+                session
+            ):
+
+                with SESSIONS_LOCK:
+
+                    sessions = self.load_json_file(
+                        SESSIONS_FILE
+                    )
+
+                    if (
+                        index is not None
+                        and
+                        index < len(sessions)
+                    ):
+
+                        sessions[index][
+                            "active"
+                        ] = False
+
+                        sessions[index][
+                            "expired_at"
+                        ] = now_iso()
+
+                        self.save_json_file(
+                            SESSIONS_FILE,
+                            sessions
+                        )
 
                 self.send_json(
                     {
                         "success": False,
                         "active": False,
-                        "error": (
-                            "La sesión ha sido cerrada."
-                        ),
-                        "code": "SESSION_INACTIVE"
+                        "error":
+                            "La sesión ha expirado.",
+                        "code":
+                            "SESSION_EXPIRED"
                     },
                     401
                 )
@@ -2889,9 +3030,7 @@ class CinemaXHandler(
                 return
 
             user_id = clean_id(
-                session.get(
-                    "user_id"
-                )
+                session.get("user_id")
             )
 
             user = self.find_user_by_id(
@@ -2908,37 +3047,76 @@ class CinemaXHandler(
                     {
                         "success": False,
                         "active": False,
-                        "error": (
-                            "El usuario ya no existe."
-                        ),
-                        "code": "USER_NOT_FOUND"
+                        "error":
+                            "El usuario ya no existe.",
+                        "code":
+                            "USER_NOT_FOUND"
                     },
                     401
                 )
 
                 return
 
+            # Actualizar actividad
+            with SESSIONS_LOCK:
+
+                sessions = self.load_json_file(
+                    SESSIONS_FILE
+                )
+
+                for stored in sessions:
+
+                    if (
+                        clean_id(
+                            stored.get("id")
+                        )
+                        ==
+                        session_id
+                    ):
+
+                        stored[
+                            "last_activity"
+                        ] = now_iso()
+
+                        stored[
+                            "last_activity_epoch"
+                        ] = now_epoch()
+
+                        break
+
+                self.save_json_file(
+                    SESSIONS_FILE,
+                    sessions
+                )
+
             self.send_json(
                 {
                     "success": True,
                     "active": True,
-                    "session_id": session_id,
-                    "sessionId": session_id,
-                    "token": session_id,
+                    "session_id":
+                        session_id,
+                    "sessionId":
+                        session_id,
+                    "token":
+                        session_id,
                     "user": {
-                        "id": user_id,
-                        "username": user.get(
-                            "username",
-                            ""
-                        ),
-                        "email": user.get(
-                            "email",
-                            ""
-                        ),
-                        "role": user.get(
-                            "role",
-                            "user"
-                        )
+                        "id":
+                            user_id,
+                        "username":
+                            user.get(
+                                "username",
+                                ""
+                            ),
+                        "email":
+                            user.get(
+                                "email",
+                                ""
+                            ),
+                        "role":
+                            user.get(
+                                "role",
+                                "user"
+                            )
                     }
                 }
             )
@@ -2954,7 +3132,8 @@ class CinemaXHandler(
                 {
                     "success": False,
                     "active": False,
-                    "error": str(e)
+                    "error":
+                        "Error comprobando sesión."
                 },
                 500
             )
@@ -2993,7 +3172,6 @@ class CinemaXHandler(
                     )
 
                 except Exception:
-
                     pass
 
             if not session_id:
@@ -3001,9 +3179,8 @@ class CinemaXHandler(
                 self.send_json(
                     {
                         "success": False,
-                        "error": (
+                        "error":
                             "Sesión no especificada."
-                        )
                     },
                     400
                 )
@@ -3018,17 +3195,18 @@ class CinemaXHandler(
 
                 found = False
 
-                current_time = now_iso()
+                current = now_iso()
+                epoch = now_epoch()
 
                 for session in sessions:
 
                     if (
-                        clean_id(
-                            session.get(
-                                "id"
-                            )
+                        hmac.compare_digest(
+                            clean_id(
+                                session.get("id")
+                            ),
+                            session_id
                         )
-                        == session_id
                     ):
 
                         session[
@@ -3037,11 +3215,15 @@ class CinemaXHandler(
 
                         session[
                             "last_activity"
-                        ] = current_time
+                        ] = current
+
+                        session[
+                            "last_activity_epoch"
+                        ] = epoch
 
                         session[
                             "logout_at"
-                        ] = current_time
+                        ] = current
 
                         found = True
 
@@ -3057,8 +3239,13 @@ class CinemaXHandler(
             self.send_json(
                 {
                     "success": True,
-                    "message": "Sesión cerrada.",
-                    "session_id": session_id
+                    "message":
+                        "Sesión cerrada."
+                },
+                200,
+                {
+                    "Set-Cookie":
+                        "session_id=; Path=/; Max-Age=0; HttpOnly; SameSite=Lax"
                 }
             )
 
@@ -3072,13 +3259,14 @@ class CinemaXHandler(
             self.send_json(
                 {
                     "success": False,
-                    "error": str(e)
+                    "error":
+                        "Error cerrando sesión."
                 },
                 500
             )
 
     # ========================================================
-    # DESCONECTAR USUARIO
+    # DESCONECTAR
     # ========================================================
 
     def disconnect_user(
@@ -3101,9 +3289,8 @@ class CinemaXHandler(
                 self.send_json(
                     {
                         "success": False,
-                        "error": (
+                        "error":
                             "Usuario no encontrado."
-                        )
                     },
                     404
                 )
@@ -3117,18 +3304,16 @@ class CinemaXHandler(
                 )
 
                 found = False
-
-                current_time = now_iso()
+                current = now_iso()
 
                 for session in sessions:
 
                     if (
                         clean_id(
-                            session.get(
-                                "user_id"
-                            )
+                            session.get("user_id")
                         )
-                        == user_id
+                        ==
+                        user_id
                     ):
 
                         session[
@@ -3136,12 +3321,8 @@ class CinemaXHandler(
                         ] = False
 
                         session[
-                            "last_activity"
-                        ] = current_time
-
-                        session[
                             "disconnected_at"
-                        ] = current_time
+                        ] = current
 
                         found = True
 
@@ -3155,31 +3336,33 @@ class CinemaXHandler(
             self.send_json(
                 {
                     "success": True,
-                    "message": (
-                        "Usuario desconectado correctamente."
-                    ),
-                    "user_id": user_id,
-                    "sessions_invalidated": found
+                    "message":
+                        "Usuario desconectado correctamente.",
+                    "user_id":
+                        user_id,
+                    "sessions_invalidated":
+                        found
                 }
             )
 
         except Exception as e:
 
             print(
-                "ERROR desconectando usuario:",
+                "ERROR desconectando:",
                 e
             )
 
             self.send_json(
                 {
                     "success": False,
-                    "error": str(e)
+                    "error":
+                        "Error desconectando usuario."
                 },
                 500
             )
 
     # ========================================================
-    # ACTUALIZAR USUARIO
+    # UPDATE USER
     # ========================================================
 
     def update_user(
@@ -3202,18 +3385,14 @@ class CinemaXHandler(
 
                 if (
                     clean_id(
-                        user.get(
-                            "id"
-                        )
+                        user.get("id")
                     )
-                    == clean_id(
-                        user_id
-                    )
+                    ==
+                    clean_id(user_id)
                 ):
 
                     found = user
                     index = i
-
                     break
 
             if found is None:
@@ -3221,18 +3400,13 @@ class CinemaXHandler(
                 self.send_json(
                     {
                         "success": False,
-                        "error": (
+                        "error":
                             "Usuario no encontrado."
-                        )
                     },
                     404
                 )
 
                 return
-
-            # ------------------------------------------------
-            # USERNAME
-            # ------------------------------------------------
 
             if "username" in data:
 
@@ -3249,10 +3423,8 @@ class CinemaXHandler(
                     self.send_json(
                         {
                             "success": False,
-                            "error": (
-                                "El nombre de usuario "
-                                "debe tener entre 3 y 20 caracteres."
-                            )
+                            "error":
+                                "El nombre de usuario debe tener entre 3 y 20 caracteres."
                         },
                         400
                     )
@@ -3263,44 +3435,32 @@ class CinemaXHandler(
 
                     if (
                         clean_id(
-                            user.get(
-                                "id"
-                            )
+                            user.get("id")
                         )
-                        != clean_id(
-                            user_id
-                        )
+                        !=
+                        clean_id(user_id)
+                        and
+                        clean_id(
+                            user.get("username")
+                        ).lower()
+                        ==
+                        username.lower()
                     ):
 
-                        if (
-                            clean_id(
-                                user.get(
-                                    "username"
-                                )
-                            ).lower()
-                            == username.lower()
-                        ):
+                        self.send_json(
+                            {
+                                "success": False,
+                                "error":
+                                    "Este nombre de usuario ya está en uso."
+                            },
+                            409
+                        )
 
-                            self.send_json(
-                                {
-                                    "success": False,
-                                    "error": (
-                                        "Este nombre de usuario "
-                                        "ya está en uso."
-                                    )
-                                },
-                                409
-                            )
-
-                            return
+                        return
 
                 found[
                     "username"
                 ] = username
-
-            # ------------------------------------------------
-            # EMAIL
-            # ------------------------------------------------
 
             if "email" in data:
 
@@ -3313,10 +3473,8 @@ class CinemaXHandler(
                     self.send_json(
                         {
                             "success": False,
-                            "error": (
-                                "El correo electrónico "
-                                "es obligatorio."
-                            )
+                            "error":
+                                "El correo electrónico es obligatorio."
                         },
                         400
                     )
@@ -3327,44 +3485,32 @@ class CinemaXHandler(
 
                     if (
                         clean_id(
-                            user.get(
-                                "id"
-                            )
+                            user.get("id")
                         )
-                        != clean_id(
-                            user_id
-                        )
+                        !=
+                        clean_id(user_id)
+                        and
+                        clean_id(
+                            user.get("email")
+                        ).lower()
+                        ==
+                        email
                     ):
 
-                        if (
-                            clean_id(
-                                user.get(
-                                    "email"
-                                )
-                            ).lower()
-                            == email
-                        ):
+                        self.send_json(
+                            {
+                                "success": False,
+                                "error":
+                                    "Este correo electrónico ya está registrado."
+                            },
+                            409
+                        )
 
-                            self.send_json(
-                                {
-                                    "success": False,
-                                    "error": (
-                                        "Este correo electrónico "
-                                        "ya está registrado."
-                                    )
-                                },
-                                409
-                            )
-
-                            return
+                        return
 
                 found[
                     "email"
                 ] = email
-
-            # ------------------------------------------------
-            # PASSWORD
-            # ------------------------------------------------
 
             if "password" in data:
 
@@ -3377,10 +3523,8 @@ class CinemaXHandler(
                     self.send_json(
                         {
                             "success": False,
-                            "error": (
-                                "La contraseña "
-                                "debe tener al menos 6 caracteres."
-                            )
+                            "error":
+                                "La contraseña debe tener al menos 6 caracteres."
                         },
                         400
                     )
@@ -3388,12 +3532,15 @@ class CinemaXHandler(
                     return
 
                 found[
-                    "password"
-                ] = password
+                    "password_hash"
+                ] = hash_password(
+                    password
+                )
 
-            # ------------------------------------------------
-            # ROLE
-            # ------------------------------------------------
+                found.pop(
+                    "password",
+                    None
+                )
 
             if "role" in data:
 
@@ -3410,9 +3557,7 @@ class CinemaXHandler(
                         "role"
                     ] = role
 
-            users[
-                index
-            ] = found
+            users[index] = found
 
             if not self.save_users(
                 users
@@ -3421,10 +3566,8 @@ class CinemaXHandler(
                 self.send_json(
                     {
                         "success": False,
-                        "error": (
-                            "No se pudo guardar "
-                            "el usuario."
-                        )
+                        "error":
+                            "No se pudo guardar el usuario."
                     },
                     500
                 )
@@ -3434,26 +3577,17 @@ class CinemaXHandler(
             self.send_json(
                 {
                     "success": True,
-                    "message": (
-                        "Usuario actualizado correctamente."
-                    ),
+                    "message":
+                        "Usuario actualizado correctamente.",
                     "user": {
-                        "id": found.get(
-                            "id",
-                            ""
-                        ),
-                        "username": found.get(
-                            "username",
-                            ""
-                        ),
-                        "email": found.get(
-                            "email",
-                            ""
-                        ),
-                        "role": found.get(
-                            "role",
-                            "user"
-                        )
+                        "id":
+                            found.get("id", ""),
+                        "username":
+                            found.get("username", ""),
+                        "email":
+                            found.get("email", ""),
+                        "role":
+                            found.get("role", "user")
                     }
                 }
             )
@@ -3468,13 +3602,14 @@ class CinemaXHandler(
             self.send_json(
                 {
                     "success": False,
-                    "error": str(e)
+                    "error":
+                        "Error actualizando usuario."
                 },
                 500
             )
 
     # ========================================================
-    # ELIMINAR USUARIO
+    # DELETE USER
     # ========================================================
 
     def delete_user(
@@ -3496,11 +3631,10 @@ class CinemaXHandler(
                     for u in users
                     if (
                         clean_id(
-                            u.get(
-                                "id"
-                            )
+                            u.get("id")
                         )
-                        == user_id
+                        ==
+                        user_id
                     )
                 ),
                 None
@@ -3511,9 +3645,8 @@ class CinemaXHandler(
                 self.send_json(
                     {
                         "success": False,
-                        "error": (
+                        "error":
                             "Usuario no encontrado."
-                        )
                     },
                     404
                 )
@@ -3525,11 +3658,10 @@ class CinemaXHandler(
                 for u in users
                 if (
                     clean_id(
-                        u.get(
-                            "id"
-                        )
+                        u.get("id")
                     )
-                    != user_id
+                    !=
+                    user_id
                 )
             ]
 
@@ -3540,10 +3672,8 @@ class CinemaXHandler(
                 self.send_json(
                     {
                         "success": False,
-                        "error": (
-                            "No se pudo eliminar "
-                            "el usuario."
-                        )
+                        "error":
+                            "No se pudo eliminar el usuario."
                     },
                     500
                 )
@@ -3557,10 +3687,10 @@ class CinemaXHandler(
             self.send_json(
                 {
                     "success": True,
-                    "message": (
-                        "Usuario eliminado correctamente."
-                    ),
-                    "user_id": user_id
+                    "message":
+                        "Usuario eliminado correctamente.",
+                    "user_id":
+                        user_id
                 }
             )
 
@@ -3574,13 +3704,14 @@ class CinemaXHandler(
             self.send_json(
                 {
                     "success": False,
-                    "error": str(e)
+                    "error":
+                        "Error eliminando usuario."
                 },
                 500
             )
 
     # ========================================================
-    # CATÁLOGO - AGREGAR
+    # CATÁLOGO
     # ========================================================
 
     def add_catalog_item(
@@ -3594,28 +3725,14 @@ class CinemaXHandler(
             catalog = self.load_catalog()
 
             if (
-                not item.get(
-                    "title"
-                )
+                not item.get("title")
                 and
-                item.get(
-                    "name"
-                )
+                item.get("name")
             ):
 
-                item[
-                    "title"
-                ] = item[
-                    "name"
-                ]
+                item["title"] = item["name"]
 
-            # ------------------------------------------------
-            # ID AUTOMÁTICO
-            # ------------------------------------------------
-
-            if not item.get(
-                "id"
-            ):
+            if not item.get("id"):
 
                 title = clean_id(
                     item.get(
@@ -3646,19 +3763,14 @@ class CinemaXHandler(
                 )
 
                 new_id = base
-
                 counter = 2
 
                 ids = {
                     clean_id(
-                        x.get(
-                            "id"
-                        )
+                        x.get("id")
                     )
                     for x in catalog
-                    if x.get(
-                        "id"
-                    )
+                    if x.get("id")
                 }
 
                 while new_id in ids:
@@ -3669,33 +3781,26 @@ class CinemaXHandler(
 
                     counter += 1
 
-                item[
-                    "id"
-                ] = new_id
+                item["id"] = new_id
 
             item_id = clean_id(
-                item.get(
-                    "id"
-                )
+                item.get("id")
             )
 
             if any(
                 clean_id(
-                    x.get(
-                        "id"
-                    )
+                    x.get("id")
                 )
-                == item_id
+                ==
+                item_id
                 for x in catalog
             ):
 
                 self.send_json(
                     {
                         "success": False,
-                        "error": (
-                            "Ya existe un contenido "
-                            "con ese ID."
-                        )
+                        "error":
+                            "Ya existe un contenido con ese ID."
                     },
                     409
                 )
@@ -3713,12 +3818,8 @@ class CinemaXHandler(
                 self.send_json(
                     {
                         "success": False,
-                        "error": (
-                            "No se pudo guardar "
-                            "el catálogo. "
-                            "Comprueba la conexión "
-                            "con GitHub."
-                        )
+                        "error":
+                            "No se pudo guardar el catálogo."
                     },
                     500
                 )
@@ -3728,10 +3829,10 @@ class CinemaXHandler(
             self.send_json(
                 {
                     "success": True,
-                    "message": (
-                        "Contenido agregado"
-                    ),
-                    "item": item
+                    "message":
+                        "Contenido agregado",
+                    "item":
+                        item
                 },
                 201
             )
@@ -3746,14 +3847,11 @@ class CinemaXHandler(
             self.send_json(
                 {
                     "success": False,
-                    "error": str(e)
+                    "error":
+                        "Error agregando contenido."
                 },
                 500
             )
-
-    # ========================================================
-    # CATÁLOGO - EDITAR
-    # ========================================================
 
     def update_catalog_item(
         self,
@@ -3776,43 +3874,30 @@ class CinemaXHandler(
 
                 if (
                     clean_id(
-                        item.get(
-                            "id"
-                        )
+                        item.get("id")
                     )
-                    == item_id
+                    ==
+                    item_id
                 ):
 
                     if (
-                        not data.get(
-                            "title"
-                        )
+                        not data.get("title")
                         and
-                        data.get(
-                            "name"
-                        )
+                        data.get("name")
                     ):
 
-                        data[
-                            "title"
-                        ] = data[
-                            "name"
-                        ]
+                        data["title"] = data["name"]
 
                     merged = {
                         **item,
                         **data
                     }
 
-                    merged[
-                        "id"
-                    ] = item.get(
+                    merged["id"] = item.get(
                         "id"
                     )
 
-                    catalog[
-                        i
-                    ] = merged
+                    catalog[i] = merged
 
                     if not self.save_catalog(
                         catalog
@@ -3821,11 +3906,8 @@ class CinemaXHandler(
                         self.send_json(
                             {
                                 "success": False,
-                                "error": (
-                                    "No se pudo guardar "
-                                    "el catálogo. "
-                                    "Comprueba GitHub."
-                                )
+                                "error":
+                                    "No se pudo guardar el catálogo."
                             },
                             500
                         )
@@ -3835,10 +3917,10 @@ class CinemaXHandler(
                     self.send_json(
                         {
                             "success": True,
-                            "message": (
-                                "Contenido actualizado"
-                            ),
-                            "item": merged
+                            "message":
+                                "Contenido actualizado",
+                            "item":
+                                merged
                         }
                     )
 
@@ -3847,9 +3929,8 @@ class CinemaXHandler(
             self.send_json(
                 {
                     "success": False,
-                    "error": (
+                    "error":
                         "Contenido no encontrado"
-                    )
                 },
                 404
             )
@@ -3864,14 +3945,11 @@ class CinemaXHandler(
             self.send_json(
                 {
                     "success": False,
-                    "error": str(e)
+                    "error":
+                        "Error actualizando catálogo."
                 },
                 500
             )
-
-    # ========================================================
-    # CATÁLOGO - ELIMINAR
-    # ========================================================
 
     def delete_catalog_item(
         self,
@@ -3894,16 +3972,13 @@ class CinemaXHandler(
 
                 if (
                     clean_id(
-                        item.get(
-                            "id"
-                        )
+                        item.get("id")
                     )
-                    == item_id
+                    ==
+                    item_id
                 ):
 
-                    found = dict(
-                        item
-                    )
+                    found = dict(item)
 
                 else:
 
@@ -3916,9 +3991,8 @@ class CinemaXHandler(
                 self.send_json(
                     {
                         "success": False,
-                        "error": (
+                        "error":
                             "Contenido no encontrado"
-                        )
                     },
                     404
                 )
@@ -3930,25 +4004,18 @@ class CinemaXHandler(
                 for x in trash
                 if (
                     clean_id(
-                        x.get(
-                            "id"
-                        )
+                        x.get("id")
                     )
-                    != item_id
+                    !=
+                    item_id
                 )
             ]
 
-            found[
-                "deletedAt"
-            ] = now_iso()
+            found["deletedAt"] = now_iso()
 
             trash.append(
                 found
             )
-
-            # ------------------------------------------------
-            # Guardar catálogo
-            # ------------------------------------------------
 
             if not self.save_catalog(
                 new_catalog
@@ -3957,19 +4024,13 @@ class CinemaXHandler(
                 self.send_json(
                     {
                         "success": False,
-                        "error": (
-                            "No se pudo actualizar "
-                            "el catálogo."
-                        )
+                        "error":
+                            "No se pudo actualizar el catálogo."
                     },
                     500
                 )
 
                 return
-
-            # ------------------------------------------------
-            # Guardar papelera
-            # ------------------------------------------------
 
             if not self.save_trash(
                 trash
@@ -3978,11 +4039,8 @@ class CinemaXHandler(
                 self.send_json(
                     {
                         "success": False,
-                        "error": (
-                            "El contenido salió del catálogo "
-                            "pero no se pudo guardar "
-                            "la papelera."
-                        )
+                        "error":
+                            "No se pudo guardar la papelera."
                     },
                     500
                 )
@@ -3992,10 +4050,10 @@ class CinemaXHandler(
             self.send_json(
                 {
                     "success": True,
-                    "message": (
-                        "Contenido movido a la papelera"
-                    ),
-                    "item": found
+                    "message":
+                        "Contenido movido a la papelera",
+                    "item":
+                        found
                 }
             )
 
@@ -4009,14 +4067,11 @@ class CinemaXHandler(
             self.send_json(
                 {
                     "success": False,
-                    "error": str(e)
+                    "error":
+                        "Error eliminando contenido."
                 },
                 500
             )
-
-    # ========================================================
-    # RESTAURAR
-    # ========================================================
 
     def restore_trash_item(
         self,
@@ -4039,16 +4094,13 @@ class CinemaXHandler(
 
                 if (
                     clean_id(
-                        item.get(
-                            "id"
-                        )
+                        item.get("id")
                     )
-                    == item_id
+                    ==
+                    item_id
                 ):
 
-                    found = dict(
-                        item
-                    )
+                    found = dict(item)
 
                 else:
 
@@ -4061,10 +4113,8 @@ class CinemaXHandler(
                 self.send_json(
                     {
                         "success": False,
-                        "error": (
-                            "Contenido no encontrado "
-                            "en la papelera."
-                        )
+                        "error":
+                            "Contenido no encontrado en la papelera."
                     },
                     404
                 )
@@ -4073,32 +4123,28 @@ class CinemaXHandler(
 
             if any(
                 clean_id(
-                    x.get(
-                        "id"
-                    )
+                    x.get("id")
                 )
-                == item_id
+                ==
+                item_id
                 for x in catalog
             ):
 
                 self.send_json(
                     {
                         "success": False,
-                        "error": (
-                            "Ya existe un contenido "
-                            "con ese ID en el catálogo."
-                        )
+                        "error":
+                            "Ya existe un contenido con ese ID."
                     },
                     409
                 )
 
                 return
 
-            if "deletedAt" in found:
-
-                del found[
-                    "deletedAt"
-                ]
+            found.pop(
+                "deletedAt",
+                None
+            )
 
             catalog.append(
                 found
@@ -4111,10 +4157,8 @@ class CinemaXHandler(
                 self.send_json(
                     {
                         "success": False,
-                        "error": (
-                            "No se pudo restaurar "
-                            "el contenido."
-                        )
+                        "error":
+                            "No se pudo restaurar."
                     },
                     500
                 )
@@ -4128,11 +4172,8 @@ class CinemaXHandler(
                 self.send_json(
                     {
                         "success": False,
-                        "error": (
-                            "El contenido fue restaurado "
-                            "pero no se pudo actualizar "
-                            "la papelera."
-                        )
+                        "error":
+                            "No se pudo actualizar la papelera."
                     },
                     500
                 )
@@ -4142,10 +4183,10 @@ class CinemaXHandler(
             self.send_json(
                 {
                     "success": True,
-                    "message": (
-                        "Contenido recuperado correctamente"
-                    ),
-                    "item": found
+                    "message":
+                        "Contenido recuperado correctamente",
+                    "item":
+                        found
                 }
             )
 
@@ -4159,14 +4200,11 @@ class CinemaXHandler(
             self.send_json(
                 {
                     "success": False,
-                    "error": str(e)
+                    "error":
+                        "Error restaurando contenido."
                 },
                 500
             )
-
-    # ========================================================
-    # ELIMINAR DEFINITIVAMENTE
-    # ========================================================
 
     def permanently_delete_trash_item(
         self,
@@ -4186,31 +4224,22 @@ class CinemaXHandler(
                 for x in trash
                 if (
                     clean_id(
-                        x.get(
-                            "id"
-                        )
+                        x.get("id")
                     )
-                    != item_id
+                    !=
+                    item_id
                 )
             ]
 
-            if (
-                len(
-                    new_trash
-                )
-                ==
-                len(
-                    trash
-                )
+            if len(new_trash) == len(
+                trash
             ):
 
                 self.send_json(
                     {
                         "success": False,
-                        "error": (
-                            "Contenido no encontrado "
-                            "en la papelera."
-                        )
+                        "error":
+                            "Contenido no encontrado en la papelera."
                     },
                     404
                 )
@@ -4224,10 +4253,8 @@ class CinemaXHandler(
                 self.send_json(
                     {
                         "success": False,
-                        "error": (
-                            "No se pudo eliminar "
-                            "definitivamente."
-                        )
+                        "error":
+                            "No se pudo eliminar definitivamente."
                     },
                     500
                 )
@@ -4237,10 +4264,10 @@ class CinemaXHandler(
             self.send_json(
                 {
                     "success": True,
-                    "message": (
-                        "Contenido eliminado definitivamente"
-                    ),
-                    "id": item_id
+                    "message":
+                        "Contenido eliminado definitivamente",
+                    "id":
+                        item_id
                 }
             )
 
@@ -4254,14 +4281,15 @@ class CinemaXHandler(
             self.send_json(
                 {
                     "success": False,
-                    "error": str(e)
+                    "error":
+                        "Error eliminando definitivamente."
                 },
                 500
             )
 
 
 # ============================================================
-# SERVIDOR
+# SERVER
 # ============================================================
 
 class CinemaXServer(
@@ -4272,12 +4300,15 @@ class CinemaXServer(
 
 
 # ============================================================
-# INICIO
+# START
 # ============================================================
 
 if __name__ == "__main__":
-    
-    print("🔥🔥🔥 CINEMAX SERVER.PY EJECUTADO 🔥🔥🔥", flush=True)
+
+    print(
+        "🔥🔥🔥 CINEMAX SERVER.PY EJECUTADO 🔥🔥🔥",
+        flush=True
+    )
 
     os.makedirs(
         CINEMA_DIR,
@@ -4329,10 +4360,6 @@ if __name__ == "__main__":
 
     print()
 
-    # --------------------------------------------------------
-    # GITHUB
-    # --------------------------------------------------------
-
     if github_enabled():
 
         print(
@@ -4340,18 +4367,15 @@ if __name__ == "__main__":
         )
 
         print(
-            f"   Repo: "
-            f"{GITHUB_OWNER}/{GITHUB_REPO}"
+            f"   Repo: {GITHUB_OWNER}/{GITHUB_REPO}"
         )
 
         print(
-            f"   Branch: "
-            f"{GITHUB_BRANCH}"
+            f"   Branch: {GITHUB_BRANCH}"
         )
 
         print(
-            f"   Path: "
-            f"{GITHUB_PATH_PREFIX or '(raíz)'}"
+            f"   Path: {GITHUB_PATH_PREFIX or '(raíz)'}"
         )
 
     else:
@@ -4360,24 +4384,44 @@ if __name__ == "__main__":
             "☁️ GITHUB: DESACTIVADO"
         )
 
-        print(
-            "   Variables GitHub no configuradas."
-        )
-
     print()
-
-    # --------------------------------------------------------
-    # SINCRONIZAR GITHUB ANTES DE ARRANCAR
-    # --------------------------------------------------------
 
     github_initial_sync()
 
-    # --------------------------------------------------------
-    # ESTADO
-    # --------------------------------------------------------
+    print(
+        "=========================================="
+    )
 
     print(
-        "🔐 ADMIN: ACTIVADO"
+        "🔐 AUTENTICACIÓN: ACTIVADA"
+    )
+
+    print(
+        "   Passwords: PBKDF2-SHA256"
+    )
+
+    print(
+        "   Sesiones: tokens criptográficos"
+    )
+
+    print(
+        "   Expiración: 7 días"
+    )
+
+    print(
+        "   Inactividad: 4 horas"
+    )
+
+    print(
+        "   Rate limit: ACTIVADO"
+    )
+
+    print(
+        "   Migración legacy: ACTIVADA"
+    )
+
+    print(
+        "=========================================="
     )
 
     print(
@@ -4397,13 +4441,13 @@ if __name__ == "__main__":
     )
 
     print(
-        "🔌 DESCONEXIÓN DE SESIONES: ACTIVADA"
+        "🔌 DESCONEXIÓN: ACTIVADA"
     )
 
     print(
-        "💾 PERSISTENCIA GITHUB: "
+        "💾 GITHUB: "
         + (
-            "ACTIVADA"
+            "ACTIVADO"
             if github_enabled()
             else "LOCAL"
         )
