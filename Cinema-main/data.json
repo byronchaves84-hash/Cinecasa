@@ -241,9 +241,9 @@
     },
     {
         "id": "serie-1",
-        "title": "Serie 1",
+        "title": "The Walking Dead",
         "type": "Serie",
-        "category": "series",
+        "category": "serie",
         "url": "../Cinema-main/Serie1/index.html",
         "image": "../Cinema-main/images/serie1.jpg",
         "year": "",
@@ -376,7 +376,10 @@
                 ]
             }
         ],
-        "session_id": "1decbe64-d53e-441d-93be-2ec83052d795"
+        "session_id": "1decbe64-d53e-441d-93be-2ec83052d795",
+        "video": "../Cinema-main/Serie1/index.html",
+        "rating": "",
+        "featured": false
     },
     {
         "id": "serie-2",
