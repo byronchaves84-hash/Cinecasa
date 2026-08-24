@@ -3,9 +3,9 @@
         "id": "admin-001",
         "username": "Byron",
         "email": "admin@cinemax.com",
-        "password": "cinemax2026",
         "role": "admin",
-        "createdAt": "2026-08-17T01:32:21.447388+00:00"
+        "createdAt": "2026-08-17T01:32:21.447388+00:00",
+        "password_hash": "pbkdf2_sha256$310000$+8EO3YwPlaZZ8tz+2k6yYQ==$mA7pFtmG1wxB2LuGvFYkT9zgMgvBA0bmEyb65k6wCys="
     },
     {
         "id": "admin-002",
