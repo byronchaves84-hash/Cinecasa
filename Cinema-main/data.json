@@ -624,33 +624,6 @@
                 ]
             }
         ]
-    },
-    {
-        "title": "El Último Horizonte",
-        "category": "pelicula",
-        "year": "",
-        "image": "",
-        "video": "",
-        "description": "",
-        "genre": "",
-        "duration": "",
-        "rating": "",
-        "featured": false,
-        "session_id": "1eb6f4e3-30ed-47ba-8d4f-8a6f5a0ea419",
-        "id": "el-último-horizonte"
-    },
-    {
-        "title": "El Último Horizonte",
-        "category": "pelicula",
-        "year": "",
-        "image": "",
-        "video": "https://www.w3schools.com/html/mov_bbb.mp4",
-        "description": "",
-        "genre": "Accion",
-        "duration": "",
-        "rating": "",
-        "featured": false,
-        "session_id": "9c8ea2a8-b57e-4134-93b6-26a46b22b416",
-        "id": "el-último-horizonte-2"
     }
+   
 ]
