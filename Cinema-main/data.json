@@ -681,7 +681,51 @@
         "year": "",
         "genre": "Serie",
         "duration": "",
-        "description": ""
+        "description": "",
+        "seasons": [
+            {
+                "number": 1,
+                "episodes": [
+                    {
+                        "number": 1,
+                        "title": "Episodio 1",
+                        "video": "https://drive.google.com/file/d/1NXL8zoZXPkyJHbcerpBpGxWdt8ORbQZi/preview",
+                        "image": ""
+                    },
+                    {
+                        "number": 2,
+                        "title": "Episodio 2",
+                        "video": "https://drive.google.com/file/d/1Gk82hOHrySTTU9d83doW81pa8ANenkl-/preview",
+                        "image": ""
+                    },
+                    {
+                        "number": 3,
+                        "title": "Episodio 3",
+                        "video": "https://drive.google.com/file/d/19-vxdHTvd5DQB8IsIagH8R_tVRTc1tea/preview",
+                        "image": ""
+                    },
+                    {
+                        "number": 4,
+                        "title": "Episodio 4",
+                        "video": "https://drive.google.com/file/d/1SPD-GwskXV6frm82TTqfNJvIiPeyU_IZ/preview",
+                        "image": ""
+                    },
+                    {
+                        "number": 5,
+                        "title": "Episodio 5",
+                        "video": "https://drive.google.com/file/d/1lL7a8vq0ZzbSayJYDwsqNcbLCBoKD2qD/preview",
+                        "image": ""
+                    },
+                    {
+                        "number": 6,
+                        "title": "Episodio 6",
+                        "video": "https://drive.google.com/file/d/1Qt4YW1QIveYO1CuUAhmJSSzeWYU1Ljj4/preview",
+                        "image": ""
+                    }
+                ]
+            }
+        ],
+        "session_id": "MAoC8Em066bbSghbewziYOlOECK90vzr6yIdNJG7AJ0"
     },
     {
         "id": "serie-9",
