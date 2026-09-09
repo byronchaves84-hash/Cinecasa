@@ -67,5 +67,20 @@
         "session_id": "LXQm8dxWE56FOzwWCI4uytQ-2421-fCSVnQ5J3mAar4",
         "id": "harry-potter-3",
         "deletedAt": "2026-09-09T22:07:19.045207+00:00"
+    },
+    {
+        "title": "Harry Potter",
+        "category": "serie",
+        "year": "2008",
+        "image": "https://images.unsplash.com/photo-1485846234645-a62644f84728",
+        "video": "",
+        "description": "",
+        "genre": "Accion",
+        "duration": "1h 35min",
+        "rating": "8.5",
+        "featured": false,
+        "session_id": "LXQm8dxWE56FOzwWCI4uytQ-2421-fCSVnQ5J3mAar4",
+        "id": "harry-potter-2",
+        "deletedAt": "2026-09-09T22:07:22.029334+00:00"
     }
 ]
