@@ -1,32 +1,5 @@
 [
     {
-        "title": "Harry Potter",
-        "category": "serie",
-        "year": "2034",
-        "image": "https://images.unsplash.com/photo-1500534623283-312aade485b7",
-        "video": "",
-        "description": "assqqw",
-        "genre": "Ciencia ficción, misterio, suspenso",
-        "duration": "10 segundos",
-        "rating": "8.4",
-        "featured": false,
-        "session_id": "223ee5bc-87d3-4f41-af54-38d74eedc7d8",
-        "id": "harry-potter",
-        "seasons": [
-            {
-                "number": 1,
-                "episodes": [
-                    {
-                        "number": 1,
-                        "title": "Episodio 1",
-                        "video": "https://www.youtube.com/watch?v=z8f7OvwZDfc&t=2459s",
-                        "image": "https://www.impawards.com/tv/last_of_us_ver23.html?utm_source=chatgpt.com"
-                    }
-                ]
-            }
-        ]
-    },
-    {
         "title": "Dark",
         "category": "serie",
         "year": "2017",
@@ -82,5 +55,20 @@
         "session_id": "LXQm8dxWE56FOzwWCI4uytQ-2421-fCSVnQ5J3mAar4",
         "id": "harry-potter-2",
         "deletedAt": "2026-09-09T22:07:22.029334+00:00"
+    },
+    {
+        "title": "Harry Potter",
+        "category": "pelicula",
+        "year": "2017",
+        "image": "",
+        "video": "",
+        "description": "",
+        "genre": "",
+        "duration": "",
+        "rating": "",
+        "featured": false,
+        "session_id": "g7HHUlBZPZbhmDRv-RGI5OYuURjUU95qYmc7BS5BSBQ",
+        "id": "harry-potter",
+        "deletedAt": "2026-09-09T22:07:45.971168+00:00"
     }
 ]
