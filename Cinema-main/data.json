@@ -704,6 +704,41 @@
                         "image": ""
                     }
                 ]
+            },
+            {
+                "number": 2,
+                "episodes": [
+                    {
+                        "number": 1,
+                        "title": "Episodio 1",
+                        "video": "https://drive.google.com/file/d/1T2EQPvKD053QeBoLN5lwGAYBRrn90f1X/preview",
+                        "image": ""
+                    },
+                    {
+                        "number": 2,
+                        "title": "Episodio 2",
+                        "video": "https://drive.google.com/file/d/1CLD53yZVQBx1GePwNoPmYM-6y9Bb615M/preview",
+                        "image": ""
+                    },
+                    {
+                        "number": 3,
+                        "title": "Episodio 3",
+                        "video": "https://drive.google.com/file/d/1RrlSUc2yRqkso2HUzKBwOAQSfQrsc28m/preview",
+                        "image": ""
+                    },
+                    {
+                        "number": 4,
+                        "title": "Episodio 4",
+                        "video": "https://drive.google.com/file/d/1RJ9FMeVcttis_f7nHNpEz7yLQ5zjRQmb/preview",
+                        "image": ""
+                    },
+                    {
+                        "number": 5,
+                        "title": "Episodio 5",
+                        "video": "https://drive.google.com/file/d/1A-oINk3wlQCbML30P_lN4pqhylfdsvmo/preview",
+                        "image": ""
+                    }
+                ]
             }
         ]
     },
